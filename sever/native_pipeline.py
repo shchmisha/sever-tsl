@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from collections import Counter
+from functools import partial
 from pathlib import Path
 import time
 
@@ -381,17 +382,20 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         trace(trace_path, "quality_gate", page_id=page["page_id"], decision=page["quality_gate"])
     save_json(out / "selected-pages.json", pages)
     processed = []
+    default_reader = reader is None
     if reader is None:
         from .zoom_image_reader import read_frame_zoom
         reader = read_frame_zoom
         if conflict_reader is None:
             from .image_conflicts import read_leaf_conflicts
             conflict_reader = read_leaf_conflicts
-    read = reader
     factory = additional_frames or iter_additional_page_frames
     consecutive_failures = 0
     for position, page in enumerate(pages, 1):
         page_id = page["page_id"]
+        # The default reader shares one upright rotation across this leaf's
+        # views; custom readers keep their own signature and get no extra state.
+        read = partial(reader, leaf_orientation={}) if default_reader else reader
         trace(trace_path, "page_selected", **page)
         accepted = set(page["quality_gate"].get("accepted_frame_ids", []))
         ordered = sorted((f for f in page["frames"] if f["frame_id"] in accepted),

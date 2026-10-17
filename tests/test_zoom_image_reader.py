@@ -71,3 +71,54 @@ def test_orientation_stop_never_falls_through_to_field_model(frame, tmp_path, mo
     with pytest.raises(type(failure)):
         run(frame, tmp_path, config=config(), model=model_for(native_reading(), calls))
     assert not calls
+
+
+def counting_orientation(calls, value=90):
+    def respond(messages, info):
+        calls.append(value)
+        return ModelResponse(parts=[TextPart(json.dumps({'rotation_clockwise': value}))],
+                             usage=RequestUsage(input_tokens=12, output_tokens=3))
+    return FunctionModel(respond)
+
+
+def reader_answering(form_scope):
+    def respond(messages, info):
+        payload = reading(last_panel(messages))
+        payload['reading']['form_scope'] = form_scope
+        return response(payload)
+    return FunctionModel(respond)
+
+
+def test_first_fresh_orientation_is_reused_for_later_views_of_the_leaf(frame, tmp_path):
+    shared, orientation_calls, settings = {}, [], config()
+    options = dict(config=settings, orientation_model=counting_orientation(orientation_calls),
+                   model=reader_answering('out_of_scope'), leaf_orientation=shared)
+    first = run(frame, tmp_path, **options)
+    second = run(frame, tmp_path, **options)
+    assert orientation_calls == [90] and settings.usage.requests == 3
+    assert shared == {'rotation_clockwise': 90, 'frame_id': frame['frame_id'],
+                      'evidence_path': first['recognition']['image_preparation']['orientation_evidence_path']}
+    assert first['recognition']['image_preparation']['rotation_source'] == 'fresh_orientation_call'
+    prepared = second['recognition']['image_preparation']
+    assert prepared['rotation_source'] == 'same_leaf_frame' and prepared['rotation_clockwise'] == 90
+    assert prepared['rotation_from_frame_id'] == frame['frame_id']
+    assert second['recognition']['pixel_proof']['rotation_clockwise_degrees'] == 90
+
+
+def test_insufficient_reading_with_reused_rotation_requests_fresh_orientation_next(frame, tmp_path):
+    shared, orientation_calls = {}, []
+    options = dict(config=config(), orientation_model=counting_orientation(orientation_calls),
+                   model=reader_answering('insufficient_evidence'), leaf_orientation=shared)
+    run(frame, tmp_path, **options)
+    reused = run(frame, tmp_path, **options)
+    assert reused['recognition']['image_preparation']['leaf_orientation_dropped'] is True and shared == {}
+    run(frame, tmp_path, **options)
+    assert orientation_calls == [90, 90]
+
+
+def test_unknown_orientation_is_not_shared_with_later_views(frame, tmp_path):
+    shared, calls = {}, []
+    for _ in range(2):
+        run(frame, tmp_path, config=config(), orientation_model=orientation(None),
+            model=model_for(native_reading(), calls), leaf_orientation=shared)
+    assert shared == {} and len(calls) == 2

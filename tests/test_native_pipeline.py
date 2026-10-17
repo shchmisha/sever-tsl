@@ -676,3 +676,25 @@ def test_uncertain_video_coverage_is_preserved_in_progress_and_final_exports(tmp
     assert progress_coverage and all(item == expected for item in progress_coverage)
     assert json.loads((out / "partial-results.json").read_text())["video_coverage"] == expected
     assert json.loads((out / "results.json").read_text())["video_coverage"] == expected
+
+
+def test_default_reader_gets_one_orientation_store_per_leaf(tmp_path, monkeypatch):
+    source, frames = setup_pages(tmp_path, monkeypatch, count=4)
+    pages = [{"page_id": f"page-{n}", "start_s": n, "end_s": n + 1,
+              "selected_frame_id": frames[2*n]["frame_id"], "frames": deepcopy(frames[2*n:2*n+2])}
+             for n in range(2)]
+    monkeypatch.setattr("sever.video.analyze_video", lambda *a, **kw: deepcopy(pages))
+    stores = []
+    async def fake_zoom(frame, *, source_id, page_id, leaf_orientation, **kw):
+        stores.append((page_id, id(leaf_orientation)))
+        leaf_orientation.setdefault("rotation_clockwise", 90)
+        return answer(frame, source_id, page_id, "upd")
+    async def no_review(*args, **kwargs):
+        raise AssertionError("Agreeing readings need no joint review")
+    monkeypatch.setattr("sever.zoom_image_reader.read_frame_zoom", fake_zoom)
+    monkeypatch.setattr("sever.image_conflicts.read_leaf_conflicts", no_review)
+    asyncio.run(process_video_images(source, tmp_path / "run", config=AgentConfig(),
+                                     additional_frames=lambda *a: iter(())))
+    assert [page for page, _ in stores] == ["page-0", "page-0", "page-1", "page-1"]
+    assert stores[0][1] == stores[1][1] and stores[2][1] == stores[3][1]
+    assert stores[0][1] != stores[2][1]
