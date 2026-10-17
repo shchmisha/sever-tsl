@@ -300,3 +300,70 @@ def test_form_rejection_only_review_cannot_establish_target_field_readability():
     truth["selected_frame_usability"]["target"]["usable"] = None
     metric = evaluate({"pages": [_prediction()]}, truth)["frame_document_detection_rate"]
     assert metric["uncertain"] == 1 and metric["confirmed_unusable"] == 0
+
+
+def test_wilson_interval_and_exact_mcnemar_match_reference_values():
+    from sever.evaluation import mcnemar_exact, wilson_interval
+    assert wilson_interval(35, 44) == (0.655, 0.8885)
+    assert wilson_interval(0, 0) is None
+    assert wilson_interval(44, 44)[1] == 1.0 and wilson_interval(0, 44)[0] == 0.0
+    assert mcnemar_exact(6, 0) == 0.03125
+    assert mcnemar_exact(1, 1) == 1.0
+    assert mcnemar_exact(0, 0) is None
+
+
+def _not_visible(**rest):
+    return {"value": None, "status": "unreadable", "labeled": False, "manual": True,
+            "manual_visibility": "not_visible_on_this_leaf", **rest}
+
+
+def test_not_visible_rows_are_abstention_checks_that_fail_on_any_value_claim():
+    truth = {"pages": [{"page_id": "t1", "start_s": 0, "end_s": 2, "document_type": "ttn", "fields": {
+        "document_number": "0001", "consignor": _not_visible(), "consignee": _not_visible(),
+        "document_date": {"value": None, "status": "unreadable", "labeled": False, "manual": True,
+                          "manual_visibility": "semantic_confirmation_needed"}}}]}
+    page = _prediction("ttn", {"document_number": "0001"})
+    page["result"]["fields"]["consignor"] = {"status": "recognized", "raw_value": "ООО Составитель", "normalized_value": "ООО Составитель"}
+    page["result"]["fields"]["consignee"] = {"status": "unreadable", "normalized_value": None}
+    report = evaluate({"pages": [page]}, truth)
+    checks = report["abstention_checks"]
+    assert (checks["correct"], checks["total"]) == (1, 2)
+    assert checks["semantic_pending_rows"] == 1 and checks["undetected_rows"] == 0
+    assert checks["failures"] == [{"truth_page_id": "t1", "field": "consignor", "predicted_type": "ttn",
+                                   "status": "recognized", "raw_value": "ООО Составитель"}]
+    assert checks["by_field"] == {"ttn.consignee": {"correct": 1, "total": 1, "rate": 1.0},
+                                  "ttn.consignor": {"correct": 0, "total": 1, "rate": 0.0}}
+    assert report["details"][0]["abstention_checks"] == {"consignor": False, "consignee": True}
+    # The labelled field is unaffected and the unlabelled rows stay out of its denominator.
+    assert report["labeled_fields"] == {"correct": 1, "total": 1, "rate": 1.0}
+    assert report["confidence_intervals"]["abstention_checks"] == (0.0945, 0.9055)
+    assert report["confidence_intervals"]["labeled_fields"] == (0.2065, 1.0)
+
+
+def test_undetected_not_visible_rows_and_blank_claims_are_not_passes():
+    truth = {"pages": [{"page_id": "t1", "start_s": 0, "end_s": 2, "document_type": "upd",
+                        "fields": {"consignor": _not_visible()}},
+                       {"page_id": "t2", "start_s": 2, "end_s": 4, "document_type": "upd",
+                        "fields": {"consignor": _not_visible()}}]}
+    page = _prediction("upd", {}, timestamp=1)
+    page["result"]["fields"]["consignor"] = {"status": "not_present", "normalized_value": None}
+    report = evaluate({"pages": [page]}, truth)
+    checks = report["abstention_checks"]
+    assert (checks["correct"], checks["total"], checks["undetected_rows"]) == (0, 1, 1)
+    assert checks["failures"][0]["status"] == "not_present" and checks["failures"][0]["raw_value"] is None
+
+
+def test_legacy_address_boundary_scores_against_the_legacy_label_only_when_asked():
+    truth = {"pages": [{"page_id": "t1", "start_s": 0, "end_s": 2, "document_type": "upd", "fields": {
+        "consignee_address": {"value": 'ООО "А"; ИНН/КПП 1/2, 628422, г. Сургут, ул. Мира, д. 1',
+                              "legacy_value": "628422, г. Сургут, ул. Мира, д. 1", "status": "recognized",
+                              "field_boundary_rule": "entire_printed_field_2026-10-11"}}}]}
+    postal = _prediction("upd", {"consignee_address": "628422, г. Сургут, ул. Мира, д. 1"})
+    full = _prediction("upd", {"consignee_address": 'ООО "А"; ИНН/КПП 1/2, 628422, г. Сургут, ул. Мира, д. 1'})
+    assert evaluate({"pages": [full]}, truth)["labeled_fields"]["correct"] == 1
+    assert evaluate({"pages": [postal]}, truth)["labeled_fields"]["correct"] == 0
+    legacy = evaluate({"pages": [postal]}, truth, address_boundary="legacy")
+    assert legacy["labeled_fields"]["correct"] == 1 and legacy["address_boundary"] == "legacy"
+    assert evaluate({"pages": [full]}, truth, address_boundary="legacy")["labeled_fields"]["correct"] == 0
+    with pytest.raises(ValueError, match="address_boundary"):
+        evaluate({"pages": [full]}, truth, address_boundary="old")

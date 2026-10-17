@@ -1,11 +1,43 @@
 """Provisional one-to-one visible-leaf evaluation, with annotation coverage explicit."""
 from collections import Counter, defaultdict
+import math
+
 from .normalize import comparison
 from .schema import FIELDS_BY_TYPE
+
+NOT_VISIBLE = "not_visible_on_this_leaf"
+
+
+def wilson_interval(correct: int, total: int, z: float = 1.959964) -> tuple[float, float] | None:
+    """95% Wilson score interval for a proportion; None when nothing was measured."""
+    if total <= 0:
+        return None
+    p = correct / total
+    denominator = 1 + z * z / total
+    centre = (p + z * z / (2 * total)) / denominator
+    half = z * math.sqrt(p * (1 - p) / total + z * z / (4 * total * total)) / denominator
+    return (round(max(0.0, centre - half), 4), round(min(1.0, centre + half), 4))
+
+
+def mcnemar_exact(b: int, c: int) -> float | None:
+    """Two-sided exact McNemar p-value for b A-only and c B-only successes; None without discordant pairs."""
+    n = b + c
+    if n == 0:
+        return None
+    k = min(b, c)
+    tail = sum(math.comb(n, i) for i in range(k + 1)) / 2 ** n
+    return min(1.0, 2 * tail)
 
 
 def _metric(correct: int, total: int, **extra) -> dict:
     return {"correct": correct, "total": total, "rate": correct / total if total else None, **extra}
+
+
+def _intervals(report: dict) -> dict:
+    """95% Wilson intervals for every correct/total metric, kept beside the metrics."""
+    names = ("candidate_coverage", "detection", "type_accuracy_all_expected", "type_accuracy_targets",
+             "e2e", "e2e_on_fully_labeled", "unknown_rejection", "abstention_checks", "labeled_fields")
+    return {name: wilson_interval(report[name]["correct"], report[name]["total"]) for name in names if name in report}
 
 
 def _primary_frame(page: dict) -> dict | None:
@@ -86,7 +118,15 @@ def _selected_frame_quality(actual: list[dict]) -> dict:
     }
 
 
-def evaluate(result: dict, truth: dict) -> dict:
+def evaluate(result: dict, truth: dict, *, address_boundary: str = "current") -> dict:
+    """Score one run against one labelled video.
+
+    address_boundary="legacy" scores a field against its ``legacy_value`` (the
+    label under the pre-2026-10-11 postal-only boundary) when the label has one;
+    use it only for runs whose instructions predate that rule.
+    """
+    if address_boundary not in {"current", "legacy"}:
+        raise ValueError("address_boundary must be 'current' or 'legacy'")
     if truth.get("source_sha256") and result.get("source", {}).get("sha256") != truth["source_sha256"]:
         raise ValueError("Ground truth source hash does not match the processed video")
     expected = truth.get("pages", [])
@@ -97,6 +137,11 @@ def evaluate(result: dict, truth: dict) -> dict:
     field_stats = defaultdict(lambda: {"correct": 0, "total": 0})
     errors = Counter()
     details = []
+    # Rows a human marked as not visible on this leaf are abstention checks: the
+    # system must not claim a value or a blank for them. Undetected intervals and
+    # rows pending a semantic decision are counted separately, never as passes.
+    abstention = {"correct": 0, "total": 0, "undetected": 0, "semantic_pending": 0,
+                  "failures": [], "by_field": defaultdict(lambda: {"correct": 0, "total": 0})}
     target_total = unknown_total = unknown_correct = 0
     for item in expected:
         start, end = item["start_s"], item["end_s"]
@@ -123,11 +168,32 @@ def evaluate(result: dict, truth: dict) -> dict:
             target_total += 1
             target_typed += int(type_ok)
         checks = {}
+        abstentions = {}
         # Labeled fields retain misses and wrong types in their denominators.
         for name, target in item.get("fields", {}).items():
             if isinstance(target, dict) and target.get("labeled", True) is False:
+                if target.get("manual_visibility") != NOT_VISIBLE:
+                    abstention["semantic_pending"] += 1
+                    continue
+                if index is None:
+                    abstention["undetected"] += 1
+                    continue
+                found = prediction.get("fields", {}).get(name, {})
+                claimed = found.get("status") in {"recognized", "not_present"}
+                abstentions[name] = not claimed
+                abstention["total"] += 1
+                abstention["by_field"][f"{kind}.{name}"]["total"] += 1
+                if claimed:
+                    abstention["failures"].append({"truth_page_id": item.get("page_id"), "field": name,
+                        "predicted_type": prediction.get("document_type"), "status": found.get("status"),
+                        "raw_value": (found.get("raw_value") or "")[:120] or None})
+                else:
+                    abstention["correct"] += 1
+                    abstention["by_field"][f"{kind}.{name}"]["correct"] += 1
                 continue
             value = target.get("value") if isinstance(target, dict) else target
+            if address_boundary == "legacy" and isinstance(target, dict) and "legacy_value" in target:
+                value = target["legacy_value"]
             wanted_status = target.get("status", "recognized" if value is not None else "not_present") if isinstance(target, dict) else ("recognized" if value is not None else "not_present")
             found = prediction.get("fields", {}).get(name, {})
             ok = type_ok and found.get("status") == wanted_status and _value_matches(name, found.get("normalized_value"), target, value)
@@ -162,6 +228,7 @@ def evaluate(result: dict, truth: dict) -> dict:
             "type_correct": bool(type_ok), "field_checks": checks, "fully_labeled": complete,
             "e2e_evaluated": kind != "unknown" and complete,
             "e2e_success": bool(e2e) if kind != "unknown" and complete else None,
+            "abstention_checks": abstentions,
         })
     usability = truth.get("selected_frame_usability", {})
     usable_correct = usable_total = usable_targets_correct = usable_targets_total = usable_uncertain = 0
@@ -188,8 +255,9 @@ def evaluate(result: dict, truth: dict) -> dict:
         interpretation="Conservative lower bound over all target leaf intervals; unlabeled targets are not measured extraction failures.",
     )
     processing_failures = Counter(error for page in actual for error in _processing_failures(page.get("result", {})))
-    return {
+    report = {
         "ground_truth_provenance": truth.get("provenance", "independent manual provisional"),
+        "address_boundary": address_boundary,
         "customer_approved": truth.get("customer_approved", False),
         "unit": "visible leaf interval, including repeat showings; one-to-one match by primary selected-frame timestamp",
         "frame_document_detection_rate": _metric(usable_correct, usable_total,
@@ -211,14 +279,25 @@ def evaluate(result: dict, truth: dict) -> dict:
         "annotation_coverage": {"fully_labeled_targets": fully_labeled_total, "target_total": target_total,
                                 "unlabeled_targets": target_total - fully_labeled_total},
         "unknown_rejection": _metric(unknown_correct, unknown_total),
+        "abstention_checks": _metric(abstention["correct"], abstention["total"],
+            undetected_rows=abstention["undetected"], semantic_pending_rows=abstention["semantic_pending"],
+            by_field={name: {**counts, "rate": counts["correct"] / counts["total"] if counts["total"] else None}
+                      for name, counts in sorted(abstention["by_field"].items())},
+            failures=abstention["failures"],
+            interpretation="Rows a human marked not visible on this leaf; a pass means the system claimed no value or blank for that field on the matched prediction. Wrong-type predictions pass unless they still claim the field."),
         "unmatched_predictions": len(actual) - len(used),
         "processing_failures": {"candidate_leaves": sum(bool(_processing_failures(page.get('result', {}))) for page in actual),
                                 "reasons": dict(processing_failures)},
         "selected_frame_quality": _selected_frame_quality(actual),
         "failure_reasons": dict(errors), "details": details,
+        "labeled_fields": _metric(sum(counts["correct"] for counts in field_stats.values()),
+                                  sum(counts["total"] for counts in field_stats.values())),
         "normalization_method": "NFKC/whitespace, case/ё, canonical dates/numbers; explicit legal-form prefixes and organization/address formatting punctuation. Words, meaningful symbols and numeric address tokens are retained. Character-script aliases require per-field accepted_variants.",
         "limitations": ["Provisional labels and the visible-leaf/repeat convention require customer review.",
                         "Unlabeled required fields have no measured end-to-end outcome; the all-target score is a conservative lower bound.",
                         "Repeat showings are separate leaf intervals, not unique document identities; one prediction cannot cover two intervals.",
-                        "Unmatched candidate leaves are reported separately; detection is recall-style coverage, not precision or verified usable-frame accuracy."],
+                        "Unmatched candidate leaves are reported separately; detection is recall-style coverage, not precision or verified usable-frame accuracy.",
+                        "Confidence intervals are Wilson 95% intervals over rows, ignoring clustering by sheet and by repeat showing; they understate the true uncertainty."],
     }
+    report["confidence_intervals"] = _intervals(report)
+    return report

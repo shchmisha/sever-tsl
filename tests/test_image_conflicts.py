@@ -574,3 +574,10 @@ def test_batched_review_overflow_returns_explicit_nonimage_declines(frames, tmp_
     assert len(calls) == 2 and result["recognition"]["zoom_images"] == 12
     record = records(tmp_path)[0]
     assert len(record["tool_proofs"]) == 12 and len(record["tool_declines"]) == 2
+
+
+def test_joint_instructions_forbid_reference_markers_as_values():
+    from sever.image_conflicts import IMAGE_CONFLICTS_VERSION, INSTRUCTIONS
+    assert "raw_value НИКОГДА не содержит слов «он же»" in INSTRUCTIONS
+    assert "без префикса «он же;»" in INSTRUCTIONS
+    assert IMAGE_CONFLICTS_VERSION.endswith("v7-no-reference-values")

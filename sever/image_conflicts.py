@@ -26,7 +26,7 @@ from .image_reader import (EVIDENCE_ORIGIN, TRNFields, TTNFields, TORGFields,
 from .normalize import normalize
 from .schema import DocumentType, Evidence, FIELDS_BY_TYPE, FieldValue
 
-IMAGE_CONFLICTS_VERSION = "fresh-joint-source-visibility-and-field-review-v6"
+IMAGE_CONFLICTS_VERSION = "fresh-joint-source-visibility-and-field-review-v7-no-reference-values"
 MAX_MODEL_REQUESTS = 12
 MAX_ZOOM_IMAGES = 12
 MAX_REVIEW_FRAMES = 4
@@ -61,7 +61,11 @@ raw_value=null. Полный видимый блок сохрани в evidence_
 название организации, выпиши его напрямую. Ссылка «он же» из СОСЕДНЕЙ строки
 к этой роли не относится. Раскрывай ссылку только когда она буквально
 напечатана в собственной строке запрошенного поля; тогда сохрани отдельно
-обе настоящие строки. В evidence_text копируй именно видимую подпись и текст
+обе настоящие строки. raw_value НИКОГДА не содержит слов «он же», «тот же»
+или другой ссылки: это указатель, а не значение. Строку со ссылкой сохрани
+в evidence_text, а в raw_value запиши только само значение, на которое она
+указывает: наименование продавца либо ПОЛНЫЙ напечатанный адресный блок
+продавца, без префикса «он же;». В evidence_text копируй именно видимую подпись и текст
 этой строки дословно, включая продолжение адреса. Не склеивай разные строки
 с выдуманными подписями, не добавляй [он же], многоточия и пояснения от себя.
 resolution_reason кратко объясняет чтение и не должен противоречить этим

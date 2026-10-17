@@ -41,7 +41,7 @@
     "torg12",
     "trn"
   ],
-  "evaluation_scope": "Provisional independently read required fields on visible leaf intervals: 44 labelled field instances of 96 required across 20 target intervals; 8 intervals fully labelled. Unlabelled fields must be excluded from value-accuracy denominators, not treated as correct nulls. Leaf/display interval is the current unit; repeated physical-document consolidation and UPD continuation invoice semantics await customer agreement. No formal acceptance or production accuracy is claimed.",
+  "evaluation_scope": "Provisional independently read required fields on visible leaf intervals: 44 labelled field instances of 96 required across 20 target intervals; 8 intervals fully labelled. Unlabelled fields must be excluded from value-accuracy denominators, not treated as correct nulls. Leaf/display interval is the current unit; repeated physical-document consolidation and UPD continuation invoice semantics await customer agreement. No formal acceptance or production accuracy is claimed. consignee_address labels follow the 2026-10-11 entire-field rule since 2026-10-18 (legacy_value retained).",
   "videos": [
     {
       "source": "/Users/shchmisha/Downloads/20260818-4_132351.mp4",
@@ -169,11 +169,11 @@
               "uncertainty": "Only the printed legal-name portion is the value. INN/KPP and РЦ ООО Профреш remain in raw evidence; the separate buyer block is not substituted."
             },
             "consignee_address": {
-              "value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
               "status": "recognized",
               "labeled": true,
               "manual": true,
-              "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
               "provenance": {
                 "timestamp_s": 0.0,
                 "sample_id": 1,
@@ -182,7 +182,16 @@
                 "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-01.jpg",
                 "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upd-parties-crop.png"
               },
-              "uncertainty": "No visually ambiguous characters in the selected field."
+              "uncertainty": "No visually ambiguous characters in the selected field.",
+              "legacy_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "field_boundary_rule": "entire_printed_field_2026-10-11",
+              "relabel": {
+                "date": "2026-10-18",
+                "method": "manual visual reading of the listed frame by the assistant, confirmed by three independent readings of the same crop (all identical); no model output consulted",
+                "frame": "analysis/sample-04/selected-frames/upd-parties-crop.png (from original-01.jpg)",
+                "previous_boundary": "postal_part_only",
+                "customer_approved": false
+              }
             }
           },
           "field_annotation_status": "fully_labeled_for_type",
@@ -547,17 +556,26 @@
               "uncertainty": "Указано юридическое наименование из строки грузополучателя; ИНН/КПП и РЦ не включены. Роль покупателя не подставляется."
             },
             "consignee_address": {
-              "value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
               "status": "recognized",
               "labeled": true,
               "manual": true,
-              "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
               "manual_visibility": "visible_readable",
               "provenance": {
                 "review_frame_index": 0,
                 "printed_caption": "Грузополучатель и его адрес"
               },
-              "uncertainty": "Читается собственный адрес грузополучателя в Сургуте. Адрес покупателя в Москве не подставляется."
+              "uncertainty": "Читается собственный адрес грузополучателя в Сургуте. Адрес покупателя в Москве не подставляется.",
+              "legacy_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "field_boundary_rule": "entire_printed_field_2026-10-11",
+              "relabel": {
+                "date": "2026-10-18",
+                "method": "manual visual reading of the listed frame by the assistant, confirmed by three independent readings of the same crop (all identical); no model output consulted",
+                "frame": "analysis/sample-04/selected-frames/original-04.jpg (18.392 s), parties block rotated upright",
+                "previous_boundary": "postal_part_only",
+                "customer_approved": false
+              }
             }
           },
           "field_annotation_status": "fully_labeled_for_type",
@@ -3819,11 +3837,11 @@
               "uncertainty": "Only the printed legal-name portion is the value. INN/KPP and РЦ ООО Профреш remain in raw evidence; the separate buyer block is not substituted."
             },
             "consignee_address": {
-              "value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
               "status": "recognized",
               "labeled": true,
               "manual": true,
-              "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
               "provenance": {
                 "timestamp_s": 1.032889,
                 "sample_id": 2,
@@ -3832,7 +3850,16 @@
                 "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/selected-frames/upright-01.jpg",
                 "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/selected-frames/upd-parties-crop.png"
               },
-              "uncertainty": "No visually ambiguous characters in the selected field."
+              "uncertainty": "No visually ambiguous characters in the selected field.",
+              "legacy_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "field_boundary_rule": "entire_printed_field_2026-10-11",
+              "relabel": {
+                "date": "2026-10-18",
+                "method": "manual visual reading of the listed frame by the assistant, confirmed by three independent readings of the same crop (all identical); no model output consulted",
+                "frame": "analysis/sample-05/selected-frames/upd-parties-crop.png (from original-01.jpg)",
+                "previous_boundary": "postal_part_only",
+                "customer_approved": false
+              }
             }
           },
           "field_annotation_status": "fully_labeled_for_type",
@@ -4195,17 +4222,26 @@
               "uncertainty": "Указано юридическое наименование из строки грузополучателя; ИНН/КПП и РЦ не включены. Роль покупателя не подставляется."
             },
             "consignee_address": {
-              "value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
               "status": "recognized",
               "labeled": true,
               "manual": true,
-              "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
               "manual_visibility": "visible_readable",
               "provenance": {
                 "review_frame_index": 0,
                 "printed_caption": "Грузополучатель и его адрес"
               },
-              "uncertainty": "Читается собственный адрес грузополучателя в Сургуте. Адрес покупателя в Москве не подставляется."
+              "uncertainty": "Читается собственный адрес грузополучателя в Сургуте. Адрес покупателя в Москве не подставляется.",
+              "legacy_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "field_boundary_rule": "entire_printed_field_2026-10-11",
+              "relabel": {
+                "date": "2026-10-18",
+                "method": "manual visual reading of the listed frame by the assistant, confirmed by three independent readings of the same crop (all identical); no model output consulted",
+                "frame": "analysis/sample-05/selected-frames/original-04.jpg (13.428 s), parties block rotated upright",
+                "previous_boundary": "postal_part_only",
+                "customer_approved": false
+              }
             }
           },
           "field_annotation_status": "fully_labeled_for_type",
@@ -6268,5 +6304,13 @@
         "sha256": "efa090b3b3465655c2e1ec8529884b4532ede44f9dc19774744a00a4d1b8b295"
       }
     ]
-  }
+  },
+  "relabel_history": [
+    {
+      "date": "2026-10-18",
+      "fields": "consignee_address on sample-04-page-001, sample-04-page-004, sample-05-page-001, sample-05-page-004",
+      "reason": "Customer clarification of 2026-10-11: the address field holds everything printed inside it (organization, РЦ, ИНН/КПП, postal address). Previous postal-only values kept as legacy_value; evaluate(..., address_boundary='legacy') scores against them.",
+      "customer_approved": false
+    }
+  ]
 }

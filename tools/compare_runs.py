@@ -141,7 +141,7 @@ def load_run(directory):
     return results, summary, per_leaf
 
 
-def score(results, truth_path):
+def score(results, truth_path, *, address_boundary="current"):
     """Score one run against the truth video with the same source SHA-256."""
     from sever.evaluation import evaluate
 
@@ -150,10 +150,13 @@ def score(results, truth_path):
     video = next((video for video in truth.get("videos", []) if video.get("source_sha256") == sha), None)
     if video is None:
         return {"status": "no_labels_for_this_video"}
-    report = evaluate(results, video)
+    report = evaluate(results, video, address_boundary=address_boundary)
     labelled = [value for value in report["field_accuracy"].values()]
-    return {"status": "scored", "truth_video": video.get("source_id"),
+    return {"status": "scored", "truth_video": video.get("source_id"), "address_boundary": address_boundary,
             "labelled_fields": {"correct": sum(v["correct"] for v in labelled), "total": sum(v["total"] for v in labelled)},
+            "abstention_checks": {key: report["abstention_checks"][key] for key in
+                                  ("correct", "total", "undetected_rows", "semantic_pending_rows", "failures")},
+            "confidence_intervals": report.get("confidence_intervals", {}),
             "field_accuracy": {name: {"correct": value["correct"], "total": value["total"]}
                                for name, value in sorted(report["field_accuracy"].items())},
             "type_accuracy_targets": _count(report["type_accuracy_targets"]),
@@ -162,7 +165,27 @@ def score(results, truth_path):
             "intervals_detected": _count(report["detection"]),
             "unmatched_predictions": report["unmatched_predictions"],
             "per_interval": [{key: detail.get(key) for key in ("truth_page_id", "prediction_page_id", "detected",
-                              "type_correct", "field_checks", "e2e_success")} for detail in report["details"]]}
+                              "type_correct", "field_checks", "e2e_success", "abstention_checks")} for detail in report["details"]]}
+
+
+def paired_comparison(accuracy_a, accuracy_b):
+    """Exact McNemar test on labelled fields and abstention checks both runs scored."""
+    from sever.evaluation import mcnemar_exact
+
+    result = {}
+    for key in ("field_checks", "abstention_checks"):
+        rows_a = {(item["truth_page_id"], name): ok for item in accuracy_a.get("per_interval", [])
+                  for name, ok in (item.get(key) or {}).items()}
+        rows_b = {(item["truth_page_id"], name): ok for item in accuracy_b.get("per_interval", [])
+                  for name, ok in (item.get(key) or {}).items()}
+        shared = sorted(set(rows_a) & set(rows_b))
+        b = sum(rows_a[row] and not rows_b[row] for row in shared)
+        c = sum(rows_b[row] and not rows_a[row] for row in shared)
+        result[key] = {"paired_rows": len(shared), "a_only_correct": b, "b_only_correct": c,
+                       "mcnemar_exact_p": mcnemar_exact(b, c),
+                       "changed_rows": [{"truth_page_id": page, "field": name, "a": rows_a[(page, name)], "b": rows_b[(page, name)]}
+                                        for page, name in shared if rows_a[(page, name)] != rows_b[(page, name)]]}
+    return result
 
 
 def _count(metric):
@@ -173,14 +196,16 @@ def _ratio(new, old):
     return round(new / old, 3) if isinstance(new, (int, float)) and isinstance(old, (int, float)) and old else None
 
 
-def compare(a_dir, b_dir, *, label_a="A", label_b="B", truth=None):
+def compare(a_dir, b_dir, *, label_a="A", label_b="B", truth=None, address_boundary=("current", "current")):
     runs = {}
-    for label, directory in ((label_a, a_dir), (label_b, b_dir)):
+    for label, directory, boundary in ((label_a, a_dir, address_boundary[0]), (label_b, b_dir, address_boundary[1])):
         results, summary, per_leaf = load_run(directory)
-        accuracy = score(results, truth) if truth and summary["complete"] else (
+        accuracy = score(results, truth, address_boundary=boundary) if truth and summary["complete"] else (
             {"status": "run_incomplete_not_scored"} if truth else {"status": "no_truth_supplied"})
         runs[label] = {"summary": summary, "accuracy": accuracy, "per_leaf": per_leaf}
     a, b = runs[label_a]["summary"], runs[label_b]["summary"]
+    paired = (paired_comparison(runs[label_a]["accuracy"], runs[label_b]["accuracy"])
+              if all(runs[label]["accuracy"].get("status") == "scored" for label in (label_a, label_b)) else None)
     notes = []
     if a["source_sha256"] != b["source_sha256"]:
         notes.append("The two runs read different source videos; the comparison is not like for like.")
@@ -207,7 +232,7 @@ def compare(a_dir, b_dir, *, label_a="A", label_b="B", truth=None):
             row[label] = {key: leaf.get(key) for key in ("interval_s", "document_type", "stop_reason", "views",
                           "confirmed_fields", "required_fields", "requests", "model_seconds", "leaf_seconds", "call_kinds")}
         leaves.append(row)
-    return {"labels": [label_a, label_b], "ratio_b_over_a": speed, "notes": notes,
+    return {"labels": [label_a, label_b], "ratio_b_over_a": speed, "notes": notes, "paired": paired,
             "runs": {label: {"summary": run["summary"], "accuracy": run["accuracy"]} for label, run in runs.items()},
             "leaves": leaves}
 
@@ -220,8 +245,13 @@ def markdown(report):
     def cell(value):
         return "—" if value is None else f"{value:,.2f}".rstrip("0").rstrip(".") if isinstance(value, float) else f"{value:,}" if isinstance(value, int) else str(value)
 
-    def frac(metric):
-        return "—" if not metric else f"{metric['correct']}/{metric['total']}"
+    def frac(metric, interval=None):
+        if not metric:
+            return "—"
+        text = f"{metric['correct']}/{metric['total']}"
+        if interval:
+            text += f" (95% {interval[0]*100:.0f}–{interval[1]*100:.0f}%)"
+        return text
 
     lines = [f"# {a} vs {b}", "", f"| | {a} | {b} | {b}/{a} |", "|---|---|---|---|"]
     rows = [("Wall time, s", sa["elapsed_seconds"], sb["elapsed_seconds"], report["ratio_b_over_a"]["elapsed_seconds"]),
@@ -236,11 +266,28 @@ def markdown(report):
     kinds = sorted(set(sa["trace"]["call_kinds"]) | set(sb["trace"]["call_kinds"]))
     lines += [f"| Calls: {kind} | {cell(sa['trace']['call_kinds'].get(kind, 0))} | {cell(sb['trace']['call_kinds'].get(kind, 0))} | |" for kind in kinds]
     if ra["accuracy"].get("status") == "scored" or rb["accuracy"].get("status") == "scored":
-        lines += ["", "| Accuracy (provisional labels) | " + a + " | " + b + " |", "|---|---|---|"]
+        boundaries = [run["accuracy"].get("address_boundary", "current") for run in (ra, rb)]
+        lines += ["", f"| Accuracy (provisional labels; address boundary {a}: {boundaries[0]}, {b}: {boundaries[1]}) | " + a + " | " + b + " |", "|---|---|---|"]
+        intervals = {"labelled_fields": "labeled_fields", "type_accuracy_targets": "type_accuracy_targets",
+                     "unknown_rejection": "unknown_rejection", "e2e_on_fully_labeled": "e2e_on_fully_labeled",
+                     "intervals_detected": "detection", "abstention_checks": "abstention_checks"}
         for name, key in (("Labelled fields correct", "labelled_fields"), ("Target types correct", "type_accuracy_targets"),
                           ("Non-target rejected", "unknown_rejection"), ("Fully correct labelled sheets", "e2e_on_fully_labeled"),
-                          ("Labelled intervals detected", "intervals_detected")):
-            lines.append(f"| {name} | {frac(ra['accuracy'].get(key))} | {frac(rb['accuracy'].get(key))} |")
+                          ("Labelled intervals detected", "intervals_detected"),
+                          ("Abstention checks passed (not-visible rows)", "abstention_checks")):
+            cells = [frac(run["accuracy"].get(key), (run["accuracy"].get("confidence_intervals") or {}).get(intervals[key]))
+                     for run in (ra, rb)]
+            lines.append(f"| {name} | {cells[0]} | {cells[1]} |")
+        if report.get("paired"):
+            for key, title in (("field_checks", "labelled fields"), ("abstention_checks", "abstention checks")):
+                pair = report["paired"][key]
+                p_value = pair["mcnemar_exact_p"]
+                lines.append(f"| Paired {title}: {a}-only / {b}-only correct | {pair['a_only_correct']} / {pair['b_only_correct']} of {pair['paired_rows']} | "
+                             f"McNemar p = {'—' if p_value is None else f'{p_value:.3f}'} |")
+        failures = [(label, f) for label, run in ((a, ra), (b, rb)) for f in (run["accuracy"].get("abstention_checks") or {}).get("failures", [])]
+        if failures:
+            lines += ["", "Abstention failures (value claimed for a field marked not visible):",
+                      *[f"- {label}: {f['truth_page_id']} {f['field']} → {f['status']} {f.get('raw_value') or ''}".rstrip() for label, f in failures]]
         changed = []
         for item_a, item_b in zip(ra["accuracy"].get("per_interval", []), rb["accuracy"].get("per_interval", [])):
             for field in sorted(set(item_a.get("field_checks") or {}) | set(item_b.get("field_checks") or {})):
@@ -273,12 +320,16 @@ def main(argv=None):
     parser.add_argument("--label-a", default="A")
     parser.add_argument("--label-b", default="B")
     parser.add_argument("--truth", type=Path, help="Ground-truth JSON with videos[].source_sha256 (read after inference)")
+    parser.add_argument("--address-boundary-a", choices=["current", "legacy"], default="current",
+                        help="Score run A's address fields against legacy_value (pre-2026-10-11 postal-only labels)")
+    parser.add_argument("--address-boundary-b", choices=["current", "legacy"], default="current")
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--markdown", type=Path)
     args = parser.parse_args(argv)
     if args.label_a == args.label_b:
         parser.error("Labels must differ")
-    report = compare(args.a, args.b, label_a=args.label_a, label_b=args.label_b, truth=args.truth)
+    report = compare(args.a, args.b, label_a=args.label_a, label_b=args.label_b, truth=args.truth,
+                     address_boundary=(args.address_boundary_a, args.address_boundary_b))
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.markdown:

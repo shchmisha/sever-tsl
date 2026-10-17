@@ -27,10 +27,10 @@ from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProvi
                      _PageDeps, _RouterAIChatModel, _after_request, _before_request,
                      _close_run_usage, _dump, _settle_run_usage, _trace, _write_cache as _write_evidence)
 from .normalize import normalize
-from .schema import DocumentResult, Evidence, FieldStatus, FieldValue, FIELDS_BY_TYPE
+from .schema import DocumentResult, Evidence, FieldValue, FIELDS_BY_TYPE
 
-IMAGE_READER_VERSION = "native-source-images-model-authority-v6-compact"
-IMAGE_SCHEMA_VERSION = "native-image-model-authority-v6-compact"
+IMAGE_READER_VERSION = "native-source-images-model-authority-v6.1-compact"
+IMAGE_SCHEMA_VERSION = "native-image-model-authority-v6.1-compact-no-frame-conflict"
 EVIDENCE_ORIGIN = "model_pixel_transcription"
 
 INSTRUCTIONS = """Задача — извлечь значения реквизитов из настоящих изображений,
@@ -159,7 +159,9 @@ independent corroboration. Confidence is an indicator, not a calibrated probabil
 class ImageField(BaseModel):
     model_config = ConfigDict(extra="forbid")
     raw_value: str | None = Field(description="Literal printed value, or null when unresolved", max_length=1200)
-    status: FieldStatus
+    # One frame cannot disagree with itself: "conflict" exists only after fusion
+    # across frames or a joint review, never as a single-frame proposal.
+    status: Literal["recognized", "not_present", "unreadable"]
     confidence: float | None = Field(default=None, ge=0, le=1, description="Omit")
     evidence_text: str = Field(max_length=600, description="Literal own printed caption of this field only, without repeating raw_value; for он же the reference line and the seller caption")
     panel_ids: list[str] = Field(max_length=12, description="Actual supplied panel IDs containing the caption and the value")

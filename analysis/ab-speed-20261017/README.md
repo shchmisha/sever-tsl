@@ -44,3 +44,20 @@ label-boundary ambiguity plus one-frame model noise, not a change in reading beh
 
 Not covered by this test: `HARNESS_LEAF_CONCURRENCY>1` (server runs `--parallel 1`), the other 10 videos,
 and any customer-approved labels.
+
+## Rescored on 2026-10-18 with the relabelled addresses and the new evaluator
+
+`comparison-relabelled.md` / `.json` rescore the same two runs after the four `consignee_address` labels were
+moved to the entire printed block (2026-10-11 rule; postal-only text kept as `legacy_value`) and after the
+evaluator gained abstention checks and Wilson intervals (commit after 5131285):
+
+| | main | phase1-speed |
+|---|---|---|
+| Labelled fields correct | 18/22 (95% 61–93%) | 17/22 (95% 57–90%) |
+| Fully correct labelled sheets | 3/4 | 2/4 |
+| Abstention checks (22 not-visible rows on detected sheets) | 22/22 | 22/22 |
+| Paired difference | 1 field (main-only correct), McNemar p = 1.0 | |
+
+Scored against the legacy postal-only labels, main reads 16/22; the two consignee addresses it read in full were
+correct all along. The one remaining difference is the `он же;`-prefixed joint-review value on sheet 4, which the
+joint-review instruction now forbids (unmeasured until the next live run).

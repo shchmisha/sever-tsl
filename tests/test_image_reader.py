@@ -624,7 +624,7 @@ def test_recognized_field_requires_only_real_supplied_panel_provenance(source_fr
 @pytest.mark.parametrize("raw,status,blank", [
     (None, "recognized", False), ("", "recognized", False), ("   ", "recognized", False),
     ("77", "recognized", True), ("77", "not_present", True),
-    (None, "not_present", False), ("77", "unreadable", False), ("77", "conflict", False),
+    (None, "not_present", False), ("77", "unreadable", False),
 ])
 def test_status_and_raw_value_structure_is_enforced_without_semantic_rules(source_frame, tmp_path, raw, status, blank):
     payload = reading("trn", fields={"document_number": field(raw, status=status, text="",
@@ -636,12 +636,20 @@ def test_status_and_raw_value_structure_is_enforced_without_semantic_rules(sourc
     assert result["recognition"]["reading"] == payload
 
 
-@pytest.mark.parametrize("status", ["unreadable", "conflict"])
-def test_unresolved_model_status_is_preserved_with_null_value(source_frame, tmp_path, status):
-    payload = reading("trn", fields={"document_date": field(status=status, text="", panels=[])})
+def test_unresolved_model_status_is_preserved_with_null_value(source_frame, tmp_path):
+    payload = reading("trn", fields={"document_date": field(status="unreadable", text="", panels=[])})
     result = validate(source_frame, tmp_path, payload)
-    assert result["document"].fields["document_date"].status == status
+    assert result["document"].fields["document_date"].status == "unreadable"
     assert result["document"].errors == []
+
+
+def test_single_frame_schema_has_no_conflict_status():
+    """A frame cannot disagree with itself; conflict arises only across frames or in a joint review."""
+    payload = reading("trn", fields={"document_date": field(status="conflict", text="", panels=[])})
+    with pytest.raises(ValidationError):
+        ImageReading.model_validate(payload)
+    schema = ImageReading.model_json_schema()["$defs"]["ImageField"]["properties"]["status"]
+    assert schema["enum"] == ["recognized", "not_present", "unreadable"]
 
 
 def test_model_blank_decision_needs_no_caption_regex_or_complete_page_filter(source_frame, tmp_path):
