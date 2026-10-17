@@ -1,0 +1,941 @@
+{
+ "verify:serving": {
+  "verdicts": [
+   {
+    "title": "Run 2-4 leaves concurrently on llama-server --parallel N, with --kv-unified, a sized context and slot pinning",
+    "status": "confirmed",
+    "reason": "Repo facts check out: deploy/sever-model.service:12 (--ctx-size 65536 --parallel 1, fa on, q8_0 KV); sever/agents.py:133 leaf_concurrency=1; sever/native_pipeline.py:1066-1090 worker pool, cancels siblings on first exception; deploy/README.md:586-593 says ctx is split between slots; sever/image_agent.py:348 treats HTTP 400 as fatal and :380-383 stops the batch; .venv pydantic_ai/models/openai.py:1214 passes extra_body. Local llama.cpp checkout /Users/shchm/llama.cpp is b7822: llama-context.cpp:174-178 n_ctx_seq split, common.h:437 kv_unified=false, :527 similarity 0.1, server-common.cpp:48-50 exceed context gives 400, server-context.cpp:925-963 LCP choice looks only at idle slots, :1695-1704 a busy pinned slot defers the task, :2638-2668 an overflow clears every processing slot. The arithmetic holds: the leaf seconds in comparison.md add up to about 1,065 s, leaving about 69 s of non-leaf time, and (730-760+69)/15 is about 53-55 s per sheet. Two points are overstated. First, the deployed binary is a 'v0.6.0' tag archive (deploy/README.md:254), not b7822, so every llama.cpp line cited has to be checked again on the server. Second, 'hides the 11.8% idle' is only partly true: in gpu-phase1-speed.csv the first 14 samples (about 70 s) are idle before any model call (video analysis), and leaf concurrency within one video cannot hide them. Only the roughly 13 scattered idle samples between calls can be hidden.",
+    "corrected_claim": "Same plan and roughly the same estimates (about -25 to -35% s/sheet on one video). About half of the 11.8% GPU idle is the pre-model video-analysis phase, and only multi-video pipelining hides that. All llama.cpp behaviour cited from b7822 must be checked against the deployed v0.6.0 binary."
+   },
+   {
+    "title": "Measure first, offline: per-call timing split, cache continuity, peak context, and the server's model/vision facts",
+    "status": "confirmed",
+    "reason": "sever/agents.py:182-199 keep llama.cpp timings under the _SERVER_TIMING_KEYS cache_n/prompt_n/prompt_ms/predicted_n/predicted_ms. sever/agents.py:576-582 write cache_read_tokens, elapsed_seconds, server_timings and response_parts per response. tools/compare_runs.py:84-87 and :106-107 only accumulate totals (timings.update over TIMING_KEYS). b7822 log strings exist: clip.cpp:1263-1267 image_min/max_pixels, server-context.cpp:2437 failed-to-truncate clear, :2384 forcing full prompt re-processing. The trace path is on the server and could not be opened from here. The startup log must come from the deployed v0.6.0 binary, not b7822."
+   },
+   {
+    "title": "Stop hiding zoom tools mid-run: the changed tool list breaks the prefix cache for the final submit request",
+    "status": "uncertain",
+    "reason": "The code matches. sever/image_agent.py:256-265 prepare_zoom returns None once zoom_count>=8 or requests_started>=7; :278-289 holds the in-tool decline; :302 zoom_regions accepts max_length=8, so one call can use all 8 crops; sever/image_conflicts.py:461-466 does the same. In pydantic_ai/models/__init__.py:264-265 tool_defs = [*function_tools, *output_tools], so the zoom tools are listed BEFORE submit_reading, and removing them changes the prompt at the tools block, before the submit schema and every image. Three things are still unverified. (a) That the deployed Qwen3.8 chat template renders tools in the first system turn ahead of the images; this is true for Qwen2.5/3 templates, but the GGUF template was not checked. (b) How often this happens. (c) The 'whole slot clears' consequence, which applies only if the model is hybrid, and that is unconfirmed. The fingerprint/prompt-hash change, which forces a new batch, is not mentioned."
+   },
+   {
+    "title": "Emit crop rectangles as integer [x1,y1,x2,y2] in 0-1000 instead of keyed floats in [0,1]",
+    "status": "uncertain",
+    "reason": "The code matches: sever/image_agent.py:36 float Coordinate in [0,1], :55-60 CropRegion keyed floats, :75-76 instruction text, :180-189 zoom scaling, :302 up to 8 regions; image_conflicts.py:145-150 _FrameCropRegion. The token arithmetic is plausible, since Qwen tokenizers split digits one per token. The main assumption is unmeasured: that zoom arguments are 30-40% of the 222 output tokens per call. Submit_reading answers with evidence_text and raw_value (image_reader.py:161-167) probably dominate. The 'float re-serialisation' cache argument is speculative: pydantic-ai sends the raw argument string back, and any re-render by the server's template would differ in spacing too, not only in floats. The 0-1000 convention for Qwen3.8 is unverified."
+   },
+   {
+    "title": "Send the context, orientation and triage images at the server's token window, not 1024 px that the server then bilinear-upscales",
+    "status": "confirmed",
+    "reason": "sever/image_agent.py:140-146 runs LANCZOS thumbnail to 1024 then JPEG q95. :170-173 prep records resize 'none' and native_source_detail for crops. :77-78 promises crops 'without magnification'. image_detail.py:84-90 shrinks the orientation images to 1024 px, and image_triage.py:133-134 sends the single context JPEG. b7822 clip.cpp:1158-1171 (QWEN3VL) shows the min-1024-token warning; :2833-2843 calc_size_preserved_ratio(patch_size*2, min, max) followed by RESIZE_ALGO_BILINEAR; :2357-2361 upscales below min_pixels. A 2160x3840 frame becomes 576x1024 = 589,824 px, below the 1024-token minimum, so the server upscales it. This holds only if the deployed v0.6.0 keeps the same preprocessing and patch size; the exact pixel window must be read from the startup log. Uplifting small crops on the client with LANCZOS is still magnification, so the instruction text must change to match."
+   },
+   {
+    "title": "A/B the already-installed Qwen3.6-35B-A3B (MoE) against the dense 27B on the current pipeline: the user decides",
+    "status": "uncertain",
+    "reason": "deploy/README.md:166 records the user's choice of the dense 27B. :236-245 shows the old trial was OCR-guided, with accepted-field counters ('не независимо измеренная точность'). :254 says the 35B model is kept. The speed estimate is optimistic against the only measurement on hand: that trial gave 156.8 vs 231.2 s, about 32% less time, against the claimed -45 to -60%. The 150-200 tok/s decode is an assumption. At Q6 the 35B weights are about 28-29 GB, which leaves almost no room for --parallel or a larger ctx on 32 GB.",
+    "corrected_claim": "Expect somewhere between the old trial's -32% and the -45 to -60% estimate. Keep it an opt-in experiment that needs the user's consent and a full re-score on 44 labels."
+   },
+   {
+    "title": "Raise --ubatch-size to 1024-2048: prefill becomes the bottleneck once decode is batched",
+    "status": "uncertain",
+    "reason": "deploy/sever-model.service:12 sets no -b/-ub. b7822 common.h:322-323 defaults to n_batch 2048 / n_ubatch 512. Prefill is 273 of 1004 model seconds, which is 27% (analysis/ab-speed-20261017/README.md:22-23). The 10-25% gain is not measured, and prompt_ms includes vision-encoder time, which ubatch does not speed up. llama-bench -p measures text-only prefill and will overstate the gain for image-heavy prompts."
+   },
+   {
+    "title": "Cap output tokens per call kind at about 2x the observed maximum instead of 8192 for agent and joint-review calls",
+    "status": "confirmed",
+    "reason": "deploy/local-provider.env.example:7 sets HARNESS_MAX_OUTPUT_TOKENS=8192, and deploy/README.md:167 says the output limit is 8192. sever/cli.py:27 and sever/api.py:157 default to '2200'. image_agent.py:328 and image_conflicts.py:528 pass max_tokens. image_orientation.py:28 caps at 128 and image_triage.py:30 at 96. The effect only touches tail latency and is unknown until the trace is read. Long address raw_value (max_length 1200, image_reader.py:161) across 6 fields can legitimately run to several thousand tokens, so the floor must come from data."
+   },
+   {
+    "title": "If the model is hybrid, shrink the static prefix (instructions plus about 14.8k-char schema): it is re-prefilled on every run",
+    "status": "uncertain",
+    "reason": "The b7822 code matches: server-context.cpp:1007-1008 mtmd skips the prompt cache, :2290-2298 checkpoints are disabled with mtmd, :2434-2441 a failed truncate clears the memory. image_reader.py:163/:211 'Omit' fields exist. The premise is unresolved, and the measurements point both ways. Idle VRAM of 26,180 MiB suggests a small KV, which fits a hybrid model. Yet 68% of input tokens came from the cache, and only 639,726 tokens were prefilled over 188 calls, about 3.4k per call. Every crop costs at least 1024 tokens, and orientation sends 4 images. If about 70 runs each re-prefilled a 7-8k prefix, the new-token total would probably exceed that figure. So cross-run reuse may already work. The finding is correctly conditional."
+   },
+   {
+    "title": "Read a leaf's first two frames concurrently to shorten the critical path",
+    "status": "uncertain",
+    "reason": "The code shows sequential reads: native_pipeline.py:862 awaits read inside the per-frame loop, and :1066-1090 runs concurrency only across leaves. zoom_image_reader.py:41-61 reuses the leaf's orientation. comparison.md gives page-0015 34 calls and 301.33 s. Leaves 0007-0010 stop after 3 calls (orientation, triage and 1 read?), so starting two reads at once would add a wasted second read on leaves that one triage result could settle. The saturation/redundancy check (native_pipeline.py:855-859) and the no-progress counter depend on order. The gain is not quantified from data, and the effort is L."
+   },
+   {
+    "title": "Do not spend time on speculative decoding, --cache-reuse, --cache-ram, lower --image-min-tokens or f16 KV",
+    "status": "confirmed",
+    "reason": "b7822 server-context.cpp:712-736: with multimodal, cache_reuse is disabled, a speculative draft makes load return false, and memory that cannot shift also disables cache_reuse. :1007-1008 mtmd skips the RAM prompt cache. clip.cpp:1166-1171 prints the Qwen-VL grounding warning. common/arg.cpp in b7822 has --reasoning-format/--reasoning-budget and no --no-reasoning-preserve, which confirms the deployed binary (v0.6.0, deploy/README.md:254) is newer. The report rightly says to re-check every point on that binary."
+   }
+  ],
+  "missing": [
+   "The deployed llama.cpp is a 'v0.6.0' tag archive (deploy/README.md:254), not the local b7822 checkout. Every finding that relies on b7822 behaviour (KV split, slot selection, mtmd cache/checkpoint rules, Qwen-VL resize) needs to be re-verified on the server binary first, and only findings 2 and 10 say so.",
+   "Crop prefill floor: --image-min-tokens 1024 applies to every zoom crop, so each small caption crop costs at least about 1024 prefill tokens after server upscaling. 8 crops per frame read means at least about 8k new tokens per run. The report never puts a number on crop count or crop token cost as a prefill lever, for example fewer or merged crops, or one composite image per zoom_regions call.",
+   "About half of the measured 11.8% GPU idle is the first 14 samples (about 70 s) of pre-model video analysis (gpu-phase1-speed.csv). Leaf concurrency within one video cannot hide it; overlapping the analysis of video k+1 with the reading of video k can.",
+   "Calls per sheet remain the dominant lever: page-0015 (34 calls, 301 s) and the two TTN other-side leaves (19-22 calls) set the critical path. No serving-side finding addresses the stop rules for 'requires_other_document_side'.",
+   "Accuracy gating: findings 1 and 7 propose re-scoring only the 22 labels of video 5. 44 labelled fields over 4 videos exist, and with 22 labels the 95% interval spans about 50-87% (ab README), so a speed change cannot be shown accuracy-neutral on video 5 alone.",
+   "Request timeout and fairness under --parallel: HARNESS_MODEL_TIMEOUT=600 and deferred pinned tasks are not analysed, and neither is the effect of N=4 on per-request latency during long prefill of a joint review.",
+   "The implementation fingerprint and prompt hash change (deploy/README.md:455-460) affects findings 3, 4, 5 and 9 and forces a new batch. The report flags this for only some of them."
+  ]
+ },
+ "verify:engines": {
+  "verdicts": [
+   {
+    "title": "Enable MTP self-speculative decoding on the existing llama.cpp v0.6.0 + Qwen3.8-27B Q6",
+    "status": "confirmed",
+    "reason": "Repo: deploy/sever-model.service:12 has no --spec-type and runs --parallel 1, q8_0 KV; deploy/README.md:259 says v0.6.0; analysis/ab-speed-20261017/README.md says 688 s generation at 61 tok/s = 69% of model time, 5.34 s/request, 188 requests. Web: github.com/sudoingX/qwen38-mtp has the RTX 5090 Q6_K row 61.9 -> 130.0 at n-max 2, acceptance 0.52-0.95, +110%, and the --parallel 1 rule. PR #22673 is 'llama + spec: MTP Support', merged around 2026-05-16, uses --spec-type draft-mtp and --spec-draft-n-max, and has a 5090 row 63.72 -> 105.47 (acc 0.797). The HF Qwen3.8-27B card says MTP is 'trained with multiple steps'. Issue #27428 shows 766 -> 742 (3%) for a single-GPU 4090 run, though it was Q3_K_XL and the report's 'Laptop' detail is not stated. ROCmFPX #67 gives 7.533/0.611 s on stock b10400. The newreleases v0.4.1 page has the #28715 'Fixed speculative decoding after image input' line. The reddit snapshot reports image-turn acceptance 0.62 at 104.68 tok/s. The v0.6.0 release exists (05 Oct) and mentions MTP speculative decoding. Arithmetic checks out: 3.66 s decode of 5.34 s, and about 3.46-4.01 s per call after the speedup. Recomputing the video wall (1,134 - 1,004 + 188 x 3.4-4.0 s) gives about 770-880 s, slightly above the reported 750-850 s.",
+    "corrected_claim": "Numbers and sources check out. Two corrections. First, the derived phase1 video-5 wall is about 770-880 s, not 750-850 s. Second, every cited MTP gain comes from long text generations (128K-ctx benchmarks, 2,000-token runs), while our calls emit about 222-token JSON tool calls after large image prefixes, so the realized gain may sit at the low end. The v0.6.0 notes also add 'probabilistic sampling for simple draft and MTP', so check that the temperature-0 path stays greedy-verified. Whether the deployed UD-Q6_K_M GGUF contains MTP tensors is still unverified."
+   },
+   {
+    "title": "Qwen3.6-35B-A3B (MoE) gives the largest raw per-call speedup but needs a labelled accuracy A/B",
+    "status": "confirmed",
+    "reason": "The HF Qwen3.6-35B-A3B card exists and is Apache-2.0, April 2026: OmniDocBench1.5 89.9, CC-OCR 81.9, MMMU 81.7, 40 layers, 256 experts (8 routed + 1 shared), 2 KV heads. jarvislabs (RTX PRO 6000, Q8_0): 27B 45.76 -> 79.37 with MTP, 35B-A3B 193.36 -> 225.48 (1.17x). hardware-corner 5090 Q4_K_XL: 2931.32/61.38 vs 6630.42/234.30. atomic.chat (b10988): 3,830/74.2 vs Nemotron 12,047/334.3. BenchLM CC-OCR: 81.2 vs 81.9. Roboflow: 64.8% vs 69.5%. The decode ratio of about 3.8-4.2x is supported. The prefill upper bound of 3.1x comes from Nemotron, a different model; the only Qwen MoE-vs-dense pair gives 2.26x. The VRAM risk is overstated: deploy/README.md:260 shows Qwen3.6-35B-A3B Q6 was already deployed on this very 5090 for the historical trial, so Q6 does fit with mmproj.",
+    "corrected_claim": "Decode is about 3.8-4.2x faster. Prefill is about 2.3x faster on the only Qwen MoE-vs-dense pair; the 3.1x figure is Nemotron's. The Q6 build is already proven to fit the server (deploy/README.md:260), so dropping to Q5 for VRAM reasons is unnecessary. Quality evidence is limited to generic benchmarks, with no Cyrillic data."
+   },
+   {
+    "title": "Concurrency 2-4 on llama.cpp: modest gain, poor fit with MTP, wall capped by slowest leaf",
+    "status": "confirmed",
+    "reason": "sever/cli.py:29-30 matches the quoted leaf_concurrency env var. comparison.md:45 shows page-0015 at 301.33 s, and the wall is 1,134.49 s. computingforgeeks ?p=171658 has 5090 rows llama.cpp 77.8 single / 369 at 32 and vLLM 85.7 / 936, but the engines ran different quants (llama.cpp UD-Q4_K_M, vLLM RedHatAI INT4 W4A16). sudoingX's README says a parallel-2 baseline 'reads ~20% low' and the advantage is 'gone by 4 concurrent streams'. Jan PR #9186 shows RS 598.5 -> 2394.0 MiB from 1 to 4 slots ('about 600 MiB each') with MTP, at UD-Q2_K_XL and 8k ctx. Particula describes the slot-reassignment collapse with 15 x 149.626 MiB checkpoints discarded (issue #22746). The 1.3-2.0x throughput figures are the report's own estimates with no direct measurement, as it admits. id_slot is not used anywhere in sever/, so pinning needs a code change.",
+    "corrected_claim": "Sources are accurate. The 369-vs-936 comparison mixes quantizations (GGUF Q4_K_M vs GPTQ W4A16), so it overstates llama.cpp's weakness somewhat. The critical-path bound only bites at 4 slots (1,134/4 = 284 s < 301 s); at 2 slots it does not. Pinning workers to slots with id_slot needs new code in the harness."
+   },
+   {
+    "title": "vLLM 0.31 + nvidia/Qwen3.8-27B-NVFP4 (+MTP) is the throughput option for 4+ concurrent streams",
+    "status": "confirmed",
+    "reason": "The nvidia/Qwen3.8-27B-NVFP4 card exists: Apache-2.0, dated 09/08/2026, MLP + lm_head NVFP4 and attention/linear-attention FP8, MMMU-Pro 75.14->74.86, IFBench 80.07->78.93, qwen3_coder parser, no OCR eval. The Friendli gittensor card (vLLM 0.27.1, 2026-08-14, 5090) shows 80.6 / 137 / 267 tok/s, TTFT 134 ms at about 1,967 tokens and 8.52 s at about 62k, and a BF16 vision tower. The vLLM recipe calls Mamba prefix caching 'experimental in align mode' and says FP8 needs a 40 GB GPU. The Twu31 card reports 0% hits on a 1449-token prompt with the default state, 72% with bf16 state + block-aligned prompts, and 784-token blocks, but on vLLM 0.24.0 and in prose, not table rows. The vLLM docs include image hashes in the extra hashes. Misattribution: the '413 vs 261 at 4 concurrent' MTP figures and the 85.7 single-stream top of the range come from computingforgeeks ?p=171658, which used RedHatAI INT4 W4A16, not NVFP4. computingforgeeks tensorrt-llm-vs-vllm (the NVIDIA NVFP4 run) gives 65.6/68.5 single stream and 1,195 at 32 streams. The 718 s was the whole first start, mostly FlashInfer, not FlashInfer alone. vLLM #40807/#40831 were not verified.",
+    "corrected_claim": "For the NVIDIA NVFP4 checkpoint on vLLM 0.31, single-stream speed is 65.6-68.5 tok/s, not up to 85.7. The 413-vs-261 MTP gain at 4 streams was measured on a different INT4 W4A16 checkpoint. The hybrid prefix-cache numbers come from vLLM 0.24. The 718 s is the total first-start time."
+   },
+   {
+    "title": "Do not switch to NVFP4 GGUF in llama.cpp for this OCR task without an A/B",
+    "status": "confirmed",
+    "reason": "The reddit snapshot 1syxckc shows Qwen3.6-27B-NVFP4 on a 5090: b8966 vs b8967 gives pp2048@d8192 3117.80 -> 5005.44 and tg512@d8192 71.65 -> 71.61. atomic.chat shows NVFP4-MTP at 5,100/79.4 vs AD-Q4_K_M at 3,830/74.2. Reddit 1u1r8yy has Tormeister's line 'NVFP4 and AWQ variants having much higher KLD than Q6_K quants' (Qwen3.6-27b). InsiderLLM confirms the conversion that dropped MTP (0% acceptance) and quality 'unsettled', and places native Blackwell NVFP4 at b8967. sudoingX has 62.7 -> 108.7 (n=3). Refuted sub-claim: neither the cited InsiderLLM page nor the reddit thread contains the 'NVFP4 perplexity 7.2 vs 6.6 for Q8_K_XL' comparison, and no source is given for it. The 'about 2x prefill' compares a llama-bench text number with our measured multimodal agent-workload 2,340 tok/s. The like-for-like llama-bench pair (Q4_K_M 3,830 vs NVFP4 5,100) is only 1.33x.",
+    "corrected_claim": "Drop the perplexity 7.2-vs-6.6 claim, which has no source. The like-for-like prefill gain over K-quants is about 1.3x, not 2x. Decode is about 72-79 tok/s. The recommendation to keep Q6 + MTP stands."
+   },
+   {
+    "title": "KV cache: drop q8_0 to f16 (or shrink ctx); cheap for this hybrid model, not a speed lever",
+    "status": "confirmed",
+    "reason": "The HF Qwen3.8-27B card gives 64 layers in 16 blocks of 3 Gated DeltaNet + 1 Gated Attention, with 4 KV heads x 256 dim. That makes 16 x 4 x 256 x 2 (K+V) x 2 bytes = 64 KiB/token f16, which is 4 GiB at 65,536. q8_0 at 8.5 bits is about 2.1 GiB, so the delta is about 1.9 GiB. Jan PR #9186 measured 512 MiB KV at 8192 ctx, consistent with that. localbench gives 0.024 for Qwen 3.6 27B dense, but the sentence does not name the cache type explicitly. HN 48545335 has the lloyd-christmas quote 'quantizing k leads to broken json on tool calls'. The repo's 26,180-26,683 MiB matches. The claimed speed impact of 'within about 5%' has no source.",
+    "corrected_claim": "The memory math and sources are correct. The KL figure of 0.024 is only implied to be q8_0, and the speed-neutral claim is unsourced. With MTP (about 2 GB) plus f16 KV (+1.9 GB), usage reaches about 30.6 of 32.6 GB, so shrink ctx or keep q8_0 if MTP is enabled."
+   },
+   {
+    "title": "Verify hybrid-model prompt-cache checkpoints are not forcing re-prefill",
+    "status": "confirmed",
+    "reason": "deploy/sever-model.service:12 has --chat-template-kwargs enable_thinking false and --no-reasoning-preserve. The README's 68% cache figure gives 639,726/188 = 3,403 new tokens per call, and a full re-prefill of 10,596 tokens at 2,340 tok/s is about 4.5 s. The llama.cpp server README has -ctxcp default 32, -cms default 8192 (0 = no minimum), -cram default 8192, and --reasoning-preserve default enabled. Particula describes -cms as an eviction floor, the 'forcing full prompt re-processing due to lack of cache data' message at verbosity 4, '-rea off' still churning context, and stripped empty think blocks changing the prefix. Since --no-reasoning-preserve strips reasoning from all but the last assistant message, it is a direct suspect for that churn in multi-turn agent loops.",
+    "corrected_claim": ""
+   },
+   {
+    "title": "SGLang, TensorRT-LLM and ExLlamaV3 are not better fits today",
+    "status": "confirmed",
+    "reason": "computingforgeeks tensorrt-llm-vs-vllm: TRT-LLM 1.3.0rc29, per-request decode 73.0 tok/s, 1,361 at 32 streams with FP8 KV, enable_block_reuse false because KV cache reuse is listed as unsupported for this architecture, and disable_mm_encoder failing with 'AttributeError: NoneType ... load_weights'. runtimewire: 206.1 tok/s on one 5090, 'project-reported', open sglang #34895 repetition issue. The Friendli dfischermittwald card says 'Greedy sampling is unsupported by the DFlash2 selector'. billmccartney/Qwen3.8-27B-exl3: exllamav3 1.4.2, 8.0bpw, 27.35 GiB, 64.45% acceptance, 109.87 -> 58.72 s (1.87x), tested on 4070 + 3090, explicitly 'not a visual-quality evaluation', peak 34,634 MiB.",
+    "corrected_claim": ""
+   },
+   {
+    "title": "Candidate: Qwen3.8-27B UD-Q6 GGUF + MTP on llama.cpp v0.6.0",
+    "status": "confirmed",
+    "reason": "The HF card exists and is Apache-2.0, which settles the report's 'not re-verified' license caveat. It confirms the 48 GDN + 16 attention layout, MTP and OmniDocBench 91.1, but gives no exact release date: the citation says August 2026 and the collection was 'Updated Aug 13', so the 2026-08-14 date is not confirmed. 'SGLang recommended on the model card' was not checked. No multilingual or Russian statement exists on the card.",
+    "corrected_claim": "License is confirmed as Apache-2.0. Release is August 2026, with the exact date unconfirmed."
+   },
+   {
+    "title": "Candidate: Qwen3.6-35B-A3B GGUF Q5_K/Q6_K on llama.cpp",
+    "status": "confirmed",
+    "reason": "The HF card confirms Apache-2.0, April 2026, OmniDocBench 89.9, CC-OCR 81.9, MMMU 81.7, and 35B/3B with 256 experts (8+1) and 2 KV heads. The jarvislabs and Roboflow figures are confirmed. deploy/README.md:260 shows a Q6 build already ran on this server, so the 'tight on 32 GB' warning is moot in practice.",
+    "corrected_claim": "Q6 has already been deployed and run on this 5090 (deploy/README.md:260). A Q5 fallback is not required for fit."
+   },
+   {
+    "title": "Candidate: nvidia/Qwen3.8-27B-NVFP4 on vLLM 0.31.0",
+    "status": "confirmed",
+    "reason": "The NVIDIA card is confirmed: Apache-2.0, 09/08/2026, the quoted benchmark deltas, and the qwen3_coder parser. computingforgeeks confirms the 21.9 GB checkpoint, 65.6-68.5 single stream and 1,195 at 32 streams on vLLM 0.31.0. The vision encoder (0.86 GiB), MTP head (0.79 GiB) and 275,941 FP8 KV token figures were not verified. The Friendli 80.6/137/267 run used a different (gittensor) NVFP4 checkpoint on vLLM 0.27.1, which the report correctly notes.",
+    "corrected_claim": ""
+   },
+   {
+    "title": "Candidate: Qwen3.8-27B NVFP4-MTP GGUF (community) on llama.cpp",
+    "status": "confirmed",
+    "reason": "DataCamp confirms felippeburk/Qwen3.8-27B-NVFP4-MTP-GGUF, about 19 GB, 122 tok/s at 84.9% acceptance on a 5090. atomic.chat confirms the cdiamond build at 5,100/79.4. esatapedico and the 15.95 GB lower size bound were not found in the cited pages. The v0.6.0 release notes mention a W4A4 NVFP4/MXFP4 mul_mat path and NVFP4 mmq optimisations.",
+    "corrected_claim": "The esatapedico conversion and the 15.95 GB size are unverified."
+   },
+   {
+    "title": "Candidate: Qwen3.8-27B EXL3 8.0bpw on ExLlamaV3 1.4.2",
+    "status": "confirmed",
+    "reason": "The HF card confirms every quoted number and the over-32 GB peak (34,634 MiB at 212,992 ctx). A 5090 fit at 8.0bpw is unlikely even at short ctx, since the weights alone are 27.35 GiB.",
+    "corrected_claim": ""
+   }
+  ],
+  "missing": [
+   "The biggest accuracy loss is segmentation: 8/20 target intervals are missed in video.py ORB/RANSAC grouping. No engine or model change addresses it, and none of the findings improve precision; they all aim at speed-neutral or speed-positive swaps.",
+   "Call count per sheet is the larger lever. The 4 hard leaves take 72% of calls, and the 'requires_other_document_side' leaves burn 19-34 calls. Engine findings only cut per-call time.",
+   "Output-token reduction is missing: about 222 tokens per call, with decode at 69%. Shorter tool-call JSON, dropping verbose fields from submit_reading, or a terser schema is a zero-risk decode lever that also compounds with MTP.",
+   "Image token budget is unexamined: --image-min-tokens 1024 / --image-max-tokens 4096 and 1024 px context images. Measuring prompt_n per image and lowering the minimum for orientation/triage calls could cut prefill. The report also does not check whether the measured 2,340 tok/s 'prefill' excludes mmproj vision-encoder time, so comparisons with text llama-bench pp numbers are not like-for-like.",
+   "Every cited MTP speedup comes from long text generations. The short-output (about 222-token) regime with a large image prefix is unmeasured, and the first tokens after prefill are not drafted, so the gain could be lower.",
+   "Interaction of MTP with grammar-constrained or tool-call output (pydantic-ai NativeOutput/ToolOutput via json_schema grammar) in llama.cpp is unverified. So is the v0.6.0 change 'probabilistic sampling for simple draft and MTP' at temperature 0.",
+   "Determinism and business-rule impact: stored answers are never replayed, and the two-frame agreement rule makes any run-to-run numeric non-determinism (MTP batched verify, multi-slot batching, NVFP4) directly change confirmed/conflict outcomes. A repeated-run stability test (same frames, N runs) should precede any engine change.",
+   "--parallel N with --ctx-size 65536 may split the context per slot when the KV cache is not unified, shrinking each slot to 32k or 16k. Check the maximum per-call prompt (joint review up to 4 frames) first.",
+   "No OCR-specialised open-weight models (e.g. PaddleOCR-VL, dots.ocr, olmOCR-class) were evaluated as cheap first-pass readers or triage. With only 44 provisional labels (95% CI about 50-87%), no accuracy A/B can show parity; the label set needs to grow before any model swap.",
+   "No Russian or Cyrillic document-reading evidence exists for any candidate. The glyph errors seen in-house (РИТЕЙЛ->РИТЕИЛ, Кашириных->Каширных, соор.->корп.) need a targeted glyph-level test set."
+  ]
+ },
+ "verify:fusion": {
+  "verdicts": [
+   {
+    "title": "Let two independent single-frame 'other_document_side' claims end the leaf at view 2 without the joint review",
+    "status": "confirmed",
+    "reason": "The code matches the claim. sever/image_reader.py:159-167: ImageField has only a free-text `reason`, with no cause enum. native_pipeline.py:821-823 requires a leaf_visibility_assessments entry with source_reading_count == len(readings). Those entries are created only at :672-680 from a joint review, with image_conflicts.py:330-336 needs_other_side. complete_page_visible is already reading-level (image_reader.py:216, :429). comparison.json phase1 confirms joint calls 5/5/7/4/6/6 = 33 of 39, field_agent 15/12/6/7/11/26, views 2/2/2/2/2/5, and confirmed fields 1/1/0/2/0/2 in both runs. Caveats: (1) The 'модельное разрешение' quote is README.md:30, not :205. (2) 15/2 and 12/2 are agent calls per view (submit included), not zooms. (3) The ~720 s best case assumes both single reads flag every unresolved field on all six leaves. On 0015 even the joint review with zooms was non-terminal at view 2 (it needed 5 views and the final review), so the 0015 share (~137 s) is unlikely. The joint seconds are an estimate: there are no per-kind timings locally.",
+    "corrected_claim": "The mechanism is as described. The speed gain is unmeasured and depends on how well the single-frame model flags the other side: the realistic upper bound is about -280 to -340 s from the five leaves that stopped at view 2, not -414 s. The README citation should be :30."
+   },
+   {
+    "title": "After a non-terminal field review, allow one more view instead of three, and count progress only on unresolved, non-conflict fields",
+    "status": "confirmed",
+    "reason": "native_pipeline.py:456-458 and :39-51 (_progress_state adds recognized keys from every reading, plus statuses) match the claim. image_fusion.py:183 makes conflict permanent. tests/test_native_conflict_pipeline.py:357-372 asserts frames[:5]. comparison.json: 0015 phase1 has 5 views, 34 requests and 26 agent calls; main read 9/20/15/9 views on 0012-0015 against 2/2/2/5 in phase1, with the same confirmed counts 0/2/0/2. Overstatements: the window still resets on real progress, so this is not a hard bound of 3 views plus 2 reviews. The '15 vs 106 calls on main 0013' comparison is against V7; phase1 already does 0013 in 13 calls, so the marginal gain is 0 there. Change 2 adds nothing on video5, because 0015's views 3-5 already had no progress. The 0015 saving overlaps finding 1, so the two cannot be summed.",
+    "corrected_claim": "On video5 the effect is about -2 views on 0015 (about -10 calls, about -90 s), and it overlaps finding 1. This is a soft tightening, not a hard bound."
+   },
+   {
+    "title": "Stop the single-frame search once only conflict fields remain: one fresh view, then the final review",
+    "status": "confirmed",
+    "reason": "native_pipeline.py:919-922 resets disagreements_preserved to None. _stop_reason :165-166 returns it only when every unconfirmed field is conflict. :606-620 builds per-key groups, :229-245 and :630-633 block coverage beyond 4 frames, :1026-1028 sets the exhaustion labels. tests :80-95 assert that all frames are seen. Single reads cannot clear a fusion conflict (image_fusion.py:183). The '0 s on video5 phase1' claim is correct: no phase1 leaf ended in conflict. The tail evidence is weak. Main 0013 is not shown to be a conflict leaf: in phase1 the same leaf ended requires_other_document_side at view 2. The link to the video-3 2000-call failure is asserted without per-leaf data (2000 calls over 58 pages is about 34 per page).",
+    "corrected_claim": "The code reasoning holds. The tail benefit is unproven: no measured leaf in the cited data is shown to have ended in disagreements_preserved."
+   },
+   {
+    "title": "Make the joint-review answer as compact as the phase1 single-frame answer",
+    "status": "uncertain",
+    "reason": "The citations check out: image_conflicts.py:163 (evidence_text max 4000, 'role/caption and value'), the resolution_reason max_length 2000 in _FieldReview, INSTRUCTIONS 'В evidence_text копируй ... дословно, включая продолжение адреса', image_reader.py:125-127, and the A/B README ('69% of model time'). The saving estimate cannot be checked: comparison.json has no per-kind output tokens, and only the final submit_conflict_review response of each review (about 9 reviews in phase1, not 39 calls) carries the per-frame readings. Note also README.md:203 promises the model's literal transcription in the evidence, and the joint INSTRUCTIONS also ask for the full visible block in evidence_text for organisation fields.",
+    "corrected_claim": "The saving applies to about 9 final submits, not 39 calls. It is plausible but unmeasured. Measure per-kind output tokens first."
+   },
+   {
+    "title": "Per-mode request cap for joint reviews: about 5 for unreadable-only or type reviews, 12 kept for real conflicts",
+    "status": "refuted",
+    "reason": "The constants are confirmed (image_conflicts.py:30-31, enforced in before_request/prepare_zoom and UsageLimits). The expected saving contradicts the measured counts. In phase1 each leaf had one fields review (views=2, stop right after the initial review), except 0015, whose 6 calls span an initial and a final review (about 3 each). A cap of 5 trims only reviews above 5: 0012 (7 → -2) and 0014 (6 → -1). 0003 and 0006 (5) and 0013 (4) are unaffected.",
+    "corrected_claim": "On video5 phase1 this saves at most about 3 joint calls (about -25 s, about -2%), not -7 to -9 calls (-50 to -75 s). It also risks more non-terminal verdicts."
+   },
+   {
+    "title": "Remove over-broad blockers that keep requires_other_document_side from firing",
+    "status": "uncertain",
+    "reason": "The cited guards exist: native_pipeline.py:810 (document.errors), :813 (failed or stopped attempts), :823 (source_reading_count), :827-829 (reading.errors). image_reader.py:376 has the unprefixed heading error and :413 the `name: rejection` format. image_agent.py:229 raises ViewBudgetExceeded, and a generic Exception is caught at :940 as status=failed. Guard (a) is only partly redundant: it is the only check that a terminal joint assessment is current after later reads. The end-of-leaf recovery logic (about :1003-1008) already treats heading errors as recoverable once the type is known, which supports relaxing (b). No artifact shows any of these guards firing. 'Main 0013 consistent with a blocker' is speculation, since V7 had no no-progress stop and could have exhausted for other reasons.",
+    "corrected_claim": "The guards exist as described. There is no measured case where they blocked a stop, so the benefit is hypothetical."
+   },
+   {
+    "title": "Align the joint review's 'он же' rule with the single-frame contract",
+    "status": "confirmed",
+    "reason": "image_conflicts.py INSTRUCTIONS: 'Раскрывай ссылку только когда она буквально напечатана ... тогда сохрани отдельно обе настоящие строки', with no ban on 'он же' in raw_value. image_reader.py:138-140: 'Do not return «он же» itself as a name or address.' native_pipeline.py:692 replaces the fused field. analysis/ab-speed-20261017/README.md documents the page-0004 joint value 'он же; ООО \"ФРЭШ-ЭКСПРЕСС\", 454004, …'. README.md:203 keeps both lines in the evidence, which fits putting the reference in evidence_text. The fixed value still includes the organisation (11.10 rule) against a postal-only label, so the +0 expected effect is honest."
+   },
+   {
+    "title": "Final-review frame selection: maximise fully covered fields instead of all-or-nothing coverage",
+    "status": "confirmed",
+    "reason": "native_pipeline.py:626 flattens all fields' groups into one list. choose() at :229-245 returns None unless every group, plus the fresh-frame group in the final phase, fits in 4 frames. :251-254 then falls back to candidates[:4], quality-ranked with the fresh frame first. :630-633 blocks fields per frame set. tests :327 cover the blocked case. Frequency is unmeasured: no blocked_fields counts are available locally, and video5 phase1 had no conflict-ending leaves."
+   },
+   {
+    "title": "Hard per-leaf frame or call cap (e.g. at most 6 single reads or 40 calls) as a budget backstop",
+    "status": "uncertain",
+    "reason": "The facts are confirmed: README.md:38 ('Фиксированного ограничения числа кадров на лист нет'), frame_count_limit None at native_pipeline.py:1031 and :1041, per_leaf_frame_limit None at :1101, candidates() at :802-807 yields the whole pool, and analysis/monitor-native-v7-state.json shows 20260818-3 failed with 2000 responses at 54/58 pages. The claimed protection is stated against V7. Video 3 averaged about 34 calls per page, which looks like breadth rather than one extreme leaf, and phase1 already runs about 12.5 calls per leaf. Whether a 40-call cap would have saved video 3 under phase1 is unknown.",
+    "corrected_claim": "It is a reasonable backstop, but its marginal value over phase1's no-progress stop is unmeasured. Video 3's failure may not be a per-leaf tail problem."
+   },
+   {
+    "title": "Not recommended without customer sign-off: majority of three or more frames with strict digits",
+    "status": "confirmed",
+    "reason": "README.md:205 says 'большинство кадров не разрешает спор'. tests/test_image_fusion.py:235-243 (majority f1/f2/f3 must stay conflict) and :280-290 confirm. image_fusion.py:183 sets conflict on any second key. The analysis of systematic glyph and role errors is sound."
+   },
+   {
+    "title": "Small presentation-equivalence extensions (ё/е; № prefix; trailing г.) are low value and conflict with tests",
+    "status": "refuted",
+    "reason": "'The only gap that matches evaluation is ё/е' is wrong. sever/normalize.py strips a leading № on numbers (:10-11, :28-29). It canonicalises date forms, including '20 августа 2026' to ISO (:13-27). For party fields, comparison() at :43-55 folds legal-form expansions, drops quotes and folds punctuation. Fusion (image_fusion.py:39-90) does none of these. The other cited facts are correct: tests/test_image_fusion.py:139 and :232-233, and image_fusion.py:189 uses the first-read raw value.",
+    "corrected_claim": "Evaluation also folds the № prefix, date forms and legal-form expansion, so several fusion/evaluation gaps exist. ё/е is the only one that bends no test, while the others reverse explicit test decisions."
+   }
+  ],
+  "missing": [
+   "Segmentation misses (8/20 target intervals) are the largest accuracy loss, and no finding addresses video.py or registration.",
+   "Generation is 69% of model time at 61 tok/s single-stream. Batched decode (llama-server --parallel N with the existing opt-in leaf concurrency) and the faster MoE model (Qwen3.6-35B-A3B: 156.8 s vs 231.2 s on one clip, same 9/10 fields) are likely bigger speed levers than any per-call prompt change, and the report omits both.",
+   "Findings 1 and 2 both claim the 0015 savings, so their speed effects cannot be added.",
+   "No per-kind token or seconds breakdown exists locally (comparison.json has call counts per leaf only). The per-joint-call seconds in findings 1, 4 and 5 are back-calculated assumptions; compare_runs should add per-kind tokens and timings before ranking.",
+   "Reviewing only 4-5 leaves on one video (22 labels, 95% CI about 50-87%) cannot show precision neutrality. The other 10 videos have not been A/B'd on phase1.",
+   "Joint-review prefix-cache behaviour: each review sends up to 4 new full images, so its input is largely uncached. Input cost per joint call is not analysed.",
+   "No finding addresses the known role-confusion (creator vs consignor) and address-boundary error classes, which are accuracy issues independent of call count."
+  ]
+ },
+ "verify:segmentation": {
+  "verdicts": [
+   {
+    "title": "Correct the missed-interval metric: 1 of 20 targets missed (not 8), and that miss is a boundary artifact",
+    "status": "confirmed",
+    "reason": "The arithmetic holds. analysis/monitor-native-v7-state.json:155-162 gives correct_target_types 14, target_intervals 20, missed_intervals 8. sever/evaluation.py:111-117 sets type_ok False for an undetected interval, so at least 14 targets were detected and 8 target misses is impossible. sever/evaluation.py:203 'detection' counts all expected intervals, and tools/compare_runs.py:162/:242 labels it 'Labelled intervals detected'. My replay of the strict matcher (evaluation.py:108) on the 88 primaries in analysis/selected-frame-usability-full.json found 7 misses: video 4 pages 007, 012, 023, 027, 030 and 032, all unknown; video 5 page-005, a TTN with 4 labelled fields. It also found 6+1 unmatched primaries, matching the truth's unmatched_selected_frame_review_indices. The bracket window [start_bracket[0], end_bracket[1]) with maximum matching gives video 4 51/53 (2 misses) and video 5 15/15. Truth line 4413 boundary_note confirms that the primary at 21.32 s lies just past the 21.174 s boundary. comparison.json shows main at 16/22 labelled fields with page-005 unmatched in both runs. README.md:253 confirms that strict one-to-one primary-timestamp matching is the documented rule.",
+    "corrected_claim": "Substantively right, with one caveat. The replayed primaries (88 leaves, dated 2026-10-04) are not the V7 segmentation: V7 had 8 misses and 7 unmatched, which implies 87 leaves. So for V7 the evidence only bounds target misses at 6 or fewer. '1 of 20' is likely but needs V7's finish-evaluation.json to confirm. Under brackets, which interval in video 4 goes unmatched (012 or 013) depends on the tie-break; the count is 2 either way. In this data greedy and optimal matching give the same count."
+   },
+   {
+    "title": "Pick the primary frame from inner, turn-free samples (the current score is noise and favours leaf edges)",
+    "status": "confirmed",
+    "reason": "The cited code matches. video.py:482 limits neighbours to the same leaf, :484 is the score formula, :414 has algorithm_version 4, and :87-94 computes sharpness over the masked paper. On output/accuracy-review/video4-segmentation-observed.json: 26 of 51 primaries in leaves with 3 or more samples sit at the first or last sample (19.5 expected); the median score spread among retained frames is 0.039; the page-0003 primary frame-000027 at 13.86 s has Laplacian variance 1580.6, against 1489.9 and 1465.7 for the earlier samples. Of the 7 unmatched primaries, v4 page-0007/0022/0029 and v5 page-0005 each sit about 0.27 s before their leaf end (one half step), so they are last samples. That the v4 page-0045 primary is the first sample is plausible but not proven. Video 5 leaf page-0005 [18.93, 21.59] has inner samples at about 19.7-20.8 s, inside truth [19.109, 21.174).",
+    "corrected_claim": "The evidence holds, but the position and spread statistics come from an interim algorithm_version 3 segmentation (69 leaves), not the current code. The recovery of page-005 under strict matching is likely. The all-interval forecast (8 to 3 or fewer) is speculative."
+   },
+   {
+    "title": "Make the confirming second view independent of the primary, not its closest twin",
+    "status": "confirmed",
+    "reason": "video.py:496-498 multiplies the seed score by minimum_edge_agreement, and :502 sorts by -score and then time proximity. frame_pool.py:133 computes novelty, which only reaches the output field primary_image_difference at :145; :135-136 score = relative_quality*strength, even though the docstring at :167 claims 'quality/novelty order'. In comparison.json, phase1 read 2 views on 14 of 15 leaves (only page-0015 read 5). In the interim v4 segmentation, 39 of 54 first seeds are the adjacent sample, with median mean_abs_difference 0.052. analysis/ab-speed-20261017/README.md:39 records the Кашириных/Каширных glyph difference.",
+    "corrected_claim": "Also note that native_pipeline.py:429-432 orders the seeds by relative_selection_score, which leaves out the strength term. Changing seed selection alone does not decide which seed is read second; the read order must change too. The precision effect is unmeasured."
+   },
+   {
+    "title": "Cut spurious short leaves: confirm 2-sample leaves too, and recognise a covered part of the same sheet",
+    "status": "confirmed",
+    "reason": "video.py:291 skips leaves that are not singletons. :141-144 the worst direction decides alone, with a .18 partial threshold. :267-272 two matching pending samples open a new leaf. My strict replay of video4-segmentation-observed.json: 69 leaves, 19 unmatched, 13 of them singletons. The five unmatched inside targets are page-0005 (004 upd), page-0008 (006 ttn), and page-0010/0011/0013 (008 ttn). analysis/accuracy-speed-v8-progress.json:54-64 matches (69/53/15/57).",
+    "corrected_claim": "Three corrections. First, video.py:342-349 already merges kept groups across gaps that hold only rejected samples, so (c) should extend that step, not add a new one. Second, 'labelled precision unchanged' is not guaranteed: the strict matcher takes the primary closest to the interval midpoint, so a fragment can take the match from the real leaf, and removing fragments could change scores. Third, the fragment counts come from the pre-fix interim segmentation; the current code's count is unmeasured."
+   },
+   {
+    "title": "Detect repeat showings offline (CPU); use them to save reads only after the customer agrees",
+    "status": "uncertain",
+    "reason": "The truth repeat_of links match (truth lines 584, 727, 1354, 1517, 4232, 4375, 4496, 5096, 5257). The phase1 repeat-leaf seconds 54.63+59.36+109.1+107.57+301.33 = 632 s are confirmed from comparison.json. video.py:182 is the .075 gate. My CPU re-run of sever.video._pair_evidence on PIL-resized analysis/sample-0x/selected-frames originals did not reproduce the key negative. sample-04 original-01 vs original-04 (UPD front vs repeat) came out same_page True: 108 inliers, fraction .079, coverage .638. The report has False: 99 inliers, fraction .072. The sample-05 UPD pair was True (249 inliers, coverage .40), and the sample-05 TTN pair 02 vs 05 was also True.",
+    "corrected_claim": "The repeat pair sits right at the .075 inlier-fraction gate, so the outcome depends on the resize/decode path. 'The gate misses real repeats' is fragile rather than shown. A dedicated rule is still reasonable, but its margin needs measuring on pipeline thumbnails. Reusing an earlier leaf's confirmed reading also stretches the per-leaf two-frame rule (README.md:38, :98), as the report says."
+   },
+   {
+    "title": "Re-rank seeds and pool frames by quality inside the unresolved fields' regions (not glare in this footage)",
+    "status": "confirmed",
+    "reason": "frame_pool.py:128-138 ranks once by thumbnail sharpness x strength. :69 scale=384:-2 -q:v 5 is a 2160/384 = 5.6x downscale. video.py:163 computes the homography but :189-193 does not return it. video.py:87 drops the top 18%. schema.py:21 has bbox. image_reader.py:370 and image_agent.py:164 store the crop/panel bbox normalized to the saved source frame. On the 174 frames of video4-segmentation-observed.json, the maximum maximum_local_near_white_fraction is 0.000156 and only 4 frames have skin > 0.1. In comparison.json the pool ran only on phase1 page-0015 (5 views, 301 s) and on main 0012-0015 (9-20 views).",
+    "corrected_claim": "The evidence bbox is the model-chosen crop/panel region, not a field box. The homography lives in the coordinates of the cropped (top 18%, sides 3.5%) 384-px thumbnail, and pool candidates are registered only against the primary. Mapping a bbox read from a seed needs chained transforms, and header fields in the top 18% fall outside the registered region. The speed and precision gains are unmeasured."
+   },
+   {
+    "title": "Offline segmentation scorer and cached-feature parameter sweep (no model calls)",
+    "status": "confirmed",
+    "reason": "Every cited threshold line checks out: video.py:135 (100/.55), :144 (.18), :154 (.72), :182 (16/.075/.08), :186-188 (.22/.90/.05, .11), :244 (20 keypoints / .25 bright), :289 radius, :326 hull .2, :332 span .12. evaluation.py:89-114 needs only pages and primary timestamps, plus result.source.sha256 to pass the hash check. The truth has boundary_uncertainty for videos 4 and 5 only; videos 1 and 2 have stable_window or null. accuracy-speed-v8-progress.json:64 gives 95 s.",
+    "corrected_claim": "Bracket ranges exist only for sample-04 and sample-05; sample-01 and sample-02 must use strict mode. The scorer needs to supply the source sha256, because video-analysis.json does not carry it."
+   },
+   {
+    "title": "Overlap CPU video work with model reading",
+    "status": "uncertain",
+    "reason": "The code claims are right. video.py:443 is the first full decode, :531-533 a second full decode by PTS with no seek, and :300-308 a seeked probe per singleton. native_pipeline.py:415-419 calls next() synchronously unless leaf_concurrency>1, and :802-807 shows the iterator includes the frame_pool factory. The savings are unmeasured. 95 s/53 truth intervals is about 1.8 s per sheet. The pool runs on only 1 of 15 phase1 leaves, so prefetching it saves almost nothing.",
+    "corrected_claim": "Most of the gain would come from streaming or seeked original extraction, not from pool prefetch. Leaf boundaries depend on the next group's first sample, and short candidates need dense confirmation, so streaming needs at least a one-leaf lag. The gain stays about 2-4% and is unverified."
+   },
+   {
+    "title": "Effective base sampling is 0.533 s; do not move the base to 0.25 s",
+    "status": "confirmed",
+    "reason": "video.py:442 uses gte(t-prev_selected_t, 0.5). With 30.01 fps, 15 frames is 0.49980 s, below 0.5, so each step is 16 frames = 0.53312 s. 345 samples over 183.66 s is 0.532 s. The shortest target, sample-04-page-011 (1.53 s), was matched in my strict replay. The only target miss, sample-05-page-005 (2.07 s), is a boundary artifact. The truth inventory_limit text says very brief, fully covered showings cannot be ruled out.",
+    "corrected_claim": "Under bracket matching, which video-4 non-target interval stays unmatched (012 blank reverse or 013 EAC declaration) depends on the tie-break. Neither is a sampling loss. The CPU cost of 0.25 s sampling is an estimate."
+   }
+  ],
+  "missing": [
+   "The V7 segmentation itself (87 leaves, implied by 8 misses and 7 unmatched) was never replayed. The report's per-video split of the 8 misses (6/1/1) is a forecast. /root/sever-validation/native-v7-evaluation/finish-evaluation.json should be read before the '1 of 20 targets' claim is published.",
+   "Several statistics (primary first/last rate, seed adjacency, fragment counts) come from output/accuracy-review/video4-segmentation-observed.json. That file is algorithm_version 3 with max_pages 300, an interim segmentation, not today's algorithm_version 4 code.",
+   "The strict matcher picks the primary closest to the interval midpoint, so extra fragments can take matches from the real leaf. Segmentation changes can therefore move the labelled metrics even though one-to-one matching ignores extras.",
+   "native_pipeline.py:429-432 orders seeds by relative_selection_score, while video.py:502 selects them by score x edge agreement. The first seed read and the top-ranked seed can differ, so any seed-selection fix must also cover the read order.",
+   "video.py:342-349 already merges kept groups across gaps that hold only rejected samples. Proposals for merging short candidates should build on it.",
+   "For videos 4 and 5, bracket windows overlap their neighbours by about 1-1.5 s, so a 2 s interval can accept primaries from a 3 s window. The extra metric should report how many matches depend on that overlap only.",
+   "The repeat-link gate result depends on how thumbnails are produced (ffmpeg -q:v 5 vs PIL resize). Regression tests built from the selected-frames JPEGs may not represent pipeline thumbnails."
+  ]
+ },
+ "verify:vlm-general": {
+  "verdicts": [
+   {
+    "title": "Benchmark Qwen3.6-27B as a drop-in replacement for Qwen3.8-27B (same architecture, better Russian OCR and extraction)",
+    "status": "confirmed",
+    "reason": "All cited numbers check out. MWS-Vision-Bench test (private): Qwen3.6-27B 0.692/0.861/0.753/0.062/0.893 vs Qwen3.8-27B 0.687/0.797/0.738/0.223/0.807 (https://github.com/mts-ai/MWS-Vision-Bench). Validation split shows the same order (OCR 0.863 vs 0.800). OCRBench v2 2026.09 EN: 68.3 (#5) vs 63.5 (#11) (https://99franklin.github.io/ocrbench_v2/). Qwen3.8 card: OSWorld-Verified 84.3 vs 63.9, OmniDocBench 1.5 91.1 vs 89.4. Both cards describe the same layout: 64 layers in 16 blocks of 3 DeltaNet + 1 gated attention, 4 KV heads x 256 dims. unsloth Qwen3.6-27B-Q6_K is 22.5 GB and mmproj-F16 is 928 MB. MWS says nothing about thinking mode or precision, which matches the stated risk. Caveats: the Qwen3.8 card says it beats Qwen3.6-27B on every shared benchmark, so the Russian edge rests on one third-party benchmark. Linking the glyph errors to the OCR axis is a guess. zoom_regions takes model-emitted normalized boxes (sever/image_agent.py:75,302), so the grounding risk is real.",
+    "corrected_claim": "Supported as a cheap A/B. The OCR/KIE lead comes from one third-party benchmark (MWS), whose thinking and precision settings are unknown. Qwen's own card shows Qwen3.8 ahead everywhere it compares the two. Note that the user chose Qwen3.8-27B on purpose (deploy/README.md:260)."
+   },
+   {
+    "title": "Benchmark Qwen3.6-35B-A3B (MoE) for speed: workload is prompt-processing-bound",
+    "status": "refuted",
+    "reason": "The 'prompt-processing-bound' reasoning is contradicted by the project's own server timings. In analysis/ab-speed-20261017/comparison.md:47 (phase1-speed, 188 responses), 639,726 uncached input tokens took 273.4 s, while 41,696 output tokens took 688.5 s. Decoding is about 69% of the 1004 s model time (about 60 tok/s); prompt processing is about 27%. llama.cpp already serves about 68% of input tokens from cache (1,352,407 cached). The model-card facts are confirmed: 35B total / 3B active; 40 layers = 10 x (3 DeltaNet + 1 attention); 2 KV heads x 256; 256 experts with 8 routed + 1 shared; OmniDocBench1.5 89.9, CC-OCR 81.9; vLLM 0.19.0 / SGLang 0.5.10 (https://huggingface.co/Qwen/Qwen3.6-35B-A3B). MWS row 0.691/0.847/0.755/0.094/0.840 is confirmed. GGUF sizes are confirmed: UD-Q4_K_XL 22.4, UD-Q5_K_M 26.5, UD-Q6_K 29.3, MXFP4_MOE 21.7 GB, mmproj-F16 899 MB. The '156.8 vs 231.2 s on one clip' trial was actually two short clips run on the older OCR->classification->reading pipeline before the v6 fix, not native_image (README.md:78). Also, Qwen3.6-35B-A3B Q6 already ran on this 32 GB server (deploy/README.md:241,260), which undercuts the claim that Q6 is too tight.",
+    "corrected_claim": "Worth benchmarking, but because the workload is decode-bound, not prefill-bound. About 69% of model time is generating about 222 tokens per call at about 60 tok/s. A 3B-active MoE reads far fewer weight bytes per output token, so decode speedups could exceed the 1.3–2x estimate. The prior 1.48x figure came from the old pipeline on two clips. Q6 has already run on this GPU."
+   },
+   {
+    "title": "Check prefix-cache reuse for hybrid DeltaNet models on llama.cpp; vLLM is the fallback",
+    "status": "refuted",
+    "reason": "The citations exist, but the premise does not hold for this workload. llama.cpp#22384 was closed as completed by ggerganov on 2026-04-26 with 'The fix is incorrect. There is nothing to fix in llama-server'. The reporter says reprocessing persists in b8943 with Qwen3.6-27B. The candidate table's 'open complaint' wording is wrong. The v2ex thread is confirmed: 19K prompt vs checkpoints at 39K–71K, full reprocess. Friendli confirmed: default vLLM prefix caching is only 79%. The 99% figure needs --prefix-match-unit 16 with MTP off, and 93–98% needs MTP K=2 + prefix-match-unit; weights 18.2 GB, vision BF16. HivenetQuant NVFP4 confirmed (vision BF16, RTX 5090 benchmarks). But the project's own data shows llama.cpp already caches about 68% of input tokens (comparison.md:47: cached 1.35M vs processed 0.64M), and all prompt processing together is only 273 s of 1004 s model time. Perfect caching could save at most about 27% of model time, so 'any regression directly multiplies' and 'cut prompt-processing time substantially' are overstated. The proposed check is already answerable from existing server_timings in analysis/ab-speed-20261017/comparison.json.",
+    "corrected_claim": "Low priority. llama.cpp prefix reuse already gives about 68% cache hits, close to vLLM's default 79%. Prompt processing is about 27% of model time, so a stack switch for caching alone can recover at most about a quarter of model time. vLLM is more interesting for MTP/batching than for prefix caching."
+   },
+   {
+    "title": "Keep Qwen3.8-27B as the control and check whether its grounding edge matters for zoom_regions",
+    "status": "confirmed",
+    "reason": "MWS test grounding column is confirmed: Qwen3.8-27B 0.223, Qwen3.6-35B-A3B 0.094, Qwen3.6-27B 0.062, Qwen3.5-27B 0.073, Gemma 4 31B 0.043. Validation split agrees (0.236 vs 0.071/0.099). OmniDocBench 1.5 91.1 vs 89.4 is confirmed on the Qwen3.8 card. The pipeline does depend on model-emitted boxes: zoom_source/zoom_regions take normalized [0,1] left/top/right/bottom of the whole upright frame (sever/image_agent.py:75,268-314). So crop placement is a real channel through which grounding ability matters. Qwen natively emits 0–1000 coordinates, so the format mismatch the risk mentions is plausible."
+   },
+   {
+    "title": "Add Gemma 4 31B as the single non-Qwen control; expect lower Russian OCR",
+    "status": "uncertain",
+    "reason": "Card facts are confirmed (https://huggingface.co/google/gemma-4-31B-it): 30.7B dense, 60 layers, sliding window 1024, 256K context, Apache 2.0, budgets 70/140/280/560/1120, 'Native support for structured tool use', OmniDocBench 1.5 edit distance 0.131, recommended temperature 1.0, 35+/140+ languages. Gemma 3 27B 0.365 is confirmed on the 26B-A4B card. MWS row 0.613/0.734/0.700/0.043/0.793 is confirmed. ggml-org/gemma-4-31B-it-GGUF is in llama.cpp docs/multimodal.md. unsloth Q5_K_M 21.7 GB, Q6_K 25.2 GB, mmproj-F16 1.2 GB are confirmed. The claim that it is 'the only non-Qwen family' meeting these criteria is refuted: Mistral Small 3.1/3.2 24B is Apache-2.0, fits 32 GB, has an official ggml-org GGUF (Mistral-Small-3.1-24B-Instruct-2503-GGUF) and tool calling, and scored 0.577 on MWS. The card does not give KV heads or head dims for the local layers, so the '--swa-full adds about 7 GB (50 x 16 x 256)' estimate cannot be verified. The edit distance of 0.131 is not on the same scale as Qwen's OmniDocBench score of 89.4, so 'close to Qwen on document parsing' is not shown by these numbers.",
+    "corrected_claim": "Reasonable as a non-Qwen control, but not the only option: Mistral Small 3.2 also qualifies, and the Gemma 4 26B-A4B MoE sibling (OmniDocBench edit 0.149) is a faster alternative. The SWA cache-size estimate is unverified."
+   },
+   {
+    "title": "Optional: offload orientation and triage to Qwen3.5-4B or 9B",
+    "status": "uncertain",
+    "reason": "Card facts are confirmed: Qwen3.5-9B has 201 languages, Apache-2.0, 32 layers. OCRBench 89.2/85.0, OmniDocBench1.5 87.7/86.2, CC-OCR 79.3/76.7 (9B/4B). MWS test overall 0.624/0.602. Release date 2026-03-02 per the QwenLM/Qwen3.8 README. However, the call counts are from main, not phase1-speed, which is already measured. In analysis/ab-speed-20261017/comparison.md, phase1-speed has orientation 15 + triage 19 = 34 of 188 calls. The share is still about 18%, but in absolute terms it is about 5x fewer orientation calls than the 75 cited. Phase1 total model time is 1004 s, so the reachable saving is small. The VRAM fit for the helper is an unmeasured estimate.",
+    "corrected_claim": "On phase1-speed, orientation + triage are 34 of 188 calls (15 + 19). Offloading saves part of a ~1000 s model-time budget, at the cost of a second server. Low priority."
+   },
+   {
+    "title": "Do not spend benchmark time on the other families listed in the task",
+    "status": "uncertain",
+    "reason": "Most pieces are confirmed. InternVL GitHub's latest news is 2025/08/30 and nothing after 3.5 is listed. arXiv 2508.18265: Table 4 OCRBench 880/870, Table 8 MMBench-ru 83.5/85.6. arXiv 2412.02210 Table 3: InternVL2-76B 13.18 vs Qwen2-VL-72B 65.94 Russian. GLM-4.6V-Flash is Chinese/English, MIT, 9B/10B. Molmo2-8B is English-only with no OCR numbers. Mistral Small 4 is 119B/6.5B active and Russian is not named. Llama 4 Scout is 109B and Russian is not listed. PaddleOCR-VL-1.6 has no Russian mention and fixed task prompts. Mistral Small 3.2 MWS is 0.577. But 'rank low on OCRBench v2' is cherry-picked. On the 2026.09 ZH table, MiniCPM-V-4.5 (58.8, #18) and GLM-4.6V-Flash (59.5, #16) both rank above Qwen3.6-27B (58.7, #19). The InternVL3.5-14B, Kimi-VL and Ministral-3 numbers come from older tables (2025.09/2026.03), not 2026.09. The cited community GGUF (bartowski InternVL3_5-14B) is for the 14B, not the 30B-A3B candidate it is offered for.",
+    "corrected_claim": "These families are fine to skip mainly for lack of Russian evidence or size, not because of weak OCRBench v2 ranks. On the ZH column, MiniCPM-V-4.5 and GLM-4.6V-Flash outrank Qwen3.6-27B."
+   }
+  ],
+  "missing": [
+   "The project's own server timings show the workload is decode-bound. On phase1-speed, 41,696 output tokens took 688 s (~60 tok/s), versus 273 s for 640k uncached prompt tokens (analysis/ab-speed-20261017/comparison.md:47). The biggest speed levers are therefore output tokens and decode speed, not prefill or caching.",
+   "MTP speculative decoding is not discussed at all. Qwen3.6/3.8 ship MTP heads; unsloth has an MTP Q4_0 head for Qwen3.8-27B. llama.cpp merged MTP speculative decoding (PR #22673, 2026-05-16, --spec-type mtp), reported at about 2–2.5x generation speed. The vLLM MTP recipes (friendli, CobraPhil 160+ TPS on one 5090) target exactly the decode bottleneck. Caveats: reports that image input crashes llama.cpp's MTP path, and output divergence at higher draft lengths.",
+   "phase1-speed is already measured, not 'unmeasured' as the report's context says. It reached 1134 s wall vs 2665 s, 188 vs 424 requests, and 15/22 vs 16/22 labelled fields, with one consignor_address regression (comparison.md). The report's baselines and how_to_test should use these numbers.",
+   "Qwen3.6-35B-A3B Q6 already ran on this exact server (deploy/README.md:241,260). That settles the VRAM-fit question better than the estimates do. The README also shows the 156.8 s trial was two clips on the old pipeline.",
+   "The official Qwen/Qwen3.8-27B-FP8 checkpoint (in the qwen38 collection) is not mentioned as a vLLM/SGLang option.",
+   "Gemma 4 26B-A4B (MoE, OmniDocBench edit 0.149) is a faster non-Qwen candidate that the report omits, while it claims Gemma 4 31B is the only non-Qwen option.",
+   "The Qwen3.8 card recommends non-thinking sampling of temperature 0.7 with presence_penalty 1.5. Running at temperature 0 with no presence penalty may raise repetition or looping risk, which also inflates decode time. The report mentions the temperature difference but does not tie it to output length.",
+   "The report does not cut output: the ~222–236 output tokens per call dominate time. Shorter tool arguments, fewer turns, or a grammar-constrained compact schema save time directly on any model.",
+   "Qwen3.5/3.6 are not in llama.cpp's official multimodal pre-quantized list (docs/multimodal.md), so their vision support relies on community GGUFs (unsloth). The project already runs Qwen3.8 this way."
+  ]
+ },
+ "verify:evaluation": {
+  "verdicts": [
+   {
+    "title": "Score the 44 'not_visible_on_this_leaf' rows as abstention (hallucination) checks",
+    "status": "refuted",
+    "reason": "The code and label counts check out: evaluation.py:128 skips labeled:false. The GT has 44 not_visible rows, 8 semantic rows and 44 labelled rows. Pages 012-015 carry 0 value labels (16 not_visible + 4 semantic), and the A/B README confirms these are the 4 hard leaves. Q4 (GT expansion.customer_questions[3]) supports counting not_present as wrong ('Невидимость не означает напечатанное отсутствие'). The speed effect is what fails. analysis/ab-speed-20261017/comparison.md, committed at HEAD 953e8e3, already measured phase1-speed: wall time 2665 -> 1134 s, and the hard leaves went from 1962.6 s on main (256+776+444+487) to 606.6 s (101+97+108+301). Most of the '-1490 s' is already spent; only about 170 s is left above TTN-reverse cost, mostly page-0015 at 301 s. The 'measurable where the stop acts' argument is also weak. comparison.json shows page-0012 and page-0014 typed torg12 in both arms (type_correct False), so all 8 of their abstention checks fail regardless of stopping. Only the 8 not_visible rows on 013/015 carry any signal. 'Exactly the role-confusion traps' overstates it: 16 of the 44 rows are TTN commodity continuations that print no role lines at all.",
+    "corrected_claim": "Adding abstention checks is a sound S-effort metric change: 88 checks, and e2e can grow from 8 to 16 leaves. It is not the largest available speed lever. Phase1-speed already cut the 4 hard leaves from about 1963 s to about 607 s (wall time 2665 -> 1134 s). On video 5 only the 8 not_visible rows on the two type-correct UPD continuations (013/015) can show a precision change from early stopping. The two torg12-typed TTN continuations fail on type in both arms."
+   },
+   {
+    "title": "The 'missed interval' class is largely a primary-timestamp matching artefact; add bracket-tolerant matching",
+    "status": "uncertain",
+    "reason": "The mechanism is real. evaluation.py:108 uses strict `start <= timestamp < end`. GT page-005 has end_s 21.174 and end_bracket [20.658, 21.691], and page-006 starts at 21.174. README.md:121-122 and :327-329 document the 21.324 s TTN front case. In the A/B, page-005 is the only miss (14/15) and costs 4 fields in both arms. The core inference is invalid, though. The monitor reports 87 predictions vs 88 truth intervals, 8 missed and 7 unmatched, but with one-to-one matching an unmatched prediction can be a duplicate split inside an already-matched interval, paired with a genuinely merged or skipped truth interval elsewhere. The counts limit only the net difference and do not show that at least 7 primaries fell outside their interval. sever/video.py:472-478 describes the pipeline's own boundaries, not the truth's. The truth method is stated in GT boundary_uncertainty.method.",
+    "corrected_claim": "At least one documented miss (sample-05-page-005, 4 labelled fields, 1 e2e leaf) is a boundary artefact, and bracket-tolerant matching would recover it. Whether the other 7 misses are artefacts or genuine merge/split errors is unknown until each unmatched prediction's primary timestamp is checked against the truth intervals. The 87-vs-88 count does not settle it."
+   },
+   {
+    "title": "Relabel the 4 consignee_address values to the 11.10.2026 entire-block rule; keep the old value as legacy",
+    "status": "confirmed",
+    "reason": "GT lines 171/549/3821/4197 hold the postal-only value. GT line 160 raw_value has 'Профреш'. I viewed analysis/sample-05/selected-frames/upd-parties-crop.png: field (4) prints 'ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, ...соор. 16', and the seller's (2а) line is postal-only, with (3) reading 'он же'. README.md:11-16 and image_reader.py:59-63 and :177 require the entire block. My probe: comparison() matches the V8 block string to a newline-joined, «»-quoted block label and does not match the postal-only label. In comparison.json, consignee_address on pages 001 and 004 is the only failing field on those pages in both arms, so relabelling would move main to 18/22. Caveat: the A/B README calls the consignor_address label 'pre-11.10 boundary' too, so the claim that those 4 labels stay valid is the report's reading. It agrees with the prompt ('If он же, use the ENTIRE visible Адрес field following Продавец'), but it is not settled."
+   },
+   {
+    "title": "Report uncertainty: Wilson CI, exact McNemar and document-cluster bootstrap in compare_runs and the server evaluator",
+    "status": "confirmed",
+    "reason": "I recomputed the numbers. Wilson(35,44) = [0.655, 0.888], half-width 0.117. Exact McNemar gives 6-0 p=0.03125 and 5-0 p=0.0625. n for ±5 points is 246 at p=0.8 and 139 at p=0.9. Paired n at 8-10% discordance is about 249-312. From the GT: 21 of the 44 labelled rows are on repeat_of pages, there are 7 distinct value strings with the stated multiplicities, and consignee 'УМНЫЙ РИТЕЙЛ' appears 8 times (18 points). tools/compare_runs.py score() pools only correct/total, and markdown() prints 'Fields that changed' with no test. deploy/evaluate_server_results.py aggregate() pools without intervals. The A/B README already gives a rough 50-87% interval by hand. For 16/22 the Wilson interval is [0.52, 0.87]."
+   },
+   {
+    "title": "Labelling plan, about 2.5 to 3 h for one person: migrate, convert, then the five short unlabelled videos",
+    "status": "uncertain",
+    "reason": "All the counts check out against analysis/monitor-native-v7-state.json. The 7 unlabelled jobs have 6801 responses and 35377.13 s, 74% of 9222 and of 48048.09 s; their leaves total 190 when video 3 is counted at its 58 selected pages (54 result pages). The five short videos total 70 leaves, 3524 calls and 19004.66 s (39.6%), with 72/56/49/46/34 calls per leaf. TORG-12 + ТрН = 9 of 19 fields. deploy/evaluate_server_results.py marks unlabelled videos not_measured. One tool detail is off: tools/inspect_video.py scales samples to 720 px but tiles them at 180x320, 24 per sheet (6 columns), not '24 tiles at 720 px'. The time and yield estimates (about 45 target leaves, 100-120 value labels, 25-30 min per video) are guesses with nothing in the repo behind them. High calls per leaf on these videos may mean continuations or out-of-scope forms rather than readable fronts, as the report itself notes."
+   },
+   {
+    "title": "Make seconds-per-sheet comparable: report speed per truth class and per repeat showing",
+    "status": "confirmed",
+    "reason": "The formula is in load_run() in tools/compare_runs.py: `seconds_per_leaf = elapsed / len(pages)`. V7 video 4 runs 5890.59/53 = 111 s per leaf, and the GT has 10 target and 43 unknown intervals there. Video 5 runs 4123.89/15 = 275 s per leaf with 5 unknown intervals. On main in comparison.md, class (b) (pages 012-015) is 1962.6/2665 s = 73.6%. Repeats (004, 005, 006, 014, 015) are 1170.8 s = 44% on main and about 56% on phase1-speed, so the 30-45% range is low for phase1. Caveat: joining by prediction_page_id mis-tags page-0005, a clean front that the strict matcher leaves unmatched."
+   },
+   {
+    "title": "Fix strictness bugs in normalize/comparison: quoted-day dates, unparseable literals, normalized-only matching",
+    "status": "confirmed",
+    "reason": "My probe of sever/normalize.py comparison(): '«20» августа 2026 г.', '\"20\" августа 2026 г.' and '20 авг. 2026' all give None, while the reference gives 2026-08-20. '20.08.26' gives None on both sides. 'дом №158' becomes 'дом No158', which does not equal 'дом No 158', because the final text() applies NFKC again. evaluation.py:49-53 requires observed is not None, and :133 passes only normalized_value. image_reader.py:392-396 keeps a recognized value with normalized=null. The test-file line references are approximate."
+   },
+   {
+    "title": "comparison() is more lenient than the literal rule: add a strict 'literal_exact' metric next to it",
+    "status": "confirmed",
+    "reason": "sever/normalize.py:41 casefolds and :43-52 canonicalizes legal forms. tests/test_evaluation.py:218 (not :226) asserts that 'Общество с ограниченной ответственностью \"Диета +\"' equals 'ООО «Диета+»'. image_reader.py:66-67 says 'Не раскрывай сокращения'. My probe: the expanded 'Общество с ограниченной ответственностью \"Умный ритейл\"' compares equal to 'ООО \"УМНЫЙ РИТЕЙЛ\"', and Latin 'OOO' compares not equal. evaluation.py:219 normalization_method contains the cited 'Character-script aliases require per-field accepted_variants'."
+   },
+   {
+    "title": "Measure formatting-only fusion conflicts: the fusion agreement key is stricter than the evaluation key",
+    "status": "confirmed",
+    "reason": "sever/image_fusion.py:39-41 _literal_comparison covers NFKC, casefold and whitespace only. :53-60 returns the literal key for fields that are neither organizations nor addresses ('Numbers and dates use the unchanged literal comparison'). :174 keys on raw_value, :183 sets conflict when len(values) > 1, and :211 persists value_groups. normalize() converts dates to ISO. The proposal is a measurement first, and both the size of the effect and the 0.45 confidence are honestly marked as unknown."
+   },
+   {
+    "title": "Unblock scoring of new labels: remove the hard-coded 4-video check and add a review-CSV importer",
+    "status": "confirmed",
+    "reason": "deploy/evaluate_server_results.py about lines 140-141: `if len(videos) != 4: raise ValueError(\"This evaluation requires the four original independently labelled videos\")`. tools/build_review_table.py CSV_COLUMNS include review_status and corrected_value, and worksheet_rows() writes them blank. grep over sever/, tools/, deploy/ and tests/ finds 'corrected_value' only in tools/build_review_table.py, so no importer exists."
+   },
+   {
+    "title": "Measure the out-of-scope 'unknown with heading' rule, which is not scored today",
+    "status": "confirmed",
+    "reason": "evaluation.py:117-121 scores unknown leaves by document_type only. GT unknown observed_form values are descriptive, for example 'Декларация о соответствии ЕАЭС' x13, 'Акт, заголовок АКТ' x11 and 'Табличное приложение с печатями' x11, across 68 unknown intervals. The pipeline does record a literal heading: image_reader.py:116 and :213-214 (heading_text, visible_text), and on phase1, image_triage.py:56-69 puts the literal heading into observed_form, visible_text and evidence. Caveat: some unknown leaves have no heading to label, such as 'Чистая оборотная сторона / перелистывание', so the check cannot cover all 68."
+   }
+  ],
+  "missing": [
+   "The phase1-speed A/B is already measured and committed (analysis/ab-speed-20261017/comparison.md, HEAD 953e8e3): wall time 2665 -> 1134 s, requests 424 -> 188, accuracy 16/22 vs 15/22. The report's speed framing, in particular finding 1's -1490 s upper bound, ignores that most of the hard-leaf time is already gone.",
+   "The only field that differs between the A/B arms is sample-05-page-004 consignor_address. On phase1 the joint review returned 'он же; ООО \"ФРЭШ-ЭКСПРЕСС\", 454004, …', which goes against the prompt's own он-же rule (use the seller's Адрес field). That is a possible joint-review regression or a labelling-rule decision. The report never says how the 'он же' consignor_address case should be labelled or scored.",
+   "Two type errors repeat in both arms: the TTN commodity continuations (pages 012/014) are typed torg12. Video-5 target types are 7/10, with the other loss being the missed page-005. This also makes every abstention check on those leaves fail, and the report proposes no type-level diagnostic for TTN continuations read as TORG-12.",
+   "Video 5 is the 'development' partition and is reused for every A/B. No step re-runs or rescores sample-04 (the 'test' partition) to check that speed changes tuned on video 5 do not regress elsewhere. That overfitting risk matters given only 22 labels.",
+   "The phase1 timing data shows generation is 69% of model time (61 tok/s). Output-token counts per call kind are not tied to any precision check, so cutting output, for example with the compact schema, has no evaluation guard.",
+   "The relabelling and bracket-matching changes would shift the historical V7 headline (35/44) and the README figures. The report does not say how README.md's stated numbers and the customer-facing report would be versioned once the labels change."
+  ]
+ },
+ "verify:ocr-specialist": {
+  "verdicts": [
+   {
+    "title": "F1: MDPBench (arXiv 2603.28130) Table 2 RU values for dots.ocr 66.8, dots.mocr 71.2, PaddleOCR-VL 56.9, HunyuanOCR 52.2, olmOCR2 65.8, GLM-OCR 64.2, DeepSeek-OCR 36.2, MinerU-2.5-VLM 8.6, Gemini-3-pro 84.9",
+    "status": "confirmed",
+    "reason": "https://arxiv.org/html/2603.28130 Table 2: all nine RU values match exactly; Photo values (dots.ocr 72.3, dots.mocr 77.2, HunyuanOCR 64.3) also match. Authors are Zhang Li ... Xiang Bai, Yuliang Liu (HUST + Kingsoft), code at Yuliang-Liu/MultimodalOCR, so the same-lab caveat holds."
+   },
+   {
+    "title": "F1: MDPBench HF leaderboard: PaddleOCR-VL-1.5 RU 76.0, 1.6 70.7, chandra-ocr-2 74.0, MonkeyOCRv2-B 80.1, HunyuanOCR-1.5 67.4, LightOnOCR-2-1B 54.3",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/datasets/Delores-Lin/MDPBench main results: every RU value matches. Also matches: PaddleOCR-VL-1.5 All/Photo 78.3/75.2, HunyuanOCR-1.5 76.8/73.6, chandra Photo 77.1, MinerU-2.5-Pro RU 62.6, Nanonets-OCR2-3B RU 45.5 / All 64.2."
+   },
+   {
+    "title": "F1: GlotOCR (arXiv 2604.12978) Cyrillic Acc@5 / script accuracy values",
+    "status": "confirmed",
+    "reason": "https://arxiv.org/html/2604.12978 appendix Tables 5/6 match: dots.ocr 86.0/99.2, HunyuanOCR 86.8/98.5, dots.mocr 83.5/99.2, PaddleOCR-VL-1.5 78.0/97.8, GLM-OCR 26.2/98.2, DeepSeek-OCR-2 57.8/94.2, LightOnOCR-2 68.8/95.5, olmOCR-2 71.2, Nanonets-OCR2 63.7. Latin as the second output script for Cyrillic appears only in the table. The 'fluent-looking text in a script they do know' quote is in the paper."
+   },
+   {
+    "title": "F1: 'dots.ocr and dots.mocr: best open GlotOCR Cyrillic'",
+    "status": "refuted",
+    "corrected_claim": "On GlotOCR Cyrillic Acc@5, HunyuanOCR (86.8) is slightly ahead of dots.ocr (86.0) and dots.mocr (83.5). dots.ocr/dots.mocr lead only on Cyrillic script accuracy (99.2).",
+    "reason": "https://arxiv.org/html/2604.12978 Tables 5/6. The report's own evidence line lists HunyuanOCR at 86.8."
+   },
+   {
+    "title": "F1: Real5-OmniDocBench numbers and 'PaddleOCR-VL best Real5 photo robustness'",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/datasets/PaddlePaddle/Real5-OmniDocBench: PaddleOCR-VL-1.6 93.19 (skew 92.66), 1.5 92.05, dots.ocr 86.38 (skew 84.27), DeepSeek-OCR 2 73.01 (warping 66.53, skew 61.28), GLM-OCR 90.32 (skew 85.39), MonkeyOCRv2-B 89.22, -S 87.90, OvisOCR2 92.29, MinerU2.5-Pro 88.94 (skew 81.26), Xiaomi-OCR-0 0.8B 92.73. PaddleOCR-VL-1.6 is top. One caveat: this leaderboard is published by PaddlePaddle itself, so it has the same same-lab issue the report raises only for MDPBench."
+   },
+   {
+    "title": "F1: MonkeyOCRv2-B card: RU among 17 languages, MDPBench RU 80.1, HUST authors, Apache-2.0, 0.7B",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/zenosai/MonkeyOCRv2-B-Parsing: 0.7B (0.1B ViT + 0.6B LLM), Apache-2.0, released 2026-07-14, arXiv 2607.11562, 17 languages including RU, MDPBench 83.3/88.1/81.7/RU 80.1, authors Yuliang Liu ... Xiang Bai."
+   },
+   {
+    "title": "Candidate MonkeyOCRv2: 'No llama.cpp support found'",
+    "status": "refuted",
+    "corrected_claim": "There is no official llama.cpp support and MonkeyOCRv2 is not in llama.cpp's mtmd OCR list. However, the HF card lists community quantizations for llama.cpp, Ollama and LM Studio, and it also lists Docker Model Runner. Whether it can actually run on llama-server is unverified, so 'serve it on port 8091 as a second llama-server' (F6) is not established for MonkeyOCRv2.",
+    "reason": "https://huggingface.co/zenosai/MonkeyOCRv2-B-Parsing serving section; https://github.com/ggml-org/llama.cpp/blob/master/docs/multimodal.md OCR list (only PaddleOCR-VL, GLM-OCR, Deepseek-OCR, Dots.OCR, HunyuanOCR)."
+   },
+   {
+    "title": "F1 exclusions (GLM-OCR, DeepSeek-OCR-2, MinerU2.5, Granite-Docling, Nanonets, olmOCR-2, OvisOCR2, TeleOCR)",
+    "status": "confirmed",
+    "reason": "The cited numbers check out: GLM-OCR Cyrillic Acc@5 26.2; DeepSeek-OCR-2 Real5 skew 61.28 / warp 66.53 and Cyrillic 57.8; MinerU MDPBench RU 8.6 / Pro 62.6 with a zh/en card (https://huggingface.co/opendatalab/MinerU2.5-Pro-2604-1.2B). Granite-Docling covers English plus experimental ja/ar/zh, no Russian (https://huggingface.co/ibm-granite/granite-docling-258M). Nanonets RU 45.5, Markdown with no bboxes. olmOCR-2 is tagged en, plain text plus YAML, no bboxes. OvisOCR2 gives bboxes only for image/chart regions. TeleOCR is zh/en with block-level ContentBlock bboxes, no line boxes. Caveat: MinerU2.5-Pro's card says ~1B params, not 1.2B, and TeleOCR's card says Apache-2.0, ~1.2B (metadata 1B)."
+   },
+   {
+    "title": "F2: repo citations (image_agent.py:34-35, :141, :252; image_reader.py:1-4, :420; README.md:80, :203; ocr.py:56-72)",
+    "status": "confirmed",
+    "reason": "sever/image_agent.py:34-35 MAX_MODEL_REQUESTS=8 / MAX_ZOOM_IMAGES=8; :141 thumbnail((1024,1024)); :252 ToolOutput(_NativeReadingResponse, name=\"submit_reading\", strict=False); sever/image_reader.py:1 'without an OCR classification gate' and :420 'Evidence boxes delimit uploaded panels...'; README.md:80 v6.1 run stopped, all candidates unknown, zero image reading calls; README.md:203 region_index=null for native_image; sever/ocr.py:56-72 Apple Vision regions with bbox and region_index."
+   },
+   {
+    "title": "F2/F6/F7: PaddleOCR-VL-1.5 Spotting = 8 <LOC_0..1000> tokens forming a 4-point quadrilateral; Russian listed in Table A7",
+    "status": "confirmed",
+    "reason": "https://arxiv.org/html/2601.21957: each text instance is followed by eight location tokens (TL, TR, BR, BL) normalized <LOC_0>..<LOC_1000>. Table A7 has a Cyrillic group starting 'Russian, Belarusian, Ukrainian'. OmniDocBench v1.5: 94.50 (1.5) and 88.41 (dots.ocr). Table 6: 1.4335 pages/s with FastDeploy 2.3 and 1.1433 with vLLM 0.10.2 on one A100, batches of 512."
+   },
+   {
+    "title": "F2/F7: dots.ocr JSON bbox [x1,y1,x2,y2], 11 categories, prompt_grounding_ocr with --bbox, ~11.29 MP input",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/rednote-hilab/dots.ocr: confirms the prompt modes, 11 categories, MIT licence, released 2025.07.30, evaluated with vLLM 0.9.1, optimal below 11,289,600 pixels, Russian showcase image, 100-language in-house bench. The report's 'vLLM official since 0.11.0' is not stated on the card (unverified)."
+   },
+   {
+    "title": "F2/F3: Habr MTS AI A100 batch-1 speeds (PaddleOCR-VL 98.7 ppm vLLM / 110.8 SGLang, dots.ocr 61.6, DeepSeek-OCR 56.3)",
+    "status": "confirmed",
+    "reason": "https://habr.com/ru/companies/mts_ai/articles/1065182/ (MWS AI, 31 Jul 2026, A100 80GB, batch=1, 15 handwritten Russian samples): numbers match. Caveat: these are small handwriting pages, not 8.3 MP dense forms, so '0.6–1.1 s per page' does not transfer directly to the project's frames; the report's 1–5 s estimate is an extrapolation."
+   },
+   {
+    "title": "F2: OCR anchors cut field-agent time 30–50%",
+    "status": "uncertain",
+    "reason": "This is an unmeasured estimate with no supporting source. The design-level citations hold, but the size of the speed-up is speculation."
+   },
+   {
+    "title": "F3: LightOnOCR-3 single-page latency 2.7 s on H100; the two-stage text-only replacement",
+    "status": "confirmed",
+    "corrected_claim": "The 2.7 s latency is stated for the 1B model only and is described as the lowest; the 0.8B and 4B models get no absolute latency. The two-stage speed and precision effects remain unmeasured estimates.",
+    "reason": "https://huggingface.co/blog/lightonai/lightonocr-3 (2026-10-08): olmOCR-bench 86.3/85.5/84.5, ParseBench 75.1/74.6/71.4, 4.78 and 3.36 pages/s on vLLM 0.30.0, grounding coordinates normalized 0–1000, Apache-2.0, no Russian mention. README.md:78 confirms 156.83 s vs 231.19 s, but README also says that trial used the old OCR→classification scheme and is 'not independently measured accuracy'."
+   },
+   {
+    "title": "F4: repo already has an OCR orientation scorer and a document-title regex",
+    "status": "confirmed",
+    "corrected_claim": "The regex is at sever/ocr.py:29-32, not 27-30. The OCR engine is Apple Vision only on macOS with swiftc; on the Linux server it falls back to tesseract_rus_eng (sever/ocr.py:324-326). sever/ocr.py also caches OCR results (_write_cache), which must be checked against the no-replay rule before reuse.",
+    "reason": "sever/ocr.py:188 _orientation_score; sever/ocr.py:29-32 _DOCUMENT_TITLE (ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, ТОВАРНАЯ НАКЛАДНАЯ, ТРАНСПОРТНАЯ НАКЛАДНАЯ, СЧЁТ-ФАКТУРА, УПД, INVOICE, CERTIFICATE); sever/image_orientation.py:1-4; sever/zoom_image_reader.py:8-10 imports choose_reading_rotation and triage_frame."
+   },
+   {
+    "title": "F4: PP-OCRv5 eslav 81.6% on 7,031 images; cyrillic 80.27% on 7,600; dt_polys/rec_boxes; PaddleOCR-VL use_doc_orientation_classify/use_doc_unwarping",
+    "status": "confirmed",
+    "reason": "https://www.paddleocr.ai/main/en/version3.x/algorithm/PP-OCRv5/PP-OCRv5_multi_languages.html (eslav: ru/be/uk/en); https://www.paddleocr.ai/main/en/version3.x/pipeline_usage/PaddleOCR-VL.html (both flags exist, default False)."
+   },
+   {
+    "title": "F4: speed saving 7–11% of video-5 wall time",
+    "status": "uncertain",
+    "reason": "This is an estimate. It assumes orientation calls cost the 5.7 s average, but orientation sends four images, so per-call cost probably differs. Phase-1 orientation counts are not measured yet."
+   },
+   {
+    "title": "F5: Habr Nov 2025 PaddleOCR-VL 0.9B МОСКВА→MOCKBA; image_fusion.py:148 method text",
+    "status": "confirmed",
+    "reason": "https://habr.com/ru/articles/966846/ (16 Nov 2025) reports the Latin look-alike substitution on a clean printed page. sever/image_fusion.py:148 contains 'no OCR, semantic repair or expected values'."
+   },
+   {
+    "title": "F6: llama.cpp mtmd OCR support list and PR numbers; PR 18825 merged 2026-02-19; PR 17575 merged 2026-04-09",
+    "status": "confirmed",
+    "reason": "https://github.com/ggml-org/llama.cpp/blob/master/docs/multimodal.md lists PaddleOCR-VL #18825, GLM-OCR #19677, Deepseek-OCR #17400, Dots.OCR #17575, HunyuanOCR #21395. PR 18825 merged Feb 19, 2026: the author recommends PP-DocLayoutV3 first, the <__media__>OCR: marker as a temporary workaround (later --jinja with updated files), and one image per call. PR 17575 merged Apr 9, 2026."
+   },
+   {
+    "title": "F6: ggml blog (Apr 10, 2026): PaddleOCR-VL may have degraded performance, Q8_0 default, Qianfan-OCR supported",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/blog/ggml-org/using-ocr-models-with-llama-cpp lists LightOnOCR, Qianfan-OCR, PaddleOCR-VL, GLM-OCR, Deepseek-OCR, Dots.OCR and HunyuanOCR; flags 'may have degraded performance'; 'Q8_0 by default'."
+   },
+   {
+    "title": "F6: HunyuanOCR llama.cpp doc: b11103, PR #28890, DFlash 84.6→167.1 tok/s on Apple M5 Pro, byte-identical on 26 samples",
+    "status": "confirmed",
+    "corrected_claim": "Prefill drops from 232 to 192 t/s (~17% slower) with DFlash, so the end-to-end gain depends on output length. There are no NVIDIA numbers.",
+    "reason": "https://github.com/Tencent-Hunyuan/HunyuanOCR/blob/main/docs/llama_cpp.md"
+   },
+   {
+    "title": "F6: Blackwell sm120 vLLM image verified on RTX 5070 only, CUDA 12.9+; SGLang/FastDeploy CC <12.0",
+    "status": "confirmed",
+    "corrected_claim": "The Blackwell page itself documents `paddleocr genai_server --backend sglang` and SGLang dependency install, which partly contradicts the main page's CC 8.0–<12.0 limit for SGLang. Treat SGLang on sm_120 as untested rather than excluded.",
+    "reason": "https://www.paddleocr.ai/v3.5.0/en/version3.x/pipeline_usage/PaddleOCR-VL-NVIDIA-Blackwell.html (tag latest-nvidia-gpu-sm120, ~13 GB image, RTX 5070 verified, RTX 5090 not confirmed); https://www.paddleocr.ai/main/en/version3.x/pipeline_usage/PaddleOCR-VL.html."
+   },
+   {
+    "title": "F6: deploy/sever-model.service:12 and deploy/README.md:274-276",
+    "status": "confirmed",
+    "reason": "Line 12 ExecStart shows --port 8090 --ctx-size 65536 --parallel 1 --flash-attn on --cache-type-k/v q8_0 --image-min/max-tokens 1024/4096. deploy/README.md:274-276 says changing these parameters changes comparison conditions and that hashes must be saved."
+   },
+   {
+    "title": "F6: VRAM fit claims (PaddleOCR-VL, HunyuanOCR, MonkeyOCRv2 fit in ~6 GB; dots.ocr tight at Q8)",
+    "status": "uncertain",
+    "reason": "All VRAM numbers are the report's own estimates; no source measures them. MonkeyOCRv2 has no official llama.cpp path (see above). Also, the free ~6 GB figure (32−26) ignores the mmproj compute buffer peaks of the 27B at --image-max-tokens 4096."
+   },
+   {
+    "title": "Candidate PaddleOCR-VL-1.6: 1.0B metadata, Apache-2.0, 2026-05-28, OmniDocBench v1.6 96.33, paddleocr[doc-parser]>=3.6.0, transformers>=5.0.0, Spotting",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6. The tech report date 2026-06-03 is from the News section. The card gives no numeric Real5 score; that comes from the Real5 leaderboard."
+   },
+   {
+    "title": "Candidate HunyuanOCR: 1B, Tencent Hunyuan Community License, arXiv 2607.04884, ParseBench 63.86, vLLM>=0.25.1, transformers>=5.13.0, temp 0 / rep 1.08",
+    "status": "confirmed",
+    "corrected_claim": "The 1.5 paper is listed as published Jul 6, not Jul 7. The card states no 1.0 release date. The task list includes spotting_json and spotting_hunyuan, but coordinate output is not documented on the card. Russian is not mentioned (tags: multilingual, en, zh).",
+    "reason": "https://huggingface.co/tencent/HunyuanOCR"
+   },
+   {
+    "title": "Candidate dots.mocr: olmOCR-bench 83.9±0.9 vs dots.ocr 79.1±1.0, paper 2026-03-13, MIT, 3B",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/rednote-hilab/dots.mocr (redirects to dots-studio/dots.mocr; arXiv 2603.13032, Mar 13)."
+   },
+   {
+    "title": "Candidate Chandra OCR 2: 5B Qwen3.5-based, modified OpenRAIL-M (<$2M, non-competitive), ru 85.5 / uk 91.0 / sr 90.3, 43-lang avg 77.8, olmOCR-bench 85.8±0.8, 1.44 pages/s H100 at 96 concurrency, 60 s avg latency",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/datalab-to/chandra-ocr-2 and https://github.com/datalab-to/chandra (P95 latency 156 s; the authors estimate ~2 pages/s in real use). There is no bbox format documentation and no llama.cpp mention in the README."
+   },
+   {
+    "title": "Candidate Qianfan-OCR: 4B (Qwen3-4B), Apache-2.0, arXiv 2603.13398, OmniDocBench v1.5 93.12, olmOCR 79.8, KIE 87.9 / OCRBench KIE 95.0 / Nanonets KIE F1 86.5, CCOCR-multilan 76.7, 1.024 pages/s W8A8 A100 vLLM 0.10.2, 192 languages",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/baidu/Qianfan-OCR; llama.cpp support is listed in the ggml blog."
+   },
+   {
+    "title": "Candidate GLM-OCR: 0.9B MIT, OmniDocBench v1.5 94.62, v1.6 95.22, 8 languages incl. Russian, olmOCR 75.2, 0.67 images/s",
+    "status": "confirmed",
+    "corrected_claim": "The card gives no vLLM/SGLang version numbers. 'vLLM ≥0.19.0 with transformers ≥5.3.0; SGLang ≥0.5.10' could not be verified from the card, and the card says the image-to-text pipeline is unsupported in Transformers v5.",
+    "reason": "https://huggingface.co/zai-org/GLM-OCR; https://roboflow.com/blog/best-open-source-ocr-models (8 languages incl. Russian, v1.6 95.22)."
+   },
+   {
+    "title": "Candidates OvisOCR2 and TeleOCR",
+    "status": "confirmed",
+    "reason": "https://huggingface.co/ATH-MaaS/OvisOCR2: Qwen3.5-0.8B base, Apache-2.0, arXiv 2607.13639, OmniDocBench v1.6 96.58, Real5 92.29, PureDocBench Avg3 75.06, ParseBench 40.84, bboxes only for visual regions. https://huggingface.co/XingChen-AGI/TeleOCR: formerly NaviDC-OCR, renamed 2026-09-10, weights 2026-08-17, ~1.2B, Apache-2.0, OmniDocBench v1.6 96.87, Real5 90.72, Wild 88.53, ParseBench 58.67, ContentBlock bbox/angle/content, OTSL tables, zh/en."
+   },
+   {
+    "title": "Candidates DeepSeek-OCR 2, olmOCR-2, Nanonets-OCR2-3B, Granite-Docling",
+    "status": "confirmed",
+    "corrected_claim": "The DeepSeek-OCR-2 card pins transformers==4.46.3 but gives no vLLM version; the 'vLLM 0.8.5 wheel' claim is unverified from the card.",
+    "reason": "https://huggingface.co/deepseek-ai/DeepSeek-OCR-2 (3B, Apache-2.0, arXiv 2601.20552, Jan 28, olmOCR 76.3); https://www.codesota.com/ocr/benchmark/omnidocbench (91.09 v1.5); https://huggingface.co/allenai/olmOCR-2-7B-1025 (Apache-2.0, en, 82.4 FP8 / 82.3 BF16, YAML front matter, no bboxes); https://huggingface.co/nanonets/Nanonets-OCR2-3B (no licence stated, Russian named, olmOCR 69.5, no bboxes); https://huggingface.co/ibm-granite/granite-docling-258M (2025-09-17, edit distance 0.45, OCRBench 500, revision untied)."
+   },
+   {
+    "title": "Candidate Xiaomi-OCR-0",
+    "status": "uncertain",
+    "reason": "It appears only on the Real5 leaderboard (0.8B, 92.73, https://huggingface.co/datasets/PaddlePaddle/Real5-OmniDocBench). No model card, weights or licence were found, so it cannot be confirmed as a locally usable open-weight model."
+   },
+   {
+    "title": "F7: crop-level second reading with OCR, and F8: OCR fingerprints for missed intervals",
+    "status": "uncertain",
+    "reason": "The supporting citations hold: dots.ocr prompt_grounding_ocr; PR 18825 recommends layout first then recognizing regions; sever/image_reader.py:2-4; sever/image_fusion.py:109; sever/video.py:405; sever/ocr.py:286 _header_line_boxes. The benefits are speculative and unmeasured, and F8 depends on the unknown failure mode of the 8 missed intervals."
+   }
+  ],
+  "missing": [
+   "None of the proxy benchmarks measures what the product needs. GlotOCR uses rendered synthetic sentence images; MDPBench and OmniDocBench are page-level edit distance or parsing scores. None tests key-value extraction or literal field accuracy on photographed Russian forms. Real5 is published by PaddlePaddle, so it has the same self-evaluation bias the report flags only for MDPBench.",
+   "Classic Cyrillic OCR baselines with line boxes are missing beyond PP-OCRv5: Surya (strong Russian, line bboxes; its licence restricts commercial use), docTR, EasyOCR, and the Tesseract rus engine the server already falls back to (sever/ocr.py:324-326). The bake-off should include the existing Tesseract path as the zero-cost baseline.",
+   "On the Linux server, sever/ocr.py uses tesseract_rus_eng; Apple Vision runs only on macOS. It also writes an OCR cache (_write_cache). Reusing it would conflict with the 'stored model answers are never replayed' rule, and the report did not check this.",
+   "Prefix-cache interaction: about 73% of input tokens are llama.cpp prefix-cache reads today. Adding per-frame OCR hint text (F2) must go after the static ~24k-char instructions and schema, or it invalidates the cache and raises prefill time. This could offset the speed gain.",
+   "GPU contention under the existing shared inference lock and --parallel 1. A second OCR server on the same RTX 5090 would make the phase1-speed A/B timings incomparable unless both arms run with it, and the report does not quantify the slowdown to the 27B.",
+   "Cheaper speed levers that need no new model are not compared against OCR: lowering --image-max-tokens or the zoom-crop resolution, or switching to the already-tried Qwen3.6-35B-A3B MoE for the field agent. They give a baseline the OCR proposals must beat.",
+   "General VLMs with native text grounding or spotting (e.g. Qwen-VL family OCR or grounding modes in the model already deployed) are not considered. They could supply line boxes without a second model.",
+   "Licence detail for HunyuanOCR: the Tencent Hunyuan Community License territory clause (it excludes the EU, UK and South Korea) and its user-count thresholds. The report only says to check it; whether Russia-based commercial use is allowed should be confirmed.",
+   "The 2160x3840 frames are portrait 8.3 MP. Most of these OCR models were benchmarked at ~1540–2048 px long edge, so the bake-off must also test resizing and tiling choices, which affect both speed and Cyrillic accuracy."
+  ]
+ },
+ "verify:reading": {
+  "verdicts": [
+   {
+    "title": "Replace the 1024-px-overview + up-to-8-crop zoom loop with one request carrying two native bands of the sheet (at most one zoom round)",
+    "status": "confirmed",
+    "reason": "Every code citation checks out: image_agent.py:34-35 sets the 8/8 limits; :140-146 makes a 1024 JPEG context and PNG crops; :176-177 counts each non-context panel against zoom_count; :256-265 is prepare_zoom; :329 sets tool_choice auto; :76-77 says \"without magnification\". Setting MAX_MODEL_REQUESTS=2 would work as described: tests/test_image_agent.py:407-417 shows zoom tools are offered on requests 1..MAX-1 and only submit_reading on the last. The llama.cpp smart-resize branch exists (llm-lab llama.cpp tools/mtmd/mtmd-image.cpp:146-153), and with it the 1944x231 -> 2976x384 (1,116 tokens) and 2160x2240 -> 1984x2080 (4,030 tokens) arithmetic is right. The 4.6 calls per view is right: comparison.json has 33 views, minus 8 triage-only views = 25 field-agent views, 115/25 = 4.6. Page-0002 is about 13 s per view and page-0001 about 24 s per view. Small errors: (1) saving 175-325 s from 1,134 s over 15 leaves gives 64-54 s per sheet, not 64-60. (2) prepare_zoom returns both zoom_source and zoom_regions, not only zoom_regions. (3) _Source.panel(context=False) cannot be reused as is: it writes an unresized PNG, increments zoom_count, names the panel zoom_NN, and records prep resize='none' and native_source_detail=True (:149,170-177). Resized bands would carry wrong provenance unless panel() is extended. (4) Views are read one after another in native_pipeline, so decoding two views together under --parallel 2 needs a pipeline restructure. (5) The 21-23 s per view figure depends on how much model time joint reviews take, which comparison.json does not split out.",
+    "corrected_claim": "Same proposal, with these fixes: bands need a new panel kind with its own counter and with prep and transform recording the Lanczos resize, not panel(context=False). With MAX_MODEL_REQUESTS=2, request 1 offers both zoom tools. Expected about 54-64 s per sheet, not 64-60."
+   },
+   {
+    "title": "Shorten the final submit_reading answer: decoding is 69% of model time",
+    "status": "uncertain",
+    "reason": "The decode share, the 61 tok/s and the 222-236 output tokens per request match README.md:18,23. image_reader.py:163 and :211 do say \"Omit\", :166-167 have defaults, :117-120 asks for the regulatory caption, and image_agent.py:149 and :329 match. One citation is wrong: image_reader.py:213 gives visible_text a default \"\", so it is not required for every form. The prompt already tells the model to give reason only for unreadable/not_present, to set explicit_blank only for not_present, and to omit confidence (image_reader.py:128-129). Whether the model still emits those defaults is unverified. No local trace has submit_reading arguments: a grep of runs/, output/ and analysis/ found none. So the 620-token answer and the 140-190-token saving are estimates, not measurements. Two risks are missing. Dropping observed_form for supported forms changes the HTML report, because report.py:312 shows observed_form for every reading and prints 'Форма не прочитана' when it is empty; native_pipeline.py:902 also records it. Removing confidence and type_confidence also needs code changes in _validate_reading (image_reader.py:397-417 read proposal.confidence and reading.type_confidence).",
+    "corrected_claim": "Likely a modest decode saving, but its size cannot be known until the phase1 trace shows which default keys the model actually emits; the prompt already asks it to omit them. Keep observed_form, or change report.py:312, and update _validate_reading if the confidence fields are removed."
+   },
+   {
+    "title": "Check whether each view's first request misses the prefix cache (hybrid model + one slot) and shrink what a miss costs",
+    "status": "uncertain",
+    "reason": "The citations are accurate: zoom_image_reader.py:49-50, 72-73 and 86-87; the address rule five times (image_reader.py:54-56, 59-68, 132-135, 175, 177); «он же» at 44-50, 137-140 and 174; README.md:20 and :23. 168k/2,340 tok/s is about 72 s. But the premise 'three different system prompts in a row per view' is wrong for phase1. Orientation is reused per leaf (zoom_image_reader.py:41-46), and triage runs only until full_read_required (:70); comparison.json has 15 orientation and 19 triage calls over 25 field-agent views. So for a leaf's second view, the request just before is usually the previous view's last field-agent request, with the same instructions and tools. A miss on that view can only come from hybrid/recurrent rollback limits. The 'looks hybrid' inference from 26 GB of GPU memory is a guess and not shown. The checkpoint mechanism and the --checkpoint-min-step default of 8192 do exist in a local llama.cpp build (common/common.h:620-621, server-context.cpp:3264,3344-3357), but that is not the server's v0.6.0 build. The report also uses two token counts for the same schema: 3,435 here and 3,567 in the form-split finding.",
+    "corrected_claim": "Worth the cheap trace check. Misses are possible only at each leaf's first view, after orientation, triage or joint review, plus any views the hybrid rollback limit affects, so the 25 x 6.7k upper bound probably overstates the cost."
+   },
+   {
+    "title": "Remove 'conflict' from the per-frame field status: one such answer permanently blocks two-frame confirmation",
+    "status": "confirmed",
+    "reason": "schema.py:7 includes 'conflict', and ImageField.status uses it (image_reader.py:162). _validate_reading keeps a conflict with null raw_value unchanged (:407-411). In image_fusion.py:181-185, any per-frame conflict with frame evidence makes the fused field 'conflict'. native_pipeline.py:165-166 does count conflict toward 'disagreements_preserved', but the loop resets that stop to None (:919-922), so the leaf keeps reading, as claimed. INSTRUCTIONS and ZOOM_INSTRUCTIONS never define a per-frame conflict. Two nuances. First, 'permanently' is too strong: a joint review can still resolve the field (fresh_joint_model_review, native_pipeline.py:552-554). Second, a later per-frame 'conflict' also invalidates an earlier joint resolution (:536-547), which makes the finding stronger. Joint review reuses UPDFields etc. (image_conflicts.py:24-25,33) and also treats a 'conflict' status as an explicit disagreement (:159, :296), so the risk the finding states is real.",
+    "corrected_claim": "A per-frame 'conflict' blocks two-frame confirmation of that field for the leaf. A joint review can still settle it, but any later per-frame 'conflict' reopens it. Give the per-frame reader its own ImageField without 'conflict'."
+   },
+   {
+    "title": "Size every overview image to what llama.cpp actually feeds the model, and crop it to the sheet",
+    "status": "confirmed",
+    "reason": "image_agent.py:140-141, image_detail.py:87-88 and image_triage.py:89 (which uses _Source.panel context=True, so a 1024 JPEG) are as stated. With the smart-resize code (mtmd-image.cpp:146-153), 576x1024 becomes 768x1376 = 1,032 tokens. The quadrilateral is computed in video.py analyze_image_quality (:31-70, gray>140 mask at :45) on the 384-px sample (video.py:442,457 -> _features -> :105) and stored under frame['quality']['paper_geometry'] (:72, :520). quality.py:143 says no paper-outline rule runs there. I recomputed the local stats: video5 13/22 quadrilaterals, video4 68/198, median bounding-box share 0.79 and 0.71, close to the stated 0.73. The finding already notes that the server's v0.6.0 might not upscale, which is the only unverified link."
+   },
+   {
+    "title": "Do not split form identification into a separate call with a form-specific schema; trim the shared union instead",
+    "status": "confirmed",
+    "reason": "image_reader.py:209-216 and :219-248 put the base fields (observed_form, heading_text, ...) before document_type and fields in each subclass. native_pipeline.py:167-169 is the disagreeing_document_readings stop, zoom_image_reader.py:70 gates triage, and README.md states that type and fields need two distinct frames. Triage costs about 1.1-1.2 s: out-of-scope leaves cost 4.5-4.7 model seconds for 1 orientation + 2 triage calls in comparison.json. The independence argument against reusing frame 1's type is sound. Unverified: the token counts, and whether the server's grammar really forces schema property order (it depends on llama.cpp applying a tool-argument grammar)."
+   },
+   {
+    "title": "Orientation: little left to save; the sheet outline cannot decide it, but a 1-image composite or merging with triage can trim it",
+    "status": "confirmed",
+    "reason": "image_orientation.py:28-38 and :75-81, image_detail.py:75-88 (four 1024-px context thumbnails) and zoom_image_reader.py:41-61 and :99-104 match. README.md:19 gives orientation 15 and triage 19. accuracy-speed-v8-latency-followup.json has orientation_seconds 27.65 for 12 requests, about 2.3 s each. The clipped-edge stats are confirmed (22/22, 197/198). One side claim is doubtful: that ТТН is a portrait form (the 1-Т front side is commonly printed landscape). It does not change the conclusion."
+   },
+   {
+    "title": "Grammar-constrained tool/JSON decoding is not a material slowdown; do not spend effort there unless the trace shows it",
+    "status": "uncertain",
+    "reason": "The citations are correct: README.md:23 gives 61 tok/s; image_agent.py:252 has ToolOutput strict=False and :329 tool_choice auto; image_orientation.py:135 and image_triage.py:130 use NativeOutput strict=False; the maxLength values at image_reader.py:161-167 and 212-214 match. The bandwidth bound is reasonable: about 22 GB per token at about 1.79 TB/s gives roughly 80 tok/s. But the step from a 22-25% gap to the ceiling to 'at most about 10% grammar overhead' assumes a normal efficiency figure that was not measured. Whether llama.cpp v0.6.0 applies a lazy grammar to tool calls, or enforces maxLength there, is not verifiable locally.",
+    "corrected_claim": "Grammar overhead is probably small but is bounded only by an assumption. The suggested per-kind predicted_ms comparison is needed before the claim can be accepted."
+   },
+   {
+    "title": "Skip perspective warp/deskew; at most crop to the sheet box",
+    "status": "confirmed",
+    "reason": "video.py:52-70 has the area > .18 test, approxPolyDP, clipped_edges and perspective_indicator = 1 - min(ratios). Recomputed locally: video5 n=22, 13 quadrilaterals, 22 clipped, perspective median 0.13, p90 0.156; video4 n=198, 68 quadrilaterals, 197 clipped, median 0.098, p90 0.188. image_reader.py:262-266 _inverse_affine ignores the third row. image_agent.py:76-77 promises the model no invented pixels."
+   }
+  ],
+  "missing": [
+   "Joint review is the single largest remaining target: 39 calls, 4-7 per target leaf in phase1. No finding cuts its request or crop limits (image_conflicts.py MAX_MODEL_REQUESTS=12, MAX_ZOOM_IMAGES=12) or its prompt size.",
+   "The 6 'requires_other_document_side' leaves still cost 19-22 calls and about 100-110 s each in phase1. Detecting earlier that the needed fields are on the other side (for example in triage) is not discussed, though it could save more than most of the listed items.",
+   "page-0015 alone took 34 calls over 5 views and 301 s, about 27% of phase1 wall time. No finding looks at no-progress stop tuning or the view-selection policy for such leaves.",
+   "Segmentation misses (8/20 target intervals) are the biggest accuracy loss, and no reading-side change addresses them. The expected precision gains should be weighed against this.",
+   "observed_form is shown in the HTML report for every reading (report.py:312) and stored per attempt (native_pipeline.py:902). Dropping it for supported forms changes the report.",
+   "Removing the confidence fields from the schema needs code changes in _validate_reading (image_reader.py:397-417) and in DocumentResult construction, not only schema edits.",
+   "Band panels make evidence bounding boxes much coarser (half a sheet per panel). This should be checked against how evidence is presented to the customer.",
+   "The report does not reconcile its two schema token counts (3,435 vs 3,567) or say which serialization the server actually receives.",
+   "The context facts call phase1-speed 'unmeasured', but analysis/ab-speed-20261017/README.md records a measured A/B: 1,134 s, 15/22 fields. The findings rely on that one run; with 22 labels the 95% interval spans roughly 50-87%, so precision claims cannot be settled on video 5 alone."
+  ]
+ },
+ "verify:techniques": {
+  "verdicts": [
+   {
+    "title": "Enable MTP speculative decoding on the existing Qwen3.8-27B GGUF",
+    "status": "confirmed",
+    "reason": "PR https://github.com/ggml-org/llama.cpp/pull/22673 is merged (May 16, 2026). It states \"MTP is compatible with Vision input\" and warns \"Prompt processing (PP) speed typically takes a negative hit\". The 5090 27B q4_0 figures 63.72 -> 105.47 tok/s (acceptance 0.797) come from a commenter running draft 3. The n_parallel=1 error is quoted in a comment. The server README --spec-type list includes draft-mtp, and --spec-draft-n-max defaults to 3. In HF discussions/14 (UD-Q6_K_XL) the no-vision/no-MTP run is about 52-56 tok/s and vision+MTP is about 92 tok/s, but the 92 was measured at n-max 5. The n-max sweep (1.47x at n-max 1, 1.51x at n-max 2) is UD-Q4_K_XL on code, and n-max 6 was slower only on prose. The 1315 -> 665 prefill drop is in the PR thread (3090+3060), not in the HF thread. Unsloth doc: 'MTP enabled', '1-2GB extra headroom'. #22867 (MTP+vision slot corruption) was closed May 10, 2026, but the page names no upstream fix PR, only a fork PR (am17an#5). Repo: README 22-23 gives 688 s / 61 tok/s / 69%, and the service file has no --spec-type.",
+    "corrected_claim": "The ~92 tok/s vision+MTP figure was measured at --spec-draft-n-max 5 (UD-Q6_K_XL, 65k ctx), not 2. The n-max 1 vs 2 vs 6 sweep was on UD-Q4_K_XL, and only n-max 6 on prose fell below baseline. So the n-max that is best here is unknown; sweep 1-3 (the default is 3). The prefill-halving report (1315 -> 665) is from the llama.cpp PR thread on a 3090+3060 setup. Whether the #22867 fix is upstream is unconfirmed, so check the build."
+   },
+   {
+    "title": "Keep the tool list constant within a run so the cache survives",
+    "status": "confirmed",
+    "reason": "sever/image_agent.py:256-265 prepare_zoom returns None when zoom_count>=8 or requests_started>=7, and the comment at 278-280 says 'the next model request exposes only the submission tool'. image_conflicts.py:461-465 uses the same pattern. Pydantic docs: prepare can 'return None to omit the tool for that step'. The Qwen3.8 chat_template.jinja emits '<|im_start|>system\\n', then '# Tools ... <tools>' ... '</tools>', then the tool-call instructions, and only then the system content, so the prefix diverges within the first ~10-20 tokens. PR #20087 says 'once any prefix is invalid, you have to reprocess', and #18497 confirms the recurrent-state reasoning. Caveat: a change this early forces full reprocessing on any model, hybrid or not. Also, the decline text at image_agent.py:288 already says 'Submit using the supplied pixels', so adding 'submit now' is redundant. How often this happens is not measured.",
+    "corrected_claim": "Removing tools changes the prompt about 10-20 tokens in, so the whole request is re-processed on any architecture; the hybrid-checkpoint argument is not needed. The existing decline message already tells the model to submit. How often it happens is unmeasured."
+   },
+   {
+    "title": "Space hybrid-model checkpoints so the shared prefix is reused across frames",
+    "status": "uncertain",
+    "reason": "The flags match the llama.cpp server README: -cms/--checkpoint-min-step default 8192 (0 = no minimum), --ctx-checkpoints default 32, --cache-ram default 8192, --cache-idle-slots 'default: enabled, requires cache-ram'. Since --cache-ram 8192 and idle-slot saving are already the defaults, the 'keep' advice changes nothing. #18497 and PR #20087 support the mechanism. The lmstudio #1818 figures (60K repeat prompt ~70-80 s -> ~1.0 s) are real, but they were on Qwen3-Next-80B-A3B with --checkpoint-every-n-tokens 4096 / --ctx-checkpoints 128 / --swa-full, not Qwen3.8. Roboflow confirms 64 layers with a 3 DeltaNet : 1 attention pattern. The central claim, that each field-agent run re-processes the ~8k prefix, is the author's estimate and has not been measured; 68% of input tokens are already cache hits. Different call types also have different tool lists, so they share almost no prefix anyway.",
+    "corrected_claim": "This is a plausible but unmeasured hypothesis. Measure cache_n at the start of each field-agent run before changing flags. --cache-ram 8192 and --cache-idle-slots are already the defaults."
+   },
+   {
+    "title": "Let the client set image sizes: send real 768x1376 contexts and stop server-side upscaling of crops",
+    "status": "confirmed",
+    "reason": "mtmd-image.cpp contains `else if (opts.min_pixels > 0 && h_bar * w_bar < opts.min_pixels)`, which scales up by beta=sqrt(min/hw) and uses ceil_by_factor with align_size = patch_size*n_merge. The Qwen3.8 preprocessor_config shows patch_size 16, merge_size 2, shortest_edge 65536, longest_edge 16777216. The Qwen3-VL README says 'compression ratio is 32' and gives the 256*32*32 / 1280*32*32 example. The arithmetic checks out: 576x1024 -> 768x1376 = 1032 tokens; 1080x230 -> 2240x480 = 1050 tokens; 2160x3840 under 4096 tokens -> 1536x2720 = 4080. Repo: service file sets min 1024/max 4096; image_agent.py:141 thumbnails to 1024 with Lanczos; image_agent.py:77 says 'without magnification'; README.md:213 says 'без изменения нативного масштаба'. The estimate of 150-200 crops per video is not measured."
+   },
+   {
+    "title": "Send homography-mapped crops in the first request for later frames of the same sheet",
+    "status": "confirmed",
+    "reason": "sever/video.py:163 calls cv2.findHomography(pb, pa, cv2.RANSAC, 3.5), and the matrix is not stored. comparison.md shows 115 field_agent calls. arXiv 2609.22910 ('When Should a VLM Look?', 19 Sep 2026) abstract: 'only 10% to 12% of visual calls were both needed and used', spurious calls '36% to 87% of the time'. The 'cold start' qualifier was not checked. The 2505.21333 abstract says 'limited capability' on holistic video comprehension and cross-frame integration. The speed estimate is unmeasured. The business-rule risk is understated: the rectangles are part of frame 1's stored model answer, and README forbids replaying stored model answers.",
+    "corrected_claim": "The sources are accurate. Reusing frame-1 model-chosen rectangles as frame-k input is arguably a reuse of a stored model answer as well as an independence issue. Get explicit customer sign-off before building it."
+   },
+   {
+    "title": "Pick frames by per-region sharpness; avoid multi-frame super-resolution",
+    "status": "confirmed",
+    "reason": "sever/frame_pool.py:128-136 ranks by whole-frame sharpness_laplacian_variance. quality.py:63 lists 'sharp_background_or_page_edges_can_hide_blurred_text'. Q-Frame (arXiv 2506.22139v3, 22 Jul 2025) Table 11: Video-MME OCR 56.8 -> 68.3 for Qwen2-VL-7B without subtitles (65.5 -> 67.6 with subtitles). Q-Frame does query-aware frame selection plus multi-resolution, which is close to the report's description. No speed or precision numbers are claimed."
+   },
+   {
+    "title": "Deskew or rectify the context and crops with a 4-corner homography; use learned dewarping only for curled sheets",
+    "status": "confirmed",
+    "reason": "TeleOCR (arXiv 2608.12898v3, 10 Sep 2026) states 'removing geometric distortions alone substantially improves two-stage parsing performance', and Table 3 gives Qwen3-VL-8B Clean 72.44 vs Real Degraded 62.73. ForCenNet (2507.19804, ICCV 2025 per CVF open access) Table 1 lists CER 0.136 vs DocTr 0.183, DocGeoNet 0.182, FTDR 0.170, CGU-Net(UVDoc) 0.178 with ED 513.76; that ED is better than ForCenNet's 571.40. PaddleOCR lists UVDoc CER 0.179, 30.3 MB, 19.05 ms on a T4. 2501.03145 v3 (15 Nov 2025) uses YOLOv8 masks plus a cubic polynomial grid with median CER 0.0235. Nuance: TeleOCR does not itself use ForCenNet as an inference preprocessor; it cites it for a motivating dewarping experiment and for synthesizing deformations, and it explicitly avoids a dewarping module. README.md:38 'Отдельного классификатора...' confirmed.",
+    "corrected_claim": "TeleOCR cites ForCenNet for its dewarping experiment and data synthesis. It does not use ForCenNet as its preprocessor, and its method avoids a separate dewarping module. ForCenNet does not have the best ED on DocUNet; CGU-Net/UVDoc does."
+   },
+   {
+    "title": "Try Qwen3.6-35B-A3B (MoE) as the decode-speed option",
+    "status": "confirmed",
+    "reason": "Zenn article: RTX 5090, llama.cpp b8870, UD-Q5_K_S PP512 3293 / TG128 180, UD-Q4_K_M 2892 / 183, 23.2 GB file and about 25 GB VRAM. Qwen3.6-35B-A3B README: 35B total / 3B active, Apache-2.0, OmniDocBench1.5 89.9, CC-OCR 81.9, CharXiv RQ 78.0, vLLM method qwen3_next_mtp. Qwen3.8-27B README: OmniDocBench1.5 91.1. README.md:78 confirms 9/10 at 156.83 s vs 231.19 s, but that run used the old OCR-guided pipeline, and the README says it is 'не независимо измеренная точность'. deploy/README.md:260 says 'Выбранная пользователем'. Caveats: '3x' compares llama-bench tg128 at empty context with 61 tok/s measured in production at ~10k context. 'MTP works with it in llama.cpp' was not verified on the PR page.",
+    "corrected_claim": "The ~3x decode figure compares an empty-context llama-bench with production at ~10k context, so expect less. The 9/10-field parity comes from the obsolete OCR-guided pipeline, not native_image."
+   },
+   {
+    "title": "A/B two parallel slots with a unified KV pool against MTP",
+    "status": "confirmed",
+    "reason": "The server README describes -kvu/--kv-unified ('default: enabled if number of slots is auto', so it must be passed explicitly with --parallel 2) and --kv-unified-per-slot. The PR #22673 comment quotes 'MTP currently supports only n_parallel=1'. deploy/README.md:588-590 confirms the context is split per slot. The 1.5-1.9x figure is unsourced, as the report says."
+   },
+   {
+    "title": "Remove or shrink the orientation call",
+    "status": "confirmed",
+    "reason": "image_detail.py:88 thumbnails non-native panels to 1024. image_orientation.py:55-80 sends four rotated contexts in one call. comparison.md lists 15 orientation calls. PaddleOCR doc_preprocessor gives PP-LCNet_x1_0_doc_ori 99.06% top-1 (self-built PaddleX set of 1,000 images), 2.62/0.59 ms on GPU, 7 MB. The page does not state a 224x224 input size. README.md:38 states there is no separate classifier. The 288x512 = 144-token figure only holds after min-tokens is lowered, as the report notes. The insufficient_evidence re-pick claim was not checked.",
+    "corrected_claim": "The 224x224 input size for PP-LCNet_x1_0_doc_ori is not stated on the cited page."
+   },
+   {
+    "title": "Fewer output tokens: integer 0-1000 zoom coordinates and per-step max_tokens caps",
+    "status": "uncertain",
+    "reason": "Repo checks out: image_agent.py:36 defines a float Coordinate in [0,1], and image_agent.py:328 sets max_tokens from effective.max_output_tokens (8192). The Qwen3-VL README says only 'relative position coordinates' and gives no range. Issue #1616 is a Qwen2.5-VL / LLaMA-Factory question; in it, user HumanZhong (affiliation unknown) recommends 0-1000 boxes for Qwen3-VL. Nothing documents what Qwen3.8 uses. The token savings were not verified, and the report itself rates confidence at 0.3."
+   },
+   {
+    "title": "Constrained JSON / grammar sampling is not the bottleneck",
+    "status": "uncertain",
+    "reason": "The citations check out. The grammars README warns 'x? x? x?.... x? ... may result in extremely slow sampling' and says additionalProperties false 'produces faster grammars'. llguidance.md gives '50μs of single-core CPU time' and p99 0.5ms. #4218 (titled 'llama : speed-up grammar sampling') contains the quoted line in a comment by ejones. image_reader.py:161-167 shows the max_length values. The inference does not hold: 61 tok/s in production (with vision, ~10k context, possibly lazy tool-call grammar) is compared with 52-56 tok/s from a different user's setup (no vision, 208k ctx config). That cannot isolate grammar overhead, and it has not been shown that a grammar is active at all for Qwen XML tool calls with tool_choice auto.",
+    "corrected_claim": "The evidence does not yet show whether grammar overhead matters. Decide only after the proposed llama-bench vs trace predicted_ms comparison."
+   },
+   {
+    "title": "Test a larger physical batch (-ub) for prefill",
+    "status": "confirmed",
+    "reason": "The llama.cpp server README states '-ub, --ubatch-size N | physical maximum batch size (default: 512)'. sever-model.service:12 sets no -ub. README gives prefill 273 s at 2,340 tok/s. The report states the effect is unknown, which is accurate."
+   }
+  ],
+  "missing": [
+   "The largest lever is call count on the 4 hard leaves (72% of calls, 74% of time). The report has no per-leaf call cap, no early stop for conflicts that stay unresolved, and no limit on joint-review rounds; it optimizes mostly per-call speed.",
+   "Segmentation misses 8/20 target intervals, the biggest accuracy loss, and no finding addresses it (e.g. denser sampling, a looser ORB/RANSAC grouping threshold, an analysis of missed intervals).",
+   "Decode is bandwidth-bound, so a smaller quant of the same 27B model (Q5_K/Q4_K_M) is a cheap ~1.2-1.4x decode option. It was not considered, and it would need an accuracy A/B.",
+   "The K/V cache type (q8_0 vs f16) affects decode speed with flash-attn; this was not tested.",
+   "vLLM/SGLang (both listed on the Qwen3.8 card) support MTP together with concurrent requests and prefix caching. That would remove llama.cpp's MTP-or-parallel trade-off.",
+   "The deployed build is labelled 'v0.6.0', which is not a normal llama.cpp bNNNN tag. Every flag proposal (draft-mtp, -cms, --kv-unified-per-slot) depends on that build being newer than May 2026; check `llama-server --help` first.",
+   "Several findings may affect accuracy (image sizes, deskew, mapped crops, caps), but only 44 provisional labels exist (22 on video 5). That is too few to detect small regressions. Expand the labels before trusting precision A/Bs.",
+   "How speculative decoding interacts with grammar-constrained tool-call sampling, and how acceptance rate varies with JSON/XML output, was not considered.",
+   "Reusing frame-1 model-chosen rectangles may conflict with the 'stored model answers are never replayed' rule, not only with frame independence."
+  ]
+ },
+ "verify:cloud-baseline": {
+  "verdicts": [
+   {
+    "title": "Ceiling estimate: on Russian KIE, local 27B-class Qwen is already close to hosted frontier models; segmentation, not the reader model, is the main loss",
+    "status": "uncertain",
+    "reason": "The MWS rows match the page exactly (test: GPT-5.6 Sol 0.789/0.836/0.862/0.623; Cotype Pro 3 KIE 0.906; Claude Sonnet 5 KIE 0.830; Gemini 3.5 Flash 0.882; Qwen3.6-27B 0.893; Qwen3.8-27B 0.807/grounding 0.223; validation: Opus 5.5 0.896, Gemini 3.6 Flash 0.903, GPT-6.1 Sol 0.822). The page gives no KIE formula and no inference settings. Three framing claims fail. (1) Hosted KIE on test runs 0.818 to 0.906, not 0.86 to 0.91: Sonnet 5 is 0.830 and GPT-6 Luna 0.818. (2) Best KIE minus deployed Qwen3.8-27B is about 9.9 points on test (Cotype Pro 3 0.906 vs 0.807), so 'at most 5-9' is low. Qwen3.6-27B alone is 8.6 points above the deployed model, so the deployed reader is not near ceiling. (3) analysis/ab-speed-20261017/README.md:37-38 says that on video 5 'labelled intervals detected 14/15 both', yet 6-7 of 22 fields were wrong. On that video segmentation is not the main loss. The 8/20 figure is a 4-video aggregate.",
+    "corrected_claim": "On MWS private test, hosted KIE runs 0.818-0.906. The open Qwen3.6-27B (0.893) matches or beats most hosted models, but the deployed Qwen3.8-27B (0.807) is about 9-10 points below the best. Segmentation is the largest loss only in the 4-video aggregate. On video 5 (14/15 intervals detected) most errors are other-side, label-boundary or reader errors."
+   },
+   {
+    "title": "A/B Qwen3.6-27B against the deployed Qwen3.8-27B: better Russian text reading and KIE, much weaker grounding",
+    "status": "confirmed",
+    "reason": "MWS test and validation rows match verbatim: 3.8-27B 0.687/0.797/0.738/0.223/0.807/0.873 and 3.6-27B 0.692/0.861/0.753/0.062/0.893/0.889; validation img→text 0.863 vs 0.800, KIE 0.833 vs 0.812. OCRBench v2 2026.09 matches: English 68.3 vs 63.5, Recognition 71.1 vs 75.5, Extraction 92.8 vs 90.4; Chinese 58.7 vs 56.9. The Qwen3.8-27B card gives OmniDocBench 1.5 91.1 vs 89.4 and OSWorld-Verified 84.3 vs 63.9. Both cards give 64 layers in a 16×(3 DeltaNet + 1 attention) layout. deploy/sever-model.service:12 uses ${MODEL_PATH}/${MMPROJ_PATH}. One correction: the 'Unsloth notes mmproj not interchangeable' attribution is not on unsloth.ai/docs/models/qwen3.6. Only a third-party site (allthings.how) says so. Using the matching mmproj is still correct practice.",
+    "corrected_claim": "Same as stated, except that the mmproj non-interchangeability note comes from allthings.how, not Unsloth. Also, the MWS validation/test KIE gap for Qwen3.6-27B (0.833 vs 0.893) is as large as the gap between the two models."
+   },
+   {
+    "title": "Use the Qwen3.6-35B-A3B MoE, not an 8B model, as the speed option: the pipeline is decode-bound and the MoE does not lose on Russian reading",
+    "status": "confirmed",
+    "reason": "MWS test row 'Qwen3.6-35B-A3B | 0.691 | 0.847 | 0.755 | 0.094 | 0.840 | 0.920' matches. OCRBench v2 English 65.5 (Chinese 60.8) matches. The HF card gives OmniDocBench1.5 89.9 and CC-OCR 81.9. Unsloth gives 240 vs 160 tok/s on an RTX 6000, and separately about 220 vs 140. The 140 figure is for the UD-Q2_K_XL quant and both are with MTP, so they do not transfer directly to Q6 without MTP. Unsloth's memory table (6-bit 30 GB, 4-bit 23 GB; 27B 6-bit 24 GB) and the CUDA 13.2 warning match. The README.md:22-23 figures (61 tok/s, 69% of model time) match. The MoE MTP gain is only 1.15-1.2x vs 1.4x for dense, which narrows the MoE advantage once MTP is applied to both."
+   },
+   {
+    "title": "Do not downsize to an 8–9B model: it loses 4–10 KIE points on Russian documents and much more on photographed Russian pages",
+    "status": "confirmed",
+    "reason": "The Qwen3.5-27B/9B card values match (88.9/87.7, 81.0/79.3, 89.4/89.2). The MWS rows for Qwen3.5-9B and Qwen3-VL-8B match (Qwen3-VL-32B KIE 0.671). The CC-OCR v2 Appendix A.4 quote and the Qwen3.8 collection (only 27B and 2.4T-A95B) are confirmed. The MDPBench numbers are misread: the report took the KO column as RU. Table 2 of arxiv 2603.28130 lists AR,HI,JP,KO,RU,TH,ZH,ZH-T after a Non-Latin Avg. I recomputed that average to check the column positions: (71.3+67.7+69.5+86.0+76.0+68.4+84.8+75.7)/8 = 74.9, as printed. The correct RU values are Qwen3-VL-8B 57.9, Qwen3.5-9B 54.7, Gemini-3-pro 84.9, PaddleOCR-VL-1.5 76.0. The conclusion holds and is stronger.",
+    "corrected_claim": "On MDPBench RU, Qwen3-VL-8B scores 57.9 and Qwen3.5-9B 54.7, vs 84.9 for Gemini-3-pro-preview and 76.0 for PaddleOCR-VL-1.5. The other numbers are as stated."
+   },
+   {
+    "title": "Small specialist OCR parsers match Gemini 3 Pro on photographed Russian text; use them at most as a glyph cross-check, not as the field reader",
+    "status": "refuted",
+    "reason": "The headline is false. In MDPBench Table 2 (arxiv 2603.28130v1), 86.0 is PaddleOCR-VL-1.5's KO score; its RU score is 76.0, vs 84.9 for Gemini-3-pro-preview. The Non-Latin Avg 74.9 checks out with that column order. PaddleOCR-VL-1.5 is not the highest on RU and does not match Gemini on Russian. Other figures check out: Real5-OmniDocBench 92.05/93.19/89.24/78.66 and Qwen3-VL-235B 88.904 (arxiv 2606.03264); Cyrillic edit distance 0.109 vs 0.220 (arxiv 2510.14528); Chandra ru row '88.8% 85.5% 88.7% 82.8% 72.2%' (github.com/datalab-to/chandra). That row shows Chandra 1 (88.7%) beating Chandra 2 (85.5%) on Russian, which the report omits. Real5 measures photographed pages in general, not Russian.",
+    "corrected_claim": "On photographed multilingual pages (Real5-OmniDocBench) PaddleOCR-VL-1.5/1.6 beat Gemini-3 Pro. On Russian (MDPBench RU) PaddleOCR-VL-1.5 scores 76.0, about 9 points behind Gemini-3-pro (84.9), and its Photo score is 75.2. Chandra 1 (88.7%) scores above Chandra 2 (85.5%) on Datalab's ru row. The use as a glyph cross-check only stays reasonable, but the Russian evidence for it is weaker than stated."
+   },
+   {
+    "title": "Public OCR benchmarks cannot settle model choice at this label size; grow the labelled set first",
+    "status": "confirmed",
+    "reason": "The LlamaIndex blog (Feb 24 2026) states GLM-OCR at 94.6% and that GLM-OCR and PaddleOCR-VL-1.5 'surpassed 94%'. It says the dataset is small and skewed to academic papers, with no form fields or handwriting. Nanonets omnidocbench page: Qwen3.5-9B 76.7, GPT-5.4 85.3, Gemini-3-Pro 88.8. Codesota: Gemini 3 Pro 90.33, marked unverified. The README.md:43 quote matches. Two parts do not hold up: the 'GPT-5.4 89.1 (another aggregator)' figure has no URL and could not be checked, and the 150+ figure is optimistic. At p≈0.8, a ±5-point 95% half-width needs about 0.16·(1.96/0.05)² ≈ 246 fields; 150 fields give about ±6.4 points.",
+    "corrected_claim": "Same, but resolving ±5 points at 95% needs about 250 labelled fields per model (more for an unpaired comparison). The GPT-5.4 89.1 figure is unsourced."
+   },
+   {
+    "title": "Decode-side speedup available on the current model: llama.cpp MTP speculative decoding for Qwen3.6/3.8 hybrids",
+    "status": "confirmed",
+    "reason": "The Unsloth Qwen3.6 page says 'llama.cpp has merged MTP support' and links PR #22673. It gives the flags '--spec-type draft-mtp --spec-draft-n-max 2', '1.4x for dense models at draft tokens = 2 and for the MoE around 1.15 to 1.2x', acceptance falling from 83% to 50% at 4 draft tokens, and MTP rows needing about 1 GB more. Only the 35B-A3B example includes --mmproj. The Qwen3.8-27B card states 'MTP (Multi-Token Prediction): trained with multiple steps'. Unverified: whether an MTP GGUF exists for Qwen3.8-27B (all Unsloth numbers are for Qwen3.6). Byte-identical output under greedy speculation is likely but not guaranteed in llama.cpp, because batched verification can change floating-point accumulation."
+   },
+   {
+    "title": "Russian-specific failure mode: Cyrillic/Latin lookalike letters can pass two-frame fusion unnoticed",
+    "status": "confirmed",
+    "reason": "The report undersells its own source. MDPBench (arxiv 2603.28130v1) says 'For Russian documents, models frequently suffer from visual confusion' and goes on to 'erroneously decoding Cyrillic characters that are visually identical to Latin letters', so the lookalike wording is in the paper. sever/image_fusion.py _literal_comparison is NFKC + casefold + whitespace only, so it does not map homoglyphs. grep finds only the sever/vision.py:1079 comment. No mixed-script check exists.",
+    "corrected_claim": "The MDPBench text itself names Cyrillic characters misread as identical-looking Latin letters as the Russian failure mode. The rest is as stated."
+   },
+   {
+    "title": "Candidate: Qwen3.6-27B",
+    "status": "confirmed",
+    "reason": "HF card: Apache-2.0, April 2026 citation, 27B, 64-layer hybrid layout, CC-OCR 81.2, OCRBench 89.4. The Qwen3.8 card lists OmniDocBench 1.5 at 89.4. The MWS and OCRBench v2 values match. The VRAM figure is inferred from Unsloth's 24 GB at 6-bit. The mmproj note is third-party, not Unsloth."
+   },
+   {
+    "title": "Candidate: Qwen3.6-35B-A3B",
+    "status": "confirmed",
+    "reason": "HF card: Apache-2.0, April 2026, OmniDocBench1.5 89.9, CC-OCR 81.9. OCRBench 90.0 comes from the Qwen3.6-27B card. MWS, OCRBench v2 (65.5/60.8) and the Unsloth memory and throughput figures match. vllm>=0.25.0 for NVFP4 is confirmed."
+   },
+   {
+    "title": "Candidate: Qwen3.8-27B (deployed)",
+    "status": "confirmed",
+    "reason": "HF card: 64 layers, 16×(3×DeltaNet + 1×attention), MTP, Apache-2.0, Aug 2026 citation; recommends SGLang, vLLM and TokenSpeed. The collection lists a 27B-FP8 variant. OmniDocBench 1.5 is 91.1 vs Opus 4.6 Max 86.6. The README.md:20 GPU memory of 26,180–26,683 MiB matches (MiB, so about 25.6–26.1 GiB)."
+   },
+   {
+    "title": "Candidate: Qwen3.5-9B",
+    "status": "refuted",
+    "reason": "The card values (87.7/79.3/89.2), the Feb 2026 citation, Apache-2.0, MWS, OCRBench v2 58.7/64.1, the CC-OCR multilingual RU F1 78.97 (arxiv 2609.24058 Table 3) and Nanonets OmniDocBench 76.7 are confirmed. The listed 'MDPBench RU 60.3' is the JP column; RU is 54.7. Nanonets olmOCR 77.2 and IDP 76.2 were not visible in the fetched summaries.",
+    "corrected_claim": "MDPBench RU 54.7 (vs Gemini-3-pro 84.9). Nanonets olmOCR/IDP sub-scores are unverified."
+   },
+   {
+    "title": "Candidate: PaddleOCR-VL-1.5 / 1.6",
+    "status": "refuted",
+    "reason": "'MDPBench RU 86.0, the highest in the table' is false: 86.0 is the KO column, RU is 76.0, and Gemini-3-pro scores 84.9. Real5 and OmniDocBench v1.6 values, the 0.9B size, Cyrillic edit distance 0.109, olmOCR 80.0 and GlotOCR Cyrillic Acc@5 78.0 (arxiv 2604.12978) are confirmed. The license is not stated in the paper.",
+    "corrected_claim": "MDPBench RU 76.0 (Gemini-3-pro 84.9). Strong on photographed pages in general (Real5 92.05/93.19), not leading on Russian."
+   },
+   {
+    "title": "Candidate: Chandra OCR 2",
+    "status": "confirmed",
+    "reason": "github.com/datalab-to/chandra: ru 85.5% (Chandra 2) vs 88.7% (Chandra 1), 82.8% (Gemini 2.5 Flash) and 72.2% (GPT-5 Mini); olmOCR-bench 85.8 ± 0.8; 43-language average 77.8%; code Apache 2.0, weights modified OpenRAIL-M with a $2M cap and no use competing with Datalab's API; served via vLLM or HF. The repo does not state the parameter count (4B is unverified). Chandra 1 scores higher on Russian and was not considered."
+   },
+   {
+    "title": "Candidate: Gemma 4 31B IT",
+    "status": "uncertain",
+    "reason": "The numbers match: OmniDocBench1.5 80.1 and CC-OCR 75.7 (Qwen3.6-35B-A3B card), OCRBench 86.1 (Qwen3.6-27B card), MWS test KIE 0.793 and img→text 0.734. But the candidate URL points to a Qwen model card, not to a Gemma source. License, release date, serving and VRAM were not checked, so the entry has no primary source.",
+    "corrected_claim": "Benchmarks are confirmed only as third-party figures in Qwen cards and MWS. A Google model card URL is needed before the license or serving can be stated."
+   }
+  ],
+  "missing": [
+   "MWS lists GLM-5.3 Flash with test grounding 0.613 (KIE 0.784), far above any Qwen. If it is open-weight and fits 32 GB, it matters for zoom_regions/zoom_source crop placement. The report never checked which non-Qwen MWS entries (GLM-5.3 Flash, Cotype Light 3, Cotype VL 32B 8-bit, DeepSeek V4.1 Flash) are open-weight and runnable locally.",
+   "The benchmark's own split noise is as large as the model gaps: Qwen3.6-27B KIE is 0.833 on validation vs 0.893 on test, while Qwen3.8-27B is 0.812 vs 0.807. The validation-split KIE gap between the two Qwens is only 2 points, so the 8.6-point test gap should not be treated as reliable.",
+   "Video-5 evidence (README.md:36-43) contradicts 'segmentation is the main loss' for that video: 14/15 intervals detected, yet 6-7/22 fields wrong, partly from label-boundary ambiguity under the pre-11.10 address rule. The report needed a per-video error-class breakdown, not only the 4-video aggregate.",
+   "The official Qwen3.8-27B-FP8 checkpoint and the card's recommendation of vLLM/SGLang/TokenSpeed were not considered. A vLLM server on the RTX 5090 with continuous batching (leaf concurrency) could beat llama.cpp --parallel 1 on throughput without any model change.",
+   "Output-token and prompt-size levers on the current model: about 236 output tokens per call at 61 tok/s, with a ~24k-char instructions-plus-schema prompt. Image token limits (--image-max-tokens 4096) vs accuracy were not considered either.",
+   "The Unsloth throughput figures (160/240 tok/s, 140/220) are with MTP and partly at the UD-Q2_K_XL quant, so they cannot be compared directly with the deployed 61 tok/s at Q6 without MTP. The report treats them as a model-to-model decode ratio.",
+   "The MDPBench KO/RU column misread was carried into three places (findings 4 and 5, the Qwen3.5-9B and PaddleOCR candidates). Any downstream summary that quotes RU 86.0/85.5/61.9/60.3 is wrong."
+  ]
+ },
+ "verify:russian-ocr": {
+  "verdicts": [
+   {
+    "title": "A/B Qwen3.6-35B-A3B and Qwen3.6-27B against the current Qwen3.8-27B on Russian field reading",
+    "status": "confirmed",
+    "reason": "I downloaded the MWS README (raw.githubusercontent.com/mts-ai/MWS-Vision-Bench/main/README.md). Every quoted validation and test row matches exactly: Qwen3.6-35B-A3B val 0.694/0.859/0.784/0.099/0.822/0.904; Qwen3.6-27B test KIE 0.893; Qwen3.8-27B val 0.800 img->text, 0.812 KIE, 0.236 grounding. Habr 953292 confirms KIE is an F1 over fully matching key-value pairs and does not publish inference settings. The Qwen3.6-27B HF card confirms CC-OCR 81.2/81.9, OCRBench 89.4/90.0 and Apache-2.0. Unsloth card confirms UD-Q6_K 30 GB, UD-Q5_K_M 27.1 GB, UD-Q4_K_XL 22.9 GB. deploy/README.md:260 keeps 35B-A3B 'для исторического сравнения'.",
+    "corrected_claim": "The numbers are correct, but the claim needs four caveats. (1) The README has a seventh Anti-fraud column, which the report drops. Qwen3.8-27B is better there too (0.391 vs 0.232/0.195), though that is irrelevant here. (2) On the 119-item KIE subset, Qwen3.6-27B moves from 0.833 on val to 0.893 on test, which suggests KIE differences of 0.01-0.02 are noise. (3) deploy/ab_speed_test.sh compares two git refs against ONE shared model server and states it 'never changes ... the model service'. It runs one VIDEO per invocation and has no MODEL_PATH/MMPROJ_PATH inputs. A model A/B therefore means restarting sever-model with a different /etc/sever-tsl/local-model.env and running the same ref twice. That is not 'ab_speed_test.sh with only MODEL_PATH... swapped'. (4) The unsloth MTP repo cited for file sizes says '--mmproj [is] not yet supported with MTP', so a vision deployment must use the non-MTP GGUF, whose sizes may differ."
+   },
+   {
+    "title": "Check that the local llama-server Q6 stack is not losing Russian OCR quality (MWS subset plus golden crops)",
+    "status": "confirmed",
+    "reason": "github.com/ggml-org/llama.cpp/issues/22785: opened 7 May 2026, labelled bug-unconfirmed and stale, closed as not planned on 21 Jun 2026. It reports server-only OCR degradation since b8545 (last good b8533), projector qwen3vl_merger. ngxson replied 'The commit mentioned in \"First Bad Commit\" is unrelated'. The MindStudio article (30 Aug 2026) contains the BF16-projector and small-text quotes verbatim. The HF dataset card gives validation counts of 144 full-page OCR and 119 KIE. The README runner supports OpenAI-compatible and vLLM endpoints. deploy/sever-model.service:12 matches the production flags.",
+    "corrected_claim": "The diagnostic is sound, but two details need correcting. The issue's reporter used a community fine-tune ('Qwen3.5-9B-DeepSeek-V4-Flash'), not Qwen3.8, and nobody bisected or confirmed the bug. Production llama.cpp is built from tag archive 'v0.6.0' (deploy/README.md), not a bNNNN build number, so the 'at or before b8533' comparison first requires mapping v0.6.0 to a build/commit."
+   },
+   {
+    "title": "Handle Cyrillic/Latin homoglyphs explicitly: script hint plus mixed-script flag (never rewrite)",
+    "status": "confirmed",
+    "reason": "MDPBench (arxiv.org/html/2603.28130v1) contains the 'erroneously decoding Cyrillic characters that are visually identical to Latin letters' quote. ScriptMoE (arXiv 2609.24058v1, 21 Sep 2026) has 'The Russian gap stems from Cyrillic-Latin character confusion' verbatim. GlotOCR (2604.12978) has the 'Cyrillic and Thai also benefit notably...' sentence verbatim. Habr 966846 (16 Nov 2025) shows 'МОСКВА' -> 'MOCKBA' by PaddleOCR-VL. The OKO README normalizes 'похожие латинские и русские буквы'. sever/image_fusion.py:39-41 is exactly NFKC+casefold. A grep for кирил/latin/латин/cyrill in image_reader.py and image_agent.py finds nothing. A local scan of ground-truth-expanded-provisional.json values finds no mixed-script tokens; the only hit is a 'frame-000040@20.791133с' boundary note and file paths."
+   },
+   {
+    "title": "Use a specialized literal OCR model as a veto on the cited crop (against 'plausible rewriting')",
+    "status": "confirmed",
+    "reason": "FaithC4 (arxiv 2607.21617, v2 dated 02 Sep 2026, Amazon) contains these as stated: 'rewrite it into a more plausible form'; Qwen3-VL 31.33% and Qwen3.5 27.35%; Tesseract/docTR 0%; the no-correction instruction 'reduces its magnitude by roughly 30–50%' for Qwen3-VL-4B and Qwen3.5-4B; pipelines 'median 93.5% vs. 68.6% F1'. MORE (2607.02956) gives HunyuanOCR 99.02, PaddleOCR-VL 98.31, dots.ocr 94.84, Qwen3-VL-2B 96.03, Cyrillic 91.45/90.01. GlotOCR Acc@5 is 86.8/86.0/83.5/79.0/78.0. Habr 1065182 gives PaddleOCR-VL 98.7/110.8 pages/min (A100, batch=1). Habr 993628 has the 'статистически вероятных словоформ' quote. sever/image_agent.py:71 has the abbreviation instruction.",
+    "corrected_claim": "The sources support the idea, but several caveats are missing. FaithC4 covers English, Chinese and Korean only, not Russian. 'Traditional OCR 0%' applies to Tesseract/docTR; PaddleOCR rewrote 7.87%. The 93.5% vs 68.6% figure comes from extracting ASINs (random 10-character strings) from 150 compliance PDFs. In that test the PaddleOCR-VL-1.5 pipeline was the WORST pipeline (74.48%), and direct Qwen3.5-4B reached 93.79%. That weakens PaddleOCR-VL-1.5 as a veto model. MORE cites the HunyuanOCR v1 report (arXiv 2511.19575), so its 99.02 Russian score is not evidence for HunyuanOCR-1.5. In Habr 993628 the 'likely word forms' statement is about handwritten text."
+   },
+   {
+    "title": "Validate embedded ИНН with the existing local checksum as a confirmation veto",
+    "status": "confirmed",
+    "reason": "sever/inn.py:39 defines validate_inn with 10- and 12-digit control digits. inn.py:213 has the reason 'Conflicting literal own-role INNs; no majority/checksum selection'. sever/native_pipeline.py:1045-1046 sets inn_verification 'not_performed' with the quoted reason. Habr 1091144 (ScanReader, Zero-Trust) checks ИНН/СНИЛС/ОГРН/БИК/accounts algorithmically and quotes 'несуществующий ИНН с правильным форматом'.",
+    "corrected_claim": "The mechanism is verified. Three corrections: (a) In Habr 1091144 the 'tenfold amount error' describes an old evaluation-metric bug (scored 98.32%) that the new check rejects, not a VLM output. (b) Content AI 1021880 only suggests that the model could focus on 'проверке ИНН/КПП, дат и сумм'; it reports no tested result. (c) The provisional ground truth has only one labelled printed ИНН (7725382984, inside the 'ИНН/КПП 7725382984/860245001' block), and it passes the checksum. The labelled set therefore cannot measure the gain, and the parser must handle the 'ИНН/КПП digits/digits' layout."
+   },
+   {
+    "title": "Targeted one-crop re-read for single-character confusable disagreements (Й/И, Ё/Е, 6/8, О/0)",
+    "status": "confirmed",
+    "reason": "CC-OCR v2 (arxiv 2605.03903v2, 10 Aug 2026) contains verbatim 'Shape-similar substitution instead results from confusion between visually similar characters' and 'Ambiguous seal patterns frequently induce hallucinated but visually plausible text'.",
+    "corrected_claim": "The MDPBench Hindi quote is a paraphrase. The paper says models 'tend to retain only the base characters and ignore crucial modifiers', not 'keep base characters and drop vowel diacritics'. As the report admits, no source quantifies Й/И or Ё/Е confusion in Russian, so the proposal rests on project data that has not been measured yet."
+   },
+   {
+    "title": "Ask for grounding boxes in the Qwen-native relative 0-1000 integer convention",
+    "status": "confirmed",
+    "reason": "In QwenLM/Qwen3-VL issue #1616, HumanZhong (no role shown) wrote on 16 Oct 2025 'It is recommended to use option A for qwen2.5-vl and to use option B for qwen3-vl', where B means relative 0-1000 coordinates. Habr 953292 confirms MWS uses absolute 0-2048 coordinates; the authors first tried 0-1000 and switched. sever/image_agent.py:36 has Coordinate as float ge=0 le=1, and line 75 has the '[0, 1]' instruction.",
+    "corrected_claim": "The citation is accurate but weak evidence. The advice is about formatting FINE-TUNING data for Qwen2.5-VL vs Qwen3-VL in LLaMA-Factory, not inference prompting, and the commenter's affiliation is unknown. The only follow-up in the thread reports many wrong boxes on a KIE task. Nothing establishes the convention for Qwen3.6 or Qwen3.8."
+   },
+   {
+    "title": "Set expectations and consider an 'OCR draft + VLM verify' path for УПД/ТОРГ-12",
+    "status": "confirmed",
+    "reason": "Habr contentai 1021880 (10 Apr) gives the PTR figures as stated: УПД ContentCapture 2.67%, VLM-only 4%, hybrid LLaMA-4 36.67%, Qwen2.5-VL-7B 23.3%; ТОРГ-12 IDP-only 0%, best cloud VLM about 41%, hybrid 80%, local Mistral 51%. The documents are synthetic and near-ideal. FaithC4 gives 93.5% vs 68.6%.",
+    "corrected_claim": "One cited claim is refuted. Habr 993628 does NOT say VLMs 'confuse nearby number and date fields'. It says universal VLMs make more table-structure errors, and that line/column splitting errors are a general problem. The FaithC4 pipeline figure comes from random ASIN strings, and its PaddleOCR-VL-1.5 pipeline scored below the direct VLMs."
+   }
+  ],
+  "missing": [
+   "Segmentation is the largest measured accuracy loss (8/20 target intervals missed), and the report proposes nothing for it; all findings target reading.",
+   "MWS also lists Qwen3.8 Flash (val img->text 0.842, KIE 0.833, grounding 0.301; test 0.836/0.832/0.264), which beats Qwen3.8-27B on all three axes. The report never checks whether Qwen3.8 Flash is open-weight and small enough to run locally. If it is, it would be the most obvious A/B candidate, since it keeps the grounding advantage.",
+   "Qwen3.6-27B and 35B-A3B use hybrid Gated DeltaNet linear attention (the 27B card shows 64 layers: 48 linear, 16 full attention; the report says '16 of 65'). llama.cpp's prompt-prefix reuse for recurrent/linear-attention state is more limited than for pure KV models. About 73% of V7 input tokens were prefix-cache reads, so a swap could lose cache hits and erase part of the MoE speed gain. This needs measuring, for example via cache_n in the phase1 per-call counters.",
+   "The cited unsloth 35B-A3B MTP GGUF does not support --mmproj with MTP. A vision deployment needs the non-MTP GGUF and must keep enable_thinking=false; Qwen3.6 defaults to thinking.",
+   "deploy/ab_speed_test.sh A/Bs git refs against a fixed model server and explicitly never touches the model service. A model A/B needs a separate procedure (swap local-model.env, restart sever-model, rerun the same ref) and must still respect the shared inference lock.",
+   "Production llama.cpp is tag v0.6.0, not a bNNNN build, so the b8533/b8545 regression check needs a commit mapping.",
+   "Cotype Light 3 (MWS AI, 9B): no open weights or license was found, and its scores come from the vendor's own benchmark. Treat it as not locally usable until weights are published.",
+   "HunyuanOCR-1.5 Cyrillic evidence: MORE evaluated HunyuanOCR v1 (cites arXiv 2511.19575), so the 99.02 Russian score does not transfer to 1.5. The Tencent Hunyuan Community License territory restrictions should be checked for a Russian deployment.",
+   "PaddleOCR-VL-1.5: ServerFlow places it in the bottom pair overall and weak on tables and handwriting, not 'last on Russian tables and handwriting'. Its license is still unverified in the fetched sources.",
+   "No cost estimate for the 4 hard leaves (72% of calls), which are the main speed lever: e.g. whether simply capping per-leaf calls or frames would beat any model swap."
+  ]
+ }
+}
