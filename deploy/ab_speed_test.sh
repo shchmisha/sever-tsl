@@ -31,7 +31,7 @@ IDLE_MAX_WAIT_SECONDS=${IDLE_MAX_WAIT_SECONDS:-43200}
 # The production release's interpreter is readable by the sever user; uv's own
 # managed Python would live under /root, which the recognition user cannot run.
 PYTHON=${PYTHON:-$(readlink -f /opt/sever-tsl/current/.venv/bin/python3 2>/dev/null || true)}
-UV=${UV:-$(command -v uv || echo /root/.local/bin/uv)}
+UV=${UV:-$(command -v uv || echo /opt/sever-tsl/bootstrap/bin/uv)}
 
 say() { printf '%s %s\n' "$(date -u +%H:%M:%S)" "$*" >&2; }
 fail() { say "STOP: $*"; exit 1; }
@@ -43,6 +43,7 @@ command -v git >/dev/null || fail "git is not installed"
 [ -f "$BUNDLE" ] || fail "missing git bundle $BUNDLE"
 [ -r "$VIDEO" ] || fail "missing video $VIDEO"
 [ -r "$ENV_FILE" ] || fail "missing $ENV_FILE"
+[ -f "$RUNS_DIR/.inference-evaluation.lock" ] || fail "missing shared lock $RUNS_DIR/.inference-evaluation.lock"
 curl -sf "$MODEL_URL/health" >/dev/null || fail "model server $MODEL_URL is not healthy"
 if [ "$LEAF_CONCURRENCY_B" -gt 1 ]; then
   slots=$(curl -sf "$MODEL_URL/props" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("total_slots", 1))')
@@ -104,7 +105,11 @@ run_ref() {  # run_ref LABEL RELEASE_DIR LEAF_CONCURRENCY
   nvidia-smi --query-gpu=timestamp,memory.used,memory.total,utilization.gpu --format=csv -l 5 \
     > "$OUT/gpu-$label.csv" 2>/dev/null & gpu_pid=$!
   local before; before=$(date -u +%s)
-  runuser -u sever -- env -i PATH=/usr/local/bin:/usr/bin:/bin HOME=/srv/sever "${RUN_ENV[@]}" \
+  # Same working directory and shared inference lock as the API service; the
+  # env file's own values come later and win.
+  cd /srv/sever
+  runuser -u sever -- env -i PATH=/usr/local/bin:/usr/bin:/bin HOME=/srv/sever \
+      SEVER_RUNS_DIR="$RUNS_DIR" SEVER_INFERENCE_GATE_PATH="$RUNS_DIR/.inference-evaluation.lock" "${RUN_ENV[@]}" \
       HARNESS_LEAF_CONCURRENCY="$concurrency" PYDANTIC_DISABLE_PLUGINS=__all__ PYDANTIC_AI_NO_BANNER=1 \
       PYTHONDONTWRITEBYTECODE=1 "$dir/.venv/bin/sever" process "$VIDEO" --out "$OUT/$label" \
       --model "$MODEL_NAME" --max-requests "$MAX_REQUESTS" --max-tokens "$MAX_TOKENS" \
