@@ -176,8 +176,9 @@ def test_local_model_request_allowance_does_not_claim_global_exhaustion(frame, t
     from pydantic_ai.exceptions import UsageLimitExceeded
     settings = config(max_requests=shared_limit)
     async def exhaust(self, *args, deps, usage, **kwargs):
+        # The run counts its own requests; the shared hooks record attempts.
         deps.requests_started = 8
-        usage.requests = usage.attempted_requests = 8
+        usage.requests = deps.config.usage.attempted_requests = 8
         raise UsageLimitExceeded("The next request would exceed the request_limit of 8")
     monkeypatch.setattr(image_agent.Agent, "run", exhaust)
     with pytest.raises(expected) as caught:
@@ -431,3 +432,34 @@ def test_last_shared_request_reserves_submission_and_charges_actual_call(frame, 
     with pytest.raises(BatchBudgetExceeded):
         run(frame, tmp_path, respond, settings=settings)
     assert len(calls) == 1 and settings.usage.requests == 3
+
+
+def test_concurrent_frame_reads_keep_their_own_request_allowance(frame, tmp_path):
+    """Two interleaved agent runs share the batch budget, never each other's cap."""
+    settings = config(max_requests=40)
+
+    def model():
+        calls = []
+        async def respond(messages, info):
+            calls.append(1)
+            await asyncio.sleep(0)
+            if len(calls) <= 6:
+                return zoom_call(call_id=f"crop-{len(calls)}")
+            return response(reading(last_panel(messages)))
+        return FunctionModel(respond, model_name="offline-function-model")
+
+    async def both():
+        return await asyncio.gather(*(read_frame_agent(frame, source_id="s", page_id="p", config=settings,
+            cache_dir=tmp_path / f"evidence-{n}", trace_path=tmp_path / "trace.jsonl", rotation=90,
+            model=model()) for n in range(2)))
+
+    results = asyncio.run(both())
+    # Each run makes 7 requests; with a shared-relative cap the second run would
+    # have hit 8 after the first run's requests and stopped as a budget failure.
+    assert [r["recognition"]["model_requests"] for r in results] == [7, 7]
+    assert settings.usage.requests == settings.usage.attempted_requests == 14
+    assert settings.usage.tool_calls == 12
+    for n in range(2):
+        evidence = json.loads(next((tmp_path / f"evidence-{n}").glob("image-agent-*.json")).read_text())
+        assert evidence["usage_delta"] == {"requests": 7, "input_tokens": 6 * 30 + 50,
+                                           "output_tokens": 6 * 10 + 20, "tool_calls": 6}

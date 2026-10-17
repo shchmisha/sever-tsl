@@ -19,12 +19,12 @@ from pydantic_ai.capabilities.hooks import Hooks
 from pydantic_ai.exceptions import UsageLimitExceeded
 from pydantic_ai.models import Model
 from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.usage import UsageLimits
+from pydantic_ai.usage import RunUsage, UsageLimits
 from openai import AsyncOpenAI
 
 from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProviderError,
                      _PageDeps, _RouterAIChatModel, _after_request, _before_request,
-                     _dump, _trace, _write_cache as _write_evidence)
+                     _close_run_usage, _dump, _settle_run_usage, _trace, _write_cache as _write_evidence)
 from .image_detail import _rotate, _source_box
 from .image_reader import (EVIDENCE_ORIGIN, IMAGE_SCHEMA_VERSION, INSTRUCTIONS,
                            _NativeReadingResponse, _inverse_affine, _sha,
@@ -210,13 +210,12 @@ async def read_frame_agent(frame: dict, *, source_id: str, page_id: str, config:
         "zoom_image_limit": MAX_ZOOM_IMAGES, "prompt_sha256": _sha((instructions + prompt).encode())}
     evidence_path = cache_dir / f"image-agent-{source.run_id}.json"
     deps = _PageDeps({}, source_id, page_id, trace_path, effective)
-    before = asdict(effective.usage)
+    run_usage = RunUsage()
     raw_responses, tool_proofs, tool_declines = [], [], []
     owned_client, completed = None, False
 
     def delta():
-        return {key: asdict(effective.usage)[key] - before[key]
-                for key in ("requests", "input_tokens", "output_tokens", "tool_calls")}
+        return {key: getattr(run_usage, key) for key in ("requests", "input_tokens", "output_tokens", "tool_calls")}
 
     def checkpoint():
         # Updating this run's output evidence never turns it into model input.
@@ -325,11 +324,7 @@ async def read_frame_agent(frame: dict, *, source_id: str, page_id: str, config:
 
         run = await agent.run([prompt, f"Actual source panel_id={identifier}; whole upright frame; "
             f"pixels={panel['upload_pixel_size']}", BinaryContent(data, media_type="image/jpeg")],
-            deps=deps, usage=effective.usage,
-            usage_limits=UsageLimits(request_limit=min(effective.max_requests or effective.request_limit,
-                                                       effective.usage.requests + MAX_MODEL_REQUESTS),
-                input_tokens_limit=effective.input_tokens_limit, output_tokens_limit=effective.output_tokens_limit,
-                total_tokens_limit=effective.max_tokens),
+            deps=deps, usage=run_usage, usage_limits=UsageLimits(request_limit=MAX_MODEL_REQUESTS),
             model_settings={"max_tokens": effective.max_output_tokens, "temperature": 0,
                             "tool_choice": "auto", "timeout": effective.timeout_seconds})
         source.check_unchanged()
@@ -348,8 +343,7 @@ async def read_frame_agent(frame: dict, *, source_id: str, page_id: str, config:
         completed = True
         return result
     except Exception as exc:
-        committed = effective.usage.requests - before["requests"]
-        effective.usage.requests += max(0, deps.requests_started - committed)
+        _settle_run_usage(effective, run_usage, deps)
         status = getattr(exc, "status_code", None)
         fatal = isinstance(exc, FatalProviderError) or status in {400, 401, 402, 403}
         # Response usage is charged by the SDK before after-request hooks. A
@@ -395,6 +389,7 @@ async def read_frame_agent(frame: dict, *, source_id: str, page_id: str, config:
             raise AnalysisError(str(exc)) from None
         raise AnalysisError(f"Image-agent reading failed ({type(exc).__name__}); no automatic retry") from None
     finally:
+        _close_run_usage(effective, run_usage)
         if owned_client is not None:
             try:
                 await owned_client.close()

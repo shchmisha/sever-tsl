@@ -20,12 +20,12 @@ from pydantic_ai.capabilities.hooks import Hooks
 from pydantic_ai.exceptions import UsageLimitExceeded
 from pydantic_ai.models import Model
 from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.usage import UsageLimits
+from pydantic_ai.usage import RunUsage, UsageLimits
 from openai import AsyncOpenAI
 
 from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProviderError,
                      _PageDeps, _RouterAIChatModel, _after_request, _before_request,
-                     _dump, _trace, _write_cache as _write_evidence)
+                     _close_run_usage, _dump, _settle_run_usage, _trace, _write_cache as _write_evidence)
 from .normalize import normalize
 from .schema import DocumentResult, Evidence, FieldStatus, FieldValue, FIELDS_BY_TYPE
 
@@ -492,7 +492,7 @@ async def read_frame(frame: dict, *, source_id: str, page_id: str, config: Agent
                                    max_retries=0, timeout=effective.timeout_seconds)
         model = _RouterAIChatModel(effective.model_name, provider=OpenAIProvider(openai_client=owned_client))
     deps = _PageDeps({}, source_id, page_id, trace_path, effective)
-    before = asdict(effective.usage)
+    run_usage = RunUsage()
     observation_metadata = {k: v for k, v in metadata.items() if k not in {"source_id", "page_id"}}
     completed = False
     try:
@@ -507,16 +507,12 @@ async def read_frame(frame: dict, *, source_id: str, page_id: str, config: Agent
         content = [prompt]
         for identifier, data in uploads:
             content.extend([f"Actual source panel_id={identifier}", BinaryContent(data, media_type="image/jpeg")])
-        run = await agent.run(content, deps=deps, usage=effective.usage,
-            usage_limits=UsageLimits(request_limit=min(effective.max_requests or effective.request_limit,
-                                                       effective.usage.requests + 1),
-                input_tokens_limit=effective.input_tokens_limit, output_tokens_limit=effective.output_tokens_limit,
-                total_tokens_limit=effective.max_tokens),
+        run = await agent.run(content, deps=deps, usage=run_usage, usage_limits=UsageLimits(request_limit=1),
             model_settings={"max_tokens": effective.max_output_tokens, "temperature": 0,
                             "tool_choice": "none", "timeout": effective.timeout_seconds})
         decision = run.output.reading
         result = _validate_reading(decision, proof, source_id=source_id, page_id=page_id, model_identity=model_identity)
-        delta = {k: asdict(effective.usage)[k] - before[k] for k in ("requests", "input_tokens", "output_tokens", "tool_calls")}
+        delta = {k: getattr(run_usage, k) for k in ("requests", "input_tokens", "output_tokens", "tool_calls")}
         raw_response_parts = [asdict(part) for message in run.new_messages() if isinstance(message, ModelResponse)
                               for part in message.parts]
         _trace(trace_path, "image_reader_reading", source_id, page_id, evidence_key=key,
@@ -530,12 +526,11 @@ async def read_frame(frame: dict, *, source_id: str, page_id: str, config: Agent
         completed = True
         return result
     except Exception as exc:
-        committed = effective.usage.requests - before["requests"]
-        effective.usage.requests += max(0, deps.requests_started - committed)
+        _settle_run_usage(effective, run_usage, deps)
         status = getattr(exc, "status_code", None)
         fatal = isinstance(exc, FatalProviderError) or status in {400, 401, 402, 403}
         exhausted = isinstance(exc, (BatchBudgetExceeded, UsageLimitExceeded))
-        delta = {k: asdict(effective.usage)[k] - before[k] for k in ("requests", "input_tokens", "output_tokens", "tool_calls")}
+        delta = {k: getattr(run_usage, k) for k in ("requests", "input_tokens", "output_tokens", "tool_calls")}
         proof_error = None
         try:
             _trace(trace_path, "image_reader_error", source_id, page_id, error_type=type(exc).__name__,
@@ -560,6 +555,7 @@ async def read_frame(frame: dict, *, source_id: str, page_id: str, config: Agent
             raise AnalysisError(f"Cannot preserve image-reading failure proof ({type(proof_error).__name__})") from None
         raise AnalysisError(f"Image reading failed ({type(exc).__name__}); no automatic retry") from None
     finally:
+        _close_run_usage(effective, run_usage)
         if owned_client is not None:
             try:
                 await owned_client.close()

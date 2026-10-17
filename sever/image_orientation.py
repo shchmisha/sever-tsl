@@ -18,11 +18,11 @@ from pydantic_ai.capabilities.hooks import Hooks
 from pydantic_ai.exceptions import UnexpectedModelBehavior, UsageLimitExceeded
 from pydantic_ai.models import Model
 from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.usage import UsageLimits
+from pydantic_ai.usage import RunUsage, UsageLimits
 
 from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProviderError,
                      _PageDeps, _RouterAIChatModel, _after_request, _before_request,
-                     _dump, _trace, _write_cache as _write_evidence)
+                     _close_run_usage, _dump, _settle_run_usage, _trace, _write_cache as _write_evidence)
 
 ORIENTATION_VERSION = "native-source-orientation-v2"
 ORIENTATION_OUTPUT_LIMIT = 128
@@ -110,7 +110,7 @@ async def choose_reading_rotation(frame: dict, *, source_id: str, page_id: str,
                                    max_retries=0, timeout=effective.timeout_seconds)
         model = _RouterAIChatModel(effective.model_name, provider=OpenAIProvider(openai_client=owned_client))
     deps = _PageDeps({}, source_id, page_id, trace_path, effective)
-    before = asdict(effective.usage)
+    run_usage = RunUsage()
     raw_response_parts = []
     completed = False
     schema_fallback = False
@@ -120,8 +120,7 @@ async def choose_reading_rotation(frame: dict, *, source_id: str, page_id: str,
         return await _after_request(ctx, request_context, response)
 
     def delta():
-        after = asdict(effective.usage)
-        return {name: after[name] - before[name]
+        return {name: getattr(run_usage, name)
                 for name in ("requests", "input_tokens", "output_tokens", "tool_calls")}
 
     try:
@@ -139,11 +138,8 @@ async def choose_reading_rotation(frame: dict, *, source_id: str, page_id: str,
         content = [prompt]
         for identifier, data in uploads:
             content.extend([f"Actual source panel_id={identifier}", BinaryContent(data, media_type="image/jpeg")])
-        run = await agent.run(content, deps=deps, usage=effective.usage,
-            usage_limits=UsageLimits(request_limit=min(effective.max_requests or effective.request_limit,
-                                                       effective.usage.requests + 1),
-                input_tokens_limit=effective.input_tokens_limit, output_tokens_limit=effective.output_tokens_limit,
-                total_tokens_limit=effective.max_tokens),
+        run = await agent.run(content, deps=deps, usage=run_usage,
+            usage_limits=UsageLimits(request_limit=1),
             model_settings={"max_tokens": output_limit, "temperature": 0,
                             "tool_choice": "none", "timeout": effective.timeout_seconds})
         decision = run.output.model_dump(mode="json")
@@ -158,8 +154,7 @@ async def choose_reading_rotation(frame: dict, *, source_id: str, page_id: str,
                 "proof": proof, "evidence_path": str(evidence_path), "usage_delta": record["usage_delta"],
                 "response_reuse": False}
     except Exception as exc:
-        committed = effective.usage.requests - before["requests"]
-        effective.usage.requests += max(0, deps.requests_started - committed)
+        _settle_run_usage(effective, run_usage, deps)
         status = getattr(exc, "status_code", None)
         fatal = isinstance(exc, FatalProviderError) or status in {400, 401, 402, 403}
         exhausted = isinstance(exc, (BatchBudgetExceeded, UsageLimitExceeded))
@@ -190,6 +185,7 @@ async def choose_reading_rotation(frame: dict, *, source_id: str, page_id: str,
             raise OrientationSchemaError("Orientation response did not satisfy its schema; no automatic retry") from None
         raise AnalysisError(f"Orientation reading failed ({type(exc).__name__}); no automatic retry") from None
     finally:
+        _close_run_usage(effective, run_usage)
         if owned_client is not None:
             try:
                 await owned_client.close()

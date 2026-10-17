@@ -13,12 +13,12 @@ from pydantic_ai.capabilities.hooks import Hooks
 from pydantic_ai.exceptions import UsageLimitExceeded
 from pydantic_ai.models import Model
 from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.usage import UsageLimits
+from pydantic_ai.usage import RunUsage, UsageLimits
 from openai import AsyncOpenAI
 
 from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProviderError,
                      _PageDeps, _RouterAIChatModel, _after_request, _before_request,
-                     _dump, _trace, _write_cache as _write_evidence)
+                     _close_run_usage, _dump, _settle_run_usage, _trace, _write_cache as _write_evidence)
 from .image_agent import Coordinate, EvidencePersistenceError, _Source
 from .image_fusion import _field_comparison
 from .image_reader import (EVIDENCE_ORIGIN, TRNFields, TTNFields, TORGFields,
@@ -394,13 +394,12 @@ async def read_leaf_conflicts(frames: list[dict], *, source_id: str, page_id: st
         "response_schema_sha256": _sha(_dump(response_model.model_json_schema()).encode())}
     evidence_path = cache_dir / f"image-conflicts-{uuid4().hex}.json"
     deps = _PageDeps({}, source_id, page_id, trace_path, effective)
-    before = asdict(effective.usage)
+    run_usage = RunUsage()
     raw_responses, tool_proofs, tool_declines = [], [], []
     owned_client, completed = None, False
 
     def delta():
-        return {key: asdict(effective.usage)[key] - before[key]
-                for key in ("requests", "input_tokens", "output_tokens", "tool_calls")}
+        return {key: getattr(run_usage, key) for key in ("requests", "input_tokens", "output_tokens", "tool_calls")}
 
     def proof():
         return {"sources": {label: source.proof for label, source in sources.items()},
@@ -524,10 +523,8 @@ async def read_leaf_conflicts(frames: list[dict], *, source_id: str, page_id: st
             return ToolReturn(return_value={"panels": panels}, content=contents,
                 metadata={"source_panels": proofs})
 
-        run = await agent.run(inputs, deps=deps, usage=effective.usage,
-            usage_limits=UsageLimits(request_limit=min(effective.max_requests or effective.request_limit,
-                effective.usage.requests + MAX_MODEL_REQUESTS), input_tokens_limit=effective.input_tokens_limit,
-                output_tokens_limit=effective.output_tokens_limit, total_tokens_limit=effective.max_tokens),
+        run = await agent.run(inputs, deps=deps, usage=run_usage,
+            usage_limits=UsageLimits(request_limit=MAX_MODEL_REQUESTS),
             model_settings={"max_tokens": effective.max_output_tokens, "temperature": 0,
                             "tool_choice": "auto", "timeout": effective.timeout_seconds})
         unchanged()
@@ -559,8 +556,7 @@ async def read_leaf_conflicts(frames: list[dict], *, source_id: str, page_id: st
         completed = True
         return result
     except Exception as exc:
-        committed = effective.usage.requests - before["requests"]
-        effective.usage.requests += max(0, deps.requests_started - committed)
+        _settle_run_usage(effective, run_usage, deps)
         status = getattr(exc, "status_code", None)
         fatal = isinstance(exc, FatalProviderError) or status in {400, 401, 402, 403}
         usage = effective.usage
@@ -591,6 +587,7 @@ async def read_leaf_conflicts(frames: list[dict], *, source_id: str, page_id: st
             raise EvidencePersistenceError(f"Cannot preserve joint-review proof ({type(proof_error).__name__})") from None
         raise AnalysisError(f"Joint pixel review failed ({type(exc).__name__}); no automatic retry") from None
     finally:
+        _close_run_usage(effective, run_usage)
         if owned_client is not None:
             try:
                 await owned_client.close()

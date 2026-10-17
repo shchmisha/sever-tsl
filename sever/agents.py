@@ -24,6 +24,7 @@ from pydantic_ai.models import Model
 from pydantic_ai.models import ModelRequestContext
 from pydantic_ai.models.openai import OpenAIChatModel
 from pydantic_ai.providers.openai import OpenAIProvider
+from pydantic_ai.exceptions import UsageLimitExceeded
 from pydantic_ai.usage import RunUsage, UsageLimits
 from openai import AsyncOpenAI
 
@@ -475,11 +476,35 @@ class _PageDeps:
     request_started_monotonic: float | None = None
 
 
+def _private_run_usage(ctx) -> RunUsage | None:
+    """The run's own usage when it is not the shared batch usage object.
+
+    Native image calls run with a private RunUsage so that concurrent leaves do
+    not consume each other's per-call limits. These hooks mirror each response's
+    tokens into the shared batch usage at once (as the framework counts tokens
+    before the hooks) and enforce the shared limits themselves; the caller adds
+    the run's requests and tool calls when it ends (`_close_run_usage`).
+    """
+    usage = getattr(ctx, "usage", None)
+    shared = getattr(getattr(getattr(ctx, "deps", None), "config", None), "usage", None)
+    return usage if usage is not None and shared is not None and usage is not shared else None
+
+
+def _shared_tokens_exceeded(config: AgentConfig) -> bool:
+    usage = config.usage
+    return (usage.input_tokens > config.input_tokens_limit or usage.output_tokens > config.output_tokens_limit
+            or (config.max_tokens is not None and usage.input_tokens + usage.output_tokens > config.max_tokens))
+
+
 async def _before_request(ctx: RunContext[_PageDeps], request_context: ModelRequestContext) -> ModelRequestContext:
     deps = ctx.deps
     attempts = max(getattr(deps.config.usage, "attempted_requests", 0), deps.config.usage.requests)
     if attempts >= (deps.config.max_requests or deps.config.request_limit):
         raise BatchBudgetExceeded("Shared request budget exhausted; no model call made")
+    if _private_run_usage(ctx) is not None and (
+            deps.config.usage.input_tokens >= deps.config.input_tokens_limit
+            or deps.config.usage.output_tokens >= deps.config.output_tokens_limit):
+        raise BatchBudgetExceeded("Shared token budget exhausted; no model call made")
     # Local conservative preflight; no token-count API or credential serialization.
     import math
     pieces=[]
@@ -522,6 +547,9 @@ async def _before_request(ctx: RunContext[_PageDeps], request_context: ModelRequ
 
 
 async def _after_request(ctx: RunContext[_PageDeps], request_context: ModelRequestContext, response):
+    private = _private_run_usage(ctx) is not None
+    if private:
+        ctx.deps.config.usage.incr(response.usage)
     details = response.provider_details or {}
     cost = details.get("routerai_cost_rub")
     usage = ctx.deps.config.usage
@@ -549,7 +577,20 @@ async def _after_request(ctx: RunContext[_PageDeps], request_context: ModelReque
            elapsed_seconds=round(time.monotonic() - started, 3) if started is not None else None,
            server_timings=details.get("server_timings"),
            response_parts=[asdict(part) for part in response.parts])
+    if private and _shared_tokens_exceeded(ctx.deps.config):
+        raise UsageLimitExceeded("Shared token budget exceeded by this response")
     return response
+
+
+def _settle_run_usage(config: AgentConfig, run_usage: RunUsage, deps: "_PageDeps") -> None:
+    """After a failure, charge started requests without a committed response to the run."""
+    run_usage.requests += max(0, deps.requests_started - run_usage.requests)
+
+
+def _close_run_usage(config: AgentConfig, run_usage: RunUsage) -> None:
+    """Add a finished run's requests and tool calls to the shared batch usage once."""
+    config.usage.requests += run_usage.requests
+    config.usage.tool_calls += run_usage.tool_calls
 
 
 def _create_agent(model: Model) -> Agent[_PageDeps, ExtractionDecision]:

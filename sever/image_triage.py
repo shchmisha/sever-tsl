@@ -18,11 +18,11 @@ from pydantic_ai.capabilities.hooks import Hooks
 from pydantic_ai.exceptions import UnexpectedModelBehavior, UsageLimitExceeded
 from pydantic_ai.models import Model
 from pydantic_ai.providers.openai import OpenAIProvider
-from pydantic_ai.usage import UsageLimits
+from pydantic_ai.usage import RunUsage, UsageLimits
 
 from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProviderError,
                      _PageDeps, _RouterAIChatModel, _after_request, _before_request,
-                     _dump, _trace, _write_cache as _write_evidence)
+                     _close_run_usage, _dump, _settle_run_usage, _trace, _write_cache as _write_evidence)
 from .image_agent import _Source
 from .image_reader import EVIDENCE_ORIGIN, _sha
 from .schema import DocumentResult, Evidence
@@ -108,7 +108,7 @@ async def triage_frame(frame: dict, *, rotation: int, source_id: str, page_id: s
                                    max_retries=0, timeout=effective.timeout_seconds)
         model = _RouterAIChatModel(effective.model_name, provider=OpenAIProvider(openai_client=owned_client))
     deps = _PageDeps({}, source_id, page_id, trace_path, effective)
-    before = asdict(effective.usage)
+    run_usage = RunUsage()
     raw_response_parts = []
     completed = False
 
@@ -117,8 +117,7 @@ async def triage_frame(frame: dict, *, rotation: int, source_id: str, page_id: s
         return await _after_request(ctx, request_context, response)
 
     def delta():
-        after = asdict(effective.usage)
-        return {name: after[name] - before[name]
+        return {name: getattr(run_usage, name)
                 for name in ("requests", "input_tokens", "output_tokens", "tool_calls")}
 
     try:
@@ -133,11 +132,8 @@ async def triage_frame(frame: dict, *, rotation: int, source_id: str, page_id: s
             capabilities=[Hooks(before_model_request=_before_request, after_model_request=received)])
         run = await agent.run([prompt, f"Actual source panel_id={identifier}; whole upright frame; "
                                f"pixels={panel['upload_pixel_size']}", BinaryContent(data, media_type="image/jpeg")],
-            deps=deps, usage=effective.usage,
-            usage_limits=UsageLimits(request_limit=min(effective.max_requests or effective.request_limit,
-                                                       effective.usage.requests + 1),
-                input_tokens_limit=effective.input_tokens_limit, output_tokens_limit=effective.output_tokens_limit,
-                total_tokens_limit=effective.max_tokens),
+            deps=deps, usage=run_usage,
+            usage_limits=UsageLimits(request_limit=1),
             model_settings={"max_tokens": output_limit, "temperature": 0,
                             "tool_choice": "none", "timeout": effective.timeout_seconds})
         source.check_unchanged()
@@ -156,8 +152,7 @@ async def triage_frame(frame: dict, *, rotation: int, source_id: str, page_id: s
         return {"form_scope": decision.form_scope, "observed_form": decision.observed_form,
                 "evidence_path": str(evidence_path), "result": result}
     except Exception as exc:
-        committed = effective.usage.requests - before["requests"]
-        effective.usage.requests += max(0, deps.requests_started - committed)
+        _settle_run_usage(effective, run_usage, deps)
         status = getattr(exc, "status_code", None)
         fatal = isinstance(exc, FatalProviderError) or status in {400, 401, 402, 403}
         exhausted = isinstance(exc, (BatchBudgetExceeded, UsageLimitExceeded))
@@ -182,6 +177,7 @@ async def triage_frame(frame: dict, *, rotation: int, source_id: str, page_id: s
             raise TriageSchemaError("Triage response did not satisfy its schema; no automatic retry") from None
         raise AnalysisError(f"Triage reading failed ({type(exc).__name__}); no automatic retry") from None
     finally:
+        _close_run_usage(effective, run_usage)
         if owned_client is not None:
             try:
                 await owned_client.close()
