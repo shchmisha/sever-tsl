@@ -56,3 +56,39 @@ def test_local_trace_records_origin_and_no_provider_bill(tmp_path):
     assert row["provider_kind"] == "local" and row["model_base_url"] == config.base_url
     assert row["billing"] == {"kind": "local_inference", "value": 0, "currency": None}
     assert config.usage.actual_cost_rub == config.usage.costed_requests == 0
+
+
+def test_llama_server_timings_are_kept_in_provider_details():
+    from openai.types.chat import ChatCompletion
+    from sever.agents import _RouterAIChatModel, _server_timings
+
+    completion = ChatCompletion.model_validate({
+        "id": "x", "object": "chat.completion", "created": 0, "model": "local",
+        "choices": [{"index": 0, "finish_reason": "stop",
+                     "message": {"role": "assistant", "content": "{}"}}],
+        "usage": {"prompt_tokens": 12000, "completion_tokens": 150, "total_tokens": 12150},
+        "timings": {"cache_n": 9000, "prompt_n": 3000, "prompt_ms": 1100.5, "predicted_n": 150,
+                    "predicted_ms": 2500.0, "predicted_per_second": 60.0, "unexpected": "dropped",
+                    "prompt_per_second": float("nan")}})
+    model = _RouterAIChatModel.__new__(_RouterAIChatModel)
+    details = model._process_provider_details(completion)
+    assert details["server_timings"] == {"cache_n": 9000, "prompt_n": 3000, "prompt_ms": 1100.5,
+        "predicted_n": 150, "predicted_ms": 2500.0, "predicted_per_second": 60.0}
+    assert _server_timings({}) is None and _server_timings({"timings": {"note": "x"}}) is None
+
+
+def test_trace_records_wall_time_cache_reads_and_server_timings(tmp_path, monkeypatch):
+    import sever.agents as agents
+
+    config = AgentConfig(provider_kind="local", base_url="http://localhost:8090/v1")
+    path = tmp_path / "trace.jsonl"
+    deps = SimpleNamespace(config=config, trace_path=path, source_id="source", page_id="page",
+                           request_started_monotonic=100.0)
+    monkeypatch.setattr(agents.time, "monotonic", lambda: 104.25)
+    timings = {"cache_n": 9000, "prompt_n": 3000, "predicted_n": 150, "predicted_ms": 2500.0}
+    response = ModelResponse(parts=[TextPart("{}")], provider_details={"server_timings": timings},
+                             usage=RequestUsage(input_tokens=12000, output_tokens=150, cache_read_tokens=9000))
+    asyncio.run(_after_request(SimpleNamespace(deps=deps), None, response))
+    row = json.loads(path.read_text())
+    assert row["elapsed_seconds"] == 4.25 and row["server_timings"] == timings
+    assert row["cache_read_tokens"] == 9000 and deps.request_started_monotonic is None

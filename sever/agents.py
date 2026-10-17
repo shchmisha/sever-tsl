@@ -13,6 +13,7 @@ import json
 import math
 from pathlib import Path
 import re
+import time
 from typing import Any
 from uuid import uuid4
 
@@ -174,7 +175,28 @@ class _RouterAIChatModel(OpenAIChatModel):
         cost = getattr(response.usage, "cost", None) if response.usage else None
         if isinstance(cost, (int, float)) and math.isfinite(cost) and cost >= 0:
             details["routerai_cost_rub"] = float(cost)
+        timings = _server_timings(getattr(response, "model_extra", None) or {})
+        if timings:
+            details["server_timings"] = timings
         return details
+
+
+_SERVER_TIMING_KEYS = ("cache_n", "prompt_n", "prompt_ms", "prompt_per_second",
+                       "predicted_n", "predicted_ms", "predicted_per_second")
+
+
+def _server_timings(extra: dict) -> dict | None:
+    """llama.cpp's per-request split of cached, prefilled and generated tokens.
+
+    Only finite numbers under known keys are kept; other providers return none.
+    """
+    raw = extra.get("timings")
+    if not isinstance(raw, dict):
+        return None
+    kept = {key: raw[key] for key in _SERVER_TIMING_KEYS
+            if isinstance(raw.get(key), (int, float)) and not isinstance(raw.get(key), bool)
+            and math.isfinite(raw[key])}
+    return kept or None
 
 
 def _dump(value: Any) -> str:
@@ -450,6 +472,7 @@ class _PageDeps:
     trace_path: Path
     config: AgentConfig
     requests_started: int = 0
+    request_started_monotonic: float | None = None
 
 
 async def _before_request(ctx: RunContext[_PageDeps], request_context: ModelRequestContext) -> ModelRequestContext:
@@ -492,6 +515,7 @@ async def _before_request(ctx: RunContext[_PageDeps], request_context: ModelRequ
         raise BatchBudgetExceeded("Estimated next request exceeds the shared token budget; no model call made")
     deps.requests_started += 1
     deps.config.usage.attempted_requests = attempts + 1
+    deps.request_started_monotonic = time.monotonic()
     _trace(deps.trace_path, "model_request_started", deps.source_id, deps.page_id,
            page_request=deps.requests_started, batch_attempted_requests=attempts + 1)
     return request_context
@@ -515,9 +539,15 @@ async def _after_request(ctx: RunContext[_PageDeps], request_context: ModelReque
                    "rate_snapshot_date": "2026-10-04"}
     else:
         billing = {"value": None, "currency": None, "kind": "unavailable"}
+    started = getattr(ctx.deps, "request_started_monotonic", None)
+    if started is not None:
+        ctx.deps.request_started_monotonic = None
     _trace(ctx.deps.trace_path, "model_response_received", ctx.deps.source_id, ctx.deps.page_id,
            provider_kind=ctx.deps.config.provider_kind, model_base_url=ctx.deps.config.base_url,
-           input_tokens=response.usage.input_tokens, output_tokens=response.usage.output_tokens, billing=billing,
+           input_tokens=response.usage.input_tokens, output_tokens=response.usage.output_tokens,
+           cache_read_tokens=response.usage.cache_read_tokens, billing=billing,
+           elapsed_seconds=round(time.monotonic() - started, 3) if started is not None else None,
+           server_timings=details.get("server_timings"),
            response_parts=[asdict(part) for part in response.parts])
     return response
 

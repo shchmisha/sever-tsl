@@ -16,7 +16,7 @@ NATIVE_PIPELINE_VERSION = "native-image-joint-leaf-visibility-v1"
 
 
 _SATURATION_POLICY = {
-    "version": "full-source-exact-pixel-redundancy-v1",
+    "version": "full-source-exact-pixel-redundancy-v2-value-signature",
     "minimum_agreeing_fresh_readings": 3,
     "maximum_channel_difference": 0,
     "candidate_discovery_limit": None,
@@ -25,15 +25,48 @@ _SATURATION_POLICY = {
 }
 
 
+_NO_PROGRESS_POLICY = {
+    "version": "no-progress-leaf-stop-v1",
+    "consecutive_views_without_progress": 3,
+    "progress": "a new document-type or field-value/blank/conflict proposal, or any change in the fused type or field statuses",
+    "counted_views": "completed and failed reads; quality-rejected and redundant candidates are not reads",
+    "after_stop": "final joint reviews still run; remaining candidate views stay unread and are not claimed",
+}
+
+
+def _progress_state(readings, document, pending_type_review):
+    """What the leaf has learned so far; a read that changes nothing is no progress."""
+    from .image_fusion import _field_comparison
+
+    proposals = set()
+    for reading in readings:
+        proposals.add(("type", reading.document_type))
+        for name, field in reading.fields.items():
+            if field.status == "recognized" and field.raw_value:
+                proposals.add((name, "recognized", _field_comparison(name, field.raw_value)))
+            elif field.status in {"not_present", "conflict"}:
+                proposals.add((name, field.status))
+    statuses = tuple(sorted((name, field.status) for name, field in document.fields.items()))
+    return document.document_type, frozenset(proposals), statuses, pending_type_review is not None
+
+
 def _reading_signature(reading, document):
-    """Compare model proposals, without interpreting their text or field roles."""
+    """Compare model proposals by status and value, without interpreting roles.
+
+    Values use the same presentation-equivalence key as fusion. The literal
+    evidence quote is excluded: a re-worded quote of an unchanged unreadable
+    field is not a new proposal and must not keep the frame search alive.
+    """
+    from .image_fusion import _field_comparison
+
     if (reading.errors or document.errors or reading.document_type == "unknown"
             or document.document_type not in {"unknown", reading.document_type}
             or any(field.status == "conflict" for field in document.fields.values())
             or not any(field.status == "unreadable" for field in reading.fields.values())):
         return None
-    return (reading.document_type, tuple((name, field.status, field.raw_value,
-        tuple(e.text for e in field.evidence)) for name, field in sorted(reading.fields.items())))
+    return (reading.document_type, tuple((name, field.status,
+        _field_comparison(name, field.raw_value) if field.raw_value else None)
+        for name, field in sorted(reading.fields.items())))
 
 
 def _redundant_pixels(candidate, reference):
@@ -110,7 +143,7 @@ class _FragmentSaturation:
                  [reference["frame_id"] for reference in self.support],
                  "reason": "unchanged_unresolved_readings_and_redundant_source_pixels",
                  "pixel_comparisons": comparisons,
-                 "unresolved_fields": [name for name, status, _, _ in self.signature[1]
+                 "unresolved_fields": [name for name, status, _ in self.signature[1]
                                        if status == "unreadable"],
                  "new_model_evidence": False}
         self.skips.append(event)
@@ -311,7 +344,8 @@ def _type_conflict_review_frames(page, readings, views, *, previous_frame_ids=()
 
 async def process_video_images(source: Path, out: Path, *, config, sample_interval=.5,
                                max_pages=100, progress=None, reader=None,
-                               additional_frames=None, conflict_reader=None):
+                               additional_frames=None, conflict_reader=None,
+                               no_progress_views=_NO_PROGRESS_POLICY["consecutive_views_without_progress"]):
     from .video import analyze_video
     from .quality import evaluate_page_frames, assess_frame_quality
     from .frame_pool import iter_additional_page_frames
@@ -377,6 +411,20 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         disputed_field_reviews = {}
         leaf_visibility_assessments = {}
         active_readings = []
+        leaf_progress = {"state": None, "views_without_progress": 0, "triggered": False}
+
+        def record_progress(read_completed):
+            """Count consecutive reads that taught the leaf nothing new."""
+            state = (_progress_state(readings, document, pending_type_review)
+                     if read_completed else leaf_progress["state"])
+            if read_completed and state != leaf_progress["state"]:
+                leaf_progress.update(state=state, views_without_progress=0)
+            else:
+                leaf_progress["views_without_progress"] += 1
+            if (no_progress_views is not None
+                    and leaf_progress["views_without_progress"] >= no_progress_views):
+                leaf_progress["triggered"] = True
+            return leaf_progress["triggered"]
 
         def rebuild_fusion():
             nonlocal document, fusion, active_readings
@@ -845,6 +893,11 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                         stop = "requires_other_document_side"
                     if stop:
                         break
+                    if record_progress(True):
+                        trace(trace_path, "leaf_search_stopped_without_progress", page_id=page_id,
+                              views_without_progress=leaf_progress["views_without_progress"],
+                              read_views=len(views))
+                        break
                 except (BatchBudgetExceeded, FatalProviderError):
                     attempt.update(status="stopped", reason="model_budget_or_provider_failure")
                     document.errors.append("native_image: model_budget_or_provider_failure")
@@ -858,6 +911,11 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                     if isinstance(exc, EvidencePersistenceError):
                         attempt["evidence_persistence_failed"] = True
                     saturation.reset()
+                    if record_progress(False):
+                        trace(trace_path, "leaf_search_stopped_without_progress", page_id=page_id,
+                              views_without_progress=leaf_progress["views_without_progress"],
+                              read_views=len(views))
+                        break
                 finally:
                     if attempt.get("status") == "stopped":
                         try:
@@ -934,7 +992,8 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             consecutive_failures += bool(ordered)
         else:
             consecutive_failures = 0
-        exhausted = ("source_views_exhausted_after_redundant_candidates" if saturation.skips
+        exhausted = ("source_views_unread_after_no_progress" if leaf_progress["triggered"]
+                     else "source_views_exhausted_after_redundant_candidates" if saturation.skips
                      else "source_views_exhausted")
         page["image_recognition"] = {"engine": "native_image", "model": config.vision_model_name,
             "local_ocr_used": False, "separate_classifier_used": False, "views": views,
@@ -942,6 +1001,10 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             "conflict_reviews": conflict_reviews, "error_history": error_history,
             "leaf_visibility_assessments": leaf_visibility_assessments,
             "redundancy_saturation": saturation.metadata(),
+            "no_progress_stop": {"policy": {**_NO_PROGRESS_POLICY,
+                                            "consecutive_views_without_progress": no_progress_views},
+                                 "triggered": leaf_progress["triggered"],
+                                 "views_without_progress": leaf_progress["views_without_progress"]},
             "fusion": fusion, "evidence_coordinates": "complete supplied pixel panels, not measured word boxes"}
         page["neighbor_comparison"] = {"status": stop or exhausted, "attempts": attempts,
             "frame_count_limit": None, "remaining_fields": [name for name, f in document.fields.items()
@@ -980,6 +1043,7 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             "field_conflict_review": "fresh_joint_source_images" if conflict_reader else "disabled_for_custom_reader",
             "document_type_conflict_review": "fresh_joint_source_images_covering_disputed_types" if conflict_reader else "disabled_for_custom_reader",
             "redundancy_saturation": dict(_SATURATION_POLICY),
+            "no_progress_stop": {**_NO_PROGRESS_POLICY, "consecutive_views_without_progress": no_progress_views},
             "verify_inn": False, "verify_inn_requested": config.verify_inn},
         "pages": processed, "usage": usage, "batch_usage": after,
         "elapsed_seconds": round(time.monotonic()-started, 2),

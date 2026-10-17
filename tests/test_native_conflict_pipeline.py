@@ -44,9 +44,12 @@ def reviewed(frames, names, *, resolved=True, foreign=False):
             "adjudication": {"status": "resolved" if resolved else "unresolved"}, "panels": []}
 
 
-def run(source, out, reader, reviewer):
+def run(source, out, reader, reviewer, **options):
+    # These scenarios exercise review coverage across every supplied frame;
+    # the no-progress leaf stop has its own tests and is disabled by default here.
+    options.setdefault("no_progress_views", None)
     return asyncio.run(process_video_images(source, out, config=AgentConfig(), reader=reader,
-        conflict_reader=reviewer, additional_frames=lambda *args: iter(())))
+        conflict_reader=reviewer, additional_frames=lambda *args: iter(()), **options))
 
 
 def test_joint_review_uses_pixels_and_field_names_without_previous_answers(tmp_path, monkeypatch):
@@ -349,3 +352,23 @@ def test_field_stays_conflicting_when_all_disputed_evidence_cannot_fit_joint_con
     assert final_review["status"] == "unresolved"
     assert final_review["blocked_fields"]["consignee"]["uncovered_frame_groups"]
     assert page["image_recognition"]["stop_reason"] == "source_views_exhausted"
+
+
+def test_no_progress_stop_leaves_frames_unread_but_still_runs_final_review(tmp_path, monkeypatch):
+    source, frames, reader, seen = prepared(tmp_path, monkeypatch, count=7)
+    calls = []
+
+    async def reviewer(chosen, **kwargs):
+        calls.append([frame["frame_id"] for frame in chosen])
+        return reviewed(chosen, kwargs["unresolved_fields"], resolved=len(calls) > 1)
+
+    out = tmp_path / "run"
+    page = run(source, out, reader, reviewer, no_progress_views=3)["pages"][0]
+    # Read 1 proposes, read 2 creates the conflict, reads 3-5 add nothing new.
+    assert seen == [frame["frame_id"] for frame in frames[:5]]
+    assert len(calls) == 2 and set(calls[1]) - set(calls[0])
+    assert page["result"]["fields"]["consignee"]["status"] == "recognized"
+    assert page["image_recognition"]["stop_reason"] == "all_required_fields_confirmed_after_joint_review"
+    assert page["image_recognition"]["no_progress_stop"]["triggered"] is True
+    events = [json.loads(line)["event"] for line in (out / "trace.jsonl").read_text().splitlines()]
+    assert events.count("leaf_search_stopped_without_progress") == 1

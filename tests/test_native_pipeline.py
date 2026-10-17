@@ -397,25 +397,105 @@ def test_changed_single_native_pixel_is_read_and_later_field_can_be_confirmed(tm
     assert result["pages"][0]["image_recognition"]["redundancy_saturation"]["skipped_candidates"] == []
 
 
-def test_each_new_source_pixel_view_remains_unlimited_when_models_cannot_read(tmp_path, monkeypatch):
-    source, frames = setup_pages(tmp_path, monkeypatch, count=3)
+def novel_views(tmp_path, frames, count=18):
     extra = []
-    for n in range(18):
+    for n in range(count):
         path = tmp_path / f"novel-{n}.png"
         with Image.open(frames[0]["path"]) as image:
             ImageDraw.Draw(image).point((30+n*3, 37), fill="black")
             image.save(path)
         extra.append({**frames[0], "frame_id": f"novel-{n}", "path": str(path),
                       "timestamp_s": 2+n*.1})
+    return extra
+
+
+def test_unreadable_leaf_stops_after_consecutive_views_without_progress(tmp_path, monkeypatch):
+    source, frames = setup_pages(tmp_path, monkeypatch, count=3)
+    extra = novel_views(tmp_path, frames)
+    seen = []
+    async def reader(frame, *, source_id, page_id, **kw):
+        seen.append(frame["frame_id"])
+        return unresolved_answer(frame, source_id, page_id)
+    out = tmp_path / "run"
+    result = asyncio.run(process_video_images(source, out, config=AgentConfig(), reader=reader,
+                                              additional_frames=lambda *a: iter(extra)))
+    # Read 1 proposes values, read 2 confirms the type and fields; then three
+    # reads add nothing, so the remaining 16 changed views stay unread.
+    assert seen == ["frame-0", "frame-1", "frame-2", "novel-0", "novel-1"]
+    page = result["pages"][0]
+    assert page["result"]["fields"]["consignor_address"]["status"] == "unreadable"
+    recognition = page["image_recognition"]
+    assert recognition["stop_reason"] == "source_views_unread_after_no_progress"
+    assert recognition["no_progress_stop"] == {"policy": result["configuration"]["no_progress_stop"],
+                                               "triggered": True, "views_without_progress": 3}
+    assert recognition["frame_count_limit"] is None
+
+
+def test_disabled_no_progress_stop_keeps_reading_every_changed_view(tmp_path, monkeypatch):
+    source, frames = setup_pages(tmp_path, monkeypatch, count=3)
+    extra = novel_views(tmp_path, frames)
     seen = []
     async def reader(frame, *, source_id, page_id, **kw):
         seen.append(frame["frame_id"])
         return unresolved_answer(frame, source_id, page_id)
     result = asyncio.run(process_video_images(source, tmp_path/"run", config=AgentConfig(), reader=reader,
-                                              additional_frames=lambda *a: iter(extra)))
+                                              additional_frames=lambda *a: iter(extra), no_progress_views=None))
     assert len(seen) == 21
     assert result["pages"][0]["result"]["fields"]["consignor_address"]["status"] == "unreadable"
-    assert result["pages"][0]["image_recognition"]["frame_count_limit"] is None
+    assert result["pages"][0]["image_recognition"]["no_progress_stop"]["triggered"] is False
+
+
+def test_failed_reads_count_as_views_without_progress(tmp_path, monkeypatch):
+    source, frames = setup_pages(tmp_path, monkeypatch, count=3)
+    extra = novel_views(tmp_path, frames, count=6)
+    seen = []
+    async def reader(frame, *, source_id, page_id, **kw):
+        seen.append(frame["frame_id"])
+        if frame["frame_id"].startswith("novel-"):
+            raise TimeoutError("No response")
+        return unresolved_answer(frame, source_id, page_id)
+    result = asyncio.run(process_video_images(source, tmp_path/"run", config=AgentConfig(), reader=reader,
+                                              additional_frames=lambda *a: iter(extra)))
+    page = result["pages"][0]
+    # frame-2 adds nothing, then two failed reads reach the limit of three.
+    assert seen == ["frame-0", "frame-1", "frame-2", "novel-0", "novel-1"]
+    assert page["image_recognition"]["stop_reason"] == "source_views_unread_after_no_progress"
+    assert [a["status"] for a in page["image_recognition"]["attempts"]] == ["read"] * 3 + ["failed"] * 2
+    assert any(error.startswith("native_image: image_reading_failed:novel-0") for error in page["result"]["errors"])
+
+
+def test_new_value_proposal_resets_the_no_progress_count(tmp_path, monkeypatch):
+    source, frames = setup_pages(tmp_path, monkeypatch, count=3)
+    extra = novel_views(tmp_path, frames, count=8)
+    seen = []
+    async def reader(frame, *, source_id, page_id, **kw):
+        seen.append(frame["frame_id"])
+        result = unresolved_answer(frame, source_id, page_id)
+        if frame["frame_id"] == "novel-1":
+            result["document"].fields["consignor_address"] = FieldValue(
+                status="recognized", raw_value="New readable address", normalized_value="New readable address",
+                evidence=[Evidence(frame_id=frame["frame_id"], text="Адрес: New readable address", bbox=[0, 0, 1, 1])])
+        return result
+    asyncio.run(process_video_images(source, tmp_path/"run", config=AgentConfig(), reader=reader,
+                                     additional_frames=lambda *a: iter(extra)))
+    # novel-1 is the first view with a new value, so three more reads follow it.
+    assert seen == ["frame-0", "frame-1", "frame-2", "novel-0", "novel-1", "novel-2", "novel-3", "novel-4"]
+
+
+def test_reworded_quote_of_unchanged_unreadable_field_keeps_the_same_signature():
+    from sever.native_pipeline import _reading_signature
+
+    def reading(quote, value="0042"):
+        fields = {name: FieldValue(raw_value=value if name == "invoice_number" else "example-"+name,
+                                   status="recognized",
+                                   evidence=[Evidence(frame_id="f", text=name, bbox=[0, 0, 1, 1])])
+                  for name in FIELDS_BY_TYPE["upd"]}
+        fields["consignor_address"] = FieldValue(status="unreadable", reason="blurred",
+            evidence=[Evidence(frame_id="f", text=quote, bbox=[0, 0, 1, 1])])
+        return DocumentResult(source_id="s", page_id="p", document_type="upd", fields=fields)
+    document = DocumentResult(source_id="s", page_id="p", document_type="unknown")
+    assert _reading_signature(reading("Адрес: …"), document) == _reading_signature(reading("Адрес грузо…"), document)
+    assert _reading_signature(reading("Адрес: …"), document) != _reading_signature(reading("Адрес: …", "0099"), document)
 
 
 @pytest.mark.parametrize("change", ["new_quote", "new_raw", "model_error", "provider_failure"])
@@ -443,7 +523,7 @@ def test_new_proposal_conflict_or_failed_read_resets_saturation(tmp_path, monkey
                 result["document"].errors.append("Malformed model proposal")
         return result
     result = asyncio.run(process_video_images(source, tmp_path/"run", config=AgentConfig(), reader=reader,
-                                              additional_frames=lambda *a: iter(extra)))
+                                              additional_frames=lambda *a: iter(extra), no_progress_views=None))
     assert len(seen) == 6
     assert result["pages"][0]["image_recognition"]["redundancy_saturation"]["skipped_candidates"] == []
 
