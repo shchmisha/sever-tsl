@@ -59,10 +59,13 @@ def trace_stats(rows):
             continue
         leaf = leaves[page]
         moment = row["_t"]
-        if moment is not None:
-            leaf["first"] = moment if leaf["first"] is None else min(leaf["first"], moment)
-            leaf["last"] = moment if leaf["last"] is None else max(leaf["last"], moment)
         event = row.get("event")
+        # Quality-gate rows for every leaf are written before any leaf is read;
+        # a leaf's own time starts when it is selected for reading.
+        if moment is not None and event == "page_selected":
+            leaf["first"] = moment
+        if moment is not None and leaf["first"] is not None:
+            leaf["last"] = moment if leaf["last"] is None else max(leaf["last"], moment)
         if event in CALL_KINDS:
             current_kind[page] = CALL_KINDS[event]
         elif event == "model_request_started":

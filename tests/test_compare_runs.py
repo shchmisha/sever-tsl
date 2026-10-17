@@ -143,3 +143,12 @@ def test_cli_writes_json_and_markdown(tmp_path, capsys):
     assert md.read_text().startswith("# main vs phase1")
     with pytest.raises(SystemExit):
         compare_runs.main(["--a", str(a), "--b", str(b), "--label-a", "x", "--label-b", "x", "--out", str(out)])
+
+
+def test_leaf_time_starts_when_the_leaf_is_selected_not_at_the_quality_gate(tmp_path):
+    rows = [{"time": EPOCH, "event": "quality_gate", "page_id": "p1"},
+            {"time": EPOCH, "event": "quality_gate", "page_id": "p2"},
+            *calls("p1", 10.0, [("image_agent_observation", 2)]),
+            *calls("p2", 30.0, [("image_agent_observation", 3)])]
+    _, leaves = compare_runs.trace_stats(compare_runs.read_trace(write_run(tmp_path / "a", rows, pages=[]) / "trace.jsonl"))
+    assert leaves["p1"]["leaf_seconds"] == 4.0 and leaves["p2"]["leaf_seconds"] == 6.0
