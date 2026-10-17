@@ -593,6 +593,35 @@ journalctl -u sever-tsl -n 100 --no-pager
   запросов и токенов остаётся общим для задания; остановка по бюджету или
   ошибке провайдера в одном листе отменяет остальные листы в работе.
 
+### A/B-замер скорости `main` против `phase1-speed`
+
+[ab_speed_test.sh](ab_speed_test.sh) ставит обе ветки отдельными release в
+`/opt/sever-tsl/releases/<время>-ab-a|b`, прогоняет их тесты, ждёт отсутствия
+`queued`/`processing` API-заданий и читает одно и то же видео сначала `main`,
+затем `phase1-speed` через общий локальный model server. `/opt/sever-tsl/current`,
+`sever-tsl`, `sever-model` и прежние прогоны не меняются. Эталон читается только
+после обоих прогонов: [compare_runs.py](../tools/compare_runs.py) сравнивает
+вызовы модели по видам, время модели и листа, токены и размеченную точность.
+По умолчанию видео — `20260818-5_132107.mp4` (размечено; V7: 4123,89 с, 722 ответа).
+
+С Mac, где есть ключ сервера:
+
+```bash
+git bundle create /tmp/sever-ab.bundle main phase1-speed
+ssh -i KEY -p 19022 root@185.130.214.240 'install -d -m 0700 /root/sever-ab'
+scp -i KEY -P 19022 /tmp/sever-ab.bundle deploy/ab_speed_test.sh root@185.130.214.240:/root/sever-ab/
+ssh -i KEY -p 19022 root@185.130.214.240 \
+  'mv /root/sever-ab/sever-ab.bundle /root/sever-ab/sever.bundle && systemd-run --unit sever-ab-speed --property=TimeoutStartSec=infinity bash /root/sever-ab/ab_speed_test.sh'
+ssh -i KEY -p 19022 root@185.130.214.240 'journalctl -fu sever-ab-speed'
+```
+
+Итог: `/srv/sever/validation/ab-speed-<время>/comparison.md` и `comparison.json`,
+логи прогонов, `gpu-*.csv` (память и загрузка GPU каждые 5 с) и `run-*.json`
+(отметка, если во время прогона появились API-задания: такое время не
+сравнивается). Переменные `VIDEO`, `REF_A`, `REF_B`, `LEAF_CONCURRENCY_B`
+меняют видео, ветки и число параллельных листов; `LEAF_CONCURRENCY_B>1`
+требует уже запущенного `llama-server --parallel N`, скрипт его не перезапускает.
+
 ## Смена модели и сравнение
 
 Перед сменой модели остановите finish-controller, затем batch-драйвер.
