@@ -29,8 +29,8 @@ from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProvi
 from .normalize import normalize
 from .schema import DocumentResult, Evidence, FieldStatus, FieldValue, FIELDS_BY_TYPE
 
-IMAGE_READER_VERSION = "native-source-images-model-authority-v5.3"
-IMAGE_SCHEMA_VERSION = "native-image-model-authority-v5.1"
+IMAGE_READER_VERSION = "native-source-images-model-authority-v6-compact"
+IMAGE_SCHEMA_VERSION = "native-image-model-authority-v6-compact"
 EVIDENCE_ORIGIN = "model_pixel_transcription"
 
 INSTRUCTIONS = """Задача — извлечь значения реквизитов из настоящих изображений,
@@ -44,16 +44,16 @@ INSTRUCTIONS = """Задача — извлечь значения реквиз�
 Если строка «Грузоотправитель» содержит «он же», сначала прочитай на этой же
 странице строку «Продавец» и её наименование. Затем верни в raw_value поля
 consignor именно прочитанное наименование продавца, не слова «он же».
-В evidence_text сохрани обе реально видимые строки: ссылку грузоотправителя и
-продавца с наименованием; panel_ids должны содержать настоящие панели этих строк.
+В evidence_text сохрани обе реально видимые подписи: грузоотправителя со ссылкой
+«он же» и продавца; panel_ids должны содержать настоящие панели этих строк.
 Для consignor_address при такой же явной ссылке прочитай именно видимый адрес
 продавца, не адрес покупателя. Адреса переписывай как видны, без исправления
 почтовых индексов, добавления региона, улицы или других отсутствующих частей.
 Если связанное наименование или адрес не читается, пометь соответствующее поле
 unreadable с raw_value=null. Ничего не восстанавливай по памяти и не додумывай.
 Перед окончательным ответом проверь, что организационные raw_value содержат
-прочитанные организации, а адресные raw_value — всё содержимое своего адресного поля; объяснение
-ссылки находится в evidence_text/reason, а не заменяет значение реквизита.
+прочитанные организации, а адресные raw_value — всё содержимое своего адресного поля; ссылка
+отражается в evidence_text, а не заменяет значение реквизита.
 Все решения принимай только по предоставленным изображениям.
 
 В адресном raw_value сохрани ВСЁ напечатанное содержимое именно этого поля.
@@ -61,7 +61,7 @@ unreadable с raw_value=null. Ничего не восстанавливай п�
 перепиши целиком его значение, включая название организации, склада или РЦ,
 ИНН/КПП, телефон и другие сведения, если они напечатаны внутри этого поля.
 Не оставляй только почтовую часть и не удаляй реквизиты из совмещённого поля.
-Подпись поля вместе с полным значением дословно сохрани в evidence_text.
+Подпись поля дословно сохрани в evidence_text; значение пиши только в raw_value.
 Границу поля определяй по изображению и его подписи: не захватывай соседнюю
 строку другой роли, например «Покупатель» и его «Адрес». Не раскрывай сокращения
 и не добавляй отсутствующие сведения. Если часть своего поля не читается,
@@ -118,17 +118,17 @@ Read the printed own form identifier, ОКУД code, and approval/regulatory cap
 when visible, including codes above the main title. For Товарная накладная quote
 the visible ТОРГ-12 or own ОКУД code with the title; never infer a missing code
 from the chosen type. Generic Товарная накладная alone does not establish ТОРГ-12.
-For supported forms, visible_text contains ONLY the literal own document heading,
-form code and number/date header when visible. Read role captions and values ONCE,
-in the corresponding fields' evidence_text, not again in visible_text. This avoids
-multiple inconsistent transcriptions of the same role. For unknown forms, keep
-visible_text as a brief literal transcription of the readable heading and relevant
-header/role lines (about 3000 characters). Never add explanations or completions.
-For every field provide raw_value, status, confidence, evidence_text, panel_ids,
-explicit_blank and reason explicitly. evidence_text is a literal transcription of
-the own caption AND its value; panel_ids identify the real images containing them.
-raw_value must occur literally in evidence_text. Never silently repair characters,
-digits, postal indexes or names. Organization-name values exclude addresses and INN/KPP.
+Keep the answer compact: write each value once. For supported forms leave
+visible_text empty; the heading belongs in heading_text and values in fields.
+For unknown forms visible_text is only the literal own heading line(s), at most
+about 200 characters. Never add explanations or completions.
+For every field give raw_value, status, evidence_text and panel_ids. evidence_text
+quotes only the field's own printed caption (for «он же» the reference line and the
+seller caption), never the value again; panel_ids identify the real images that
+contain the caption and the value. Give reason only for unreadable or not_present,
+set explicit_blank=true only for not_present, and omit confidence.
+Never silently repair characters, digits, postal indexes or names.
+Organization-name values exclude addresses and INN/KPP.
 Address values retain the ENTIRE printed value of their own address field/block,
 including organization/warehouse names, INN/KPP and other printed details when
 the field combines them. Never reduce a combined address field to postal text only.
@@ -136,8 +136,8 @@ Do not include neighboring fields or a different role's address.
 UPD invoice_number/date are the own счет-фактура number/date, not accounting or
 shipping references. Buyer is distinct from consignee. If грузоотправитель says
 «он же», resolve ONLY that explicit reference to the seller printed on this same
-page: quote грузоотправитель + «он же» + seller caption + seller value, and cite
-the actual panels for both. Do not return «он же» itself as a name or address.
+page: quote грузоотправитель + «он же» + seller caption, and cite the actual
+panels for both. Do not return «он же» itself as a name or address.
 TORG12 supplier is поставщик; TRN customer is заказчик услуг, связанных с перевозкой
 груза, not перевозчик. TRN number/date are this transport consignment's own header,
 never заказ/заявка or an attached invoice. Keep dates/numbers in their printed form.
@@ -160,46 +160,46 @@ class ImageField(BaseModel):
     model_config = ConfigDict(extra="forbid")
     raw_value: str | None = Field(description="Literal printed value, or null when unresolved", max_length=1200)
     status: FieldStatus
-    confidence: float | None = Field(ge=0, le=1)
-    evidence_text: str = Field(max_length=2500, description="Literal transcription of own caption and value; for он же quote the reference AND seller caption/value")
-    panel_ids: list[str] = Field(max_length=12, description="Actual supplied panel IDs containing the quoted caption/value/reference")
-    explicit_blank: bool = Field(description="True only for a visibly blank own field, never for illegible/cropped text")
-    reason: str | None = Field(max_length=240)
+    confidence: float | None = Field(default=None, ge=0, le=1, description="Omit")
+    evidence_text: str = Field(max_length=600, description="Literal own printed caption of this field only, without repeating raw_value; for он же the reference line and the seller caption")
+    panel_ids: list[str] = Field(max_length=12, description="Actual supplied panel IDs containing the caption and the value")
+    explicit_blank: bool = Field(default=False, description="True only for a visibly blank own field (not_present), never for illegible/cropped text")
+    reason: str | None = Field(default=None, max_length=240, description="Brief cause, only for unreadable or not_present")
 
 
 class UPDFields(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    invoice_number: ImageField = Field(description="Own Счет-фактура number immediately after №; quote its full header including number/date. Never use a date year or internal reference as the number.")
-    invoice_date: ImageField = Field(description="Own Счет-фактура date following от; evidence_text MUST quote the Счет-фактура caption with its date, not only от plus the date.")
-    consignor: ImageField = Field(description="Organization on Грузоотправитель. If it says он же, return the literal Продавец organization from this same frame, and quote both reference and seller lines; never return он же itself.")
-    consignor_address: ImageField = Field(description="ENTIRE literal value of the own Грузоотправитель и его адрес field/block, including organization and other details printed inside it. If он же, use the ENTIRE visible Адрес field following Продавец, before another role; quote consignor reference plus seller and seller-address lines. Never use buyer address or neighboring fields.")
-    consignee: ImageField = Field(description="Organization on Грузополучатель и его адрес, excluding its address and INN. Quote the own Грузополучатель caption with its organization; Покупатель is a different role.")
-    consignee_address: ImageField = Field(description="ENTIRE literal value printed in the own Грузополучатель и его адрес field/block, including organization, warehouse/RC, INN/KPP and other details inside that field. Quote its own caption plus the full value. Do not use Адрес following Покупатель or neighboring fields; do not reduce the value to postal address only.")
+    invoice_number: ImageField = Field(description="Own Счет-фактура number immediately after № in the Счет-фактура header. Never use a date year or internal reference as the number.")
+    invoice_date: ImageField = Field(description="Own Счет-фактура date following от in the Счет-фактура header, not another date.")
+    consignor: ImageField = Field(description="Organization on Грузоотправитель. If it says он же, return the literal Продавец organization from this same frame; never return он же itself.")
+    consignor_address: ImageField = Field(description="ENTIRE literal value of the own Грузоотправитель и его адрес field/block, including organization and other details printed inside it. If он же, use the ENTIRE visible Адрес field following Продавец, before another role. Never use buyer address or neighboring fields.")
+    consignee: ImageField = Field(description="Organization on the own Грузополучатель и его адрес line, excluding its address and INN; Покупатель is a different role.")
+    consignee_address: ImageField = Field(description="ENTIRE literal value printed in the own Грузополучатель и его адрес field/block, including organization, warehouse/RC, INN/KPP and other details inside that field. Do not use Адрес following Покупатель or neighboring fields; do not reduce the value to postal address only.")
 
 
 class TORGFields(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    supplier: ImageField = Field(description="Literal Поставщик organization with its own caption.")
-    consignee: ImageField = Field(description="Literal Грузополучатель organization with its own caption.")
-    document_number: ImageField = Field(description="This ТОРГ-12 own document number; quote own header/caption and number, not a reference to another document.")
-    document_date: ImageField = Field(description="This ТОРГ-12 own document date; quote own Дата составления/header and date.")
+    supplier: ImageField = Field(description="Literal organization on the own Поставщик line.")
+    consignee: ImageField = Field(description="Literal organization on the own Грузополучатель line.")
+    document_number: ImageField = Field(description="This ТОРГ-12 own document number from its own header, not a reference to another document.")
+    document_date: ImageField = Field(description="This ТОРГ-12 own document date (Дата составления in its own header).")
 
 
 class TTNFields(BaseModel):
     model_config = ConfigDict(extra="forbid")
     consignor: ImageField = Field(description="Literal organization explicitly labelled Грузоотправитель. A reverse-side Заказчик (плательщик), carrier or loading point is a different role; if own consignor is outside this frame, return unreadable, never infer it from those roles.")
     consignee: ImageField = Field(description="Literal organization explicitly labelled Грузополучатель. An unloading point, payer or carrier does not establish this role; if the own consignee is outside this frame, return unreadable, never infer it from the route.")
-    document_number: ImageField = Field(description="Own TTN number, possibly in Коды BEFORE the main title. Quote the literal own form/title plus that № slot. Never use К накладной (УПД), invoice, order, or regulator numbers.")
-    document_date: ImageField = Field(description="Own TTN Дата составления, possibly in Коды BEFORE the main title. Quote the literal own form/title plus that date slot. Never use an approval, attached УПД, or order date.")
+    document_number: ImageField = Field(description="Own TTN number, possibly in Коды BEFORE the main title; caption is the own form/title № slot. Never use К накладной (УПД), invoice, order, or regulator numbers.")
+    document_date: ImageField = Field(description="Own TTN Дата составления, possibly in Коды BEFORE the main title; caption is the own form/title date slot. Never use an approval, attached УПД, or order date.")
 
 
 class TRNFields(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    document_date: ImageField = Field(description="Date from Транспортная накладная own immediately adjacent Дата/№ header. Quote own title AND that header. The following Заказ (заявка) date is not this field.")
-    document_number: ImageField = Field(description="Number from Транспортная накладная own immediately adjacent Дата/№ header. Quote own title AND header, never following Заказ (заявка). If the own № slot is visibly blank, return null/not_present with explicit_blank=true, full context panel, complete page, and № [пусто] observation.")
-    consignor: ImageField = Field(description="Literal Грузоотправитель organization with its own caption.")
-    customer: ImageField = Field(description="Literal Заказчик услуг, связанных с перевозкой груза; quote own Заказчик caption. Перевозчик is another role.")
-    consignee: ImageField = Field(description="Literal Грузополучатель organization with its own caption.")
+    document_date: ImageField = Field(description="Date from the Транспортная накладная own immediately adjacent Дата/№ header; caption is the own title and that header. The following Заказ (заявка) date is not this field.")
+    document_number: ImageField = Field(description="Number from the Транспортная накладная own immediately adjacent Дата/№ header, never the following Заказ (заявка). If the own № slot is visibly blank, return null/not_present with explicit_blank=true, full context panel, complete page, and № [пусто] observation.")
+    consignor: ImageField = Field(description="Literal organization on the own Грузоотправитель line.")
+    customer: ImageField = Field(description="Literal organization on the own Заказчик услуг, связанных с перевозкой груза line. Перевозчик is another role.")
+    consignee: ImageField = Field(description="Literal organization on the own Грузополучатель line.")
 
 
 class UnknownFields(BaseModel):
@@ -208,9 +208,9 @@ class UnknownFields(BaseModel):
 
 class _Reading(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    type_confidence: float | None = Field(ge=0, le=1)
+    type_confidence: float | None = Field(default=None, ge=0, le=1, description="Omit")
     observed_form: str = Field(max_length=500, description="Visible literal form name, including unsupported forms")
-    visible_text: str = Field(max_length=8000, description="For supported forms: literal OWN heading/form code and number/date header ONLY; role lines belong exclusively in fields.evidence_text. For unknown: readable heading and relevant header/role lines. No inferred completions.")
+    visible_text: str = Field(default="", max_length=1000, description="Empty for supported forms. For unknown: only the literal own heading line(s), about 200 characters. No inferred completions.")
     heading_text: str = Field(max_length=1000, description="Literal OWN visible heading with printed form identifier/ОКУД and regulatory caption when visible; never infer a code from a model tag or use a body reference")
     heading_panel_ids: list[str] = Field(max_length=12, description="Actual supplied panel IDs containing the own heading")
     complete_page_visible: bool = Field(description="Whether the complete own page is visible in these source pixels")
@@ -420,7 +420,10 @@ def _validate_reading(decision: ImageReading, proof: dict, *, source_id: str,
                "Evidence boxes delimit uploaded panels in the saved source frame, not measured word locations."])
     return {"document": document, "recognition": {"observed_form": reading.observed_form,
         "form_scope": getattr(reading, "form_scope", "supported"),
-        "visible_text": reading.visible_text, "origin": EVIDENCE_ORIGIN, "engine": f"native_image:{model_identity}",
+        # A compact unknown reading may leave visible_text empty; its literal own
+        # heading is then the visible transcription kept for the out-of-scope record.
+        "visible_text": reading.visible_text or (reading.heading_text if reading.document_type == "unknown" else ""),
+        "origin": EVIDENCE_ORIGIN, "engine": f"native_image:{model_identity}",
         "frame_id": proof["frame_id"], "document_type": reading.document_type,
         "model_document_type": reading.document_type,
         "complete_page_visible": reading.complete_page_visible, "validation_errors": issues,

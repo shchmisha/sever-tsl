@@ -439,11 +439,12 @@ def test_panel_transforms_round_trip_source_corners_and_preserve_real_crop(tmp_p
         assert max(p[1] for p in points) == pytest.approx(panel["upload_pixel_size"][1])
 
 
-def test_native_schema_requires_all_field_properties_and_rejects_extra_contract_values():
-    payload = reading("torg12")
-    del payload["fields"]["supplier"]["explicit_blank"]
-    with pytest.raises(ValidationError):
-        ImageReading.model_validate(payload)
+def test_native_schema_requires_core_field_properties_and_rejects_extra_contract_values():
+    for name in ("raw_value", "status", "evidence_text", "panel_ids"):
+        payload = reading("torg12")
+        del payload["fields"]["supplier"][name]
+        with pytest.raises(ValidationError):
+            ImageReading.model_validate(payload)
     payload = reading("unknown")
     payload["fields"]["invoice_number"] = field()
     with pytest.raises(ValidationError):
@@ -663,3 +664,31 @@ def test_supplied_panel_id_cannot_claim_a_different_source_frame(source_frame, t
         source_id="source-23", page_id="leaf-7", model_identity="pixel-test-model")
     assert result["document"].fields["document_number"].status == "unreadable"
     assert result["document"].fields["document_number"].evidence == []
+
+
+def test_compact_schema_lets_the_model_omit_per_field_extras():
+    payload = reading("torg12")
+    for name in ("confidence", "reason", "explicit_blank"):
+        for field in payload["fields"].values():
+            field.pop(name, None)
+    payload.pop("type_confidence", None)
+    payload.pop("visible_text", None)
+    parsed = ImageReading.model_validate(payload).root
+    supplier = parsed.fields.supplier
+    assert supplier.confidence is None and supplier.reason is None and supplier.explicit_blank is False
+    assert parsed.visible_text == "" and parsed.type_confidence is None
+    schema = ImageReading.model_json_schema()["$defs"]["ImageField"]
+    assert set(schema["required"]) == {"raw_value", "status", "evidence_text", "panel_ids"}
+
+
+def test_unknown_reading_without_visible_text_keeps_its_literal_heading():
+    from sever.image_reader import _validate_reading
+    payload = reading("unknown")
+    payload["visible_text"] = ""
+    payload["form_scope"] = "out_of_scope"
+    decision = ImageReading.model_validate(payload)
+    panel_ids = payload["heading_panel_ids"]
+    proof = {"frame_id": "frame-a", "panels": {identifier: {"panel_id": identifier, "frame_id": "frame-a",
+             "bbox": [0, 0, 1, 1]} for identifier in panel_ids}}
+    result = _validate_reading(decision, proof, source_id="s", page_id="p", model_identity="m")
+    assert result["recognition"]["visible_text"] == payload["heading_text"]

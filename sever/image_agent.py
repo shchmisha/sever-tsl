@@ -30,7 +30,7 @@ from .image_reader import (EVIDENCE_ORIGIN, IMAGE_SCHEMA_VERSION, INSTRUCTIONS,
                            _NativeReadingResponse, _inverse_affine, _sha,
                            _source_transform, _validate_reading)
 
-IMAGE_AGENT_VERSION = "fresh-model-selected-batched-source-crops-v5"
+IMAGE_AGENT_VERSION = "fresh-model-selected-batched-source-crops-v6-compact"
 MAX_MODEL_REQUESTS = 8
 MAX_ZOOM_IMAGES = 8
 Coordinate = Annotated[float, Field(ge=0, le=1, allow_inf_nan=False)]
@@ -81,8 +81,8 @@ You have at most 8 model requests and 8 crop images. Use the remaining budget
 to return the structured reading; unresolved characters/roles stay unreadable.
 When no more crops are available, submit using the pixels already received.
 Check the complete reading against the supplied images before submitting:
-For a supported form, keep visible_text limited to the own heading/header;
-quote each role line only in that field's evidence_text. Do not call a field
+For a supported form, leave visible_text empty and quote only each field's own
+caption in its evidence_text; write the value once, in raw_value. Do not call a field
 blank merely because its line was outside a crop. A footer naming
 the document's creator does not by itself show consignor or consignee roles.
 Submit the final structured reading through the submit_reading tool.
