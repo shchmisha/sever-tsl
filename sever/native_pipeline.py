@@ -1,6 +1,7 @@
 """Read every usable leaf directly from source pixels, without an OCR/type gate."""
 from __future__ import annotations
 
+import asyncio
 from collections import Counter
 from functools import partial
 from pathlib import Path
@@ -346,7 +347,8 @@ def _type_conflict_review_frames(page, readings, views, *, previous_frame_ids=()
 async def process_video_images(source: Path, out: Path, *, config, sample_interval=.5,
                                max_pages=100, progress=None, reader=None,
                                additional_frames=None, conflict_reader=None,
-                               no_progress_views=_NO_PROGRESS_POLICY["consecutive_views_without_progress"]):
+                               no_progress_views=_NO_PROGRESS_POLICY["consecutive_views_without_progress"],
+                               leaf_concurrency=1):
     from .video import analyze_video
     from .quality import evaluate_page_frames, assess_frame_quality
     from .frame_pool import iter_additional_page_frames
@@ -358,6 +360,8 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
     source, out = Path(source).resolve(), Path(out).resolve()
     if not source.is_file():
         raise FileNotFoundError(source)
+    if type(leaf_concurrency) is not int or leaf_concurrency < 1:
+        raise ValueError("leaf_concurrency must be a positive integer")
     out.mkdir(parents=True, exist_ok=True)
     started = time.monotonic()
     before = config.usage.model_dump()
@@ -381,7 +385,8 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             page["selected_frame_id"] = selected
         trace(trace_path, "quality_gate", page_id=page["page_id"], decision=page["quality_gate"])
     save_json(out / "selected-pages.json", pages)
-    processed = []
+    # Leaves finish in any order when several run at once; exports keep page order.
+    completed, in_flight, outcomes = {}, {}, {}
     default_reader = reader is None
     if reader is None:
         from .zoom_image_reader import read_frame_zoom
@@ -390,9 +395,32 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             from .image_conflicts import read_leaf_conflicts
             conflict_reader = read_leaf_conflicts
     factory = additional_frames or iter_additional_page_frames
-    consecutive_failures = 0
-    for position, page in enumerate(pages, 1):
+
+    def snapshot_pages():
+        # An in-flight leaf appears once it has published its first result.
+        return ([completed[index] for index in sorted(completed)]
+                + [in_flight[index] for index in sorted(in_flight) if "result" in in_flight[index]])
+
+    def consecutive_failures():
+        """Failed leaves in a row over the finished prefix; quality-rejected leaves are neutral."""
+        count = 0
+        for index in range(1, len(pages) + 1):
+            if index not in outcomes:
+                break
+            count = count + 1 if outcomes[index] == "failed" else 0 if outcomes[index] == "read" else count
+            if count >= 3:
+                break
+        return count
+
+    async def next_candidate(iterator):
+        # Frame extraction runs ffmpeg; keep the event loop free for other leaves.
+        if leaf_concurrency > 1:
+            return await asyncio.to_thread(next, iterator, None)
+        return next(iterator, None)
+
+    async def process_page(position, page):
         page_id = page["page_id"]
+        in_flight[position] = page
         # The default reader shares one upright rotation and one scope triage
         # across this leaf's views; custom readers keep their own signature.
         read = partial(reader, leaf_orientation={}, leaf_triage={}) if default_reader else reader
@@ -551,7 +579,7 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             snapshot = {"source_id": source_id, "status": status,
                 "source": {"path": str(source), "sha256": source_id},
                 "video_coverage": video_coverage,
-                "pages": [*processed, page], "elapsed_seconds": round(time.monotonic()-started, 2)}
+                "pages": snapshot_pages(), "elapsed_seconds": round(time.monotonic()-started, 2)}
             save_json(out / "partial-results.json", snapshot)
             try:
                 write_report(out, snapshot)
@@ -803,9 +831,8 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         iterator = candidates()
         try:
             while True:
-                try:
-                    frame = next(iterator)
-                except StopIteration:
+                frame = await next_candidate(iterator)
+                if frame is None:
                     break
                 frame_id = frame["frame_id"]
                 if frame_id in seen:
@@ -993,9 +1020,9 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         if not views:
             reason = "quality_gate_rejected" if not ordered else "image_reading_failed"
             document.errors.append("native_image: " + reason)
-            consecutive_failures += bool(ordered)
+            outcomes[position] = "failed" if ordered else "neutral"
         else:
-            consecutive_failures = 0
+            outcomes[position] = "read"
         exhausted = ("source_views_unread_after_no_progress" if leaf_progress["triggered"]
                      else "source_views_exhausted_after_redundant_candidates" if saturation.skips
                      else "source_views_exhausted")
@@ -1018,21 +1045,49 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         page["inn_verification"] = {"status": "not_performed", "roles": {},
             "reason": "Native image reading does not yet provide separately corroborated role-bound printed INNs; registry match is not asserted"}
         save_json(out / "image-readings" / (page_id + ".json"), page["image_recognition"])
-        processed.append(page)
+        completed[position] = page
+        in_flight.pop(position, None)
+        failures = consecutive_failures()
         snapshot = {"source_id": source_id,
-            "status": "failed" if consecutive_failures >= 3 else "processing",
+            "status": "failed" if failures >= 3 else "processing",
             "source": {"path": str(source), "sha256": source_id},
             "video_coverage": video_coverage,
-            "pages": processed, "elapsed_seconds": round(time.monotonic()-started, 2)}
+            "pages": snapshot_pages(), "elapsed_seconds": round(time.monotonic()-started, 2)}
         save_json(out / "partial-results.json", snapshot)
         try:
             write_report(out, snapshot)
         except OSError as exc:
             trace(trace_path, "progress_report_failed", page_id=page_id,
                   error_type=type(exc).__name__)
-        if consecutive_failures >= 3:
+        if failures >= 3:
             trace(trace_path, "batch_stopped", reason="three_consecutive_image_reading_failures")
             raise RuntimeError("Three consecutive image readings failed; source checkpoints retained")
+
+    if leaf_concurrency == 1:
+        for position, page in enumerate(pages, 1):
+            await process_page(position, page)
+    else:
+        queue = iter(enumerate(pages, 1))
+
+        async def worker():
+            for position, page in queue:
+                await process_page(position, page)
+
+        # Several leaves share one model server and one batch budget. The first
+        # budget, provider or failure-run stop cancels the other leaves in flight.
+        trace(trace_path, "leaf_concurrency", leaves_at_once=leaf_concurrency)
+        tasks = [asyncio.create_task(worker()) for _ in range(min(leaf_concurrency, len(pages)))]
+        try:
+            await asyncio.wait(tasks, return_when=asyncio.FIRST_EXCEPTION)
+            failed = next((task for task in tasks if task.done() and not task.cancelled()
+                           and task.exception() is not None), None)
+            if failed is not None:
+                raise failed.exception()
+        finally:
+            for task in tasks:
+                task.cancel()
+            await asyncio.gather(*tasks, return_exceptions=True)
+    processed = [completed[index] for index in sorted(completed)]
     after = config.usage.model_dump()
     usage = {key: value-before.get(key, 0) if isinstance(value, (int, float)) and not isinstance(value, bool)
              else value for key, value in after.items()}
@@ -1048,6 +1103,7 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             "document_type_conflict_review": "fresh_joint_source_images_covering_disputed_types" if conflict_reader else "disabled_for_custom_reader",
             "redundancy_saturation": dict(_SATURATION_POLICY),
             "no_progress_stop": {**_NO_PROGRESS_POLICY, "consecutive_views_without_progress": no_progress_views},
+            "leaf_concurrency": leaf_concurrency,
             "verify_inn": False, "verify_inn_requested": config.verify_inn},
         "pages": processed, "usage": usage, "batch_usage": after,
         "elapsed_seconds": round(time.monotonic()-started, 2),

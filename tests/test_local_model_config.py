@@ -92,3 +92,15 @@ def test_trace_records_wall_time_cache_reads_and_server_timings(tmp_path, monkey
     row = json.loads(path.read_text())
     assert row["elapsed_seconds"] == 4.25 and row["server_timings"] == timings
     assert row["cache_read_tokens"] == 9000 and deps.request_started_monotonic is None
+
+
+def test_leaf_concurrency_comes_from_the_environment_and_is_bounded(monkeypatch):
+    monkeypatch.setenv("HARNESS_PROVIDER_KIND", "local")
+    monkeypatch.setenv("HARNESS_MODEL_BASE_URL", "http://127.0.0.1:8090/v1")
+    monkeypatch.delenv("HARNESS_LEAF_CONCURRENCY", raising=False)
+    assert agent_config("candidate", 20, 100000).leaf_concurrency == 1
+    monkeypatch.setenv("HARNESS_LEAF_CONCURRENCY", "3")
+    assert agent_config("candidate", 20, 100000).leaf_concurrency == 3
+    monkeypatch.setenv("HARNESS_LEAF_CONCURRENCY", "9")
+    with pytest.raises(ValueError, match="leaf_concurrency"):
+        agent_config("candidate", 20, 100000)

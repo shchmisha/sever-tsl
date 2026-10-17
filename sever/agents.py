@@ -130,10 +130,13 @@ class AgentConfig:
     refresh_cache: bool = False
     neighbor_fallback: bool = True
     verify_inn: bool = True
+    leaf_concurrency: int = 1  # native_image only: leaves read at once against one model server
 
     def __post_init__(self) -> None:
         if self.document_reader not in {"ocr_guided", "native_image"}:
             raise ValueError("document_reader must be ocr_guided or native_image")
+        if type(self.leaf_concurrency) is not int or not 1 <= self.leaf_concurrency <= 8:
+            raise ValueError("leaf_concurrency must be an integer from 1 to 8")
         if self.provider_kind not in {"remote", "local"}:
             raise ValueError("provider_kind must be remote or local")
         if self.provider_kind == "local":

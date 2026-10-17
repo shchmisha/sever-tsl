@@ -46,7 +46,8 @@ async def process_video(source: Path, out: Path, *, config, sample_interval: flo
     if getattr(config, "document_reader", "ocr_guided") == "native_image":
         from .native_pipeline import process_video_images
         return await process_video_images(source, out, config=config, sample_interval=sample_interval,
-                                          max_pages=max_pages, progress=progress)
+                                          max_pages=max_pages, progress=progress,
+                                          leaf_concurrency=getattr(config, "leaf_concurrency", 1))
     from .video import analyze_video
     from .ocr import read_image
     from .agents import analyze_page, FatalProviderError, BatchBudgetExceeded

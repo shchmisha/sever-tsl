@@ -698,3 +698,96 @@ def test_default_reader_gets_one_orientation_store_per_leaf(tmp_path, monkeypatc
     assert [page for page, _ in stores] == ["page-0", "page-0", "page-1", "page-1"]
     assert stores[0][1] == stores[1][1] and stores[2][1] == stores[3][1]
     assert stores[0][1] != stores[2][1]
+
+
+def leaves(tmp_path, monkeypatch, count):
+    source, frames = setup_pages(tmp_path, monkeypatch, count=2 * count)
+    pages = [{"page_id": f"page-{n}", "start_s": n, "end_s": n + 1,
+              "selected_frame_id": frames[2*n]["frame_id"], "frames": deepcopy(frames[2*n:2*n+2])}
+             for n in range(count)]
+    monkeypatch.setattr("sever.video.analyze_video", lambda *a, **kw: deepcopy(pages))
+    return source
+
+
+def test_concurrent_leaves_overlap_but_export_in_page_order(tmp_path, monkeypatch):
+    source = leaves(tmp_path, monkeypatch, 4)
+    active, peak, order = set(), [0], []
+
+    async def reader(frame, *, source_id, page_id, **kw):
+        active.add(page_id)
+        peak[0] = max(peak[0], len(active))
+        # Later leaves answer first, so completion order differs from page order.
+        await asyncio.sleep(.02 * (4 - int(page_id.split("-")[1])))
+        active.discard(page_id)
+        order.append(page_id)
+        return answer(frame, source_id, page_id, "upd")
+
+    out = tmp_path / "run"
+    result = asyncio.run(process_video_images(source, out, config=AgentConfig(), reader=reader,
+        additional_frames=lambda *a: iter(()), leaf_concurrency=2))
+    assert peak[0] == 2 and order != sorted(order)
+    assert [page["page_id"] for page in result["pages"]] == [f"page-{n}" for n in range(4)]
+    assert all(page["result"]["document_type"] == "upd" for page in result["pages"])
+    assert result["configuration"]["leaf_concurrency"] == 2
+    assert [p["page_id"] for p in json.loads((out / "partial-results.json").read_text())["pages"]] == \
+        [f"page-{n}" for n in range(4)]
+
+
+def test_budget_stop_in_one_leaf_cancels_the_others_and_keeps_its_type(tmp_path, monkeypatch):
+    source = leaves(tmp_path, monkeypatch, 4)
+    cancelled = []
+
+    async def reader(frame, *, source_id, page_id, **kw):
+        if page_id == "page-1":
+            await asyncio.sleep(.01)
+            raise BatchBudgetExceeded("offline budget stop")
+        try:
+            await asyncio.sleep(5)
+        except asyncio.CancelledError:
+            cancelled.append(page_id)
+            raise
+        return answer(frame, source_id, page_id, "upd")
+
+    out = tmp_path / "run"
+    with pytest.raises(BatchBudgetExceeded):
+        asyncio.run(process_video_images(source, out, config=AgentConfig(), reader=reader,
+            additional_frames=lambda *a: iter(()), leaf_concurrency=2))
+    assert cancelled == ["page-0"]
+    assert json.loads((out / "partial-results.json").read_text())["status"] == "failed"
+
+
+def test_three_consecutive_failed_leaves_stop_a_concurrent_batch(tmp_path, monkeypatch):
+    source = leaves(tmp_path, monkeypatch, 5)
+
+    async def reader(frame, *, source_id, page_id, **kw):
+        raise TimeoutError("no response")
+
+    with pytest.raises(RuntimeError, match="Three consecutive"):
+        asyncio.run(process_video_images(source, tmp_path / "run", config=AgentConfig(), reader=reader,
+            additional_frames=lambda *a: iter(()), leaf_concurrency=3))
+
+
+def test_concurrent_frame_pool_runs_off_the_event_loop(tmp_path, monkeypatch):
+    import threading
+    source = leaves(tmp_path, monkeypatch, 2)
+    loop_threads, pool_threads = set(), set()
+
+    def extra(src, page, out):
+        pool_threads.add(threading.get_ident())
+        return iter(())
+
+    async def reader(frame, *, source_id, page_id, **kw):
+        loop_threads.add(threading.get_ident())
+        return answer(frame, source_id, page_id, "unknown")
+
+    asyncio.run(process_video_images(source, tmp_path / "run", config=AgentConfig(), reader=reader,
+        additional_frames=extra, leaf_concurrency=2))
+    assert pool_threads and not pool_threads & loop_threads
+
+
+@pytest.mark.parametrize("value", [0, 1.5, "2"])
+def test_leaf_concurrency_must_be_a_positive_integer(tmp_path, monkeypatch, value):
+    source = leaves(tmp_path, monkeypatch, 1)
+    with pytest.raises(ValueError, match="leaf_concurrency"):
+        asyncio.run(process_video_images(source, tmp_path / "run", config=AgentConfig(),
+            reader=lambda *a, **k: None, leaf_concurrency=value))

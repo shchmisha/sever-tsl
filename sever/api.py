@@ -155,6 +155,7 @@ def native_implementation():
         "configuration":{"document_reader":reader,"provider_kind":"local" if local else "remote",
             "model_name":model,"vision_model":os.getenv("HARNESS_VISION_MODEL",model),
             "max_output_tokens":os.getenv("HARNESS_MAX_OUTPUT_TOKENS","2200"),
+            "leaf_concurrency":os.getenv("HARNESS_LEAF_CONCURRENCY","1"),
             "timeout_seconds":os.getenv("HARNESS_MODEL_TIMEOUT","600" if local else "60"),
             "model_base_url_sha256":hashlib.sha256(os.getenv("HARNESS_MODEL_BASE_URL",
                 "https://routerai.ru/api/v1").strip().rstrip("\\/").encode()).hexdigest()}}

@@ -25,7 +25,9 @@ def agent_config(model: str, max_requests: int, max_tokens: int):
         input_tokens_limit=max(800000,max_tokens) if provider_kind=="local" else 800000,
         output_tokens_limit=max(120000,max_tokens) if provider_kind=="local" else 120000,
         max_output_tokens=int(os.getenv("HARNESS_MAX_OUTPUT_TOKENS","2200")),
-        timeout_seconds=float(os.getenv("HARNESS_MODEL_TIMEOUT","600" if provider_kind=="local" else "60")))
+        timeout_seconds=float(os.getenv("HARNESS_MODEL_TIMEOUT","600" if provider_kind=="local" else "60")),
+        # Match llama-server --parallel; 1 keeps leaves strictly sequential.
+        leaf_concurrency=int(os.getenv("HARNESS_LEAF_CONCURRENCY","1")))
 
 @app.command()
 def process(source:Path,out:Path=typer.Option(Path("runs/latest")),interval:float=0.5,max_pages:int=100,model:str=typer.Option("openai/gpt-4.1-mini",envvar="HARNESS_MODEL_NAME"),max_requests:int=100,max_tokens:int=150_000,refresh_cache:bool=False):
