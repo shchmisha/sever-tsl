@@ -1,0 +1,304 @@
+{
+  "updated_at_utc": "2026-10-10T21:36:35.309364+00:00",
+  "current_server_release": "20261011-native-image-v7",
+  "v4_batch": "stopped_for_native_v5",
+  "v4_completed_videos": 3,
+  "v4_selected_videos": 11,
+  "new_full_video_batch_started": true,
+  "last_full_offline_suite": {
+    "passed": 1003,
+    "elapsed_seconds": 33.05,
+    "scope": "Final deployed source; software regression checks, not measured recognition accuracy"
+  },
+  "adaptive_live_probe": {
+    "directory": "/srv/sever/validation/native-v51-adaptive-check",
+    "status": "completed",
+    "images": 12,
+    "fresh_model_requests": 24,
+    "elapsed_seconds": 320.37,
+    "input_tokens": 207592,
+    "output_tokens": 14042,
+    "external_model_cost_rub": 0,
+    "ground_truth_access": false,
+    "accuracy_evaluated": false,
+    "confirmed_behavior": [
+      "All four reference forms returned their respective field schemas",
+      "Two TTN reverse source frames no longer mapped payer/unloading names into missing shipping roles",
+      "Two unsupported quality certificate frames returned out_of_scope"
+    ],
+    "remaining_observed_errors": [
+      "Two lower UPD frames still assigned creator organizations to shipping roles",
+      "Source UPD address glyphs differ (ul/up and soor/korp)",
+      "Reference TTN organization contains an extra character in its name"
+    ],
+    "current_recipe": false,
+    "note": "Historical diagnostic retained; superseded by final_probe and deployed V6 video run"
+  },
+  "next_step": "Verify first new production pages and joint reviews, then monitor immutable full11 batch to terminal; isolated evaluation only after all inference idle; distinguish unlabelled7 and employee approval.",
+  "customer_approved": false,
+  "zoom3_live_probe": {
+    "directory": "/srv/sever/validation/native-v6-zoom3-check",
+    "status": "completed",
+    "images": 12,
+    "fresh_model_requests": 73,
+    "elapsed_seconds": 416.18,
+    "input_tokens": 761565,
+    "output_tokens": 18160,
+    "structural_errors": 0,
+    "external_model_cost_rub": 0,
+    "accuracy_evaluated": false,
+    "ground_truth_access": false,
+    "remaining_observation": "Image01 free visible_text contradicts correct structured receiver; known-form transcript scope now clarified locally and awaits fresh recheck",
+    "current_recipe": false,
+    "note": "Historical diagnostic retained; superseded by final_probe and deployed V6 video run"
+  },
+  "linux_candidate_tests": {
+    "release": "20261010-native-image-v6",
+    "passed": 1001,
+    "skipped": 2,
+    "elapsed_seconds": 20.78,
+    "skipped_reason": "Two tests require original/local private fixtures absent on the server",
+    "source_installed_files_equal": 28,
+    "log": "/srv/sever/validation/linux-tests-native-image-v6.txt"
+  },
+  "final_probe": {
+    "directory": "/srv/sever/validation/native-v6-final-check",
+    "status": "completed",
+    "images": 12,
+    "fresh_model_requests": 67,
+    "elapsed_seconds": 370.84,
+    "input_tokens": 702732,
+    "output_tokens": 15038,
+    "native_png_crops": 69,
+    "explicit_crop_limit_declines": 2,
+    "structural_or_operational_errors": 0,
+    "field_proposals": {
+      "recognized": 34,
+      "unreadable": 16,
+      "not_present": 1
+    },
+    "accuracy_evaluated": false,
+    "ground_truth_access": false,
+    "external_model_cost_rub": 0,
+    "model_instructions_version": "native-source-images-model-authority-v5.2",
+    "model_schema_version": "native-image-model-authority-v5.1",
+    "model_agent_version": "fresh-model-selected-source-crops-v4",
+    "scope": "All 12 source images, fresh requests, same source-zoom reader used by the video pipeline",
+    "independent_audit": {
+      "raw_submission_export_parity": true,
+      "agent_panels_checked": 81,
+      "orientation_panels_checked": 48,
+      "native_png_pixels_exact": true,
+      "historical_response_replay": false
+    },
+    "observations": [
+      "Source glyphs ul. and soor.16 read correctly on the two initial UPD views",
+      "Shipping roles absent on TTN reverse/footer images remain unresolved rather than populated from payer/creator roles",
+      "Known-form transcript no longer contradicts recognized recipient with a duplicate blank-line statement",
+      "Input07 original printed address itself ends at Federalnaya; model-selected crops omit no visible continuation; model reason calling it cropped is unsupported",
+      "Invoice number/date on lower UPD continuation remain ambiguous across single-frame proposals; full video outcome pending"
+    ]
+  },
+  "active_batch": {
+    "manifest": "/srv/sever/runs/batches/native-image-qwen38-v7-20261011/manifest.json",
+    "unit": "sever-validation-native-v7-q38-20261011.service",
+    "status": "processing",
+    "selected_original_videos": 11,
+    "source_bytes_total": 13491073801,
+    "completed_videos": 0,
+    "submitted_jobs": 1,
+    "first_job_id": "53266394-137e-43f5-9671-8b40bbc19a91",
+    "first_source": "20260818-5_132107.mp4",
+    "fingerprint": "8903b48527dc4f7dfff3530cdb7cebfe31a702f878fd8b613ffa122760fe7238",
+    "job_limits": {
+      "requests": 2000,
+      "tokens": 40000000,
+      "wait_seconds": 43200
+    },
+    "batch_limits": {
+      "requests": 22000,
+      "tokens": 440000000
+    },
+    "accuracy_evaluated": false,
+    "customer_approved": false
+  },
+  "finish_controller": {
+    "unit": "sever-validation-native-v7-finish-20261011.service",
+    "checkpoint": "/root/sever-validation/native-v7-evaluation/finish.json",
+    "status": "waiting",
+    "evaluation_attempted": false,
+    "truth_loaded_before_idle": false,
+    "model_or_api_calls": 0,
+    "gate": "/srv/sever/runs/.inference-evaluation.lock"
+  },
+  "monitor": {
+    "automation_id": "automation",
+    "status": "ACTIVE",
+    "interval_minutes": 15,
+    "checkpoint": "analysis/monitor-native-v7-state.json"
+  },
+  "current_limitations": [
+    "Full 11-video run and value evaluation are not complete",
+    "Seven videos have no independent labels",
+    "Provisional labels need approval by a Sever TSL employee",
+    "Agreement of fresh model readings does not by itself prove field accuracy"
+  ],
+  "v7_candidate": {
+    "status": "local_integration_testing",
+    "changes": [
+      "An ungrounded form proposal no longer cancels grounded readings or halts subsequent source frames",
+      "Fresh joint-source field review uses 2–4 native sources and field names only; original proposals preserved",
+      "Unresolved first review continues remaining source frames; final review requires new pixels",
+      "Report exposes joint model review separately from original frame readings",
+      "Fingerprint pins actual review instructions, schema, source and limits"
+    ],
+    "live_verification_pending": true,
+    "last_full_local_suite": {
+      "passed": 1085,
+      "elapsed_seconds": 35.13,
+      "note": "Before final fatal-storage/report transparency followups"
+    },
+    "confirmed_V6_defects": [
+      {
+        "page_id": "page-0003",
+        "defect": "Ungrounded fifth type claim overrode four grounded TTN readings"
+      },
+      {
+        "page_id": "page-0004",
+        "defect": "Model split organization, INN/KPP and distribution-centre designation inconsistently on two legible source frames"
+      }
+    ]
+  },
+  "candidate_v7": {
+    "release": "/opt/sever-tsl/releases/20261011-native-image-v7",
+    "state": "active_fresh_full_batch_running",
+    "deployed_at_utc": "2026-10-10T21:34:10.056252+00:00",
+    "all29_local_server_installed_equal": true,
+    "proof": "analysis/deployment-native-image-v7-proof.json",
+    "local_full_suite": {
+      "passed": 1179,
+      "seconds": 80.41
+    },
+    "linux_full_suite": {
+      "passed": 1178,
+      "skipped": 2,
+      "seconds": 25.1,
+      "note": "Two local fixture tests unavailable; followed by the listed final focused checks"
+    },
+    "final_focused_checks": {
+      "local_report_pipeline_probe": 65,
+      "new_evaluation_tests_local_and_linux": 18,
+      "final_prompt_engine_and_fingerprint_local_and_linux": 131
+    },
+    "live_diagnostics": {
+      "field_initial": {
+        "path": "/srv/sever/validation/native-v7-conflict-fields",
+        "requests": 3,
+        "seconds": 28.42,
+        "finding": "Raw name/postal address are visible, but model explanation/evidence reversed captions; preserved as historical failed semantic explanation"
+      },
+      "field_final": {
+        "path": "/srv/sever/validation/native-v7-conflict-fields-final",
+        "requests": 5,
+        "seconds": 39.65,
+        "panels": 10,
+        "native_pixel_identity_verified": true,
+        "raw_export_parity": true,
+        "role_explanation_fixed": true,
+        "remaining_uncertainty": "Printed RC facility prefix retained in address; field-boundary convention awaits acceptance"
+      },
+      "form": {
+        "path": "/srv/sever/validation/native-v7-conflict-form",
+        "requests": 3,
+        "seconds": 19.94,
+        "panels": 7,
+        "native_pixel_identity_verified": true,
+        "raw_export_parity": true,
+        "type": "ttn",
+        "remaining_uncertainty": "Second source is motion-blurred; no independent certainty claim for all number digits"
+      }
+    },
+    "ground_truth_read_during_inference": false,
+    "previous_answers_as_model_inputs": false,
+    "accuracy_evaluated": false,
+    "joint_review_is_independent_model_calls": false
+  },
+  "historical_v6_batch": {
+    "manifest": "/srv/sever/runs/batches/native-image-qwen38-v6-20261010/manifest.json",
+    "unit": "sever-validation-native-v6-q38-20261010.service",
+    "status": "stopped_for_native_v7",
+    "selected_original_videos": 11,
+    "source_bytes_total_approx_gb": 13.49,
+    "completed_videos": 0,
+    "submitted_jobs": 1,
+    "first_job_id": "94b6e2e5-fc2c-416f-ab9e-2ebf7061470e",
+    "first_source": "20260818-5_132107.mp4",
+    "fingerprint": "e10385cb71e2ee74814eee81571064c6cb5ae3e8dc1958d30cd57cc9411250c3",
+    "job_limits": {
+      "requests": 2000,
+      "tokens": 40000000,
+      "wait_seconds": 43200
+    },
+    "batch_limits": {
+      "requests": 22000,
+      "tokens": 440000000
+    },
+    "accuracy_evaluated": false,
+    "customer_approved": false,
+    "first_observation": {
+      "utc": "2026-10-10T20:55:56.604416+00:00",
+      "progress": "Reading image 3/15, view 5",
+      "completed_pages": [
+        {
+          "page_id": "page-0001",
+          "type": "upd",
+          "agreed_fields": 6,
+          "distinct_frames": 2
+        },
+        {
+          "page_id": "page-0002",
+          "type": "ttn",
+          "agreed_fields": 4,
+          "distinct_frames": 2
+        }
+      ],
+      "operational_errors": 0,
+      "last_observed_fresh_responses": 47
+    },
+    "early_measured_page_processing": {
+      "measurement_utc": "2026-10-10T20:56:50+00:00",
+      "seconds_by_page": {
+        "page-0001": 50.42,
+        "page-0002": 65.33,
+        "page-0003": 161.7
+      },
+      "mean_seconds": 92.48,
+      "excludes": "Initial whole-video frame selection",
+      "caveat": "Only first three pages, not full-material throughput or accuracy"
+    },
+    "first_two_pages_independent_audit": {
+      "job_id": "94b6e2e5-fc2c-416f-ab9e-2ebf7061470e",
+      "page_ids": [
+        "page-0001",
+        "page-0002"
+      ],
+      "raw_model_submissions": 4,
+      "local_fresh_responses": 22,
+      "raw_reading_export_report_parity": true,
+      "fused_fields_agree_on_two_distinct_frame_pts_and_sha": 10,
+      "agent_panels_verified": 20,
+      "native_png_crops_pixel_exact": 16,
+      "report_and_source_links_http_status": 200,
+      "partial_processing_and_refresh": true,
+      "premature_final_csv_or_json_links": false,
+      "ground_truth_access": false,
+      "scope_limitation": "Only first two pages independently audited; no visual browser UI acceptance or full-video accuracy claim"
+    },
+    "last_observed_progress": "Reading image 13/15 at 64.5s, view4",
+    "job_status": "failed",
+    "error_type": "InterruptedForNativeV7",
+    "partial_pages": 13,
+    "remaining_unsubmitted": 10,
+    "original_results_preserved": true
+  }
+}

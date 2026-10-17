@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "status": "incomplete_transport_timeout",
+  "recorded_at_utc": "2026-10-10T21:40:30.851629+00:00",
+  "job_id": "53266394-137e-43f5-9671-8b40bbc19a91",
+  "report_url": "http://127.0.0.1:8772/53266394-137e-43f5-9671-8b40bbc19a91/report.html",
+  "observed_report": {
+    "http_status": 200,
+    "html_characters": 238083,
+    "title": "Север ТСЛ — обработка продолжается",
+    "explicit_partial_notice": true,
+    "refresh_seconds": 10,
+    "partial_results_link": true,
+    "csv_link": false
+  },
+  "observed_initial_server_snapshot": {
+    "job_status": "processing",
+    "partial_status": "processing",
+    "elapsed_seconds": 141.02,
+    "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+    "saved_pages": 2,
+    "completed_pages": 1,
+    "second_page_in_progress": true
+  },
+  "later_completion_reported_by_parent": {
+    "completed_pages": [
+      {
+        "page_id": "page-0001",
+        "document_type": "upd",
+        "recognized_fields": 6,
+        "fields": 6,
+        "views": 2
+      },
+      {
+        "page_id": "page-0002",
+        "document_type": "ttn",
+        "recognized_fields": 4,
+        "fields": 4,
+        "views": 2
+      }
+    ],
+    "independently_verified_in_this_audit": false
+  },
+  "unverified_checks": [
+    "fresh_model_raw_response_to_view_and_export_parity",
+    "native_source_panel_pixel_integrity",
+    "all_report_artifact_links"
+  ],
+  "transport_failures": [
+    {
+      "surface": "SSH master /tmp/sever-native-v3-control",
+      "timeout_seconds": 25
+    },
+    {
+      "surface": "local HTTP tunnel",
+      "timeout_seconds": 8
+    }
+  ],
+  "p1_p2_findings": [],
+  "findings_scope": "No actionable issue found in the observed initial HTML; incomplete deeper checks do not establish their success.",
+  "full_batch_complete": false,
+  "accuracy_evaluated": false,
+  "customer_approved": false,
+  "audit_actions": {
+    "model_calls": 0,
+    "ground_truth_reads": 0,
+    "remote_mutations": 0,
+    "browser_bypass": false
+  }
+}

@@ -1,0 +1,26 @@
+[Unit]
+Description=Sever TSL customer trial portal
+After=network-online.target sever-tsl.service
+Wants=network-online.target sever-tsl.service
+
+[Service]
+Type=simple
+User=sever
+Group=sever
+WorkingDirectory=/srv/sever
+Environment=PORTAL_DATA_DIR=/srv/sever/customer
+Environment=SEVER_RUNS_DIR=/srv/sever/runs
+Environment=SEVER_API_URL=http://127.0.0.1:8080
+ExecStart=/opt/sever-tsl/current/.venv/bin/python -m uvicorn sever.portal:app --host 127.0.0.1 --port 8082 --no-proxy-headers
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/sever/customer
+
+[Install]
+WantedBy=multi-user.target

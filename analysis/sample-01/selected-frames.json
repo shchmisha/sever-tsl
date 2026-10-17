@@ -1,0 +1,66 @@
+[
+  {
+    "page_candidate_id": 1,
+    "sample_id": 2,
+    "timestamp_s": 0.533111,
+    "source_frame_index": 16,
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-01.jpg",
+    "selection": "Manual representative of visual page interval, not automatic detection."
+  },
+  {
+    "page_candidate_id": 2,
+    "sample_id": 8,
+    "timestamp_s": 3.731744,
+    "source_frame_index": 112,
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-02.jpg",
+    "selection": "Manual representative of visual page interval, not automatic detection."
+  },
+  {
+    "page_candidate_id": 3,
+    "sample_id": 13,
+    "timestamp_s": 6.397278,
+    "source_frame_index": 192,
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-03.jpg",
+    "selection": "Manual representative of visual page interval, not automatic detection."
+  },
+  {
+    "page_candidate_id": 4,
+    "sample_id": 20,
+    "timestamp_s": 10.129011,
+    "source_frame_index": 304,
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-04.jpg",
+    "selection": "Manual representative of visual page interval, not automatic detection."
+  },
+  {
+    "page_candidate_id": 5,
+    "sample_id": 28,
+    "timestamp_s": 14.393856,
+    "source_frame_index": 432,
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-05.jpg",
+    "selection": "Manual representative of visual page interval, not automatic detection."
+  },
+  {
+    "page_candidate_id": 6,
+    "sample_id": 33,
+    "timestamp_s": 17.059389,
+    "source_frame_index": 512,
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-06.jpg",
+    "selection": "Manual representative of visual page interval, not automatic detection."
+  },
+  {
+    "page_candidate_id": 7,
+    "sample_id": 38,
+    "timestamp_s": 19.724922,
+    "source_frame_index": 592,
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-07.jpg",
+    "selection": "Manual representative of visual page interval, not automatic detection."
+  },
+  {
+    "page_candidate_id": 8,
+    "sample_id": 42,
+    "timestamp_s": 21.857344,
+    "source_frame_index": 656,
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-08.jpg",
+    "selection": "Manual representative of visual page interval, not automatic detection."
+  }
+]

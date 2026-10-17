@@ -1,0 +1,56 @@
+{
+  "checked_at_utc": "2026-10-10T21:41:16.855597+00:00",
+  "job_id": "53266394-137e-43f5-9671-8b40bbc19a91",
+  "report_http_status": 200,
+  "asset_head_checks": 26,
+  "asset_head_failures": [],
+  "scope": "HTTP report/assets and current JSON state; not a source-pixel or independent accuracy audit",
+  "pages": [
+    {
+      "page_id": "page-0001",
+      "type": "upd",
+      "fields": {
+        "invoice_number": "recognized",
+        "invoice_date": "recognized",
+        "consignor": "recognized",
+        "consignor_address": "recognized",
+        "consignee": "recognized",
+        "consignee_address": "recognized"
+      },
+      "views": 2,
+      "stop_reason": "all_required_fields_confirmed",
+      "reviews": [],
+      "errors": []
+    },
+    {
+      "page_id": "page-0002",
+      "type": "ttn",
+      "fields": {
+        "consignor": "recognized",
+        "consignee": "recognized",
+        "document_number": "recognized",
+        "document_date": "recognized"
+      },
+      "views": 2,
+      "stop_reason": "all_required_fields_confirmed",
+      "reviews": [],
+      "errors": []
+    },
+    {
+      "page_id": "page-0003",
+      "type": "ttn",
+      "fields": {
+        "consignor": "unreadable",
+        "consignee": "unreadable",
+        "document_number": "recognized",
+        "document_date": "unreadable"
+      },
+      "views": 6,
+      "stop_reason": null,
+      "reviews": [],
+      "errors": [
+        "Model document type has no supplied-panel heading evidence"
+      ]
+    }
+  ]
+}

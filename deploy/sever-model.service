@@ -1,0 +1,24 @@
+[Unit]
+Description=Local Sever TSL vision-language model
+After=network.target
+
+[Service]
+Type=simple
+User=sever
+Group=sever
+EnvironmentFile=/etc/sever-tsl/local-model.env
+Environment=OMP_NUM_THREADS=16
+WorkingDirectory=/srv/sever
+ExecStart=/opt/sever-tsl/llama.cpp/build/bin/llama-server --model ${MODEL_PATH} --mmproj ${MMPROJ_PATH} --alias ${MODEL_ALIAS} --host 127.0.0.1 --port 8090 --ctx-size 65536 --parallel 1 --gpu-layers all --threads 16 --threads-batch 16 --flash-attn on --cache-type-k q8_0 --cache-type-v q8_0 --image-min-tokens 1024 --image-max-tokens 4096 --jinja --chat-template-kwargs '{"enable_thinking":false}' --no-reasoning-preserve --metrics --no-webui
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/srv/sever/validation
+UMask=0027
+
+[Install]
+WantedBy=multi-user.target

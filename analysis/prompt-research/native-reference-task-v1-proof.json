@@ -1,0 +1,268 @@
+{
+  "proof_kind": "three_fresh_local_native_calls_on_one_actual_source_frame",
+  "status": "audited",
+  "source": {
+    "path": "/srv/sever/runs/da1f4757-1196-4706-aa24-d2431a47dea1/video/frames/frame-000006.png",
+    "sha256": "2784a163d5569e9c4716f97a75cec938ead073fcbfcc88c89d1a2bf38da31f49",
+    "frame_id": "frame-000006",
+    "timestamp_s": 2.6655333333333333,
+    "page_id": "page-0001",
+    "selected_pages_sha256": "c16284e2ea7011459699c76bee82fe6acb22fb92949bbb752c2ad3a48630f306"
+  },
+  "script_path": "/srv/sever/validation/prompt-research/research_native_prompt.py",
+  "script_sha256": "53a21e725cec52a0c62aebb5773ef3003d30e81d0860aa393f49c8bbdf51c676",
+  "original_reader_sha256": "fc39d261046318f9a8b4aaf6142735d5883fd87303652a37dec82c6ee4d8915d",
+  "generic_prefix_sha256": "46ef5764722fb85ff19042b0898a6928b8b08c91a17e3a8553e2f6465e456287",
+  "summary_sha256": "85cc1327bbe5de9ef102f60618da74ec2250df8a3ddff33c4502b5db71e4a42d",
+  "request_count": 3,
+  "actual_request_response_pairs": 3,
+  "actual_uploaded_images": 36,
+  "distinct_source_frames": 1,
+  "same_uploaded_jpeg_hashes_all_variants": true,
+  "source_reconstructed_jpeg_hash_checks_passed": 36,
+  "usage": {
+    "actual_cost_rub": 0,
+    "attempted_requests": 3,
+    "audio_seconds": 0,
+    "cache_audio_read_tokens": 0,
+    "cache_read_tokens": 890,
+    "cache_write_tokens": 0,
+    "costed_requests": 0,
+    "details": {},
+    "estimated_cost_rub": 0,
+    "input_audio_tokens": 0,
+    "input_tokens": 115596,
+    "output_audio_tokens": 0,
+    "output_tokens": 11465,
+    "provider_kind": "local",
+    "requests": 3,
+    "tool_calls": 0,
+    "framework_cost_usd": null,
+    "provider_cost_currency": null,
+    "estimate_rate_snapshot": null,
+    "cost_note": "Local inference; no external model API charge. Hardware and hosting costs are not estimated."
+  },
+  "aggregate_actual_tokens": 127061,
+  "model_answer_replay": false,
+  "previous_model_answers_in_request": false,
+  "ground_truth_read": false,
+  "external_model_billing": 0,
+  "ocr_used": false,
+  "separate_classifier_used": false,
+  "backend_input_kv_cached_tokens": 890,
+  "cache_note": "Backend prompt/KV token reuse is recorded separately; all three completions are fresh actual model calls with no saved answers as input.",
+  "variants": [
+    {
+      "variant": "current",
+      "status": "completed",
+      "usage_delta": {
+        "requests": 1,
+        "input_tokens": 38294,
+        "output_tokens": 1756,
+        "tool_calls": 0
+      },
+      "elapsed_seconds_including_shared_server_queue": 77.884,
+      "instructions_sha256": "8d1a841ddf2ff924841fbb1b372a35966274588934c32f02c1c140d1b508abbb",
+      "request_settings": {
+        "model": "qwen38-27b-q6",
+        "settings": {
+          "max_tokens": 8192,
+          "temperature": 0,
+          "tool_choice": "none",
+          "timeout": 1800
+        },
+        "message_count": 1,
+        "saved_answers_input": false,
+        "ground_truth_input": false,
+        "schema_sha256": "71861bf7991cf75ba536067e7f22d6943d6094f664230bfe18e8a2d9ef71683e"
+      },
+      "request_settings_sha256": "12e5330b842677f2e8e149b19141067465461dfce67535d3c6ad3c6da27fa6d8",
+      "trace_path": "/srv/sever/validation/prompt-research/native-reference-task-v1/current/trace.jsonl",
+      "trace_sha256": "63311a5cbb30282c492fccb7067d0759d659d80278ca5e6ce96dc5f0020a19a3",
+      "evidence_path": "/srv/sever/validation/prompt-research/native-reference-task-v1/current/evidence/image-reading-25491b2744b69d7b90a3c7eb403b1ce82f1c723a1b9123ec254bdbc12db1bbdd-0778b7b975924794a252054fdabfc958.json",
+      "evidence_sha256": "7716e7a1fe6d8926fb8a79658894caf7e5959b2b685f4c6c521249a488fe6275",
+      "event_counts": {
+        "image_reader_observation": 1,
+        "model_request_started": 1,
+        "model_response_received": 1,
+        "image_reader_reading": 1
+      },
+      "actual_uploaded_jpeg_count": 12,
+      "source_reconstruction_jpeg_sha_checks_passed": 12,
+      "response_part_kinds": {
+        "text": 1
+      },
+      "reading_path": "/srv/sever/validation/prompt-research/native-reference-task-v1/current/reading.json",
+      "reading_sha256": "8e4d83dfee146e99276b54e097d17f5541d5c0b47e5346aa92c3782d2a4f87fd",
+      "document_type": "upd",
+      "validation_errors": [],
+      "raw_model_fields": {
+        "invoice_number": {
+          "raw_value": "2560",
+          "status": "recognized"
+        },
+        "invoice_date": {
+          "raw_value": "20 августа 2026 г.",
+          "status": "recognized"
+        },
+        "consignor": {
+          "raw_value": "он же",
+          "status": "recognized"
+        },
+        "consignor_address": {
+          "raw_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+          "status": "recognized"
+        },
+        "consignee": {
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "status": "recognized"
+        },
+        "consignee_address": {
+          "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, корп. 16",
+          "status": "recognized"
+        }
+      },
+      "original_raw_model_response_binding": true,
+      "code_semantic_recoveries": []
+    },
+    {
+      "variant": "russian-entity-reference",
+      "status": "completed",
+      "usage_delta": {
+        "requests": 1,
+        "input_tokens": 38633,
+        "output_tokens": 1517,
+        "tool_calls": 0
+      },
+      "elapsed_seconds_including_shared_server_queue": 106.529,
+      "instructions_sha256": "960462331d125e1ae664241cb1af3265148b5716b8f94b67781523bbf3366c80",
+      "request_settings": {
+        "model": "qwen38-27b-q6",
+        "settings": {
+          "max_tokens": 8192,
+          "temperature": 0,
+          "tool_choice": "none",
+          "timeout": 1800
+        },
+        "message_count": 1,
+        "saved_answers_input": false,
+        "ground_truth_input": false,
+        "schema_sha256": "71861bf7991cf75ba536067e7f22d6943d6094f664230bfe18e8a2d9ef71683e"
+      },
+      "request_settings_sha256": "12e5330b842677f2e8e149b19141067465461dfce67535d3c6ad3c6da27fa6d8",
+      "trace_path": "/srv/sever/validation/prompt-research/native-reference-task-v1/russian-entity-reference/trace.jsonl",
+      "trace_sha256": "83e7e47d1c6234e562862eb7487e237c6fc1a60db915c512a98a371a4c38d398",
+      "evidence_path": "/srv/sever/validation/prompt-research/native-reference-task-v1/russian-entity-reference/evidence/image-reading-12e1a2d8f979215726ce7f19d14a637cb6beb005385ecbaecb0556a22c7a2f7f-161cbbd764d64539b6781474ec851689.json",
+      "evidence_sha256": "526f8c885b8d8f62f7056bf20b68bdd0435a7dde476b4f691c686f61b77cdd1b",
+      "event_counts": {
+        "image_reader_observation": 1,
+        "model_request_started": 1,
+        "model_response_received": 1,
+        "image_reader_reading": 1
+      },
+      "actual_uploaded_jpeg_count": 12,
+      "source_reconstruction_jpeg_sha_checks_passed": 12,
+      "response_part_kinds": {
+        "text": 1
+      },
+      "reading_path": "/srv/sever/validation/prompt-research/native-reference-task-v1/russian-entity-reference/reading.json",
+      "reading_sha256": "8a0478a8d1fa9c2af481d8e908b4ddafe0844b8321b17f2f05e6ddae3b0b45e6",
+      "document_type": "upd",
+      "validation_errors": [],
+      "raw_model_fields": {
+        "invoice_number": {
+          "raw_value": "2560",
+          "status": "recognized"
+        },
+        "invoice_date": {
+          "raw_value": "20 августа 2026 г.",
+          "status": "recognized"
+        },
+        "consignor": {
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "status": "recognized"
+        },
+        "consignor_address": {
+          "raw_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+          "status": "recognized"
+        },
+        "consignee": {
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "status": "recognized"
+        },
+        "consignee_address": {
+          "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, корп. 16",
+          "status": "recognized"
+        }
+      },
+      "original_raw_model_response_binding": true,
+      "code_semantic_recoveries": []
+    },
+    {
+      "variant": "russian-entity-reference-thinking",
+      "status": "failed",
+      "usage_delta": {
+        "requests": 1,
+        "input_tokens": 38669,
+        "output_tokens": 8192,
+        "tool_calls": 0
+      },
+      "elapsed_seconds_including_shared_server_queue": 220.702,
+      "instructions_sha256": "960462331d125e1ae664241cb1af3265148b5716b8f94b67781523bbf3366c80",
+      "request_settings": {
+        "model": "qwen38-27b-q6",
+        "settings": {
+          "max_tokens": 8192,
+          "temperature": 0,
+          "tool_choice": "none",
+          "timeout": 1800,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": true
+            }
+          }
+        },
+        "message_count": 1,
+        "saved_answers_input": false,
+        "ground_truth_input": false,
+        "schema_sha256": "71861bf7991cf75ba536067e7f22d6943d6094f664230bfe18e8a2d9ef71683e"
+      },
+      "request_settings_sha256": "5c13fd0a0e4ac61b9129966575bf8f66371995dae7e561482d60a84bcd4ad5ba",
+      "trace_path": "/srv/sever/validation/prompt-research/native-reference-task-v1/russian-entity-reference-thinking/trace.jsonl",
+      "trace_sha256": "23aaf9660508d233ec4766c4e06f247c4f004ae7be3b0f3a98642ab9db7ef4f0",
+      "evidence_path": "/srv/sever/validation/prompt-research/native-reference-task-v1/russian-entity-reference-thinking/evidence/image-reading-12e1a2d8f979215726ce7f19d14a637cb6beb005385ecbaecb0556a22c7a2f7f-dcfbd4b2d93e4281925e9ec58849ca59.json",
+      "evidence_sha256": "9484401eacdbb2a610fea6db10a9edf6194125baa2e4e0a49c988cef1edfbd22",
+      "event_counts": {
+        "image_reader_observation": 1,
+        "model_request_started": 1,
+        "model_response_received": 1,
+        "image_reader_error": 1
+      },
+      "actual_uploaded_jpeg_count": 12,
+      "source_reconstruction_jpeg_sha_checks_passed": 12,
+      "response_part_kinds": {
+        "thinking": 1
+      },
+      "error_type": "AnalysisError",
+      "error": "Image reading failed (UnexpectedModelBehavior); no automatic retry",
+      "structured_final_reading_available": false
+    }
+  ],
+  "thinking_request_support": {
+    "installed_source": "/opt/sever-tsl/llama.cpp/tools/server/server-common.cpp:1397-1408",
+    "official_documentation": "https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md",
+    "per_request_override": "chat_template_kwargs.enable_thinking=true",
+    "server_restart_used": false
+  },
+  "source_only_manual_spot_check": {
+    "panel_sha256": "cf9026b6e76d3354729c17e6c161231a51398263bc16c85b83ab1c5c95165ce9",
+    "scope": "Seller organization and consignor reference lines are visibly present together in the actual supplied detail_1_r90 panel. Limited to that reference; no corpus accuracy estimate."
+  },
+  "recommendation": "Generic Russian entity/reference prefix alone; retain thinking=false and all model-authority structural validation. The thinking variant reached its 8192 output cap without a structured final reading.",
+  "limitations": [
+    "One source frame only; no independent two-frame corroboration.",
+    "No corpus accuracy or customer acceptance measured.",
+    "Other five model raw values were unchanged; address/date accuracy improvement is not demonstrated.",
+    "Elapsed times include concurrent jobs and are not a controlled latency benchmark."
+  ]
+}

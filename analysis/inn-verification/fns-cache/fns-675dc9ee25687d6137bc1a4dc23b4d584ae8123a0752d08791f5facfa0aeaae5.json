@@ -1,0 +1,24 @@
+{
+  "version": "public-egrul-search-v1",
+  "origin": "https://egrul.nalog.ru",
+  "inn": "7811657720",
+  "created_at": 1791364111.779038,
+  "result": {
+    "status": "found",
+    "checked_at": "2026-10-07T09:08:30.731544+00:00",
+    "source_url": "https://egrul.nalog.ru/",
+    "records": [
+      {
+        "inn": "7811657720",
+        "name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"УМНЫЙ РИТЕЙЛ\"",
+        "short_name": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+        "ogrn": "1177847261602",
+        "entity_type": "ul",
+        "registration_date": "02.08.2017",
+        "termination_date": null,
+        "invalid_registration_date": null
+      }
+    ],
+    "reason": "Official public EGRUL/EGRIP search response; not a signed extract"
+  }
+}

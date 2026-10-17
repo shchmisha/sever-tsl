@@ -1,0 +1,458 @@
+{
+  "reviewed_at_utc": "2026-10-11T14:12:08.989155+00:00",
+  "kind": "read_only_visual_evidence_review",
+  "comparison_path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/accuracy-speed-v8-image-comparison.json",
+  "scope": {
+    "images_reviewed": 6,
+    "selection": "diagnostic selected frames; not held-out accuracy corpus",
+    "ground_truth_read": false,
+    "new_inference_calls": 0,
+    "customer_acceptance_metric": null,
+    "accuracy_metric": null,
+    "review_method": "Compare fresh saved outputs against actual native source pixels; no labels, dictionaries or replacement values."
+  },
+  "evidence_integrity": {
+    "all_12_preexisting_local_panels_match_recorded_upload_sha256": true,
+    "all_panel_source_sha256_values_match_comparison_inputs": true,
+    "ttn03_number_panel_copied_read_only_from_completed_candidate_and_sha256_checked": true
+  },
+  "overall": "Own-address block coverage and TRN organization-role handling improved on inspected frames. Literal omissions/case differences remain on UPD02; no claim of perfect accuracy or full-video acceptance.",
+  "images": [
+    {
+      "image_id": "image-0001",
+      "evidence": [
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0001-zoom_01_r270.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/b69cfce7-b368-4964-948f-61706834aa0f-baseline/image-reading-evidence/image-panels/91a7b1dd46e34050be4c3237e1b70055-zoom_01_r270-ac72f1c96cdb16aaa0d412ba750097769d6595396520395e7a439b201973af22.png",
+          "panel_sha256": "ac72f1c96cdb16aaa0d412ba750097769d6595396520395e7a439b201973af22",
+          "source_sha256": "e5b6d2922cbdc2bd11b9a8535cabe7c14be59ddfd373a9a0816b29ad49e702d3",
+          "native_source_detail": true,
+          "resize": "none"
+        }
+      ],
+      "visually_supported": [
+        "The own combined consignee/address block contains organization, INN/KPP, RC name and postal address. Candidate consignee_address retains all these components; baseline omits the organization.",
+        "The UPD own invoice header visibly gives 2559 and 20 August 2026."
+      ],
+      "remaining_limitations": [
+        "Component coverage is supported; this review does not certify byte-for-byte transcription of every field."
+      ],
+      "input_source": {
+        "path": "/srv/sever/validation/accuracy-speed-v8-20261011/input-images/01.png",
+        "sha256": "e5b6d2922cbdc2bd11b9a8535cabe7c14be59ddfd373a9a0816b29ad49e702d3",
+        "bytes": 9347395,
+        "pixel_size": [
+          2160,
+          3840
+        ]
+      },
+      "baseline_output_fields": {
+        "invoice_number": {
+          "raw_value": "2559",
+          "status": "recognized"
+        },
+        "invoice_date": {
+          "raw_value": "20 августа 2026 г.",
+          "status": "recognized"
+        },
+        "consignor": {
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "status": "recognized"
+        },
+        "consignor_address": {
+          "raw_value": "454004, Челябинская обл., Челябинск г., Братьев Кашириных ул., дом № 158, квартира 59",
+          "status": "recognized"
+        },
+        "consignee": {
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "status": "recognized"
+        },
+        "consignee_address": {
+          "raw_value": "ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "status": "recognized"
+        }
+      },
+      "candidate_output_fields": {
+        "invoice_number": {
+          "raw_value": "2559",
+          "status": "recognized"
+        },
+        "invoice_date": {
+          "raw_value": "20 августа 2026 г.",
+          "status": "recognized"
+        },
+        "consignor": {
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "status": "recognized"
+        },
+        "consignor_address": {
+          "raw_value": "454004, Челябинская обл., Челябинск г., Братьев Кашириных ул., дом № 158, квартира 59",
+          "status": "recognized"
+        },
+        "consignee": {
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "status": "recognized"
+        },
+        "consignee_address": {
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "status": "recognized"
+        }
+      }
+    },
+    {
+      "image_id": "image-0002",
+      "evidence": [
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0002-zoom_01_r270.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/b69cfce7-b368-4964-948f-61706834aa0f-baseline/image-reading-evidence/image-panels/11883c5a768a4e9f8e5420af6d490dab-zoom_01_r270-85793261364b3cf794bbd2c3f133e2701ca50e3fb1447044c89c1c5ad929c9f7.png",
+          "panel_sha256": "85793261364b3cf794bbd2c3f133e2701ca50e3fb1447044c89c1c5ad929c9f7",
+          "source_sha256": "1d76d0e3477512dd3781df107ddf3575171381ef47b04bc78529e187038ae214",
+          "native_source_detail": true,
+          "resize": "none"
+        }
+      ],
+      "visually_supported": [
+        "Candidate consignee_address retains organization, INN/KPP, RC name and postal address in the own printed block; baseline retained only postal address.",
+        "The printed consignee name contains РИТЕЙЛ; candidate restored Й relative to baseline РИТЕИЛ."
+      ],
+      "remaining_errors": [
+        {
+          "field": "consignor_address",
+          "printed_fragment": "Челябинск г.",
+          "candidate_fragment": "Челябинск",
+          "issue": "Candidate drops printed city abbreviation г. from the raw value."
+        },
+        {
+          "field": "consignee_address",
+          "printed_fragment": "ПроФреш",
+          "candidate_fragment": "Профреш",
+          "issue": "Candidate changes printed capital Ф to lowercase ф."
+        }
+      ],
+      "remaining_limitations": [
+        "The complete components do not imply exact transcription; these literal differences remain."
+      ],
+      "input_source": {
+        "path": "/srv/sever/validation/accuracy-speed-v8-20261011/input-images/02.png",
+        "sha256": "1d76d0e3477512dd3781df107ddf3575171381ef47b04bc78529e187038ae214",
+        "bytes": 8980899,
+        "pixel_size": [
+          2160,
+          3840
+        ]
+      },
+      "baseline_output_fields": {
+        "invoice_number": {
+          "raw_value": "2559",
+          "status": "recognized"
+        },
+        "invoice_date": {
+          "raw_value": "20 августа 2026 г.",
+          "status": "recognized"
+        },
+        "consignor": {
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "status": "recognized"
+        },
+        "consignor_address": {
+          "raw_value": "454004, Челябинская обл., Челябинск г., Братьев Кашириных ул., дом № 158, квартира 59",
+          "status": "recognized"
+        },
+        "consignee": {
+          "raw_value": "ООО \"УМНЫЙ РИТЕИЛ\"",
+          "status": "recognized"
+        },
+        "consignee_address": {
+          "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "status": "recognized"
+        }
+      },
+      "candidate_output_fields": {
+        "invoice_number": {
+          "raw_value": "2559",
+          "status": "recognized"
+        },
+        "invoice_date": {
+          "raw_value": "20 августа 2026 г.",
+          "status": "recognized"
+        },
+        "consignor": {
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "status": "recognized"
+        },
+        "consignor_address": {
+          "raw_value": "454004, Челябинская обл., Челябинск, Братьев Кашириных ул., дом № 158, квартира 59",
+          "status": "recognized"
+        },
+        "consignee": {
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "status": "recognized"
+        },
+        "consignee_address": {
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001, РЦ ООО \"Профреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "status": "recognized"
+        }
+      }
+    },
+    {
+      "image_id": "image-0003",
+      "evidence": [
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0003-candidate-number-zoom_03_r270.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/0af060f3-1989-4c88-b53d-7bd9879aed45-candidate/image-reading-evidence/image-panels/c0d4c6936abf46a9b078da849dadc4c0-zoom_03_r270-bbe82debaf15fafefe23043e5319ccff3167477cc51393175507e0f9650902f7.png",
+          "panel_sha256": "bbe82debaf15fafefe23043e5319ccff3167477cc51393175507e0f9650902f7",
+          "source_sha256": "7241b14b3b809567048ab4a19a51d69b017a90d6ea956bf0da1cdc979ab59e76",
+          "native_source_detail": true,
+          "resize": "none"
+        },
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0003-zoom_01_r270.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/b69cfce7-b368-4964-948f-61706834aa0f-baseline/image-reading-evidence/image-panels/dcc0545e19d34c94a62be67ca273f507-zoom_01_r270-3cecb2ccfff3d29bc842d8f59a4f57753e19bf9712bcf75c04e956032c55a7d8.png",
+          "panel_sha256": "3cecb2ccfff3d29bc842d8f59a4f57753e19bf9712bcf75c04e956032c55a7d8",
+          "source_sha256": "7241b14b3b809567048ab4a19a51d69b017a90d6ea956bf0da1cdc979ab59e76",
+          "native_source_detail": true,
+          "resize": "none"
+        },
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0003-zoom_02_r270.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/b69cfce7-b368-4964-948f-61706834aa0f-baseline/image-reading-evidence/image-panels/dcc0545e19d34c94a62be67ca273f507-zoom_02_r270-ed7ec29dd302a4e998016e658fea0f175108cd83db593fc22cfce5e77d218ed9.png",
+          "panel_sha256": "ed7ec29dd302a4e998016e658fea0f175108cd83db593fc22cfce5e77d218ed9",
+          "source_sha256": "7241b14b3b809567048ab4a19a51d69b017a90d6ea956bf0da1cdc979ab59e76",
+          "native_source_detail": true,
+          "resize": "none"
+        }
+      ],
+      "visually_supported": [
+        "Exact saved candidate native panel shows 2559 in its own ТТН № box, consistent with the candidate value.",
+        "Other inspected fragments show the reverse transport section, customer and loading/unloading points. They do not establish the own consignor/consignee role names."
+      ],
+      "remaining_limitations": [
+        "Soft contrast remains, but all four digits are legible in the inspected native number panel. This is one source frame, not independent multi-frame corroboration."
+      ],
+      "input_source": {
+        "path": "/srv/sever/validation/accuracy-speed-v8-20261011/input-images/03.png",
+        "sha256": "7241b14b3b809567048ab4a19a51d69b017a90d6ea956bf0da1cdc979ab59e76",
+        "bytes": 9001175,
+        "pixel_size": [
+          2160,
+          3840
+        ]
+      },
+      "baseline_output_fields": {
+        "consignor": {
+          "raw_value": null,
+          "status": "unreadable"
+        },
+        "consignee": {
+          "raw_value": null,
+          "status": "unreadable"
+        },
+        "document_number": {
+          "raw_value": "2559",
+          "status": "recognized"
+        },
+        "document_date": {
+          "raw_value": null,
+          "status": "unreadable"
+        }
+      },
+      "candidate_output_fields": {
+        "consignor": {
+          "raw_value": null,
+          "status": "unreadable"
+        },
+        "consignee": {
+          "raw_value": null,
+          "status": "unreadable"
+        },
+        "document_number": {
+          "raw_value": "2559",
+          "status": "recognized"
+        },
+        "document_date": {
+          "raw_value": null,
+          "status": "unreadable"
+        }
+      }
+    },
+    {
+      "image_id": "image-0004",
+      "evidence": [
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0004-zoom_01_r90.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/b69cfce7-b368-4964-948f-61706834aa0f-baseline/image-reading-evidence/image-panels/3a9704e8087642b79317ca79b3c9b7f6-zoom_01_r90-79d6df91840db16479286429626eccdd881b844c4819bb39cf3af8f5c1bcec41.png",
+          "panel_sha256": "79d6df91840db16479286429626eccdd881b844c4819bb39cf3af8f5c1bcec41",
+          "source_sha256": "11e3f5141d7e2817dfe63487ed1b04cf72c4ac85bb8700a7f9b1ebde3256aa31",
+          "native_source_detail": true,
+          "resize": "none"
+        }
+      ],
+      "visually_supported": [
+        "The own ТТН № box visibly reads 2560, consistent with both outputs.",
+        "The visible reverse-side customer/loading-point rows should not substitute for own consignor or consignee names. Candidate leaves those roles and document date unreadable."
+      ],
+      "remaining_limitations": [
+        "Review covers the supplied reverse-side frame; front-side own role values are not established here."
+      ],
+      "input_source": {
+        "path": "/srv/sever/validation/accuracy-speed-v8-20261011/input-images/04.png",
+        "sha256": "11e3f5141d7e2817dfe63487ed1b04cf72c4ac85bb8700a7f9b1ebde3256aa31",
+        "bytes": 8814949,
+        "pixel_size": [
+          2160,
+          3840
+        ]
+      },
+      "baseline_output_fields": {
+        "consignor": {
+          "raw_value": null,
+          "status": "unreadable"
+        },
+        "consignee": {
+          "raw_value": null,
+          "status": "unreadable"
+        },
+        "document_number": {
+          "raw_value": "2560",
+          "status": "recognized"
+        },
+        "document_date": {
+          "raw_value": null,
+          "status": "unreadable"
+        }
+      },
+      "candidate_output_fields": {
+        "consignor": {
+          "raw_value": null,
+          "status": "unreadable"
+        },
+        "consignee": {
+          "raw_value": null,
+          "status": "unreadable"
+        },
+        "document_number": {
+          "raw_value": "2560",
+          "status": "recognized"
+        },
+        "document_date": {
+          "raw_value": null,
+          "status": "unreadable"
+        }
+      }
+    },
+    {
+      "image_id": "image-0005",
+      "evidence": [
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0005-zoom_01_r0.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/b69cfce7-b368-4964-948f-61706834aa0f-baseline/image-reading-evidence/image-panels/ca5d09042f58404e9e04c18f5fd93811-zoom_01_r0-3b12a7c15948a2c1fb61d6983451676172408dfc4c31e7b9a4c0d610f42091e5.png",
+          "panel_sha256": "3b12a7c15948a2c1fb61d6983451676172408dfc4c31e7b9a4c0d610f42091e5",
+          "source_sha256": "d8e5931875cdd89ce702a26c7df2679e831efc2bfa13df8967d8434b61c3820c",
+          "native_source_detail": true,
+          "resize": "none"
+        },
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0005-zoom_02_r0.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/b69cfce7-b368-4964-948f-61706834aa0f-baseline/image-reading-evidence/image-panels/ca5d09042f58404e9e04c18f5fd93811-zoom_02_r0-66b183bba9f1a254fd4b456a4159976fa55ea7da6b5adb05ad90a66d1cce66cb.png",
+          "panel_sha256": "66b183bba9f1a254fd4b456a4159976fa55ea7da6b5adb05ad90a66d1cce66cb",
+          "source_sha256": "d8e5931875cdd89ce702a26c7df2679e831efc2bfa13df8967d8434b61c3820c",
+          "native_source_detail": true,
+          "resize": "none"
+        }
+      ],
+      "full_source_local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/input-05.png",
+      "full_source_sha256_verified": true,
+      "visually_supported": [
+        "Own section 2 Грузополучатель contains only a postal address and no readable organization name. Candidate null/unreadable for the organization-name field is supported; the printed address remains in its evidence quotation.",
+        "ООО Умный Ритейл appears in neighboring Заказчик section and cannot establish the consignee name.",
+        "Own transportation document header gives 20.08.2026 and 153-1, separately from the order date 17.08.2026."
+      ],
+      "remaining_limitations": [
+        "This correct refusal reduces recognized-name proposal count; it is not a newly recognized consignee organization."
+      ],
+      "input_source": {
+        "path": "/srv/sever/validation/accuracy-speed-v8-20261011/input-images/05.png",
+        "sha256": "d8e5931875cdd89ce702a26c7df2679e831efc2bfa13df8967d8434b61c3820c",
+        "bytes": 7968031,
+        "pixel_size": [
+          2160,
+          3840
+        ]
+      },
+      "baseline_output_fields": {
+        "document_date": {
+          "raw_value": "20.08.2026",
+          "status": "recognized"
+        },
+        "document_number": {
+          "raw_value": "153-1",
+          "status": "recognized"
+        },
+        "consignor": {
+          "raw_value": "ИП Боровинский Вадим Андреевич",
+          "status": "recognized"
+        },
+        "customer": {
+          "raw_value": "ООО \"Умный Ритейл\"",
+          "status": "recognized"
+        },
+        "consignee": {
+          "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "status": "recognized"
+        }
+      },
+      "candidate_output_fields": {
+        "document_date": {
+          "raw_value": "20.08.2026",
+          "status": "recognized"
+        },
+        "document_number": {
+          "raw_value": "153-1",
+          "status": "recognized"
+        },
+        "consignor": {
+          "raw_value": "ИП Боровинский Вадим Андреевич",
+          "status": "recognized"
+        },
+        "customer": {
+          "raw_value": "ООО \"Умный Ритейл\"",
+          "status": "recognized"
+        },
+        "consignee": {
+          "raw_value": null,
+          "status": "unreadable"
+        }
+      }
+    },
+    {
+      "image_id": "image-0006",
+      "evidence": [
+        {
+          "local_path": "/Users/shchmisha/Documents/ChatGPT/север/output/accuracy-review/audit-panels/0006-zoom_01_r90.png",
+          "saved_model_panel_path": "/srv/sever/validation/accuracy-speed-v8-20261011/b69cfce7-b368-4964-948f-61706834aa0f-baseline/image-reading-evidence/image-panels/073e47c20ca44ad9a5641c00e640eade-zoom_01_r90-700bd9359c0977075c5497c46e8d8ac979a01baa47cf7a3c39751368799bfc92.png",
+          "panel_sha256": "700bd9359c0977075c5497c46e8d8ac979a01baa47cf7a3c39751368799bfc92",
+          "source_sha256": "ef333f8db6510b664558a08e9252d237913d3d378dcd07b766987ca80b2c508e",
+          "native_source_detail": true,
+          "resize": "none"
+        }
+      ],
+      "visually_supported": [
+        "Visible layout contains route/trip planning, driver, start-of-trip, counterparty and delivery totals; candidate does not fabricate supported-form fields."
+      ],
+      "remaining_limitations": [
+        "Part of title is obscured by a folded page. Unknown/out-of-scope is reasonable from the inspected material; precise document-title transcription is not established."
+      ],
+      "input_source": {
+        "path": "/srv/sever/validation/accuracy-speed-v8-20261011/input-images/06.png",
+        "sha256": "ef333f8db6510b664558a08e9252d237913d3d378dcd07b766987ca80b2c508e",
+        "bytes": 8455788,
+        "pixel_size": [
+          2160,
+          3840
+        ]
+      },
+      "baseline_output_fields": {},
+      "candidate_output_fields": {}
+    }
+  ]
+}

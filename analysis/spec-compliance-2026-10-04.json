@@ -1,0 +1,821 @@
+{
+  "schema_version": 1,
+  "audited_at": "2026-10-04T17:55:56.841146+00:00",
+  "customer_approved": false,
+  "scope": "Source-grounded technical compliance snapshot; no legal interpretation, no provider calls; shared root fixes may supersede snapshot findings.",
+  "conclusion": "Рабочий исследовательский MVP реализован. Все 19 ключей схемы соответствуют ТЗ. Качество и завершение исследовательского этапа требуют фактического сквозного прогона, независимой разметки/покрытия пригодности и итоговых передаваемых результатов; промышленная точность не заявляется.",
+  "source_numbering": "Pnnn is the 1-based index of every w:p under w:body (including empty/table paragraphs) in word/document.xml; paragraph quotations below are exact extracted text.",
+  "sources": {
+    "spec": {
+      "path": "/Users/shchmisha/Downloads/Север ТСЛ — этап 1 — ТЗ к договору.docx",
+      "sha256": "38b8ea82170f21cddb8c956a1992e4cb3cf6279436b2d12e93e7bc4c37562ca9",
+      "cited_paragraphs": {
+        "P011": "Входные данные — видео, снятые сотрудником Заказчика на iPhone, на которых сотрудник последовательно перелистывает документы. Цель этапа — проверить, можно ли на реальных материалах Заказчика построить работающий конвейер:",
+        "P019": "В рамках этапа исследуются строго четыре типа документов, представленные Заказчиком в PDF с примерами и отмеченными извлекаемыми полями.",
+        "P022": "• Тип документа 1: УПД (универсальный передаточный документ). Извлекаемые поля: номер счета-фактуры; дата счета-фактуры; грузоотправитель и его адрес; грузополучатель и его адрес.",
+        "P023": "• Тип документа 2: ТОРГ-12 (товарная накладная). Извлекаемые поля: поставщик; грузополучатель; номер документа; дата составления.",
+        "P024": "• Тип документа 3: ТТН (товарно-транспортная накладная). Извлекаемые поля: грузоотправитель; грузополучатель; номер документа; дата составления.",
+        "P025": "• Тип документа 4: ТрН (транспортная накладная). Извлекаемые поля: дата транспортной накладной; номер транспортной накладной; грузоотправитель; заказчик услуг, связанных с перевозкой груза; грузополучатель.",
+        "P027": "Указанные четыре типа документов и перечни полей являются фиксированными для текущего исследовательского этапа.",
+        "P036": "• прием и декодирование исходных видео;",
+        "P037": "• выделение кадров и коротких последовательностей кадров, соответствующих отдельным листам документов;",
+        "P038": "• базовая оценка качества изображения: смаз, движение, блики, перекос, частичное перекрытие, полнота листа;",
+        "P039": "• при необходимости — использование нескольких соседних кадров одного документа.",
+        "P042": "• ML-классификация документа в один из четырех зафиксированных классов;",
+        "P043": "• фиксация уровня уверенности и ошибочных / неопределенных случаев.",
+        "P046": "• OCR-распознавание текста на выбранных кадрах;",
+        "P047": "• извлечение только заранее согласованных полей для каждого типа документа;",
+        "P048": "• нормализация значений, где это требуется для сравнения с эталоном;",
+        "P049": "• объединение результатов с нескольких кадров, если это повышает качество.",
+        "P052": "• УПД — номер и дата счета-фактуры; грузоотправитель и его адрес; грузополучатель и его адрес.",
+        "P053": "• ТОРГ-12 — поставщик; грузополучатель; номер документа; дата составления.",
+        "P054": "• ТТН — грузоотправитель; грузополучатель; номер документа; дата составления.",
+        "P055": "• ТрН — дата и номер транспортной накладной; грузоотправитель; заказчик услуг, связанных с перевозкой груза; грузополучатель.",
+        "P056": "Для реквизитов организаций при наличии ИНН в документе может использоваться сверка по ИНН.",
+        "P059": "• структурированный результат по каждому обработанному документу;",
+        "P060": "• определенный тип документа;",
+        "P061": "• извлеченные поля;",
+        "P062": "• уровень уверенности / статус обработки;",
+        "P063": "• ссылка или идентификатор исходного кадра / фрагмента;",
+        "P064": "• фиксация ошибок и случаев, где значение определить не удалось.",
+        "P080": "• Video Input — прием видео с iPhone.",
+        "P081": "• Frame / Sequence Selector — поиск информативных кадров и последовательностей одного листа.",
+        "P082": "• Image Quality & Normalization — подготовка изображения и отбраковка явно непригодных кадров.",
+        "P083": "• ML Document Classifier — определение типа документа среди четырех зафиксированных типов.",
+        "P084": "• OCR — распознавание текста.",
+        "P085": "• Field Extractor — извлечение нужных данных с учетом типа документа.",
+        "P086": "• Aggregation / Validation — сопоставление результатов нескольких кадров, расчет уверенности, фиксация спорных случаев.",
+        "P087": "• Output — таблица / JSON и итоговый отчет.",
+        "P089": "Предполагаемый технический стек включает средства обработки видео и изображений (например FFmpeg/OpenCV), ML-модель классификации документов и OCR-модуль. Конкретные библиотеки, модели и их комбинации выбираются Исполнителем в ходе исследования исходя из качества на материалах Заказчика и не являются фиксированным предметом договора.",
+        "P093": "Результат оценивается на согласованной тестовой выборке Заказчика относительно эталонных значений.",
+        "P097": "• Frame / Document Detection Rate — доля документов / листов, для которых система смогла найти пригодный для дальнейшей обработки кадр или последовательность кадров.",
+        "P098": "• Document Type Accuracy — доля документов, для которых правильно определен один из согласованных типов.",
+        "P099": "• Field Accuracy — доля правильно извлеченных значений по каждому согласованному полю.",
+        "P100": "• End-to-End Success Rate — доля документов, для которых система прошла всю цепочку от видео до корректного определения типа и извлечения согласованного набора данных.",
+        "P101": "• Статистика ошибок — основные причины неуспешного распознавания: движение, блики, перекос, закрытие рукой, слабая печать, недостаточная видимость документа и другие выявленные факторы.",
+        "P103": "Порог промышленной точности заранее не гарантируется, поскольку этап является исследованием. В итоговом отчете фиксируются фактически достигнутые значения метрик.",
+        "P109": "• рабочий тестовый контур обработки предоставленных видео;",
+        "P110": "• демонстрацию работы на согласованной выборке;",
+        "P111": "• выбранные системой кадры / последовательности кадров;",
+        "P112": "• структурированный результат в формате таблицы и/или JSON;",
+        "P113": "• фактические значения согласованных метрик;",
+        "P114": "• краткий итоговый отчет с выявленными ограничениями, типовыми ошибками и рекомендациями по съемке;",
+        "P115": "• вывод о применимости подхода и рекомендации по следующему этапу.",
+        "P117": "Этап считается завершенным после обработки согласованной выборки, передачи результатов, демонстрации и итогового отчета. Отрицательный или частично положительный исследовательский результат сам по себе не означает невыполнение работ.",
+        "P123": "• подтверждение перечня из четырех типов документов, указанных в разделе 2;",
+        "P124": "• подтверждение перечня извлекаемых полей, указанных в разделе 2;",
+        "P125": "• реальные видео с iPhone, снятые в обычном рабочем процессе;",
+        "P126": "• эталонные правильные значения по документам из тестовой выборки;",
+        "P127": "• при наличии — сканы / фотографии тех же документов для разбора сложных случаев;",
+        "P128": "• контакт ответственного сотрудника, который может оперативно уточнять смысл полей и особенности документов.",
+        "P130": "Срок выполнения этапа начинает исчисляться после получения полного набора материалов и согласования типов документов и полей.",
+        "P136": "• поддержка типов документов сверх четырех типов, указанных в разделе 2;",
+        "P137": "• разработка пользовательского приложения оператора;",
+        "P138": "• промышленное развертывание на инфраструктуре Заказчика;",
+        "P139": "• интеграция с 1С;",
+        "P140": "• веб-интерфейс ручной верификации;",
+        "P141": "• автоматизация полного движения, возврата и комплектности документов;",
+        "P142": "• мобильное приложение водителя;",
+        "P143": "• промышленная эксплуатация и SLA;",
+        "P144": "• дополнительные функции, не указанные в настоящем ТЗ.",
+        "P175": "Дальнейшие работы не входят в стоимость настоящего этапа. После получения фактических результатов исследования стороны отдельно принимают решение и оценивают следующий этап: приложение оператора, промышленный серверный контур, ручную верификацию, интеграцию с 1С, расширение числа типов документов и другие функции."
+      }
+    },
+    "plan": {
+      "path": "/Users/shchmisha/Downloads/Север ТСЛ — план работ 24.09–12.10.2026.docx",
+      "sha256": "86ec0b3f176d865a1b162f0fd878505a14156b2a8f87f30ae68bd76e51441ae1",
+      "cited_paragraphs": {
+        "P006": "С 24 сентября собрать и проверить тестовый контур обработки видео: выделение информативных кадров → определение типа документа → OCR → извлечение согласованных полей → структурированный результат. 12 октября передать Заказчику рабочую версию контура для тестирования на его материалах.",
+        "P011": "• Реализация выделения кадров и коротких последовательностей, соответствующих отдельным листам.",
+        "P012": "• Базовая оценка качества кадров: смазывание, движение, блики, перекос, частичное перекрытие и полнота листа.",
+        "P013": "• Подготовка изображений к дальнейшему распознаванию.",
+        "P015": "Результат к 27 сентября: из исходного видео автоматически выделяются пригодные для дальнейшей обработки кадры или последовательности кадров.",
+        "P018": "• Реализация определения одного из четырех типов документа.",
+        "P019": "• Настройка OCR на выбранных кадрах.",
+        "P020": "• Проверка распознавания на примерах Заказчика.",
+        "P021": "• Фиксация неопределенных и ошибочных случаев.",
+        "P022": "• Первый расчет метрик выделения документов и классификации.",
+        "P024": "Результат к 2 октября: система определяет тип документа и получает распознанный текст с выбранных кадров.",
+        "P027": "• Реализация извлечения полей отдельно для каждого из четырех типов документов.",
+        "P028": "• Нормализация дат, номеров и реквизитов для сравнения с эталоном.",
+        "P029": "• Сверка организаций по ИНН там, где ИНН присутствует в документе.",
+        "P030": "• Объединение результатов нескольких соседних кадров одного документа, если это повышает качество.",
+        "P031": "• Сборка единой цепочки: видео → кадры → тип документа → OCR → поля → структурированный результат.",
+        "P034": "Результат к 7 октября: собрана единая цепочка обработки, тестовый контур выдает структурированный набор согласованных полей по каждому обработанному документу.",
+        "P038": "• Расчет Frame / Document Detection Rate, Document Type Accuracy, Field Accuracy и End-to-End Success Rate.",
+        "P039": "• Разбор причин ошибок: движение, блики, перекрытие, качество печати, недостаточная видимость и другие выявленные случаи.",
+        "P041": "• Подготовка демонстрации, структурированного результата в таблице и/или JSON и краткого итогового отчета.",
+        "P042": "• Формирование рекомендаций по съемке и вывода о применимости подхода для следующего этапа.",
+        "P044": "Результат к 11 октября: подготовлена стабильная тестовая версия, зафиксированы текущие метрики, известные ограничения и рекомендации по съемке.",
+        "P047": "12 октября Заказчику передается рабочий тестовый контур для самостоятельного тестирования: обработка видео, выделение кадров, классификация документов, OCR, извлечение согласованных полей и структурированный результат. Одновременно передаются текущие метрики, известные ограничения и краткая инструкция по тестированию."
+      }
+    }
+  },
+  "implementation_snapshot": {
+    "README.md": {
+      "sha256": "bf91208e6ebee87aca79a07cf5efa0a2849aa30e39c112a03c9e761f5983cf2b"
+    },
+    "sever/pipeline.py": {
+      "sha256": "5080a3ece20f1bbac2a6f155704f911e77ab023139b99c9217da2f493e5e39e9"
+    },
+    "sever/video.py": {
+      "sha256": "113c67a9c43c783a9ca0edc22cb74df43977ababe8b783629a22be1bd1b93eb1"
+    },
+    "sever/ocr.py": {
+      "sha256": "6a7afc708403cf8cd56965a8c54e480cd1629fe36f290c0d25de623ba8bfd28f"
+    },
+    "sever/schema.py": {
+      "sha256": "d42c17a5df84b38cc9299b6555fe29e1993466b3d62506f1bec7a4dcd67dd071"
+    },
+    "sever/api.py": {
+      "sha256": "d4941d9a329225b6fdfecb0ed5d41c50b02c99a6a7d28b5bbe995e54cd0a3a6d"
+    },
+    "sever/evaluation.py": {
+      "sha256": "901bc8e49b81ccd0d2b124b4d7a35832605713b33de83ad6b86e088c0a58eb0a"
+    },
+    "sever/vision.py": {
+      "sha256": "6e7c12fec1830534c78919307af8a1afa636b7d9ad0dca06c54293ee3490aab1"
+    },
+    "sever/agents.py": {
+      "sha256": "bf1a4a987ba078494abadce6b5dd21a45267ef0ed311fd5caea1773bfa776c07"
+    },
+    "sever/normalize.py": {
+      "sha256": "1399d25041addf8bf2ea76167f5439f5fb4525eb6c4c935cd565ae4819ce1498"
+    },
+    "sever/classifier.py": {
+      "sha256": "3799c0dfefaf65a66fdf95042c17fdd4ee86972880c2741714c74b5a016c4fd5"
+    },
+    "sever/report.py": {
+      "sha256": "03d1d177eb17f1f4f0223ecf1b981557ab47fe892529dcb802a505f4af8d8c48"
+    },
+    "sever/cli.py": {
+      "sha256": "17e0da2c3104f2fe8087244380d92ab8cc1c3e7f1ffed9deb131060e5fd6682e"
+    }
+  },
+  "field_count": 19,
+  "field_contract": {
+    "upd": {
+      "fields": [
+        "invoice_number",
+        "invoice_date",
+        "consignor",
+        "consignor_address",
+        "consignee",
+        "consignee_address"
+      ],
+      "source_citations": [
+        "spec:P022",
+        "spec:P052"
+      ],
+      "semantics": "Номер и дата именно счёта-фактуры в УПД. Грузоотправитель/адрес и грузополучатель/адрес — самостоятельные роли; покупатель не заменяет грузополучателя."
+    },
+    "torg12": {
+      "fields": [
+        "supplier",
+        "consignee",
+        "document_number",
+        "document_date"
+      ],
+      "source_citations": [
+        "spec:P023",
+        "spec:P053"
+      ],
+      "semantics": "Поставщик, грузополучатель, собственный номер и дата товарной накладной ТОРГ-12."
+    },
+    "ttn": {
+      "fields": [
+        "consignor",
+        "consignee",
+        "document_number",
+        "document_date"
+      ],
+      "source_citations": [
+        "spec:P024",
+        "spec:P054"
+      ],
+      "semantics": "Грузоотправитель, грузополучатель, собственный номер и дата ТТН."
+    },
+    "trn": {
+      "fields": [
+        "document_date",
+        "document_number",
+        "consignor",
+        "customer",
+        "consignee"
+      ],
+      "source_citations": [
+        "spec:P025",
+        "spec:P055"
+      ],
+      "semantics": "Дата и собственный номер ТрН; грузоотправитель, заказчик услуг перевозки, грузополучатель. Перевозчик/номер заказа/приложенная ТТН не подменяют эти поля."
+    }
+  },
+  "required_functions": [
+    {
+      "id": "local_video_input",
+      "requirement": "Приём и декодирование iPhone-видео",
+      "source_citations": [
+        "spec:P011",
+        "spec:P036",
+        "spec:P080",
+        "plan:P006",
+        "plan:P047"
+      ],
+      "status": "implemented",
+      "implementation_evidence": [
+        "sever/video.py:analyze_video uses FFprobe/FFmpeg; sever/cli.py:process; sever/api.py:POST /v1/jobs"
+      ]
+    },
+    {
+      "id": "candidate_leaves",
+      "requirement": "Выделение кадров/коротких последовательностей отдельных листов",
+      "source_citations": [
+        "spec:P037",
+        "spec:P081",
+        "plan:P011",
+        "plan:P015"
+      ],
+      "status": "implemented_with_research_limits",
+      "implementation_evidence": [
+        "sever/video.py:_segment_samples ORB/RANSAC+transition hysteresis; analyze_video exact source PTS/full-resolution frames"
+      ],
+      "notes": [
+        "Единица реализации — видимый лист/повторный показ, не уникальный многостраничный документ. Приблизительные интервалы, возможны пропуск короткого показа и слияние одинаковых листов."
+      ]
+    },
+    {
+      "id": "basic_quality",
+      "requirement": "Базовая оценка смаза, движения, бликов, перекоса, перекрытия и полноты листа",
+      "source_citations": [
+        "spec:P038",
+        "spec:P082",
+        "plan:P012",
+        "plan:P013"
+      ],
+      "status": "partial_heuristic_indicators",
+      "implementation_evidence": [
+        "sever/video.py:_features/analyze_image_quality; selected frame quality artifacts; analysis/selected-frame-usability.json"
+      ],
+      "notes": [
+        "Смаз: Laplacian; движение: adjacent MAD; геометрия/перспектива и обрезанные края: яркий контур; экспозиция и возможная кожа: эвристики. Подтверждённые блик/рука остаются null. Нет калиброванной отбраковки всех непригодных кадров."
+      ]
+    },
+    {
+      "id": "conditional_neighbor_frames",
+      "requirement": "Использование/объединение соседних кадров при необходимости и если это повышает качество",
+      "source_citations": [
+        "spec:P039",
+        "spec:P049",
+        "spec:P086",
+        "plan:P030"
+      ],
+      "status": "conditional_not_implemented_in_main_pipeline",
+      "implementation_evidence": [
+        "sever/video.py retains up to3 source frames; sever/pipeline.py reads ordered_frames[:1]; sever/vision.py reads ocr_pages[0]"
+      ],
+      "notes": [
+        "ТЗ не требует обязательного fusion для каждого листа. При доказанном преимуществе соседнего кадра понадобится соответствующий путь; хранение кадров само по себе не является объединением."
+      ]
+    },
+    {
+      "id": "four_type_ml",
+      "requirement": "ML-классификация четырёх фиксированных типов; уверенность и неопределённые случаи",
+      "source_citations": [
+        "spec:P019",
+        "spec:P027",
+        "spec:P042",
+        "spec:P043",
+        "spec:P083",
+        "plan:P018",
+        "plan:P021",
+        "plan:P024"
+      ],
+      "status": "implemented",
+      "implementation_evidence": [
+        "sever/classifier.py:classify_pages NativeOutput, up to8 leaves/request; conservative source evidence; classifiers/traces/caches"
+      ],
+      "notes": [
+        "unknown — необходимая фиксация отсутствия целевой формы/неопределённости. CMR, ТН-2 и отдельный счёт-фактура вне четырёх классов."
+      ]
+    },
+    {
+      "id": "local_ocr",
+      "requirement": "OCR текста на выбранном кадре",
+      "source_citations": [
+        "spec:P046",
+        "spec:P084",
+        "plan:P019",
+        "plan:P020",
+        "plan:P024"
+      ],
+      "status": "implemented_platform_limited",
+      "implementation_evidence": [
+        "sever/ocr.py:read_image; Apple Vision on macOS; existing Tesseract rus+eng on Linux; local engine caches"
+      ],
+      "notes": [
+        "Ориентация: четыре локальных OCR-пробы, EXIF/display handling. Deskew/projective correction не реализованы и не зафиксированы ТЗ как обязательная конкретная технология. Linux качество отдельно не подтверждено."
+      ]
+    },
+    {
+      "id": "nineteen_fields",
+      "requirement": "Извлечение только 19 согласованных полей по четырём типам",
+      "source_citations": [
+        "spec:P022",
+        "spec:P023",
+        "spec:P024",
+        "spec:P025",
+        "spec:P047",
+        "spec:P085",
+        "plan:P027",
+        "plan:P031",
+        "plan:P034"
+      ],
+      "status": "implemented_contract_accuracy_under_evaluation",
+      "implementation_evidence": [
+        "sever/schema.py:FIELDS_BY_TYPE exact 6+4+4+5; DocumentResult enforces exact field set; sever/vision.py:_validated/read_document; sever/agents.py:validate_decision"
+      ],
+      "notes": [
+        "Наличие всех ключей и recognized-статусов не доказывает корректность значений. PDF-прогон существует отдельно; он не измеряет детекцию/качество видео."
+      ]
+    },
+    {
+      "id": "normalization",
+      "requirement": "Нормализация для сравнения с эталоном",
+      "source_citations": [
+        "spec:P048",
+        "plan:P028"
+      ],
+      "status": "implemented",
+      "implementation_evidence": [
+        "sever/normalize.py:normalize/comparison; dates ISO/numeric/Russian month words; number typography without loss of leading zeros"
+      ]
+    },
+    {
+      "id": "inn_check",
+      "requirement": "Сверка организаций по ИНН при наличии",
+      "source_citations": [
+        "spec:P056",
+        "plan:P029"
+      ],
+      "status": "optional_in_spec_not_implemented",
+      "implementation_evidence": [
+        "INN/KPP remain OCR data; no registry/verifier lookup is implemented"
+      ],
+      "notes": [
+        "ТЗ формулирует «может использоваться»; план включает отдельную задачу сверки. Удаление ИНН из названия компании не является сверкой по ИНН."
+      ]
+    },
+    {
+      "id": "confidence_status",
+      "requirement": "Уверенность/статус, неопределённые поля и ошибки",
+      "source_citations": [
+        "spec:P043",
+        "spec:P062",
+        "spec:P064",
+        "spec:P086",
+        "plan:P021"
+      ],
+      "status": "implemented_with_validation_gaps_at_snapshot",
+      "implementation_evidence": [
+        "sever/schema.py:FieldValue/DocumentResult; nullable confidence; recognized/not_present/unreadable/conflict; sever/agents.py/vision.py validators"
+      ],
+      "notes": [
+        "Промышленная калибровка confidence не требуется ТЗ и не заявляется. Найденные слабые проверки роли/blank в visual validator переданы root; исправление идёт отдельным агентом."
+      ]
+    },
+    {
+      "id": "source_provenance",
+      "requirement": "Идентификатор исходного кадра/фрагмента",
+      "source_citations": [
+        "spec:P063"
+      ],
+      "status": "implemented",
+      "implementation_evidence": [
+        "source SHA256, frame IDs/source PTS; Evidence frame_id+bbox; OCR matrices and source polygons; vision crop/upload transforms"
+      ],
+      "notes": [
+        "ТЗ требует ссылку/идентификатор; отдельные word boxes не обязательны. OCR bbox относится к ориентированному сохранённому кадру; visual bbox — весь отправленный crop, не отдельное поле."
+      ]
+    },
+    {
+      "id": "structured_output",
+      "requirement": "Тип, поля и структурированный результат на обработанный лист",
+      "source_citations": [
+        "spec:P059",
+        "spec:P060",
+        "spec:P061",
+        "spec:P087",
+        "spec:P112",
+        "plan:P031",
+        "plan:P034",
+        "plan:P041",
+        "plan:P047"
+      ],
+      "status": "implemented",
+      "implementation_evidence": [
+        "sever/pipeline.py:results.json/fields.csv/classifications.json/partial-results.json; sever/api.py JSON/CSV endpoints"
+      ]
+    }
+  ],
+  "required_metrics": [
+    {
+      "id": "frame_document_detection_rate",
+      "requirement": "Доля документов/листов с пригодным для дальнейшей обработки кадром/последовательностью",
+      "source_citations": [
+        "spec:P093",
+        "spec:P097",
+        "plan:P022",
+        "plan:P038"
+      ],
+      "status": "implemented_full_sample_provisional",
+      "implementation_evidence": [
+        "sever/evaluation.py: frame_document_detection_rate with independent source-bound selected-frame reviews; separate candidate_coverage and target-only usability",
+        "analysis/selected-frame-usability-full.json: 88 independently reviewed primary frames",
+        "runs/mvp/validation-summary.json: confirmed usability 67/88, target-only 7/20, 1 uncertain; unchanged provisional interval boundaries"
+      ],
+      "notes": [
+        "Все 88 основных кадров независимо просмотрены. После сопоставления с неизменными ручными интервалами подтверждённая пригодность составляет 67/88, пригодность для обязательных полей целевых форм — 7/20. Временное покрытие 81/88 считается отдельно. Одна оценка неопределённая; разметка предварительная, заказчиком не утверждена."
+      ]
+    },
+    {
+      "id": "document_type_accuracy",
+      "requirement": "Доля правильно определённых согласованных типов",
+      "source_citations": [
+        "spec:P098",
+        "plan:P022",
+        "plan:P038"
+      ],
+      "status": "implemented_provisional",
+      "implementation_evidence": [
+        "sever/evaluation.py:type_accuracy_targets; all_expected/unknown_rejection separated; misses stay denominator"
+      ]
+    },
+    {
+      "id": "field_accuracy",
+      "requirement": "Доля правильных значений по каждому согласованному полю",
+      "source_citations": [
+        "spec:P099",
+        "plan:P038"
+      ],
+      "status": "implemented_provisional_label_coverage_partial",
+      "implementation_evidence": [
+        "sever/evaluation.py:field_accuracy; independent labeled fields and explicit accepted_variants; misses/wrongtypes count"
+      ],
+      "notes": [
+        "Неразмеченные поля не дают измеренной точности; цифры не заменяют эталон Заказчика."
+      ]
+    },
+    {
+      "id": "e2e",
+      "requirement": "Полная цепочка от видео до корректного типа и набора полей",
+      "source_citations": [
+        "spec:P100",
+        "plan:P038"
+      ],
+      "status": "implemented_provisional_label_coverage_partial",
+      "implementation_evidence": [
+        "sever/evaluation.py:e2e_on_fully_labeled; e2e_all_targets_conservative with unlabeled count"
+      ],
+      "notes": [
+        "Полностью размеченные целевые листы проверяются отдельно; нижняя граница по всем целевым листам не утверждает ошибку на неразмеченных."
+      ]
+    },
+    {
+      "id": "error_causes",
+      "requirement": "Статистика основных причин неуспешного распознавания",
+      "source_citations": [
+        "spec:P101",
+        "plan:P039"
+      ],
+      "status": "partial",
+      "implementation_evidence": [
+        "sever/evaluation.py:failure_reasons+selected_frame_quality; report.html shows per-page errors/notes"
+      ],
+      "notes": [
+        "Технические ошибки и индикаторы кадров сохранены, но glare/hand не подтверждаются автоматически; окончательный разбор причин и рекомендации root ещё собирает."
+      ]
+    }
+  ],
+  "deliverables": [
+    {
+      "id": "working_contour",
+      "requirement": "Рабочий тестовый контур для предоставленных видео и инструкция самостоятельного тестирования",
+      "source_citations": [
+        "spec:P109",
+        "plan:P006",
+        "plan:P047"
+      ],
+      "status": "implemented_local_mvp",
+      "implementation_evidence": [
+        "README.md CLI/API instructions, uv.lock/wheel packaging; tests/test_api.py real local worker/FFmpeg/AppleVision with offline model; runs/mvp live-provider artifacts"
+      ],
+      "notes": [
+        "API интеграционный тест не является проверкой точности живой LLM; root отдельно выполняет живой пилот."
+      ]
+    },
+    {
+      "id": "demonstration",
+      "requirement": "Демонстрация на согласованной выборке",
+      "source_citations": [
+        "spec:P110",
+        "spec:P117",
+        "plan:P041",
+        "plan:P047"
+      ],
+      "status": "pending_final_demonstration",
+      "implementation_evidence": [
+        "Per-run report.html/source frames/JSON/CSV exist; final agreed-sample demo is not customer-accepted in artifacts"
+      ]
+    },
+    {
+      "id": "selected_frames_delivery",
+      "requirement": "Передача выбранных кадров/последовательностей",
+      "source_citations": [
+        "spec:P111",
+        "plan:P047"
+      ],
+      "status": "implemented",
+      "implementation_evidence": [
+        "selected-pages.json, video/video-analysis.json, video/frames source PNGs"
+      ]
+    },
+    {
+      "id": "actual_metrics_delivery",
+      "requirement": "Передача фактических согласованных метрик",
+      "source_citations": [
+        "spec:P113",
+        "spec:P117",
+        "plan:P038",
+        "plan:P044",
+        "plan:P047"
+      ],
+      "status": "partial_provisional",
+      "implementation_evidence": [
+        "metrics.json/evaluation module and independent provisional GT; no customer-approved label set recorded"
+      ]
+    },
+    {
+      "id": "final_report_and_recommendations",
+      "requirement": "Краткий итоговый отчёт, ограничения, типовые ошибки, рекомендации по съёмке, применимость и следующий этап",
+      "source_citations": [
+        "spec:P114",
+        "spec:P115",
+        "spec:P117",
+        "plan:P041",
+        "plan:P042",
+        "plan:P044",
+        "plan:P047"
+      ],
+      "status": "pending_root_final_report",
+      "implementation_evidence": [
+        "Per-run report.html/README current limitations; aggregate concluding report and specific shooting recommendations still root-owned"
+      ]
+    }
+  ],
+  "customer_inputs_and_completion": [
+    {
+      "id": "customer_inputs",
+      "requirement": "Подтверждение типов/полей, реальные видео, правильные эталонные значения и ответственный контакт",
+      "source_citations": [
+        "spec:P123",
+        "spec:P124",
+        "spec:P125",
+        "spec:P126",
+        "spec:P127",
+        "spec:P128",
+        "spec:P130"
+      ],
+      "status": "external_input_not_fully_recorded",
+      "implementation_evidence": [
+        "analysis/provisional-ground-truth.json customer_approved=false; analysis/reference-pdf/ground-truth.json customer_approved=false; actual provided MP4/PDF examples"
+      ],
+      "notes": [
+        "Аудит не утверждает договорную приёмку или промышленную точность."
+      ]
+    },
+    {
+      "id": "completion_criterion",
+      "requirement": "Обработанная согласованная выборка, передача результатов, демонстрация и итоговый отчёт",
+      "source_citations": [
+        "spec:P103",
+        "spec:P117"
+      ],
+      "status": "not_claimed_complete",
+      "implementation_evidence": [
+        "Root live validation/final metrics/report still in progress"
+      ],
+      "notes": [
+        "ТЗ допускает отрицательный/частично положительный исследовательский итог; формального требования 100% промышленной точности нет."
+      ]
+    }
+  ],
+  "excluded_stage1": [
+    {
+      "item": "• поддержка типов документов сверх четырех типов, указанных в разделе 2;",
+      "source_citations": [
+        "spec:P136"
+      ]
+    },
+    {
+      "item": "• разработка пользовательского приложения оператора;",
+      "source_citations": [
+        "spec:P137"
+      ]
+    },
+    {
+      "item": "• промышленное развертывание на инфраструктуре Заказчика;",
+      "source_citations": [
+        "spec:P138"
+      ]
+    },
+    {
+      "item": "• интеграция с 1С;",
+      "source_citations": [
+        "spec:P139"
+      ]
+    },
+    {
+      "item": "• веб-интерфейс ручной верификации;",
+      "source_citations": [
+        "spec:P140"
+      ]
+    },
+    {
+      "item": "• автоматизация полного движения, возврата и комплектности документов;",
+      "source_citations": [
+        "spec:P141"
+      ]
+    },
+    {
+      "item": "• мобильное приложение водителя;",
+      "source_citations": [
+        "spec:P142"
+      ]
+    },
+    {
+      "item": "• промышленная эксплуатация и SLA;",
+      "source_citations": [
+        "spec:P143"
+      ]
+    },
+    {
+      "item": "• дополнительные функции, не указанные в настоящем ТЗ.",
+      "source_citations": [
+        "spec:P144"
+      ]
+    },
+    {
+      "item": "Дальнейшие работы не входят в стоимость настоящего этапа. После получения фактических результатов исследования стороны отдельно принимают решение и оценивают следующий этап: приложение оператора, промышленный серверный контур, ручную верификацию, интеграцию с 1С, расширение числа типов документов и другие функции.",
+      "source_citations": [
+        "spec:P175"
+      ]
+    }
+  ],
+  "material_findings": [
+    {
+      "id": "usable_metric_semantics",
+      "priority": "material",
+      "finding": "Все 88 основных кадров независимо просмотрены. Покрытие 81/88 отделено от подтверждённой пригодности 67/88 и пригодности для обязательных полей целевых форм 7/20; одна оценка неопределённая. Разметка предварительная, заказчиком не утверждена.",
+      "status": "implemented_full_provisional_frame_review_and_interval_binding",
+      "source_citations": [
+        "spec:P097"
+      ],
+      "evidence": [
+        "sever/evaluation.py",
+        "analysis/selected-frame-usability-full.json",
+        "runs/mvp/validation-summary.json"
+      ]
+    },
+    {
+      "id": "visual_absence_and_party_roles",
+      "priority": "material",
+      "finding": "Проверяются собственные роли, область доказательств, ссылка «он же» только на продавца, собственные номер/дата и явно подтверждённое отсутствие значения. В реальном PDF пустой номер ТрН остаётся unreadable при отсутствии подтверждения; ошибок извлечения в остальных полях это не исключает.",
+      "status": "implemented_and_regression_tested_with_actual_cached_reads",
+      "source_citations": [
+        "spec:P022",
+        "spec:P023",
+        "spec:P024",
+        "spec:P025",
+        "spec:P064"
+      ],
+      "evidence": [
+        "sever/vision.py:_validated",
+        "sever/agents.py:validate_decision has stricter own-role absence guard"
+      ]
+    },
+    {
+      "id": "neighbor_condition",
+      "priority": "conditional",
+      "finding": "Соседние кадры сохраняются, но основной контур их не читает/не объединяет. Условная задача ТЗ остаётся открытой при доказанном улучшении качества.",
+      "status": "disclosed_limit",
+      "source_citations": [
+        "spec:P039",
+        "spec:P049",
+        "spec:P086",
+        "plan:P030"
+      ],
+      "evidence": [
+        "sever/pipeline.py ordered_frames[:1]",
+        "sever/vision.py ocr_pages[0]"
+      ]
+    },
+    {
+      "id": "quality_limits",
+      "priority": "research_limit",
+      "finding": "Нет projective/deskew correction; glare/hand confirmations неизвестны, all-poor candidate не всегда отбрасывается. Имеются честно обозначенные базовые показатели, без измеренной читаемости всей выборки.",
+      "status": "disclosed_partial",
+      "source_citations": [
+        "spec:P038",
+        "spec:P082",
+        "plan:P012"
+      ],
+      "evidence": [
+        "sever/video.py:_features/analyze_image_quality",
+        "sever/ocr.py:read_image processing limitations"
+      ]
+    },
+    {
+      "id": "reader_model_documentation",
+      "priority": "documentation",
+      "finding": "Модели по умолчанию mini в AgentConfig, CLI, pilot, reference и README; overrideHARNESS_VISION_MODEL описан.",
+      "status": "resolved_default_mini_and_documented_override",
+      "source_citations": [
+        "spec:P089",
+        "plan:P047"
+      ],
+      "evidence": [
+        "README.md",
+        "sever/cli.py:agent_config",
+        "sever/vision.py:VISION_MODEL"
+      ]
+    },
+    {
+      "id": "final_deliverables",
+      "priority": "material",
+      "finding": "Все4видео+4PDFстраницы обработаны; сохранены JSON/CSV/HTML/трассы, отдельные метрики и расходы, рекомендации по съёмке и применимости следующего этапа. Согласование эталона и формальная приёмка остаются внешними.",
+      "status": "delivered_complete_provisional_external_customer_acceptance_pending",
+      "source_citations": [
+        "spec:P093",
+        "spec:P109",
+        "spec:P110",
+        "spec:P113",
+        "spec:P114",
+        "spec:P115",
+        "spec:P117",
+        "spec:P126"
+      ],
+      "evidence": [
+        "runs/mvp/report.html",
+        "runs/mvp/validation-summary.json",
+        "analysis/provisional-ground-truth.json",
+        "README.md"
+      ]
+    }
+  ],
+  "ambiguities_to_keep_explicit": [
+    "Единица document/leaf и повторных показов не определена достаточно точно в ТЗ; текущая оценка использует видимый интервал листа.",
+    "ТЗ не задаёт промышленные пороги, timestamp tolerance, дробление multi-page document, правила частичной разметки/blank/unreadable или полноту статистической выборки.",
+    "Конкретные библиотеки/модели не фиксированы; архитектура допускает локальный OCR перед текстовой ML-классификацией и визуальное чтение целевых реквизитов."
+  ],
+  "final_validation": {
+    "date": "2026-10-04",
+    "status": "complete_provisional",
+    "customer_approved": false,
+    "video_type_targets": [
+      14,
+      20
+    ],
+    "video_labeled_fields": [
+      20,
+      20
+    ],
+    "video_fully_labeled_e2e": [
+      4,
+      4
+    ],
+    "pdf_types": [
+      4,
+      4
+    ],
+    "pdf_fields": [
+      16,
+      19
+    ],
+    "pdf_e2e": [
+      2,
+      4
+    ],
+    "remaining_accuracy_limits": [
+      "UPD reference consignor_address incomplete/unreadable",
+      "UPD reference consignee street misread",
+      "TRN reference own blank number unreadable",
+      "partial/continuation page classification failures and unmatched manual intervals"
+    ],
+    "conditional_unimplemented": [
+      "neighbor-frame field fusion",
+      "projective rectification",
+      "external INN registry check"
+    ],
+    "industrial_acceptance": false
+  }
+}

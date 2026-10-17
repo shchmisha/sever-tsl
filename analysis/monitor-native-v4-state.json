@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-10-10T19:18:20Z",
+  "automation_id": "automation",
+  "batch_status": "processing",
+  "source_count": 11,
+  "submitted_jobs": 3,
+  "remaining_videos": 8,
+  "active_job_id": "657bf871-2553-4ed2-b1d9-e5d1be00b716",
+  "active_source": "20260818-2_133246.mp4",
+  "progress": "Reading image 4/11 at 11.7s, view 2",
+  "model_requests_started": 120,
+  "model_responses_completed": 119,
+  "last_response_at_utc": "2026-10-10T19:18:08.629417+00:00",
+  "trace_age_seconds": 11,
+  "operational_error_count": 0,
+  "services": {
+    "sever-model.service": "active/running",
+    "sever-tsl.service": "active/running",
+    "sever-validation-native-v4-q38-20261010.service": "active/running",
+    "sever-validation-native-v4-finish-20261010.service": "active/running"
+  },
+  "gpu_utilization_percent": 100,
+  "gpu_memory_used_mib": 26158,
+  "gpu_memory_total_mib": 32607,
+  "gpu_temperature_c": 71,
+  "evaluation_status": "waiting",
+  "evaluation_attempted": false,
+  "truth_loaded_before_idle": false,
+  "significant_change": false,
+  "notification_sent": true,
+  "assessment": "User requested current status. Two source videos completed; third is reading leaf 4/11, eight originals remain unsubmitted. 119 fresh responses across three jobs; GPU active, no reported job errors. Offline evaluation still waiting. Two initial SSH banner timeouts recovered via direct connection; a persistent local SSH master now works. No services or recognition jobs changed.",
+  "input_tokens": 4172364,
+  "output_tokens": 111123,
+  "completed_jobs": 2,
+  "jobs": [
+    {
+      "job_id": "42eff52c-325d-4e3e-beea-9e8a4d7837d6",
+      "source": "20260818-5_132107.mp4",
+      "status": "completed",
+      "requests_started": 86,
+      "responses_completed": 86,
+      "last_response_at_utc": "2026-10-10T18:55:53.057313+00:00",
+      "error": null
+    },
+    {
+      "job_id": "1b518399-ebd0-416d-a3e5-4f013b14e4cf",
+      "source": "20260818-1_133402.mp4",
+      "status": "completed",
+      "requests_started": 24,
+      "responses_completed": 24,
+      "last_response_at_utc": "2026-10-10T19:12:00.702759+00:00",
+      "error": null
+    },
+    {
+      "job_id": "657bf871-2553-4ed2-b1d9-e5d1be00b716",
+      "source": "20260818-2_133246.mp4",
+      "status": "processing",
+      "requests_started": 10,
+      "responses_completed": 9,
+      "last_response_at_utc": "2026-10-10T19:18:08.629417+00:00",
+      "error": null
+    }
+  ],
+  "services_checked_at_utc": "2026-10-10T19:10:05Z",
+  "gpu_checked_at_utc": "2026-10-10T19:18:20Z",
+  "ssh_observation": {
+    "master_socket": "restored",
+    "multiplex_connection": "working",
+    "banner_timeouts_this_check": 2
+  },
+  "previous_job_partial_results": {
+    "job_id": "42eff52c-325d-4e3e-beea-9e8a4d7837d6",
+    "checked_at_utc": "2026-10-10T18:49:22Z",
+    "page_count": 15,
+    "field_statuses": {
+      "recognized": 27,
+      "conflict": 7,
+      "unreadable": 4,
+      "not_present": 2
+    },
+    "document_types": {
+      "upd": 4,
+      "ttn": 4,
+      "unknown": 7
+    }
+  },
+  "last_user_requested_status_at_utc": "2026-10-10T19:18:20Z"
+}

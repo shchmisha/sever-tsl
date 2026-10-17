@@ -1,0 +1,30 @@
+[Unit]
+Description=Sever TSL video document recognition API
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=sever
+Group=sever
+WorkingDirectory=/srv/sever
+EnvironmentFile=/etc/sever-tsl/provider.env
+Environment=SEVER_RUNS_DIR=/srv/sever/runs
+Environment=PYDANTIC_DISABLE_PLUGINS=__all__
+Environment=PYDANTIC_AI_NO_BANNER=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=OMP_THREAD_LIMIT=2
+Environment=TESSDATA_PREFIX=/opt/sever-tsl/tessdata_best
+ExecStart=/opt/sever-tsl/current/.venv/bin/sever serve --host 127.0.0.1 --port 8080
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/sever/runs /srv/sever/validation
+
+[Install]
+WantedBy=multi-user.target

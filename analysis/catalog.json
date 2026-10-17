@@ -1,0 +1,462 @@
+{
+  "schema_version": 2,
+  "review_date": "2026-10-07",
+  "generated_at": "2026-10-07T12:39:05.367156+00:00",
+  "status": "provisional",
+  "agreed_document_types": [
+    "UPD",
+    "TORG12",
+    "TTN",
+    "TRN"
+  ],
+  "scope_mapping_status": "The original four document types and 19 role-specific fields are implemented; video evidence covers UPD/TTN, and four rendered original PDF pages exercise all types separately.",
+  "field_contract": {
+    "upd": [
+      "invoice_number",
+      "invoice_date",
+      "consignor",
+      "consignor_address",
+      "consignee",
+      "consignee_address"
+    ],
+    "torg12": [
+      "supplier",
+      "consignee",
+      "document_number",
+      "document_date"
+    ],
+    "ttn": [
+      "consignor",
+      "consignee",
+      "document_number",
+      "document_date"
+    ],
+    "trn": [
+      "document_date",
+      "document_number",
+      "consignor",
+      "customer",
+      "consignee"
+    ]
+  },
+  "automated_operations": [
+    "Video decode with source PTS/display rotation and automatic candidate leaf segmentation",
+    "Within-leaf quality rejection/ranking, initial retained views and conditional adaptive same-leaf frame comparison/fusion",
+    "Local native OCR with content-orientation selection, pixel crops and coordinate transforms",
+    "Batched ML classification of every candidate leaf; UPD/TORG12/TTN/TRN/unknown literal scope",
+    "Structured role-focused field extraction from selected image pixels, evidence validation and normalization",
+    "Own-role literal INN/checksum reading and optional bounded official FNS identity comparison; unavailable results remain explicit",
+    "JSON/CSV/HTML output, CLI and local API, response caches, traces and shared request/token budgets",
+    "Evaluation against provisional independent manual ground truth; separate field, type, coverage and E2E denominators"
+  ],
+  "manual_operations": [
+    "Independent visible-leaf interval inventory and type labels, including repeated showings",
+    "Independent video fields: 44 labelled instances; 8 fully labelled target intervals; PDF labels separate",
+    "Independent heading/field-legibility review of all current selected primary video frames, with source hashes and preserved interval boundaries"
+  ],
+  "customer_approved_ground_truth": false,
+  "contractual_accuracy_metrics": null,
+  "ground_truth_provenance": "Independent manual visual inspection of every contact sheet and selected original frames; no model/API predictions copied, and no remote API called. No OCR assist was needed for the labelled target fields.",
+  "ground_truth_sha256": "e2c6cda14a1239c4f6fb494a405cb5f9cc38470248b43bafd8149d9e915d91d3",
+  "confirmed_literal_target_classes_in_provided_clips": [
+    "upd",
+    "ttn"
+  ],
+  "target_classes_not_observed_in_videos": [
+    "torg12",
+    "trn"
+  ],
+  "samples": [
+    {
+      "sample_id": "sample-01",
+      "source_path": "/Users/shchmisha/Downloads/20260818-1_133402.mp4",
+      "source_sha256": "1bd2b1ee9c32c410193a02c61e0745f1c6c8ca65c02c1ecd33d32a8a3074546c",
+      "source_bytes": 275801106,
+      "video_duration_s": 23.0568,
+      "video_frame_count": 692,
+      "encoded_dimensions": [
+        3840,
+        2160
+      ],
+      "upright_frame_dimensions": [
+        2160,
+        3840
+      ],
+      "codec": "hevc",
+      "display_rotation_degrees": -90,
+      "capture_metadata": {
+        "major_brand": "mp42",
+        "minor_version": "0",
+        "compatible_brands": "isommp42",
+        "creation_time": "2026-08-18T08:34:26.000000Z",
+        "com.android.version": "16",
+        "com.android.capture.fps": "30.000000",
+        "com.samsung.android.utc_offset": "+0500"
+      },
+      "sampled_frame_count": 43,
+      "visually_reviewed_page_intervals": 8,
+      "sampling_manifest": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/sampling.json",
+      "manual_observations": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/manual-observations.json",
+      "native_ocr_batch": null,
+      "partition": "negative_check",
+      "status": "provisional",
+      "truth": {
+        "leaf_intervals": 8,
+        "types": {
+          "unknown": 8
+        },
+        "target_intervals": 0,
+        "fully_labeled_target_intervals": 0,
+        "labeled_fields": 0,
+        "independently_reviewed_selected_frames": 8
+      },
+      "ground_truth": "analysis/ground-truth-expanded-provisional.json",
+      "mvp_run": "runs/closing/20260818-1_133402",
+      "saved_run_configuration": {
+        "sample_interval": 0.5,
+        "max_pages": 100,
+        "model": "openai/gpt-4.1-mini",
+        "field_engine": "selected role/header pixels via openai/gpt-4.1-mini",
+        "classification_scope": [
+          "upd",
+          "torg12",
+          "ttn",
+          "trn",
+          "unknown"
+        ],
+        "neighbor_fallback": true,
+        "per_leaf_frame_limit": null,
+        "verify_inn": true
+      },
+      "saved_processing_observations": {
+        "quality_gate_leaf_statuses": {
+          "accepted": 8
+        },
+        "same_leaf_comparison_statuses": {},
+        "same_leaf_comparison_attempts": 0,
+        "same_leaf_attempt_statuses": {},
+        "fusion_recovered_field_observations": 0,
+        "fusion_agreement_field_observations": 0,
+        "fusion_conflict_field_observations": 0,
+        "registry_role_statuses": {},
+        "inn_company_name_binding_statuses": {},
+        "printed_inn_role_statuses": {},
+        "registry_usage": {
+          "unique_lookups": 0,
+          "max_unique_lookups": 10,
+          "http_requests": 0,
+          "cache_hits": 16
+        }
+      }
+    },
+    {
+      "sample_id": "sample-02",
+      "source_path": "/Users/shchmisha/Downloads/20260818-2_133246.mp4",
+      "source_sha256": "efa090b3b3465655c2e1ec8529884b4532ede44f9dc19774744a00a4d1b8b295",
+      "source_bytes": 437881673,
+      "video_duration_s": 36.857811,
+      "video_frame_count": 1099,
+      "encoded_dimensions": [
+        3840,
+        2160
+      ],
+      "upright_frame_dimensions": [
+        2160,
+        3840
+      ],
+      "codec": "hevc",
+      "display_rotation_degrees": -90,
+      "capture_metadata": {
+        "major_brand": "mp42",
+        "minor_version": "0",
+        "compatible_brands": "isommp42",
+        "creation_time": "2026-08-18T08:33:56.000000Z",
+        "com.android.version": "16",
+        "com.android.capture.fps": "30.000000",
+        "com.samsung.android.utc_offset": "+0500"
+      },
+      "sampled_frame_count": 70,
+      "visually_reviewed_page_intervals": 12,
+      "sampling_manifest": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampling.json",
+      "manual_observations": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/manual-observations.json",
+      "native_ocr_batch": null,
+      "partition": "negative_check",
+      "status": "provisional",
+      "truth": {
+        "leaf_intervals": 12,
+        "types": {
+          "unknown": 12
+        },
+        "target_intervals": 0,
+        "fully_labeled_target_intervals": 0,
+        "labeled_fields": 0,
+        "independently_reviewed_selected_frames": 12
+      },
+      "ground_truth": "analysis/ground-truth-expanded-provisional.json",
+      "mvp_run": "runs/closing/20260818-2_133246",
+      "saved_run_configuration": {
+        "sample_interval": 0.5,
+        "max_pages": 100,
+        "model": "openai/gpt-4.1-mini",
+        "field_engine": "selected role/header pixels via openai/gpt-4.1-mini",
+        "classification_scope": [
+          "upd",
+          "torg12",
+          "ttn",
+          "trn",
+          "unknown"
+        ],
+        "neighbor_fallback": true,
+        "per_leaf_frame_limit": null,
+        "verify_inn": true
+      },
+      "saved_processing_observations": {
+        "quality_gate_leaf_statuses": {
+          "accepted": 12
+        },
+        "same_leaf_comparison_statuses": {},
+        "same_leaf_comparison_attempts": 0,
+        "same_leaf_attempt_statuses": {},
+        "fusion_recovered_field_observations": 0,
+        "fusion_agreement_field_observations": 0,
+        "fusion_conflict_field_observations": 0,
+        "registry_role_statuses": {},
+        "inn_company_name_binding_statuses": {},
+        "printed_inn_role_statuses": {},
+        "registry_usage": {
+          "unique_lookups": 0,
+          "max_unique_lookups": 10,
+          "http_requests": 0,
+          "cache_hits": 16
+        }
+      }
+    },
+    {
+      "sample_id": "sample-04",
+      "source_path": "/Users/shchmisha/Downloads/20260818-4_132351.mp4",
+      "source_sha256": "3f6c876d8974fc549923cf005eff399833f445976fd50f2a714487c8260336e2",
+      "partition": "test",
+      "status": "provisional",
+      "truth": {
+        "leaf_intervals": 53,
+        "types": {
+          "ttn": 6,
+          "unknown": 43,
+          "upd": 4
+        },
+        "target_intervals": 10,
+        "fully_labeled_target_intervals": 4,
+        "labeled_fields": 22,
+        "independently_reviewed_selected_frames": 53
+      },
+      "ground_truth": "analysis/ground-truth-expanded-provisional.json",
+      "sampling_manifest": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampling.json",
+      "manual_observations": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/manual-observations.json",
+      "mvp_run": "runs/closing/20260818-4_132351",
+      "visually_reviewed_page_intervals": 53,
+      "sampled_frame_count": 120,
+      "native_ocr_batch": null,
+      "source_bytes": 2211129670,
+      "video_duration_s": 183.6606,
+      "video_frame_count": 5513,
+      "encoded_dimensions": [
+        3840,
+        2160
+      ],
+      "upright_frame_dimensions": [
+        2160,
+        3840
+      ],
+      "codec": "hevc",
+      "display_rotation_degrees": -90,
+      "capture_metadata": {
+        "major_brand": "mp42",
+        "minor_version": "0",
+        "compatible_brands": "isommp42",
+        "creation_time": "2026-08-18T08:27:20.000000Z",
+        "com.android.version": "16",
+        "com.android.capture.fps": "30.000000",
+        "com.samsung.android.utc_offset": "+0500"
+      },
+      "saved_run_configuration": {
+        "sample_interval": 0.5,
+        "max_pages": 100,
+        "model": "openai/gpt-4.1-mini",
+        "field_engine": "selected role/header pixels via openai/gpt-4.1-mini",
+        "classification_scope": [
+          "upd",
+          "torg12",
+          "ttn",
+          "trn",
+          "unknown"
+        ],
+        "neighbor_fallback": true,
+        "per_leaf_frame_limit": null,
+        "verify_inn": true
+      },
+      "saved_processing_observations": {
+        "quality_gate_leaf_statuses": {
+          "accepted": 53
+        },
+        "same_leaf_comparison_statuses": {
+          "all_fields_corroborated": 4,
+          "source_views_exhausted": 4
+        },
+        "same_leaf_comparison_attempts": 57,
+        "same_leaf_attempt_statuses": {
+          "compared": 17,
+          "skipped": 40
+        },
+        "fusion_recovered_field_observations": 3,
+        "fusion_agreement_field_observations": 47,
+        "fusion_conflict_field_observations": 0,
+        "registry_role_statuses": {
+          "matched": 6,
+          "ambiguous": 2,
+          "unavailable": 8
+        },
+        "inn_company_name_binding_statuses": {
+          "unique": 6,
+          "ambiguous": 2,
+          "unavailable": 8
+        },
+        "printed_inn_role_statuses": {
+          "found": 8,
+          "not_present": 4,
+          "unavailable": 4
+        },
+        "registry_usage": {
+          "unique_lookups": 0,
+          "max_unique_lookups": 10,
+          "http_requests": 0,
+          "cache_hits": 8
+        }
+      }
+    },
+    {
+      "sample_id": "sample-05",
+      "source_path": "/Users/shchmisha/Downloads/20260818-5_132107.mp4",
+      "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+      "partition": "development",
+      "status": "provisional",
+      "truth": {
+        "leaf_intervals": 15,
+        "types": {
+          "ttn": 6,
+          "unknown": 5,
+          "upd": 4
+        },
+        "target_intervals": 10,
+        "fully_labeled_target_intervals": 4,
+        "labeled_fields": 22,
+        "independently_reviewed_selected_frames": 15
+      },
+      "ground_truth": "analysis/ground-truth-expanded-provisional.json",
+      "sampling_manifest": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/sampling.json",
+      "manual_observations": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/manual-observations.json",
+      "mvp_run": "runs/closing/20260818-5_132107",
+      "visually_reviewed_page_intervals": 15,
+      "sampled_frame_count": 71,
+      "native_ocr_batch": null,
+      "source_bytes": 872676908,
+      "video_duration_s": 72.808,
+      "video_frame_count": 2184,
+      "encoded_dimensions": [
+        3840,
+        2160
+      ],
+      "upright_frame_dimensions": [
+        2160,
+        3840
+      ],
+      "codec": "hevc",
+      "display_rotation_degrees": -90,
+      "capture_metadata": {
+        "major_brand": "mp42",
+        "minor_version": "0",
+        "compatible_brands": "isommp42",
+        "creation_time": "2026-08-18T08:22:59.000000Z",
+        "com.android.version": "16",
+        "com.android.capture.fps": "30.000000",
+        "com.samsung.android.utc_offset": "+0500"
+      },
+      "saved_run_configuration": {
+        "sample_interval": 0.5,
+        "max_pages": 100,
+        "model": "openai/gpt-4.1-mini",
+        "field_engine": "selected role/header pixels via openai/gpt-4.1-mini",
+        "classification_scope": [
+          "upd",
+          "torg12",
+          "ttn",
+          "trn",
+          "unknown"
+        ],
+        "neighbor_fallback": true,
+        "per_leaf_frame_limit": null,
+        "verify_inn": true
+      },
+      "saved_processing_observations": {
+        "quality_gate_leaf_statuses": {
+          "accepted": 15
+        },
+        "same_leaf_comparison_statuses": {
+          "all_fields_corroborated": 4,
+          "source_views_exhausted": 4
+        },
+        "same_leaf_comparison_attempts": 65,
+        "same_leaf_attempt_statuses": {
+          "failed": 7,
+          "compared": 16,
+          "skipped": 42
+        },
+        "fusion_recovered_field_observations": 3,
+        "fusion_agreement_field_observations": 27,
+        "fusion_conflict_field_observations": 0,
+        "registry_role_statuses": {
+          "matched": 6,
+          "ambiguous": 2,
+          "unavailable": 8
+        },
+        "inn_company_name_binding_statuses": {
+          "unique": 6,
+          "ambiguous": 2,
+          "unavailable": 8
+        },
+        "printed_inn_role_statuses": {
+          "found": 8,
+          "unavailable": 8
+        },
+        "registry_usage": {
+          "unique_lookups": 0,
+          "max_unique_lookups": 10,
+          "http_requests": 0,
+          "cache_hits": 16
+        }
+      }
+    }
+  ],
+  "pdf_reference": {
+    "ground_truth": "analysis/reference-pdf/ground-truth.json",
+    "ground_truth_sha256": "47e6d02f1eb8b371cc61c8e4cb5af90a1f14db5ac76a314500a1310ddb1dc840",
+    "run": "runs/reference-final",
+    "unit": "original rendered PDF page; not video or document detection",
+    "customer_approved": false
+  },
+  "validation_summary": "runs/closing/validation-summary.json",
+  "implementation_tools": {
+    "pipeline": "sever/pipeline.py",
+    "local_ocr": "sever/native/vision_ocr.swift",
+    "cli": "sever/cli.py",
+    "api": "sever/api.py",
+    "delivery_builder": "tools/build_delivery.py"
+  },
+  "limitations": [
+    "Manual labels and interval boundaries are provisional and not customer-approved.",
+    "Quality indicators and model confidence are not calibrated accuracy probabilities.",
+    "All current primary frames have independent provisional reviews; interval availability misses and uncertain judgments remain explicit. Customer-approved contractual legibility is pending.",
+    "Same-leaf comparison and registry modes are recorded per run; an enabled switch does not prove field improvement or an available official registry match.",
+    "Projective rectification is not implemented; quality rejection/selection cannot reconstruct hidden text.",
+    "Repeated leaf showings are evaluated as intervals; unique-document identity/grouping is not validated."
+  ]
+}

@@ -1,0 +1,678 @@
+{
+  "schemaVersion": 1,
+  "scope": "8 selected original-resolution frames from sample-01; local/native OCR plus visual checks of key crops",
+  "importantDistinction": "Native JSON/text are raw recognizer output. These fields are separate human-style visual readings; quoted values are not automatically accepted OCR. No TЗ class assignment or benchmark accuracy metric is made.",
+  "method": {
+    "ocrEngine": "Apple Vision VNRecognizeTextRequest revision 3",
+    "languages": [
+      "ru-RU",
+      "en-US"
+    ],
+    "languageCorrection": false,
+    "minimumTextHeightFraction": 0.003,
+    "preprocessing": "Conservative paper crop, clockwise 90-degree rotation for pages 4-7, lossless PNG; no resampling or perspective correction",
+    "transforms": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/transforms.json",
+    "keyCropIndex": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/key-crops.json",
+    "nativeOutput": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr/native-batch.json"
+  },
+  "pages": [
+    {
+      "page": 1,
+      "observedDocument": "Товарная накладная, обозначение ТН-2 в тексте формы",
+      "fields": [
+        {
+          "field": "title",
+          "value": "ТОВАРНАЯ НАКЛАДНАЯ",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+          ]
+        },
+        {
+          "field": "formDesignation",
+          "value": "ТН-2",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-form-reference.png"
+          ],
+          "caveat": "Designation is printed in the attachment-reference sentence; no TZ class assigned."
+        },
+        {
+          "field": "series",
+          "value": "ЯМ",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+          ]
+        },
+        {
+          "field": "number",
+          "value": "0790741",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+          ]
+        },
+        {
+          "field": "date",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+          ],
+          "caveat": "Printed as 13 августа 2026г.; normalized for comparison."
+        },
+        {
+          "field": "sender",
+          "value": "ОАО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+          ]
+        },
+        {
+          "field": "recipient",
+          "value": "ООО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+          ]
+        },
+        {
+          "field": "senderUNP",
+          "value": "200030514",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+          ]
+        },
+        {
+          "field": "recipientUNP",
+          "value": "7713573896",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+          ]
+        }
+      ]
+    },
+    {
+      "page": 2,
+      "observedDocument": "Приложение к ТН-2, товарный перечень",
+      "fields": [
+        {
+          "field": "title",
+          "value": "Приложение к ТН-2 ЯМ № 0790741 от 13 августа 2026г.",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-02-header.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteNumber",
+          "value": "0790741",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-02-header.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteDate",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-02-header.png"
+          ]
+        },
+        {
+          "field": "ownDocumentNumber",
+          "value": null,
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-02-header.png"
+          ],
+          "caveat": "No distinct own document number identified in the inspected header; 0790741 is the referenced goods note."
+        },
+        {
+          "field": "parties",
+          "value": null,
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-02-header.png"
+          ],
+          "caveat": "Start of left header lines is occluded by the turned page. Full party legal forms are not reconstructed from other pages."
+        }
+      ]
+    },
+    {
+      "page": 3,
+      "observedDocument": "Международная товарно-транспортная накладная CMR",
+      "fields": [
+        {
+          "field": "title",
+          "value": "Международная товарно-транспортная накладная / CMR",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-03-title.png"
+          ]
+        },
+        {
+          "field": "number",
+          "value": "345858",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-03-title.png"
+          ]
+        },
+        {
+          "field": "date",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-03-references.png"
+          ],
+          "caveat": "Visible bottom part of field 4, above attached-document references."
+        },
+        {
+          "field": "attachedInvoiceNumber",
+          "value": "C01-345858",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-03-references.png"
+          ],
+          "caveat": "The printed C/С glyph is visually ambiguous between Latin and Cyrillic; C01 is a transcription convention."
+        },
+        {
+          "field": "referencedGoodsNoteNumber",
+          "value": "0790741",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-03-references.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteDate",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-03-references.png"
+          ]
+        },
+        {
+          "field": "partyNameVisible",
+          "value": "Савушкин продукт",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-03-title.png"
+          ],
+          "caveat": "Sender/recipient left portions are partly occluded; full legal forms were not verified in this crop."
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "observedDocument": "Счет-фактура, отдельный документ",
+      "fields": [
+        {
+          "field": "title",
+          "value": "СЧЕТ-ФАКТУРА",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ]
+        },
+        {
+          "field": "number",
+          "value": "C01-345858",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ],
+          "caveat": "The printed C/С glyph is visually ambiguous between Latin and Cyrillic; C01 is a transcription convention."
+        },
+        {
+          "field": "date",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ]
+        },
+        {
+          "field": "seller",
+          "value": "ОАО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ]
+        },
+        {
+          "field": "buyer",
+          "value": "ООО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ]
+        },
+        {
+          "field": "recipient",
+          "value": "ООО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ]
+        },
+        {
+          "field": "sellerINN_KPP",
+          "value": "200030514 / 05882743",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ],
+          "caveat": "Copied exactly from label; no external validation of identifier type or length."
+        },
+        {
+          "field": "buyerINN_KPP",
+          "value": "7713573896 / 997150001",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ]
+        },
+        {
+          "field": "shippingDocument",
+          "value": "ЯМ0790741 от 13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+          ]
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "observedDocument": "Реестр документов о качестве и безопасности, приложение к товарной накладной",
+      "fields": [
+        {
+          "field": "title",
+          "value": "РЕЕСТР документов, подтверждающих качество и безопасность товара, указанного в товарной накладной № 0790741 от 13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-05-header.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteNumber",
+          "value": "0790741",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-05-header.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteDate",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-05-header.png"
+          ]
+        },
+        {
+          "field": "manufacturer",
+          "value": "ОАО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-05-manufacturer.png"
+          ]
+        },
+        {
+          "field": "ownDocumentNumber",
+          "value": null,
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-05-header.png"
+          ],
+          "caveat": "No distinct own number visible in inspected header. This page explicitly references the goods note; invoice continuation is not supported by its title."
+        }
+      ]
+    },
+    {
+      "page": 6,
+      "observedDocument": "Сводное удостоверение качества и безопасности, 1 из 2",
+      "fields": [
+        {
+          "field": "title",
+          "value": "СВОДНОЕ УДОСТОВЕРЕНИЕ КАЧЕСТВА И БЕЗОПАСНОСТИ ПРОДОВОЛЬСТВЕННОГО СЫРЬЯ И ПИЩЕВЫХ ПРОДУКТОВ",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-header.png"
+          ]
+        },
+        {
+          "field": "number",
+          "value": "01/1138",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-header.png"
+          ]
+        },
+        {
+          "field": "date",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-header.png"
+          ]
+        },
+        {
+          "field": "manufacturer",
+          "value": "ОАО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-header.png"
+          ]
+        },
+        {
+          "field": "recipient",
+          "value": "ООО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-header.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteNumber",
+          "value": "0790741",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-header.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteDate",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-header.png"
+          ]
+        },
+        {
+          "field": "printedPageNumber",
+          "value": 1,
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-pagecount.png"
+          ]
+        },
+        {
+          "field": "printedPageCount",
+          "value": 2,
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-pagecount.png"
+          ]
+        }
+      ]
+    },
+    {
+      "page": 7,
+      "observedDocument": "Сводное удостоверение качества и безопасности, 2 из 2",
+      "fields": [
+        {
+          "field": "title",
+          "value": "СВОДНОЕ УДОСТОВЕРЕНИЕ КАЧЕСТВА И БЕЗОПАСНОСТИ ПРОДОВОЛЬСТВЕННОГО СЫРЬЯ И ПИЩЕВЫХ ПРОДУКТОВ",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-header.png"
+          ]
+        },
+        {
+          "field": "number",
+          "value": "01/1138",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-header.png"
+          ]
+        },
+        {
+          "field": "date",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-header.png"
+          ]
+        },
+        {
+          "field": "manufacturer",
+          "value": "ОАО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-header.png"
+          ]
+        },
+        {
+          "field": "recipient",
+          "value": "ООО «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-header.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteNumber",
+          "value": "0790741",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-header.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteDate",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-header.png"
+          ]
+        },
+        {
+          "field": "printedPageNumber",
+          "value": 2,
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-pagecount.png"
+          ]
+        },
+        {
+          "field": "printedPageCount",
+          "value": 2,
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-07-pagecount.png"
+          ]
+        }
+      ]
+    },
+    {
+      "page": 8,
+      "observedDocument": "Ветеринарный сертификат, форма № 2",
+      "fields": [
+        {
+          "field": "title",
+          "value": "ВЕТЕРИНАРНЫЙ СЕРТИФИКАТ",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-title-number-date.png"
+          ]
+        },
+        {
+          "field": "series",
+          "value": "BY № 01",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-title-number-date.png"
+          ]
+        },
+        {
+          "field": "number",
+          "value": "00752453",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-title-number-date.png"
+          ]
+        },
+        {
+          "field": "date",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-title-number-date.png"
+          ],
+          "caveat": "Manually assembled from printed day 13, month 08 and year slots 20 / 26."
+        },
+        {
+          "field": "certifiedOrganization",
+          "value": "Открытое акционерное общество «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-title-number-date.png"
+          ]
+        },
+        {
+          "field": "recipient",
+          "value": "Общество с ограниченной ответственностью «Савушкин продукт»",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-parties-references.png"
+          ]
+        },
+        {
+          "field": "referencedGoodsNoteNumber",
+          "value": "ЯМ0790741",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-parties-references.png"
+          ]
+        },
+        {
+          "field": "referencedCMRNumber",
+          "value": "345858",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-parties-references.png"
+          ]
+        },
+        {
+          "field": "referencedDocumentDate",
+          "value": "13.08.2026",
+          "basis": "visual_reading_of_key_crop",
+          "evidence": [
+            "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-parties-references.png"
+          ]
+        }
+      ]
+    }
+  ],
+  "ocrFailureExamples": [
+    {
+      "page": 1,
+      "kind": "wrong_numeric_character",
+      "manualValue": "7713573896",
+      "ocrValue": "1713573896",
+      "visionIndex": 15,
+      "ocrConfidence": 0.5,
+      "evidence": [
+        "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+      ]
+    },
+    {
+      "page": 1,
+      "kind": "wrong_party_name_character",
+      "manualValue": "Савушкин продукт",
+      "ocrValue": "Савушкии продукт",
+      "visionIndex": 24,
+      "ocrConfidence": 0.5,
+      "evidence": [
+        "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+      ]
+    },
+    {
+      "page": 1,
+      "kind": "overlapping_stamp_text",
+      "manualValue": "СКОРОПОРТ",
+      "ocrValue": "СКОРОПОРА",
+      "visionIndex": 11,
+      "ocrConfidence": 0.3,
+      "evidence": [
+        "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-01-title-parties.png"
+      ]
+    },
+    {
+      "page": 4,
+      "kind": "wrong_word_character",
+      "manualValue": "Документ об отгрузке",
+      "ocrValue": "Документ об оттрузке",
+      "visionIndex": 8,
+      "ocrConfidence": 0.5,
+      "evidence": [
+        "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-04-header.png"
+      ]
+    },
+    {
+      "page": 6,
+      "kind": "missing_title_middle",
+      "manualValue": "СВОДНОЕ УДОСТОВЕРЕНИЕ КАЧЕСТВА И БЕЗОПАСНОСТИ ПРОДОВОЛЬСТВЕННОГО СЫРЬЯ И ПИЩЕВЫХ ПРОДУКТОВ",
+      "ocrValue": "СВОДНОЕ УДОСТОВЕРЕНИЕ КАЧЕСТВА И БЕЗОПАСНОСТИ ПРОДОВОЛЬСТВ\nКТОВ № 01/1138 от 13.08.2026г.",
+      "evidence": [
+        "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-06-header.png"
+      ],
+      "note": "OCR retained beginning and a short tail, dropping visible middle words. This is an omission example, not an estimated accuracy score."
+    },
+    {
+      "page": 8,
+      "kind": "layout_date_split",
+      "manualValue": "13.08.2026",
+      "ocrValue": [
+        "13",
+        "08",
+        "20",
+        "26"
+      ],
+      "visionIndices": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "ocrConfidences": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "evidence": [
+        "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-title-number-date.png"
+      ],
+      "note": "Each component is correct, but combined text interleaves unrelated content; the date requires field-aware assembly."
+    },
+    {
+      "page": 8,
+      "kind": "missing_reference_number",
+      "manualValue": "CMR от 13.08.2026 № 345858",
+      "ocrValue": "РГот 13.08.2026 № ЯM 0790741 CMR oт 13.08.2026 N",
+      "visionIndex": 53,
+      "ocrConfidence": 0.3,
+      "evidence": [
+        "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/ocr-inputs/key-crops/page-08-parties-references.png"
+      ],
+      "note": "345858 is visible on the following offset line but is absent from native page text."
+    }
+  ],
+  "limits": [
+    "Only selected visible sides/pages are assessed; portions under the turned page or hands remain unavailable.",
+    "Rectangular paper crops retain small desk wedges and occluding paper to avoid clipping document content.",
+    "Printed and handwritten marks overlap several fields. No conclusion about signature genuineness, legal validity, completeness or acceptance is drawn.",
+    "Geometric OCR text order does not preserve table row/column associations. No table accuracy or end-to-end extraction accuracy is measured.",
+    "Language correction is disabled, as requested; values still require visual validation. Vision confidence is not an accuracy score.",
+    "C/С and mixed Latin/Cyrillic glyphs can remain script-ambiguous even when the visual characters are readable."
+  ]
+}

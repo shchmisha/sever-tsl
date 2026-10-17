@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sever-tsl"
+version = "0.1.0"
+description = "Video document recognition research MVP for Sever TSL"
+requires-python = ">=3.12"
+dependencies = [
+  "pydantic-ai-slim[openai]>=1.0,<3", "pydantic>=2.11,<3",
+  "opencv-python-headless>=4.10,<5", "numpy>=2,<3", "Pillow>=11,<13",
+  "httpx>=0.27,<1", "fastapi>=0.115,<1", "uvicorn>=0.30,<1", "typer>=0.12,<1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+sever = "sever.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["sever*"]
+
+[tool.setuptools.package-data]
+sever = ["native/*.swift", "portal_static/*.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

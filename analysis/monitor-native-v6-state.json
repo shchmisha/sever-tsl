@@ -1,0 +1,132 @@
+{
+  "checked_at_utc": "2026-10-10T21:00:49.187129+00:00",
+  "batch_status": "driver_stopped_current_job_draining",
+  "counts": {
+    "selected_videos": 11,
+    "submitted_jobs": 1,
+    "statuses": {
+      "processing": 1
+    },
+    "remaining_videos": 10
+  },
+  "usage": {
+    "attempted_requests": 105,
+    "requests": 105,
+    "input_tokens": 1123529,
+    "output_tokens": 20711,
+    "actual_cost_rub": 0.0,
+    "costed_requests": 0,
+    "reserved_requests": 0,
+    "reserved_tokens": 0,
+    "requests_without_response": 0,
+    "responses_without_reported_cost": 0,
+    "local_inference_responses": 105,
+    "budget_requests": 105,
+    "budget_tokens": 1144240,
+    "currency": "RUB"
+  },
+  "jobs": [
+    {
+      "job_id": "94b6e2e5-fc2c-416f-ab9e-2ebf7061470e",
+      "status": "processing",
+      "source_path": "/srv/sever/input/20260818-5_132107.mp4",
+      "progress": "Reading image 6/15 at 22.2s, view 4",
+      "native_implementation_fingerprint": "e10385cb71e2ee74814eee81571064c6cb5ae3e8dc1958d30cd57cc9411250c3",
+      "pages": [
+        {
+          "page_id": "page-0001",
+          "type": "upd",
+          "statuses": {
+            "recognized": 6
+          },
+          "errors": [],
+          "views": 2,
+          "completed": true
+        },
+        {
+          "page_id": "page-0002",
+          "type": "ttn",
+          "statuses": {
+            "recognized": 4
+          },
+          "errors": [],
+          "views": 2,
+          "completed": true
+        },
+        {
+          "page_id": "page-0003",
+          "type": "unknown",
+          "statuses": {},
+          "errors": [
+            "Model document type has no supplied-panel heading evidence",
+            "image_fusion:conflicting_document_types"
+          ],
+          "views": 5,
+          "completed": true
+        },
+        {
+          "page_id": "page-0004",
+          "type": "upd",
+          "statuses": {
+            "recognized": 4,
+            "conflict": 2
+          },
+          "errors": [],
+          "views": 2,
+          "completed": true
+        },
+        {
+          "page_id": "page-0005",
+          "type": "ttn",
+          "statuses": {
+            "recognized": 3,
+            "not_present": 1
+          },
+          "errors": [],
+          "views": 2,
+          "completed": true
+        },
+        {
+          "page_id": "page-0006",
+          "type": "ttn",
+          "statuses": {
+            "unreadable": 3,
+            "recognized": 1
+          },
+          "errors": [],
+          "views": 3,
+          "completed": false
+        }
+      ],
+      "event_counts": {
+        "run_started": 1,
+        "quality_gate": 15,
+        "page_selected": 6,
+        "image_orientation_observation": 17,
+        "model_request_started": 106,
+        "model_response_received": 105,
+        "image_orientation_reading": 16,
+        "image_agent_observation": 16,
+        "image_agent_zoom": 83,
+        "image_agent_reading": 16,
+        "source_zoom_image_reading": 16,
+        "image_view_attempt": 16
+      },
+      "last_response_time": "2026-10-10T21:00:35.422624+00:00",
+      "last_event_time": "2026-10-10T21:00:47.499605+00:00"
+    }
+  ],
+  "finish": {
+    "status": "stopped_before_evaluation",
+    "evaluation_attempted": false,
+    "truth_loaded_before_idle": false,
+    "updated_at": "2026-10-10T21:00:41.030139+00:00"
+  },
+  "automation_status": "PAUSED",
+  "gpu": "100 %, 26170 MiB, 32607 MiB",
+  "known_new_defects": [
+    "page3 ungrounded form claim cancelled valid readings",
+    "page4 model field-boundary drift caused two conflicts"
+  ],
+  "candidate": "V7 local; not deployed"
+}

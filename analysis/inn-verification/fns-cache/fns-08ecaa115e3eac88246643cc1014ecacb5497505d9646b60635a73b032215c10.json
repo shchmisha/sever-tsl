@@ -1,0 +1,24 @@
+{
+  "version": "public-egrul-search-v1",
+  "origin": "https://egrul.nalog.ru",
+  "inn": "7453297257",
+  "created_at": 1791362275.706742,
+  "result": {
+    "status": "found",
+    "checked_at": "2026-10-07T08:37:54.780950+00:00",
+    "source_url": "https://egrul.nalog.ru/",
+    "records": [
+      {
+        "inn": "7453297257",
+        "name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ФРЭШ-ЭКСПРЕСС\"",
+        "short_name": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+        "ogrn": "1167456094827",
+        "entity_type": "ul",
+        "registration_date": "01.07.2016",
+        "termination_date": null,
+        "invalid_registration_date": null
+      }
+    ],
+    "reason": "Official public EGRUL/EGRIP search response; not a signed extract"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "version": "public-egrul-search-v1",
+  "origin": "https://egrul.nalog.ru",
+  "inn": "7725382984",
+  "created_at": 1791362281.600924,
+  "result": {
+    "status": "found",
+    "checked_at": "2026-10-07T08:37:55.709035+00:00",
+    "source_url": "https://egrul.nalog.ru/",
+    "records": [
+      {
+        "inn": "7725382984",
+        "name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ПРОФРЕШ\"",
+        "short_name": "ООО \"ПРОФРЕШ\"",
+        "ogrn": "1177746657890",
+        "entity_type": "ul",
+        "registration_date": "05.07.2017",
+        "termination_date": null,
+        "invalid_registration_date": null
+      }
+    ],
+    "reason": "Official public EGRUL/EGRIP search response; not a signed extract"
+  }
+}

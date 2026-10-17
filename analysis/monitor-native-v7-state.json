@@ -1,0 +1,216 @@
+{
+  "updated_at_utc": "2026-10-11T12:29:20.358694+00:00",
+  "release": "20261011-native-image-v7",
+  "fingerprint": "8903b48527dc4f7dfff3530cdb7cebfe31a702f878fd8b613ffa122760fe7238",
+  "manifest": "completed_with_errors",
+  "completed_at_utc": "2026-10-11T10:55:59.355140+00:00",
+  "counts": {
+    "selected_videos": 11,
+    "submitted_jobs": 11,
+    "statuses": {
+      "completed": 8,
+      "completed_with_errors": 2,
+      "failed": 1
+    },
+    "remaining_videos": 0
+  },
+  "coverage": {
+    "original_bytes": 13491073801,
+    "source_sizes_match_manifest": true,
+    "trace_source_ids_match_manifest_sha256": true,
+    "final_result_pages": 219,
+    "failed_partial_pages": 54,
+    "failed_selected_pages": 58,
+    "note": "Selected candidate pages include repeated shows and out-of-scope forms; not unique physical documents."
+  },
+  "usage": {
+    "requests_started": 9222,
+    "responses_received": 9222,
+    "requests_without_response": 0,
+    "input_tokens": 101046004,
+    "output_tokens": 1608204,
+    "total_tokens": 102654208,
+    "local_inference_responses": 9222
+  },
+  "jobs": [
+    {
+      "source": "20260818-5_132107.mp4",
+      "job_id": "53266394-137e-43f5-9671-8b40bbc19a91",
+      "status": "completed_with_errors",
+      "result_pages": 15,
+      "selected_pages": 15,
+      "elapsed_seconds": 4123.89,
+      "responses": 722
+    },
+    {
+      "source": "20260818-1_133402.mp4",
+      "job_id": "a25934c2-56dd-4b01-b3b6-d9e2774b494c",
+      "status": "completed",
+      "result_pages": 8,
+      "selected_pages": 8,
+      "elapsed_seconds": 939.04,
+      "responses": 170
+    },
+    {
+      "source": "20260818-2_133246.mp4",
+      "job_id": "7359eb95-baf0-4a88-b891-4b0cad7aa5c3",
+      "status": "completed",
+      "result_pages": 11,
+      "selected_pages": 11,
+      "elapsed_seconds": 1717.44,
+      "responses": 399
+    },
+    {
+      "source": "20260818-3_132840.mp4",
+      "job_id": "ad6998be-4ea1-4092-b148-94fbdc891639",
+      "status": "failed",
+      "result_pages": 54,
+      "selected_pages": 58,
+      "elapsed_seconds": 9976.98,
+      "responses": 2000
+    },
+    {
+      "source": "20260818-4_132351.mp4",
+      "job_id": "eb898888-af48-4a6d-8589-8605fa67470f",
+      "status": "completed_with_errors",
+      "result_pages": 53,
+      "selected_pages": 53,
+      "elapsed_seconds": 5890.59,
+      "responses": 1130
+    },
+    {
+      "source": "20260818-6_131851.mp4",
+      "job_id": "0c34e45e-bf79-4dca-b8c7-97bd44bad547",
+      "status": "completed",
+      "result_pages": 17,
+      "selected_pages": 17,
+      "elapsed_seconds": 4899.89,
+      "responses": 827
+    },
+    {
+      "source": "20260818_131702.mp4",
+      "job_id": "fec56de3-34fc-404d-91a5-d3c16c443367",
+      "status": "completed",
+      "result_pages": 15,
+      "selected_pages": 15,
+      "elapsed_seconds": 2761.68,
+      "responses": 517
+    },
+    {
+      "source": "20260821_144256.mp4",
+      "job_id": "a5449615-2593-4bdb-b9e3-a7fdabc01e0b",
+      "status": "completed",
+      "result_pages": 62,
+      "selected_pages": 62,
+      "elapsed_seconds": 6395.49,
+      "responses": 1277
+    },
+    {
+      "source": "20260821_144838.mp4",
+      "job_id": "7e107be2-f7e8-4671-bc06-4928f04ae161",
+      "status": "completed",
+      "result_pages": 11,
+      "selected_pages": 11,
+      "elapsed_seconds": 4253.32,
+      "responses": 791
+    },
+    {
+      "source": "20260821_145110.mp4",
+      "job_id": "4c15016f-ad19-4fdd-a8d4-a15227e106b1",
+      "status": "completed",
+      "result_pages": 14,
+      "selected_pages": 14,
+      "elapsed_seconds": 4016.09,
+      "responses": 787
+    },
+    {
+      "source": "20260821_145342.mp4",
+      "job_id": "c32f47bc-87b0-482b-ba0f-93e0f3b9b378",
+      "status": "completed",
+      "result_pages": 13,
+      "selected_pages": 13,
+      "elapsed_seconds": 3073.68,
+      "responses": 602
+    }
+  ],
+  "timing": {
+    "completed_jobs_elapsed_seconds": 38071.11,
+    "completed_jobs_candidate_pages": 219,
+    "seconds_per_candidate_page": 173.84068493150687,
+    "all_jobs_elapsed_seconds": 48048.09
+  },
+  "finish": {
+    "status": "evaluated",
+    "evaluation_attempted": true,
+    "truth_loaded_before_idle": false,
+    "model_or_api_calls": 0,
+    "active_or_uncertain_jobs": [],
+    "exclusive_gate_held_during_evaluation": true
+  },
+  "evaluation": {
+    "status": "complete_provisional_original_subset",
+    "generated_at_utc": "2026-10-11T10:56:09Z",
+    "labelled_videos": 4,
+    "additional_unlabelled_videos": 7,
+    "correct_labelled_fields": 35,
+    "labelled_fields": 44,
+    "fully_correct_labelled_shows": 4,
+    "fully_labelled_shows": 8,
+    "correct_target_types": 14,
+    "target_intervals": 20,
+    "missed_intervals": 8,
+    "unmatched_predictions": 7,
+    "customer_approved": false,
+    "contractual_acceptance": false,
+    "report": "/root/sever-validation/native-v7-evaluation/finish-evaluation.json"
+  },
+  "services": {
+    "sever-model": "active",
+    "sever-tsl": "active",
+    "sever-validation-native-v7-q38-20261011.service": "inactive",
+    "sever-validation-native-v7-finish-20261011.service": "inactive"
+  },
+  "ground_truth_read_by_monitor": false,
+  "accuracy_evaluated": true,
+  "customer_approved": false,
+  "automation_status": "not_found",
+  "automation_note": "Attempted PAUSED update preserving known configuration; app reported automation does not exist. No automation recreated.",
+  "notification": "User requested status; final batch outcome reported.",
+  "confirmed_failure": {
+    "job_id": "ad6998be-4ea1-4092-b148-94fbdc891639",
+    "source": "20260818-3_132840.mp4",
+    "error_type": "BatchBudgetExceeded",
+    "inner_error_type": "UsageLimitExceeded",
+    "request_limit": 2000,
+    "requests_started": 2000,
+    "responses_received": 2000,
+    "elapsed_seconds": 9976.98,
+    "fully_traversed_pages": 53,
+    "partial_last_page": 54,
+    "selected_pages": 58,
+    "unstarted_pages": [
+      55,
+      56,
+      57,
+      58
+    ],
+    "partial_result_preserved": true,
+    "final_result_exists": false,
+    "batch_continues": false,
+    "next_job_id": "eb898888-af48-4a6d-8589-8605fa67470f",
+    "observed_failure_utc": "2026-10-11T02:13:51.085466+00:00",
+    "parameters_changed": false,
+    "job_restarted": false,
+    "code_review": {
+      "same_job_resume_supported": false,
+      "request_ceiling_hardcoded_in_api_and_driver": true,
+      "batch_settings_pinned": true,
+      "api_ceiling_change_changes_fingerprint": true,
+      "remedy": "After the current batch, prepare and validate a separate release with a larger local request ceiling, then process the failed original afresh under a new UUID; preserve the failed run. No current code, services, model, quotas, or jobs changed.",
+      "files": [
+        "sever/api.py",
+        "deploy/server_batch.py"
+      ]
+    }
+  }
+}

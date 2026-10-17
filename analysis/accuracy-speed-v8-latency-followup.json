@@ -1,0 +1,99 @@
+{
+  "status": "offline_candidate_pending_fresh_validation",
+  "observed_run": "/srv/sever/validation/accuracy-speed-v8-20261011/767df52a-4b63-4f6b-8d07-45c09e7a1784-video-candidate",
+  "observed_at": "2026-10-11T14:18:40.844105+00:00",
+  "snapshot_only": true,
+  "elapsed_seconds": 571.76,
+  "completed_model_response_seconds": 538.57,
+  "model_time_share_approx": 0.942,
+  "third_leaf": {
+    "completed_views": 11,
+    "model_seconds": 409.19,
+    "field_agent_seconds": 330.02,
+    "joint_review_seconds": 51.52,
+    "orientation_seconds": 27.65,
+    "field_agent_completed_requests": 67,
+    "joint_completed_requests": 5,
+    "orientation_completed_requests": 12,
+    "status_value_patterns": 1,
+    "exact_reading_signatures": 11,
+    "unreadable_fields": [
+      "consignor",
+      "consignee",
+      "document_date"
+    ],
+    "recognized_fields": [
+      "document_number"
+    ],
+    "skipped_as_redundant": 0,
+    "candidate_scan_samples": 14,
+    "candidate_scan_accepted": 12
+  },
+  "hotspots": [
+    {
+      "file": "sever/native_pipeline.py",
+      "symbols": [
+        "_reading_signature",
+        "_FragmentSaturation.observe"
+      ],
+      "finding": "Exact evidence text participates in signature: 11 same status/value results had 11 signatures, resetting saturation before pixel comparison."
+    },
+    {
+      "file": "sever/native_pipeline.py",
+      "symbols": [
+        "_redundant_pixels",
+        "_stop_reason",
+        "process_video_images"
+      ],
+      "finding": "Pixel-exact redundancy threshold is zero; every changed frame re-enters full orientation and reading. Unreadable fields have no leaf-specific terminal outcome."
+    },
+    {
+      "file": "sever/frame_pool.py",
+      "symbols": [
+        "iter_additional_page_frames"
+      ],
+      "finding": "All associated candidates at 0.25s are yielded until exhausted; current reading policy pays full model loop for each."
+    },
+    {
+      "file": "sever/zoom_image_reader.py",
+      "symbols": [
+        "read_frame_zoom"
+      ],
+      "finding": "Each view performs fresh orientation then full frame agent. Orientation was only 6.8% of third-leaf model time; do not start by removing its proof."
+    }
+  ],
+  "proposal": {
+    "decision_authority": "Fresh joint model reads actual source pixels; Python validates only structured per-frame assertions and source identities.",
+    "terminal_cause": "other_document_side",
+    "requirements": [
+      "Each supplied source reading is unreadable with null value, complete_page_visible=true, other_document_side, nonempty actual context and real own panels.",
+      "At least two distinct frame IDs, source hashes and capture timestamps.",
+      "Model explicitly requests obtain_other_document_side; requested form confirmed.",
+      "All remaining fields qualify in the same fresh joint review; no raw or joint conflict, prior readable/blank field proposal, source error, or type uncertainty."
+    ],
+    "forbidden_terminal_causes": [
+      "occluded",
+      "blur_or_small_text",
+      "needs_more_zoom",
+      "heading_uncertain",
+      "unknown",
+      "mixed visibility"
+    ],
+    "output": "requires_other_document_side; fields stay unreadable; remaining source views explicitly unread; no not_present or successful value claim.",
+    "no_similarity_threshold_relaxation": true
+  },
+  "candidate_root": "/tmp/sever-v8-speed-candidate",
+  "changed_files": [
+    "sever/image_conflicts.py",
+    "sever/native_pipeline.py",
+    "tests/test_joint_visibility_stop.py"
+  ],
+  "patch": "/tmp/sever-v8-speed-candidate/visibility-stop.patch",
+  "negative_probe_example": "/tmp/sever-v8-speed-candidate/negative_visibility_probe.py",
+  "validation": "Full focused candidate suite: 333 passed in 12.43s. Independent narrow safety review: 129 passed in 7.58s; failure-history and conflict-preservation regressions verified. No candidate inference or GT reads by this agent; source workspace and runtime unchanged.",
+  "limitations": [
+    "Snapshot model durations include provider wait/queue time; they are not pure GPU compute timing.",
+    "Actual speed benefit and model reliability require fresh isolated candidate validation.",
+    "No per-leaf frame cap or approximate pixel duplicate threshold was introduced."
+  ]
+}

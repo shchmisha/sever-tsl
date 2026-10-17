@@ -1,0 +1,610 @@
+{
+  "verification": {
+    "source_id": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+    "page_id": "page-0001",
+    "roles": {
+      "consignor": {
+        "printed_inn": "7453297257",
+        "printed_status": "found",
+        "candidates": [
+          "7453297257"
+        ],
+        "evidence": [
+          {
+            "frame_id": "frame-000006",
+            "region_index": 11,
+            "text": "Продавец:",
+            "bbox": [
+              0.1787790704988879,
+              0.11627906968081048,
+              0.03633720874786375,
+              0.012919896620291249
+            ]
+          },
+          {
+            "frame_id": "frame-000006",
+            "region_index": 26,
+            "text": "Грузоотправитель и его адрес:",
+            "bbox": [
+              0.17839300040856762,
+              0.17531744384327452,
+              0.09224695364634197,
+              0.0221940879468564
+            ]
+          },
+          {
+            "frame_id": "frame-000006",
+            "region_index": 30,
+            "text": "он же",
+            "bbox": [
+              0.29796511585200114,
+              0.18604651142284312,
+              0.01744186083475746,
+              0.013027562476970567
+            ]
+          },
+          {
+            "frame_id": "frame-000006",
+            "region_index": 19,
+            "text": "ИНН/КПП продавца:",
+            "bbox": [
+              0.17877907187047262,
+              0.15740740707584489,
+              0.06104650894800823,
+              0.015740740740740722
+            ]
+          },
+          {
+            "frame_id": "frame-000006",
+            "region_index": 24,
+            "text": "7453297257/745301001",
+            "bbox": [
+              0.2965116290015819,
+              0.16795865616646433,
+              0.0712209304173787,
+              0.015503876297562225
+            ]
+          }
+        ],
+        "source_frame_ids": [
+          "frame-000006"
+        ],
+        "frame_observations": [
+          {
+            "printed_inn": "7453297257",
+            "printed_status": "found",
+            "candidates": [
+              "7453297257"
+            ],
+            "evidence": [
+              {
+                "frame_id": "frame-000006",
+                "region_index": 11,
+                "text": "Продавец:",
+                "bbox": [
+                  0.1787790704988879,
+                  0.11627906968081048,
+                  0.03633720874786375,
+                  0.012919896620291249
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 26,
+                "text": "Грузоотправитель и его адрес:",
+                "bbox": [
+                  0.17839300040856762,
+                  0.17531744384327452,
+                  0.09224695364634197,
+                  0.0221940879468564
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 30,
+                "text": "он же",
+                "bbox": [
+                  0.29796511585200114,
+                  0.18604651142284312,
+                  0.01744186083475746,
+                  0.013027562476970567
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 19,
+                "text": "ИНН/КПП продавца:",
+                "bbox": [
+                  0.17877907187047262,
+                  0.15740740707584489,
+                  0.06104650894800823,
+                  0.015740740740740722
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 24,
+                "text": "7453297257/745301001",
+                "bbox": [
+                  0.2965116290015819,
+                  0.16795865616646433,
+                  0.0712209304173787,
+                  0.015503876297562225
+                ]
+              }
+            ],
+            "resolved_role": "seller",
+            "company_name_binding": {
+              "status": "unavailable",
+              "legal_name_candidates": [],
+              "evidence": [],
+              "reason": "No legal name in the literal labeled-INN row"
+            },
+            "reason": "Literal labeled INN in own-role selected-frame OCR; no digit repair",
+            "frame_id": "frame-000006",
+            "timestamp_s": 2.6655333333333333
+          }
+        ],
+        "resolved_role": "seller",
+        "reason": "Literal labeled own-role OCR; malformed alternatives retained in frame_observations",
+        "local_validation": {
+          "format_valid": true,
+          "checksum_valid": true,
+          "registration_verified": false,
+          "method": "10/12 literal digits and weighted control digits; no registry evidence"
+        },
+        "name_source": "extracted_field_evidence",
+        "printed_company_name": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+        "company_name_binding": {
+          "status": "unique",
+          "legal_name_candidates": [
+            "ООО \"ФРЭШ-ЭКСПРЕСС\""
+          ],
+          "evidence": [],
+          "extracted_company_name": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "reason": "Company name from field evidence or unique same-role literal OCR; no registry substitution"
+        },
+        "registry": {
+          "status": "matched",
+          "checked_at": "2026-10-07T08:37:54.780950+00:00",
+          "source_url": "https://egrul.nalog.ru/",
+          "records": [
+            {
+              "inn": "7453297257",
+              "name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ФРЭШ-ЭКСПРЕСС\"",
+              "short_name": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+              "ogrn": "1167456094827",
+              "entity_type": "ul",
+              "registration_date": "01.07.2016",
+              "termination_date": null,
+              "invalid_registration_date": null
+            }
+          ],
+          "reason": "Printed INN and legal entity name match the official public record",
+          "cache_hit": true,
+          "name_comparison": "declared legal-form, quote and punctuation normalization; no fuzzy name repair"
+        }
+      },
+      "consignee": {
+        "printed_inn": "7725382984",
+        "printed_status": "found",
+        "candidates": [
+          "7725382984"
+        ],
+        "evidence": [
+          {
+            "frame_id": "frame-000006",
+            "region_index": 41,
+            "text": "Грузополучатель и его адрес:",
+            "bbox": [
+              0.17697417197211426,
+              0.21657456112035733,
+              0.08924010594685874,
+              0.021260307453296767
+            ]
+          },
+          {
+            "frame_id": "frame-000006",
+            "region_index": 34,
+            "text": "ООО \"УМНЫЙ РИТЕЙЛ\": ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+            "bbox": [
+              0.2977246660286977,
+              0.1967870105297429,
+              0.23451185226440435,
+              0.03188943333095973
+            ]
+          },
+          {
+            "frame_id": "frame-000006",
+            "region_index": 146,
+            "text": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+            "bbox": [
+              0.29797343939053034,
+              0.19657482489363315,
+              0.23253202438354492,
+              0.031367475015145745
+            ]
+          }
+        ],
+        "source_frame_ids": [
+          "frame-000006"
+        ],
+        "frame_observations": [
+          {
+            "printed_inn": "7725382984",
+            "printed_status": "found",
+            "candidates": [
+              "7725382984"
+            ],
+            "evidence": [
+              {
+                "frame_id": "frame-000006",
+                "region_index": 41,
+                "text": "Грузополучатель и его адрес:",
+                "bbox": [
+                  0.17697417197211426,
+                  0.21657456112035733,
+                  0.08924010594685874,
+                  0.021260307453296767
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 34,
+                "text": "ООО \"УМНЫЙ РИТЕЙЛ\": ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+                "bbox": [
+                  0.2977246660286977,
+                  0.1967870105297429,
+                  0.23451185226440435,
+                  0.03188943333095973
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 146,
+                "text": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+                "bbox": [
+                  0.29797343939053034,
+                  0.19657482489363315,
+                  0.23253202438354492,
+                  0.031367475015145745
+                ]
+              }
+            ],
+            "resolved_role": "consignee",
+            "company_name_binding": {
+              "status": "ambiguous",
+              "legal_name_candidates": [
+                "ООО \"УМНЫЙ РИТЕЙЛ\"",
+                "ООО \"ПроФреш\""
+              ],
+              "evidence": [
+                {
+                  "frame_id": "frame-000006",
+                  "region_index": 41,
+                  "text": "Грузополучатель и его адрес:",
+                  "bbox": [
+                    0.17697417197211426,
+                    0.21657456112035733,
+                    0.08924010594685874,
+                    0.021260307453296767
+                  ]
+                },
+                {
+                  "frame_id": "frame-000006",
+                  "region_index": 34,
+                  "text": "ООО \"УМНЫЙ РИТЕЙЛ\": ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+                  "bbox": [
+                    0.2977246660286977,
+                    0.1967870105297429,
+                    0.23451185226440435,
+                    0.03188943333095973
+                  ]
+                },
+                {
+                  "frame_id": "frame-000006",
+                  "region_index": 146,
+                  "text": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+                  "bbox": [
+                    0.29797343939053034,
+                    0.19657482489363315,
+                    0.23253202438354492,
+                    0.031367475015145745
+                  ]
+                }
+              ],
+              "reason": "Several literal legal names occur in the same own-role labeled-INN row; entity binding is unresolved"
+            },
+            "reason": "Literal labeled INN in own-role selected-frame OCR; no digit repair",
+            "frame_id": "frame-000006",
+            "timestamp_s": 2.6655333333333333
+          }
+        ],
+        "resolved_role": "consignee",
+        "reason": "Literal labeled own-role OCR; malformed alternatives retained in frame_observations",
+        "local_validation": {
+          "format_valid": true,
+          "checksum_valid": true,
+          "registration_verified": false,
+          "method": "10/12 literal digits and weighted control digits; no registry evidence"
+        },
+        "name_source": "extracted_field_evidence",
+        "printed_company_name": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+        "company_name_binding": {
+          "status": "ambiguous",
+          "legal_name_candidates": [
+            "ООО \"УМНЫЙ РИТЕЙЛ\"",
+            "ООО \"ПроФреш\""
+          ],
+          "evidence": [
+            {
+              "frame_id": "frame-000006",
+              "region_index": 41,
+              "text": "Грузополучатель и его адрес:",
+              "bbox": [
+                0.17697417197211426,
+                0.21657456112035733,
+                0.08924010594685874,
+                0.021260307453296767
+              ]
+            },
+            {
+              "frame_id": "frame-000006",
+              "region_index": 34,
+              "text": "ООО \"УМНЫЙ РИТЕЙЛ\": ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+              "bbox": [
+                0.2977246660286977,
+                0.1967870105297429,
+                0.23451185226440435,
+                0.03188943333095973
+              ]
+            },
+            {
+              "frame_id": "frame-000006",
+              "region_index": 146,
+              "text": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+              "bbox": [
+                0.29797343939053034,
+                0.19657482489363315,
+                0.23253202438354492,
+                0.031367475015145745
+              ]
+            }
+          ],
+          "extracted_company_name": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "reason": "Multiple literal legal names share an actual own-role labeled-INN row; keep the extracted field and INN, but do not declare a unique registry name match"
+        },
+        "registry": {
+          "status": "ambiguous",
+          "checked_at": "2026-10-07T08:37:55.709035+00:00",
+          "source_url": "https://egrul.nalog.ru/",
+          "records": [
+            {
+              "inn": "7725382984",
+              "name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ПРОФРЕШ\"",
+              "short_name": "ООО \"ПРОФРЕШ\"",
+              "ogrn": "1177746657890",
+              "entity_type": "ul",
+              "registration_date": "05.07.2017",
+              "termination_date": null,
+              "invalid_registration_date": null
+            }
+          ],
+          "reason": "Official INN record retained; several literal legal names share the document's own-role INN row, so company-name binding cannot be verified",
+          "cache_hit": true
+        }
+      }
+    },
+    "method": "field-source-frame labeled OCR inside own party bands; same-frame seller resolution only; no majority vote",
+    "limitations": [
+      "Checksum is not registration proof",
+      "Registry results never replace printed names or shipping addresses"
+    ]
+  },
+  "registry_usage": {
+    "unique_lookups": 0,
+    "max_unique_lookups": 0,
+    "http_requests": 0,
+    "cache_hits": 2
+  },
+  "verification_history": [
+    {
+      "verification": {
+        "source_id": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+        "page_id": "page-0001",
+        "roles": {
+          "consignor": {
+            "printed_inn": "7453297257",
+            "printed_status": "found",
+            "candidates": [
+              "7453297257"
+            ],
+            "evidence": [
+              {
+                "frame_id": "frame-000006",
+                "region_index": 11,
+                "text": "Продавец:",
+                "bbox": [
+                  0.1787790704988879,
+                  0.11627906968081048,
+                  0.03633720874786375,
+                  0.012919896620291249
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 26,
+                "text": "Грузоотправитель и его адрес:",
+                "bbox": [
+                  0.17839300040856762,
+                  0.17531744384327452,
+                  0.09224695364634197,
+                  0.0221940879468564
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 30,
+                "text": "он же",
+                "bbox": [
+                  0.29796511585200114,
+                  0.18604651142284312,
+                  0.01744186083475746,
+                  0.013027562476970567
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 19,
+                "text": "ИНН/КПП продавца:",
+                "bbox": [
+                  0.17877907187047262,
+                  0.15740740707584489,
+                  0.06104650894800823,
+                  0.015740740740740722
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 24,
+                "text": "7453297257/745301001",
+                "bbox": [
+                  0.2965116290015819,
+                  0.16795865616646433,
+                  0.0712209304173787,
+                  0.015503876297562225
+                ]
+              }
+            ],
+            "resolved_role": "seller",
+            "reason": "Literal labeled INN in own-role selected-frame OCR; no digit repair",
+            "local_validation": {
+              "format_valid": true,
+              "checksum_valid": true,
+              "registration_verified": false,
+              "method": "10/12 literal digits and weighted control digits; no registry evidence"
+            },
+            "printed_company_name": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+            "registry": {
+              "status": "matched",
+              "checked_at": "2026-10-07T08:37:54.780950+00:00",
+              "source_url": "https://egrul.nalog.ru/",
+              "records": [
+                {
+                  "inn": "7453297257",
+                  "name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ФРЭШ-ЭКСПРЕСС\"",
+                  "short_name": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+                  "ogrn": "1167456094827",
+                  "entity_type": "ul",
+                  "registration_date": "01.07.2016",
+                  "termination_date": null,
+                  "invalid_registration_date": null
+                }
+              ],
+              "reason": "Printed INN and legal entity name match the official public record",
+              "cache_hit": false,
+              "name_comparison": "declared legal-form, quote and punctuation normalization; no fuzzy name repair"
+            }
+          },
+          "consignee": {
+            "printed_inn": "7725382984",
+            "printed_status": "found",
+            "candidates": [
+              "7725382984"
+            ],
+            "evidence": [
+              {
+                "frame_id": "frame-000006",
+                "region_index": 41,
+                "text": "Грузополучатель и его адрес:",
+                "bbox": [
+                  0.17697417197211426,
+                  0.21657456112035733,
+                  0.08924010594685874,
+                  0.021260307453296767
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 34,
+                "text": "ООО \"УМНЫЙ РИТЕЙЛ\": ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+                "bbox": [
+                  0.2977246660286977,
+                  0.1967870105297429,
+                  0.23451185226440435,
+                  0.03188943333095973
+                ]
+              },
+              {
+                "frame_id": "frame-000006",
+                "region_index": 146,
+                "text": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\",",
+                "bbox": [
+                  0.29797343939053034,
+                  0.19657482489363315,
+                  0.23253202438354492,
+                  0.031367475015145745
+                ]
+              }
+            ],
+            "resolved_role": "consignee",
+            "reason": "Literal labeled INN in own-role selected-frame OCR; no digit repair",
+            "local_validation": {
+              "format_valid": true,
+              "checksum_valid": true,
+              "registration_verified": false,
+              "method": "10/12 literal digits and weighted control digits; no registry evidence"
+            },
+            "printed_company_name": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+            "registry": {
+              "status": "mismatch",
+              "checked_at": "2026-10-07T08:37:55.709035+00:00",
+              "source_url": "https://egrul.nalog.ru/",
+              "records": [
+                {
+                  "inn": "7725382984",
+                  "name": "ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ПРОФРЕШ\"",
+                  "short_name": "ООО \"ПРОФРЕШ\"",
+                  "ogrn": "1177746657890",
+                  "entity_type": "ul",
+                  "registration_date": "05.07.2017",
+                  "termination_date": null,
+                  "invalid_registration_date": null
+                }
+              ],
+              "reason": "Printed INN exists, but the printed company name differs from the official record",
+              "cache_hit": false,
+              "name_comparison": "declared legal-form, quote and punctuation normalization; no fuzzy name repair"
+            }
+          }
+        },
+        "method": "selected-frame labeled OCR inside own party bands; same-page seller resolution only",
+        "limitations": [
+          "Checksum is not registration proof",
+          "Registry results never replace printed names or shipping addresses"
+        ]
+      },
+      "registry_usage": {
+        "unique_lookups": 2,
+        "max_unique_lookups": 10,
+        "http_requests": 6,
+        "cache_hits": 0
+      },
+      "interpretation": "Historical first name comparison reported mismatch; superseded by manual same-row multi-entity source binding audit. Original official response retained."
+    }
+  ],
+  "source_role_audit": {
+    "manual": true,
+    "audited_at": "2026-10-07T09:28:25.182380+00:00",
+    "frame_id": "frame-000006",
+    "source_image": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/a9108587b596c83cb2cf6d9f5c070d576df802d40cb102ce9f779d91c2b30b36-oriented.png",
+    "consignee_proof_crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/inn-verification/consignee-source-proof.jpg",
+    "buyer_proof_crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/inn-verification/buyer-source-proof.jpg",
+    "observed_consignee_row": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001, РЦ ООО \"ПроФреш\"",
+    "observed_buyer_inn": "7811657720",
+    "observed_buyer_kpp": "773001001",
+    "conclusion": "7725382984 is in the own consignee/address line, not the separate buyer column. That same line contains two distinct legal names; preserve the printed field and INN but report ambiguous entity-name binding. The official ПРОФРЕШ record is retained, without overwriting source fields.",
+    "new_http_requests": 0,
+    "extracted_fields_changed": false
+  }
+}

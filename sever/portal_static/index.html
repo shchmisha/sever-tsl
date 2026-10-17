@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="referrer" content="same-origin">
+  <title>Север ТСЛ — тестирование распознавания</title>
+  <style>
+    :root { --ink:#20332f; --muted:#61706a; --green:#185c47; --green-dark:#104332; --line:#dce4de; --paper:#fff; --bg:#f4f6f2; --amber:#815c13; --red:#a0352b; --radius:16px; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    button,input,textarea { font:inherit; }
+    button,a,input,textarea,summary { -webkit-tap-highlight-color:transparent; }
+    button,a,summary { touch-action:manipulation; }
+    button,a { transition:background .15s,color .15s,border-color .15s; }
+    button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible { outline:3px solid #7caf97; outline-offset:3px; }
+    button { cursor:pointer; }
+    button:disabled { cursor:not-allowed; opacity:.55; }
+    a { color:var(--green); text-underline-offset:3px; }
+    [hidden] { display:none!important; }
+    .shell { max-width:1180px; padding:0 32px; margin:0 auto; }
+    .topbar { background:var(--paper); border-bottom:1px solid var(--line); }
+    .topbar .shell { min-height:78px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .brand-icon { width:37px; height:37px; border-radius:11px; display:grid; place-items:center; color:#fff; background:var(--green); }
+    .brand strong { font-size:17px; font-weight:720; letter-spacing:.015em; }
+    .brand small { display:block; color:var(--muted); font-size:11px; letter-spacing:.05em; }
+    .team { font-size:12px; color:var(--muted); display:flex; align-items:center; gap:8px; }
+    .team-dot { width:7px; height:7px; background:#4b8b6d; border-radius:50%; }
+    main.shell { padding-top:37px; padding-bottom:54px; }
+    .eyebrow { margin:0 0 8px; color:var(--green); text-transform:uppercase; letter-spacing:.12em; font-size:11px; font-weight:700; }
+    h1 { font-size:32px; line-height:1.2; letter-spacing:-.025em; font-weight:650; margin:0 0 12px; }
+    .intro { color:var(--muted); margin:0; max-width:720px; line-height:1.6; }
+    .beta { display:flex; align-items:flex-start; gap:11px; padding:14px 17px; border:1px solid #eadbb5; border-radius:12px; background:#fbf6e9; margin:25px 0 28px; color:#715520; font-size:13px; }
+    .beta svg { flex:none; margin-top:1px; }
+    .beta strong { font-weight:650; }
+    .beta span { display:block; margin-top:2px; color:#7e6840; }
+    .workspace { display:grid; grid-template-columns:310px minmax(0,1fr); gap:27px; align-items:start; }
+    .panel { background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); }
+    .upload-panel { padding:23px; }
+    h2 { font-size:18px; line-height:1.3; letter-spacing:-.01em; margin:0; font-weight:650; }
+    .section-note { margin:7px 0 20px; color:var(--muted); font-size:13px; }
+    .dropzone { position:relative; border:1.5px dashed #b9cbc0; border-radius:12px; min-height:198px; padding:24px 16px 20px; display:flex; align-items:center; justify-content:center; flex-direction:column; background:#fafcf9; text-align:center; }
+    .dropzone.dragover { border-color:var(--green); background:#eaf4ed; }
+    .dropzone.selected { border-style:solid; }
+    .upload-icon { width:44px; height:44px; border-radius:13px; display:grid; place-items:center; background:#e8f0e8; color:var(--green); margin-bottom:12px; }
+    .drop-title { margin:0 0 3px; font-size:14px; font-weight:550; overflow-wrap:anywhere; max-width:100%; }
+    .drop-hint { font-size:12px; margin:0; color:var(--muted); }
+    .choose-file { border:0; background:none; color:var(--green); text-decoration:underline; text-underline-offset:3px; padding:4px 8px; font-size:13px; margin-top:8px; }
+    .file-limits { color:var(--muted); font-size:11px; margin:11px 0 18px; text-align:center; line-height:1.65; }
+    .button { min-height:42px; border:1px solid var(--line); border-radius:9px; padding:9px 14px; display:inline-flex; align-items:center; justify-content:center; gap:7px; background:#fff; color:var(--ink); text-decoration:none; font-size:13px; font-weight:550; }
+    .button:hover { background:#f3f6f1; border-color:#becdc2; }
+    .button.primary { background:var(--green); border-color:var(--green); color:#fff; }
+    .button.primary:hover { background:var(--green-dark); border-color:var(--green-dark); }
+    .wide { width:100%; }
+    .upload-progress { margin-top:16px; }
+    .progress-caption { display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:12px; margin-bottom:7px; }
+    progress { display:block; width:100%; height:6px; border:0; border-radius:4px; overflow:hidden; accent-color:var(--green); background:#e8eee8; }
+    progress::-webkit-progress-bar { background:#e8eee8; }
+    progress::-webkit-progress-value { background:var(--green); border-radius:4px; }
+    progress::-moz-progress-bar { background:var(--green); border-radius:4px; }
+    .upload-tip { color:var(--muted); font-size:12px; margin:9px 0 0; }
+    .notice { font-size:13px; padding:11px 13px; border-radius:9px; background:#edf5ed; color:#325b3e; margin-top:16px; overflow-wrap:anywhere; }
+    .notice.error { background:#fcf0ed; color:var(--red); }
+    .aside-note { padding:21px 4px 0; font-size:12px; color:var(--muted); }
+    .aside-note h3 { color:var(--ink); font-size:13px; font-weight:600; margin:0 0 8px; }
+    .aside-note p { margin:0 0 11px; }
+    .steps { list-style:none; padding:0; margin:0; counter-reset:step; }
+    .steps li { display:flex; gap:10px; align-items:baseline; margin-top:11px; }
+    .steps li::before { counter-increment:step; content:counter(step); flex:none; font-size:10px; font-weight:650; color:var(--green); background:#e8eee5; width:20px; height:20px; border-radius:50%; display:grid; place-items:center; }
+    .history-heading { display:flex; justify-content:space-between; align-items:center; gap:15px; margin-bottom:6px; min-height:36px; }
+    .heading-title { display:flex; align-items:center; gap:10px; }
+    .count { background:#e5ece5; color:#53694f; font-size:11px; border-radius:7px; padding:2px 7px; font-weight:600; }
+    .refresh { padding:7px 9px; border:0; color:var(--green); background:transparent; font-size:12px; display:inline-flex; gap:6px; align-items:center; border-radius:8px; }
+    .refresh:hover { background:#e9efe7; }
+    .sync { min-height:20px; margin:0 0 16px; color:var(--muted); font-size:12px; }
+    .connection { margin:0 0 15px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+    .connection .button { font-size:12px; min-height:32px; padding:5px 10px; }
+    .job-list { display:flex; flex-direction:column; gap:13px; }
+    .empty { padding:49px 26px; text-align:center; }
+    .empty-icon { color:#8ea395; margin-bottom:13px; }
+    .empty strong { display:block; font-size:15px; font-weight:600; margin-bottom:7px; }
+    .empty p { font-size:13px; color:var(--muted); max-width:360px; margin:0 auto; }
+    .loading { padding:45px 25px; color:var(--muted); text-align:center; font-size:13px; }
+    .job { padding:20px 22px; }
+    .job-top { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+    .job-name { margin:0 0 5px; font-size:15px; line-height:1.45; font-weight:630; overflow-wrap:anywhere; }
+    .job-meta { color:var(--muted); font-size:11px; margin:0; }
+    .status { display:inline-flex; gap:6px; align-items:center; flex:none; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:550; line-height:1.4; background:#edf0ed; color:#647163; }
+    .status[data-tone="active"] { color:#2a634e; background:#e7f2e9; }
+    .status[data-tone="done"] { color:#2b6745; background:#e7f1e8; }
+    .status[data-tone="warning"] { color:var(--amber); background:#fbf0d9; }
+    .status[data-tone="error"] { color:var(--red); background:#f9eae6; }
+    .status[data-tone="active"]::before { content:""; width:5px; height:5px; border-radius:50%; background:#3a916a; }
+    .job-progress { margin:15px 0 0; font-size:13px; color:#53685e; overflow-wrap:anywhere; }
+    .job-error { margin:11px 0 0; font-size:12px; color:var(--red); background:#fcf3f0; border-radius:8px; padding:10px 12px; overflow-wrap:anywhere; }
+    .job-coverage { margin:11px 0 0; font-size:12px; color:var(--amber); background:#fbf0d9; border-radius:8px; padding:10px 12px; overflow-wrap:anywhere; }
+    .job-actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:16px; }
+    .job-actions .button { min-height:35px; padding:7px 11px; font-size:12px; }
+    .text-action { font-size:12px; padding:7px 5px; border:0; background:transparent; color:var(--green); border-radius:5px; margin-left:auto; }
+    .text-action:hover { background:#f0f5ee; }
+    .feedback-section { border-top:1px solid var(--line); margin-top:18px; padding-top:17px; }
+    .feedback-section h4 { font-weight:600; font-size:13px; margin:0 0 5px; }
+    .feedback-description { color:var(--muted); font-size:12px; margin:0 0 15px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    label { display:block; font-size:12px; color:#455d51; margin-bottom:12px; }
+    label small { color:var(--muted); font-size:10px; font-weight:400; }
+    input[type="text"],textarea { display:block; width:100%; border:1px solid #cfdbd1; border-radius:8px; margin-top:5px; background:#fff; padding:9px 10px; color:var(--ink); font-size:13px; }
+    input::placeholder,textarea::placeholder { color:#8b988e; }
+    textarea { min-height:88px; resize:vertical; }
+    .form-actions { display:flex; align-items:center; gap:12px; }
+    .form-actions .button { min-height:35px; padding:7px 11px; font-size:12px; }
+    .feedback-outcome { color:var(--green); font-size:12px; }
+    .feedback-outcome.error { color:var(--red); }
+    .feedback-history { margin-top:18px; }
+    .feedback-item { border-left:2px solid #dbe6dc; padding:0 0 0 11px; margin-top:13px; }
+    .feedback-item p { margin:3px 0; font-size:12px; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .feedback-item small { color:var(--muted); font-size:10px; }
+    .feedback-value { color:#536b59; }
+    .footer { font-size:11px; color:#829085; margin-top:30px; text-align:right; }
+    .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
+    @media (max-width:860px) { .shell { padding-left:22px; padding-right:22px; } .workspace { grid-template-columns:270px minmax(0,1fr); gap:20px; } .upload-panel { padding:19px; } .job { padding:18px; } .job-top { flex-direction:column; gap:10px; } .text-action { margin-left:0; } }
+    @media (max-width:650px) { .topbar .shell { min-height:68px; } .shell { padding-left:18px; padding-right:18px; } main.shell { padding-top:27px; } h1 { font-size:27px; } .intro { font-size:14px; } .team { font-size:11px; } .workspace { display:flex; flex-direction:column; gap:27px; } .workspace > * { width:100%; } .dropzone { min-height:165px; } .aside-note { padding-top:16px; } .steps { display:none; } .aside-note h3 { display:none; } .aside-note p { margin-bottom:0; } .beta { margin-top:20px; margin-bottom:21px; } .job-top { flex-direction:row; gap:10px; } .status { max-width:120px; } .form-row { grid-template-columns:1fr; gap:0; } .footer { text-align:left; } }
+    @media (prefers-reduced-motion:reduce) { * { transition:none!important; scroll-behavior:auto!important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell">
+      <div class="brand">
+        <span class="brand-icon" aria-hidden="true"><svg width="21" height="22" viewBox="0 0 24 24" fill="none"><path d="M7 3h8l4 4v14H5V3h2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M14 3v5h5M8 12h8M8 16h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <div><strong>СЕВЕР ТСЛ</strong><small>РАСПОЗНАВАНИЕ ДОКУМЕНТОВ</small></div>
+      </div>
+      <div class="team"><span class="team-dot" aria-hidden="true"></span><span>Кабинет команды</span></div>
+    </div>
+  </header>
+  <main class="shell">
+    <p class="eyebrow">Клиентское тестирование</p>
+    <h1>Документы из видео</h1>
+    <p class="intro">Загрузите видео с документами. Результат появится здесь: распознанные реквизиты, исходные кадры и выгрузка данных.</p>
+    <div class="beta" role="note">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 9v5M10 5.8v.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div><strong>Тестовая версия — проверьте распознанные значения.</strong><span>Ошибки и пропуски возможны. Сравнивайте реквизиты с кадрами и оставляйте замечания к результату.</span></div>
+    </div>
+    <div class="workspace">
+      <aside>
+        <section class="panel upload-panel" aria-labelledby="upload-title">
+          <h2 id="upload-title">Новое видео</h2>
+          <p class="section-note">Один файл за одну загрузку</p>
+          <form id="upload-form">
+            <input type="file" id="video-file" accept=".mp4,.mov,.m4v,.mkv,.avi,.webm" hidden>
+            <div class="dropzone" id="dropzone">
+              <div class="upload-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15v5h16v-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              <p class="drop-title" id="file-title">Перетащите видео сюда</p>
+              <p class="drop-hint" id="file-hint">или выберите файл на устройстве</p>
+              <button type="button" id="choose-file" class="choose-file">Выбрать файл</button>
+            </div>
+            <p class="file-limits" id="file-limits">MP4, MOV, M4V, MKV, AVI, WebM<br>До 4 ГиБ · до 60 минут</p>
+            <button type="submit" class="button primary wide" id="upload-button" disabled>Загрузить и распознать <span aria-hidden="true">→</span></button>
+            <div class="upload-progress" id="upload-progress" hidden>
+              <div class="progress-caption"><span id="upload-stage">Загружаем на сервер</span><span id="upload-percent">0%</span></div>
+              <progress id="upload-meter" max="100" value="0" aria-label="Загрузка видео"></progress>
+              <p class="upload-tip" id="upload-tip">Оставьте вкладку открытой до завершения загрузки.</p>
+            </div>
+            <div id="upload-notice" class="notice" role="status" hidden></div>
+          </form>
+        </section>
+        <div class="aside-note">
+          <h3>Как проверить результат</h3>
+          <ol class="steps">
+            <li>Дождитесь загрузки. Затем вкладку можно закрыть.</li>
+            <li>Откройте отчёт и сравните значения с кадрами.</li>
+            <li>Укажите ошибки через «Оставить замечание».</li>
+          </ol>
+          <p style="margin-top:18px">Ориентир обработки — около 3 минут на выделенный лист. Сложные кадры и очередь могут увеличить время.</p>
+          <p>Видео и результаты доступны всей вашей команде.</p>
+        </div>
+      </aside>
+      <section aria-labelledby="history-title">
+        <div class="history-heading">
+          <div class="heading-title"><h2 id="history-title">Видео команды</h2><span class="count" id="job-count" hidden>0</span></div>
+          <button class="refresh" id="refresh" type="button"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13 6a5 5 0 1 0 .3 3M13 2v4H9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Обновить</button>
+        </div>
+        <p class="sync" id="sync-status">Подключаемся к серверу…</p>
+        <div class="notice error connection" id="connection-notice" role="status" hidden><span id="connection-text"></span><button class="button" id="reconnect" type="button">Перезагрузить страницу</button></div>
+        <div class="job-list" id="job-list"></div>
+        <div class="panel loading" id="loading">Загружаем историю команды…</div>
+        <div class="panel empty" id="empty" hidden>
+          <svg class="empty-icon" width="39" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><rect x="6" y="9" width="28" height="24" rx="4" stroke="currentColor" stroke-width="1.4"/><path d="M14 5h12M18 17l8 4.5-8 4.5V17Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          <strong>Здесь будут ваши результаты</strong>
+          <p>Загрузите первое видео. Очередь, готовые отчёты и замечания сохранятся после закрытия страницы.</p>
+        </div>
+        <p class="footer">Статусы обновляются автоматически. Замечания сохраняются отдельно от распознанных данных.</p>
+      </section>
+    </div>
+  </main>
+  <noscript><p class="shell">Для загрузки видео и просмотра очереди включите JavaScript в браузере.</p></noscript>
+  <script>
+  (() => {
+    'use strict';
+    const $ = (id) => document.getElementById(id);
+    const states = {
+      uploading: ['Загружается', 'active', 'Видео загружается на сервер.'],
+      validating: ['Проверка видео', 'active', 'Проверяем формат и длительность видео.'],
+      submitting: ['Запуск', 'active', 'Передаём видео на распознавание.'],
+      submission_uncertain: ['Проверяем запуск', 'warning', 'Уточняем состояние задания. Не загружайте этот файл повторно.'],
+      queued: ['В очереди', 'neutral', 'Видео принято. Обработка начнётся, когда освободится очередь.'],
+      processing: ['Распознаётся', 'active', 'Обработка видео продолжается.'],
+      completed: ['Готово', 'done', 'Обработка завершена. Проверьте значения по исходным кадрам.'],
+      completed_with_errors: ['Есть ошибки', 'warning', 'Обработка завершена с ошибками. Доступный результат — в отчёте.'],
+      failed: ['Не завершено', 'error', 'Обработка не завершилась. Смотрите причину ниже.']
+    };
+    const cards = new Map();
+    let maxBytes = 4294967296;
+    let selectedFile = null;
+    let uploading = false;
+    let authenticated = false;
+    let refreshing = false;
+    let refreshTimer = null;
+    let lastJobs = [];
+    let hasLoaded = false;
+
+    function node(tag, className, text) {
+      const result = document.createElement(tag);
+      if (className) result.className = className;
+      if (text !== undefined) result.textContent = text;
+      return result;
+    }
+    function fileSize(bytes) {
+      if (!Number.isFinite(Number(bytes))) return '';
+      const value = Number(bytes);
+      return value >= 1073741824 ? (value / 1073741824).toLocaleString('ru-RU', {maximumFractionDigits:2}) + ' ГиБ' : (value / 1048576).toLocaleString('ru-RU', {maximumFractionDigits:1}) + ' МиБ';
+    }
+    function dateText(value) {
+      const date = new Date(value);
+      return Number.isNaN(date.getTime()) ? '' : new Intl.DateTimeFormat('ru-RU', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}).format(date);
+    }
+    function showUploadNotice(text, error = false) {
+      $('upload-notice').textContent = text;
+      $('upload-notice').className = error ? 'notice error' : 'notice';
+      $('upload-notice').hidden = !text;
+    }
+    function updateUploadButton() {
+      $('upload-button').disabled = !selectedFile || uploading || !authenticated;
+      $('choose-file').disabled = uploading;
+      $('video-file').disabled = uploading;
+    }
+    function pickFile(file) {
+      if (uploading || !file) return;
+      showUploadNotice('');
+      $('upload-progress').hidden = true;
+      if (!/\.(mp4|mov|m4v|mkv|avi|webm)$/i.test(file.name)) {
+        resetSelected();
+        updateUploadButton();
+        showUploadNotice('Выберите видео в формате MP4, MOV, M4V, MKV, AVI или WebM.', true);
+        return;
+      }
+      if (!file.size || file.size > maxBytes) {
+        resetSelected();
+        updateUploadButton();
+        showUploadNotice(file.size ? 'Файл слишком большой. Максимальный размер — ' + fileSize(maxBytes) + '.' : 'Этот файл пустой. Выберите другое видео.', true);
+        return;
+      }
+      selectedFile = file;
+      $('file-title').textContent = file.name;
+      $('file-hint').textContent = fileSize(file.size);
+      $('choose-file').textContent = 'Выбрать другой файл';
+      $('dropzone').classList.add('selected');
+      updateUploadButton();
+    }
+    function requestError(status, detail, fallback) {
+      const safeDetail = typeof detail === 'string' && detail.trim() && detail.length <= 300 && !/<\/?[a-z][^>]*>/i.test(detail) ? detail : null;
+      if (status === 401 || status === 403) return 'Доступ не подтверждён. Перезагрузите страницу и войдите с данными команды.';
+      if (status === 413) return 'Файл превышает допустимый размер. Максимум — ' + fileSize(maxBytes) + '.';
+      if (status === 429) return safeDetail || 'Очередь заполнена. Дождитесь завершения одного из видео и повторите загрузку.';
+      if (status >= 500) return safeDetail || 'Сервер временно недоступен. Обновите историю перед повторной попыткой.';
+      return safeDetail || fallback;
+    }
+    async function request(path, options = {}) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 20000);
+      try {
+        const response = await fetch(path, {...options, credentials:'same-origin', cache:'no-store', signal:controller.signal});
+        let data = null;
+        try { data = await response.json(); } catch (_) { /* Error pages may not contain JSON. */ }
+        if (!response.ok) {
+          const error = new Error(requestError(response.status, data && data.detail, 'Не удалось выполнить запрос. Повторите попытку.'));
+          error.status = response.status;
+          throw error;
+        }
+        if (data === null) throw new Error('Сервер вернул неполный ответ. Обновите страницу.');
+        return data;
+      } finally { clearTimeout(timer); }
+    }
+    function safeResultUrl(value) {
+      if (typeof value !== 'string' || !value.startsWith('/jobs/')) return null;
+      try {
+        const url = new URL(value, window.location.origin);
+        return url.origin === window.location.origin && /^\/jobs\/[a-zA-Z0-9-]+\/(?:report\.html|fields\.csv|(?:partial-)?results\.json)$/.test(url.pathname) && !url.search && !url.hash ? url.pathname : null;
+      } catch (_) { return null; }
+    }
+    function updateLink(link, value) {
+      const safe = safeResultUrl(value);
+      link.hidden = !safe;
+      if (safe) link.href = safe;
+      else link.removeAttribute('href');
+    }
+    function makeInput(labelText, name, placeholder, maxLength) {
+      const label = node('label');
+      label.append(document.createTextNode(labelText + ' '), node('small', '', '(необязательно)'));
+      const input = node('input');
+      input.type = 'text';
+      input.name = name;
+      input.placeholder = placeholder;
+      input.maxLength = maxLength;
+      label.append(input);
+      return {label, input};
+    }
+    function createCard(job) {
+      const card = node('article', 'panel job');
+      const top = node('div', 'job-top');
+      const titleWrap = node('div');
+      const name = node('h3', 'job-name');
+      const meta = node('p', 'job-meta');
+      const status = node('span', 'status');
+      titleWrap.append(name, meta);
+      top.append(titleWrap, status);
+      const progress = node('p', 'job-progress');
+      const error = node('p', 'job-error');
+      error.hidden = true;
+      const coverage = node('p', 'job-coverage');
+      coverage.hidden = true;
+      coverage.setAttribute('role', 'status');
+      const actions = node('div', 'job-actions');
+      const report = node('a', 'button primary', 'Открыть отчёт ↗');
+      report.target = '_blank';
+      report.rel = 'noopener';
+      const csv = node('a', 'button', 'CSV ↓');
+      csv.download = '';
+      const json = node('a', 'button', 'JSON ↓');
+      json.download = '';
+      const toggle = node('button', 'text-action', 'Оставить замечание');
+      toggle.type = 'button';
+      toggle.setAttribute('aria-expanded', 'false');
+      const feedbackSection = node('div', 'feedback-section');
+      feedbackSection.hidden = true;
+      const sectionId = 'feedback-' + job.id;
+      feedbackSection.id = sectionId;
+      toggle.setAttribute('aria-controls', sectionId);
+      toggle.addEventListener('click', () => {
+        feedbackSection.hidden = !feedbackSection.hidden;
+        toggle.setAttribute('aria-expanded', String(!feedbackSection.hidden));
+      });
+      feedbackSection.append(node('h4', '', 'Замечание к результату'), node('p', 'feedback-description', 'Опишите ошибку или пропуск. Замечание будет сохранено отдельно; распознанные значения останутся прежними.'));
+      const form = node('form');
+      const row = node('div', 'form-row');
+      const page = makeInput('Лист / кадр', 'page_id', 'Обозначение из отчёта', 120);
+      const field = makeInput('Поле', 'field', 'Например, номер документа', 120);
+      row.append(page.label, field.label);
+      const commentLabel = node('label', '', 'Что нужно проверить');
+      const comment = node('textarea');
+      comment.name = 'comment';
+      comment.required = true;
+      comment.maxLength = 4000;
+      comment.placeholder = 'Например: на кадре другая дата, а в отчёте прочитано…';
+      commentLabel.append(comment);
+      const proposed = makeInput('Ваш вариант значения', 'proposed_value', 'Какое значение вы видите на кадре', 1000);
+      const formActions = node('div', 'form-actions');
+      const submit = node('button', 'button', 'Сохранить замечание');
+      submit.type = 'submit';
+      const outcome = node('span', 'feedback-outcome');
+      outcome.setAttribute('role', 'status');
+      formActions.append(submit, outcome);
+      form.append(row, commentLabel, proposed.label, formActions);
+      const feedbackHistory = node('div', 'feedback-history');
+      feedbackSection.append(form, feedbackHistory);
+      actions.append(report, csv, json, toggle);
+      card.append(top, progress, error, coverage, actions, feedbackSection);
+      const refs = {card,name,meta,status,progress,error,coverage,report,csv,json,toggle,form,comment,submit,outcome,feedbackHistory,feedbackSignature:'',sending:false};
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (refs.sending) return;
+        const value = comment.value.trim();
+        if (!value) { comment.setCustomValidity('Опишите замечание.'); comment.reportValidity(); return; }
+        comment.setCustomValidity('');
+        refs.sending = true;
+        submit.disabled = true;
+        submit.textContent = 'Сохраняем…';
+        outcome.textContent = '';
+        outcome.classList.remove('error');
+        const payload = {comment:value};
+        for (const item of [page,field,proposed]) if (item.input.value.trim()) payload[item.input.name] = item.input.value.trim();
+        try {
+          await request('/portal-api/jobs/' + encodeURIComponent(job.id) + '/feedback', {method:'POST', headers:{'Content-Type':'application/json','X-Requested-With':'SeverPortal'}, body:JSON.stringify(payload)});
+          form.reset();
+          outcome.textContent = 'Замечание сохранено';
+          await refreshJobs();
+        } catch (err) {
+          outcome.classList.add('error');
+          outcome.textContent = err.message || 'Не удалось сохранить замечание. Повторите попытку.';
+        } finally {
+          refs.sending = false;
+          submit.disabled = false;
+          submit.textContent = 'Сохранить замечание';
+        }
+      });
+      comment.addEventListener('input', () => comment.setCustomValidity(''));
+      return refs;
+    }
+    function updateFeedback(refs, items) {
+      const feedback = Array.isArray(items) ? items : [];
+      const signature = JSON.stringify(feedback);
+      refs.toggle.textContent = feedback.length ? 'Замечания · ' + feedback.length : 'Оставить замечание';
+      if (signature === refs.feedbackSignature) return;
+      refs.feedbackSignature = signature;
+      refs.feedbackHistory.replaceChildren();
+      if (!feedback.length) return;
+      refs.feedbackHistory.append(node('h4', '', 'Сохранённые замечания'));
+      for (const entry of [...feedback].reverse()) {
+        const item = node('div', 'feedback-item');
+        const context = [dateText(entry.created_at), entry.page_id, entry.field].filter(Boolean).join(' · ');
+        item.append(node('small', '', context), node('p', '', entry.comment || ''));
+        if (entry.proposed_value) item.append(node('p', 'feedback-value', 'Предложенный вариант: ' + entry.proposed_value));
+        refs.feedbackHistory.append(item);
+      }
+    }
+    function renderJobs(jobs) {
+      const present = new Set();
+      const sorted = [...jobs].sort((a,b) => (Date.parse(b.created_at) || 0) - (Date.parse(a.created_at) || 0));
+      for (const job of sorted) {
+        if (!job || typeof job.id !== 'string') continue;
+        present.add(job.id);
+        let refs = cards.get(job.id);
+        if (!refs) { refs = createCard(job); cards.set(job.id, refs); }
+        const state = states[job.status] || ['Уточняем статус', 'neutral', 'Уточняем состояние видео.'];
+        refs.name.textContent = job.name || 'Видео';
+        refs.meta.textContent = [dateText(job.created_at), job.size_bytes ? fileSize(job.size_bytes) : ''].filter(Boolean).join(' · ');
+        refs.status.textContent = state[0];
+        refs.status.dataset.tone = state[1];
+        refs.progress.textContent = ['processing','validating','queued','submitting'].includes(job.status) && typeof job.progress === 'string' && job.progress ? job.progress : state[2];
+        refs.error.hidden = !job.error;
+        refs.error.textContent = typeof job.error === 'string' ? job.error : '';
+        const coverageWarning = typeof job.coverage_warning === 'string' ? job.coverage_warning : '';
+        refs.coverage.hidden = !coverageWarning || refs.error.textContent.includes(coverageWarning);
+        refs.coverage.textContent = coverageWarning;
+        updateLink(refs.report, job.report_url);
+        updateLink(refs.csv, job.csv_url);
+        updateLink(refs.json, job.results_url);
+        updateFeedback(refs, job.feedback);
+      }
+      for (const [id, refs] of cards) if (!present.has(id)) { refs.card.remove(); cards.delete(id); }
+      // Preserve focused forms during polling; insert only cards that changed position.
+      const list = $('job-list');
+      let index = 0;
+      for (const job of sorted) {
+        const refs = cards.get(job.id);
+        if (!refs) continue;
+        if (list.children[index] !== refs.card) list.insertBefore(refs.card, list.children[index] || null);
+        index++;
+      }
+      $('job-count').textContent = String(present.size);
+      $('job-count').hidden = !present.size;
+      $('empty').hidden = !!present.size;
+      $('loading').hidden = true;
+    }
+    function connectionError(error) {
+      $('connection-notice').hidden = false;
+      $('connection-text').textContent = error.message || 'Нет связи с сервером. Повторим проверку автоматически.';
+      $('reconnect').hidden = error.status !== 401 && error.status !== 403;
+      $('sync-status').textContent = hasLoaded ? 'Показано последнее полученное состояние.' : 'Не удалось загрузить историю. Повторим проверку автоматически.';
+      $('loading').hidden = true;
+      if (error.status === 401 || error.status === 403) { authenticated = false; updateUploadButton(); }
+    }
+    async function refreshJobs() {
+      if (refreshing) return;
+      refreshing = true;
+      $('refresh').disabled = true;
+      try {
+        if (!authenticated) {
+          const me = await request('/portal-api/me');
+          if (!me || !me.limits) throw new Error('Не удалось получить параметры загрузки. Обновите страницу.');
+          if (Number.isFinite(me.limits.max_upload_bytes) && me.limits.max_upload_bytes > 0) maxBytes = me.limits.max_upload_bytes;
+          const maxMinutes = Math.floor(Number(me.limits.max_duration_seconds || 3600) / 60);
+          $('file-limits').replaceChildren(document.createTextNode('MP4, MOV, M4V, MKV, AVI, WebM'), document.createElement('br'), document.createTextNode('До ' + fileSize(maxBytes) + ' · до ' + maxMinutes + ' минут'));
+          authenticated = true;
+          updateUploadButton();
+        }
+        const data = await request('/portal-api/jobs');
+        if (!Array.isArray(data.jobs)) throw new Error('Не удалось прочитать историю. Повторим проверку.');
+        lastJobs = data.jobs;
+        hasLoaded = true;
+        renderJobs(lastJobs);
+        $('connection-notice').hidden = true;
+        $('sync-status').textContent = 'Обновлено в ' + new Intl.DateTimeFormat('ru-RU', {hour:'2-digit', minute:'2-digit'}).format(new Date()) + ' · обновляется автоматически';
+      } catch (err) {
+        if (err.name === 'AbortError') err.message = 'Сервер долго не отвечает. Повторим проверку автоматически.';
+        if (err instanceof TypeError) err.message = 'Нет связи с сервером. Повторим проверку автоматически.';
+        connectionError(err);
+      } finally {
+        refreshing = false;
+        $('refresh').disabled = false;
+        clearTimeout(refreshTimer);
+        refreshTimer = setTimeout(refreshJobs, document.hidden ? 30000 : 6000);
+      }
+    }
+    function resetSelected() {
+      selectedFile = null;
+      $('video-file').value = '';
+      $('file-title').textContent = 'Перетащите видео сюда';
+      $('file-hint').textContent = 'или выберите файл на устройстве';
+      $('choose-file').textContent = 'Выбрать файл';
+      $('dropzone').classList.remove('selected');
+    }
+    $('upload-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (!selectedFile || uploading || !authenticated) return;
+      if (selectedFile.size > maxBytes) { showUploadNotice('Файл превышает допустимый размер ' + fileSize(maxBytes) + '.', true); return; }
+      const file = selectedFile;
+      uploading = true;
+      updateUploadButton();
+      showUploadNotice('');
+      $('upload-progress').hidden = false;
+      $('upload-meter').value = 0;
+      $('upload-percent').textContent = '0%';
+      $('upload-stage').textContent = 'Загружаем на сервер';
+      $('upload-tip').textContent = 'Оставьте вкладку открытой до завершения загрузки.';
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', '/portal-api/uploads?filename=' + encodeURIComponent(file.name));
+      xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+      xhr.setRequestHeader('X-Requested-With', 'SeverPortal');
+      xhr.upload.addEventListener('progress', (event) => {
+        if (!event.lengthComputable) return;
+        const percent = Math.min(100, Math.round(event.loaded / event.total * 100));
+        $('upload-meter').value = percent;
+        $('upload-percent').textContent = percent + '%';
+        if (event.loaded === event.total) {
+          $('upload-stage').textContent = 'Сервер принимает видео';
+          $('upload-tip').textContent = 'Передача завершена. Дождитесь подтверждения сервера.';
+        }
+      });
+      const finish = () => { uploading = false; updateUploadButton(); refreshJobs(); };
+      xhr.addEventListener('load', () => {
+        let data = null;
+        try { data = JSON.parse(xhr.responseText); } catch (_) { /* The proxy can return HTML. */ }
+        $('upload-progress').hidden = true;
+        if (xhr.status >= 200 && xhr.status < 300 && data && data.id) {
+          showUploadNotice('Видео принято. Следите за обработкой в истории — вкладку уже можно закрыть.');
+          resetSelected();
+          lastJobs = [data, ...lastJobs.filter(job => job.id !== data.id)];
+          renderJobs(lastJobs);
+        } else {
+          showUploadNotice(requestError(xhr.status, data && data.detail, 'Не получили подтверждение загрузки. Проверьте историю перед повторной попыткой.'), true);
+          if (xhr.status === 401 || xhr.status === 403) authenticated = false;
+        }
+        finish();
+      });
+      xhr.addEventListener('error', () => {
+        $('upload-progress').hidden = true;
+        showUploadNotice('Связь прервалась. Проверьте, появилось ли видео в истории, прежде чем загружать его повторно.', true);
+        finish();
+      });
+      xhr.send(file);
+    });
+    $('choose-file').addEventListener('click', () => $('video-file').click());
+    $('video-file').addEventListener('change', (event) => pickFile(event.target.files[0]));
+    const dropzone = $('dropzone');
+    ['dragenter','dragover'].forEach(type => dropzone.addEventListener(type, (event) => {
+      event.preventDefault();
+      if (!uploading) dropzone.classList.add('dragover');
+    }));
+    ['dragleave','drop'].forEach(type => dropzone.addEventListener(type, (event) => {
+      event.preventDefault();
+      dropzone.classList.remove('dragover');
+    }));
+    dropzone.addEventListener('drop', (event) => {
+      if (uploading) return;
+      const files = event.dataTransfer.files;
+      if (files.length > 1) { showUploadNotice('Выберите один файл. Следующее видео можно загрузить отдельно.', true); return; }
+      pickFile(files[0]);
+    });
+    window.addEventListener('dragover', event => event.preventDefault());
+    window.addEventListener('drop', event => event.preventDefault());
+    window.addEventListener('beforeunload', (event) => {
+      if (uploading) { event.preventDefault(); event.returnValue = ''; }
+    });
+    $('refresh').addEventListener('click', refreshJobs);
+    $('reconnect').addEventListener('click', () => window.location.reload());
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshJobs(); });
+    refreshJobs();
+  })();
+  </script>
+</body>
+</html>

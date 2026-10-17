@@ -1,0 +1,608 @@
+[
+  {
+    "bytes_saved": 1842371,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/b18a89258c9a0b73636920c2d2d94c860a3f319a38dfbaf0364590ce316d4ed0-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/b18a89258c9a0b73636920c2d2d94c860a3f319a38dfbaf0364590ce316d4ed0-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 1678546,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/4ee5d5957e110f511e2e6283c65be4624fe6501a28f0f54c684cd12cfcb3ea82-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/4ee5d5957e110f511e2e6283c65be4624fe6501a28f0f54c684cd12cfcb3ea82-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 2104819,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/627dff379e1de1c041474f180decd93b9275242ec97554fd314d3378adde8d0b-left_roles.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/627dff379e1de1c041474f180decd93b9275242ec97554fd314d3378adde8d0b-left_roles.png"
+    ]
+  },
+  {
+    "bytes_saved": 2321314,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/627dff379e1de1c041474f180decd93b9275242ec97554fd314d3378adde8d0b-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/627dff379e1de1c041474f180decd93b9275242ec97554fd314d3378adde8d0b-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 2300239,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/74278be84de683fb8a71fa2761d469401bb4da605e45a8bb9f79a7bff91861ad-left_roles.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/74278be84de683fb8a71fa2761d469401bb4da605e45a8bb9f79a7bff91861ad-left_roles.png"
+    ]
+  },
+  {
+    "bytes_saved": 2329019,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/b18a89258c9a0b73636920c2d2d94c860a3f319a38dfbaf0364590ce316d4ed0-header.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/b18a89258c9a0b73636920c2d2d94c860a3f319a38dfbaf0364590ce316d4ed0-header.png"
+    ]
+  },
+  {
+    "bytes_saved": 2532173,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/627dff379e1de1c041474f180decd93b9275242ec97554fd314d3378adde8d0b-header.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/627dff379e1de1c041474f180decd93b9275242ec97554fd314d3378adde8d0b-header.png"
+    ]
+  },
+  {
+    "bytes_saved": 2119864,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/74278be84de683fb8a71fa2761d469401bb4da605e45a8bb9f79a7bff91861ad-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/74278be84de683fb8a71fa2761d469401bb4da605e45a8bb9f79a7bff91861ad-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 2452244,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/4ee5d5957e110f511e2e6283c65be4624fe6501a28f0f54c684cd12cfcb3ea82-header.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/4ee5d5957e110f511e2e6283c65be4624fe6501a28f0f54c684cd12cfcb3ea82-header.png"
+    ]
+  },
+  {
+    "bytes_saved": 1832242,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/b18a89258c9a0b73636920c2d2d94c860a3f319a38dfbaf0364590ce316d4ed0-left_roles.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/b18a89258c9a0b73636920c2d2d94c860a3f319a38dfbaf0364590ce316d4ed0-left_roles.png"
+    ]
+  },
+  {
+    "bytes_saved": 2056582,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/4ee5d5957e110f511e2e6283c65be4624fe6501a28f0f54c684cd12cfcb3ea82-left_roles.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/4ee5d5957e110f511e2e6283c65be4624fe6501a28f0f54c684cd12cfcb3ea82-left_roles.png"
+    ]
+  },
+  {
+    "bytes_saved": 3229626,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-mvp/ocr-cache/74278be84de683fb8a71fa2761d469401bb4da605e45a8bb9f79a7bff91861ad-header.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-pdf/ocr-cache/74278be84de683fb8a71fa2761d469401bb4da605e45a8bb9f79a7bff91861ad-header.png"
+    ]
+  },
+  {
+    "bytes_saved": 7753614,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/6462b71bb2d754dbc2027b0fa8c7015cbe42563611fb4bd99dca85551cf84c37-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/e728b7b0357a3148743982d73d717afb4d2faa1da3bef217707c6f0462419c2d-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 6983055,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/7c1dfe6cbbb12ff4742775b0abced62f7ca6700c2fbb9cbf94646cf331563925-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/68014e4b401d38f85b6cd8c61aa098f8b23bc50a495466d1e19fa858f3c4c289-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 7437994,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/4b7795e0807128cad46a3070a70b868cbf70c51b439c9b6b482f86797c26a787-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/8da030c1f446904c87b10eca1b3fc19f30daf8aae17740c12a3a770aa4770dbe-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 7259359,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/6f2a410717db439f9a172ef45577e81762fbb19b9e3f8d56e7a94dd5001ac3e4-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/0b96f581cbfa7a26e052bfb90eef46b36b8804e76342996f53927193f2c2a850-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 8407802,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/21f0c281d6fa36da6e90c69bc8a3c5ca9d2b3cbda7c6bd603e703cddb7435fed-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/8c5343d43e339bbe591c9fb234ae11a69c3c706ca4c3f5ce234b5167c1e7596e-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 7031455,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/1ed632bd9a7372afc412639fed715f77eaa79cfb24feabd6224f36490d2e14f8-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/55ca7b775290c7db7eb1cd8cc5b9deef8c5909743a4bb49cb8a99aa9f601a339-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 7432869,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/dbd26277e5a7e0222304533d72539d6ed5e9749d53f3176dc4abe57af23d7fd8-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/69c3ec2e0f633c6c1e486d69f5139b1cb83749303213ea8601324f32982bd8a9-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 7951653,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/16102cc20b99070cb048b0f79c7b88e5ddb3b753ddd7dff23df98f17fbb53369-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/06413cb0fc37a294d0ebd95787cdf56925f988fec47d1e498a3088ecdd86e9e9-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 6910321,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/fe82c04921b7bb8080c9715068780cd1675c02763cd7881b9b8faecc74a66000-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/46a301fe838ee17ebb7a2afb43a7aba392535161983fb5e47655f5d443504828-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 7416314,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/295c957548e78d0799f7568c2e2e540b995d4e32623a34a312a5a81ea731abb8-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/708af6ccc710081853fe9043bf6f8351c240291b221dee28812e6f89cc2dc168-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 21874695,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/50ddacf3a907d59c6a5d00460f6bd862e8b6be9e9a0f8025862d1016e84cf89f-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/a9108587b596c83cb2cf6d9f5c070d576df802d40cb102ce9f779d91c2b30b36-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/ocr-probe/a9108587b596c83cb2cf6d9f5c070d576df802d40cb102ce9f779d91c2b30b36-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/ocr-probe/85605b4edcc5ff56f5dea754a11e819f63f948185f41afa467e272c44ecdc109-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 7825854,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/11342a1e3cfa12939dfbf71f37971907b08b9ebe96ee01946a58d7c36c946671-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/2c0ab80d4a8ab6044139d6de65e3c2cc23bf143eb3c51653d80bd99c4af0a728-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 6994147,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/ocr-cache/70a650b4c7cd35ed95e0322b7f6e18c1461caa4f74479e3a769e625770596186-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/2221a55c865cecdd9ac1f5ed95b366fb7d9a13193f7117be83ddee05a9606919-oriented.png"
+    ]
+  },
+  {
+    "bytes_saved": 7561674,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000076.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000076.png"
+    ]
+  },
+  {
+    "bytes_saved": 8428026,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000063.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000063.png"
+    ]
+  },
+  {
+    "bytes_saved": 8028951,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000077.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000077.png"
+    ]
+  },
+  {
+    "bytes_saved": 7668803,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000075.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000075.png"
+    ]
+  },
+  {
+    "bytes_saved": 6643294,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000129.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000129.png"
+    ]
+  },
+  {
+    "bytes_saved": 8549598,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000064.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000064.png"
+    ]
+  },
+  {
+    "bytes_saved": 7596557,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000110.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000110.png"
+    ]
+  },
+  {
+    "bytes_saved": 7312776,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000104.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000104.png"
+    ]
+  },
+  {
+    "bytes_saved": 7581593,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000111.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000111.png"
+    ]
+  },
+  {
+    "bytes_saved": 8560570,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000065.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000065.png"
+    ]
+  },
+  {
+    "bytes_saved": 7918397,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000107.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000107.png"
+    ]
+  },
+  {
+    "bytes_saved": 6862835,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000112.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000112.png"
+    ]
+  },
+  {
+    "bytes_saved": 7258362,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000106.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000106.png"
+    ]
+  },
+  {
+    "bytes_saved": 7055740,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000029.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000029.png"
+    ]
+  },
+  {
+    "bytes_saved": 6451103,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000028.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000028.png"
+    ]
+  },
+  {
+    "bytes_saved": 7323174,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000007.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000007.png"
+    ]
+  },
+  {
+    "bytes_saved": 6805837,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000012.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000012.png"
+    ]
+  },
+  {
+    "bytes_saved": 7428893,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000006.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000006.png"
+    ]
+  },
+  {
+    "bytes_saved": 7174292,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000010.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000010.png"
+    ]
+  },
+  {
+    "bytes_saved": 6557246,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000005.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000005.png"
+    ]
+  },
+  {
+    "bytes_saved": 7106925,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000011.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000011.png"
+    ]
+  },
+  {
+    "bytes_saved": 6491357,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000039.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000039.png"
+    ]
+  },
+  {
+    "bytes_saved": 7941522,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000020.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000020.png"
+    ]
+  },
+  {
+    "bytes_saved": 8446777,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000019.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000019.png"
+    ]
+  },
+  {
+    "bytes_saved": 6843637,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000030.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000030.png"
+    ]
+  },
+  {
+    "bytes_saved": 7412784,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000018.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000018.png"
+    ]
+  },
+  {
+    "bytes_saved": 7762854,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000137.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000137.png"
+    ]
+  },
+  {
+    "bytes_saved": 7362599,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000136.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000136.png"
+    ]
+  },
+  {
+    "bytes_saved": 6856493,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000040.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000040.png"
+    ]
+  },
+  {
+    "bytes_saved": 7456431,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000083.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000083.png"
+    ]
+  },
+  {
+    "bytes_saved": 7521610,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000120.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000120.png"
+    ]
+  },
+  {
+    "bytes_saved": 6375213,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000121.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000121.png"
+    ]
+  },
+  {
+    "bytes_saved": 7482002,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000135.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000135.png"
+    ]
+  },
+  {
+    "bytes_saved": 6780812,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000082.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000082.png"
+    ]
+  },
+  {
+    "bytes_saved": 7091128,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000041.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000041.png"
+    ]
+  },
+  {
+    "bytes_saved": 7057770,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000045.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000045.png"
+    ]
+  },
+  {
+    "bytes_saved": 8023101,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000092.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000092.png"
+    ]
+  },
+  {
+    "bytes_saved": 6824897,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000119.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000119.png"
+    ]
+  },
+  {
+    "bytes_saved": 7404436,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000131.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000131.png"
+    ]
+  },
+  {
+    "bytes_saved": 7134160,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000130.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000130.png"
+    ]
+  },
+  {
+    "bytes_saved": 7824540,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000093.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000093.png"
+    ]
+  },
+  {
+    "bytes_saved": 7775009,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000046.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000046.png"
+    ]
+  },
+  {
+    "bytes_saved": 8475313,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000091.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000091.png"
+    ]
+  },
+  {
+    "bytes_saved": 6973481,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000084.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000084.png"
+    ]
+  },
+  {
+    "bytes_saved": 7693664,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/pilot/20260818-5_132107/video/frames/frame-000047.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000047.png"
+    ]
+  },
+  {
+    "bytes_saved": 2197662,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-final/ocr-cache/f053c4aa7f31edbc6a53ed758add5c754a7edbfeac598716dc186100ff093d72-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-native/ocr-page-2.png"
+    ]
+  },
+  {
+    "bytes_saved": 1903514,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-final/ocr-cache/ca86273bd7b226030354c3eb70b39143c9add3fbeb366b1538c6282cc5e6b22c-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-native/ocr-page-3.png"
+    ]
+  },
+  {
+    "bytes_saved": 2444502,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-final/ocr-cache/5bc525ef00dbb90718d9e938383437f978c46196e6e2f721787d476f8cd7f9f1-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-native/ocr-page-1.png"
+    ]
+  },
+  {
+    "bytes_saved": 1692280,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/reference-final/ocr-cache/00f9e8fd78dddd51735d0d16a4df7fde198b0f1c197dcc0e546d6d601c14cafd-oriented.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-native/ocr-page-4.png"
+    ]
+  },
+  {
+    "bytes_saved": 10502394,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/a9108587b596c83cb2cf6d9f5c070d576df802d40cb102ce9f779d91c2b30b36-left_roles.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/ocr-probe/a9108587b596c83cb2cf6d9f5c070d576df802d40cb102ce9f779d91c2b30b36-left_roles.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/ocr-probe/85605b4edcc5ff56f5dea754a11e819f63f948185f41afa467e272c44ecdc109-left_roles.png"
+    ]
+  },
+  {
+    "bytes_saved": 9465642,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/a9108587b596c83cb2cf6d9f5c070d576df802d40cb102ce9f779d91c2b30b36-header.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/ocr-probe/85605b4edcc5ff56f5dea754a11e819f63f948185f41afa467e272c44ecdc109-header.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/ocr-probe/a9108587b596c83cb2cf6d9f5c070d576df802d40cb102ce9f779d91c2b30b36-header.png"
+    ]
+  },
+  {
+    "bytes_saved": 10044681,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000064.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-12.png"
+    ]
+  },
+  {
+    "bytes_saved": 6681816,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000059.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-11.png"
+    ]
+  },
+  {
+    "bytes_saved": 6399012,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000028.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-05.png"
+    ]
+  },
+  {
+    "bytes_saved": 6995256,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000017.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-03.png"
+    ]
+  },
+  {
+    "bytes_saved": 8117571,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000011.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-02.png"
+    ]
+  },
+  {
+    "bytes_saved": 8128937,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000037.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-07.png"
+    ]
+  },
+  {
+    "bytes_saved": 7226062,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000022.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-04.png"
+    ]
+  },
+  {
+    "bytes_saved": 6329588,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000032.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-06.png"
+    ]
+  },
+  {
+    "bytes_saved": 5831162,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000042.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-08.png"
+    ]
+  },
+  {
+    "bytes_saved": 7385039,
+    "paths": [
+      "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/video/frames/frame-000068.png",
+      "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-13.png"
+    ]
+  }
+]

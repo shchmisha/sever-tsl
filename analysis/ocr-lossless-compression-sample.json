@@ -1,0 +1,148 @@
+{
+  "network_used": false,
+  "model_calls": 0,
+  "source_changed": false,
+  "samples": [
+    {
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-4_132351/ocr-cache/df1caec0d65140bcb38dd8d64ea507bcce7df6bd068beba388eeee5863d9d4dd-oriented.png",
+      "inode": 108499971,
+      "hardlinks": 1,
+      "pixel_size": [
+        3840,
+        2160
+      ],
+      "mode": "RGB",
+      "metadata_keys": [],
+      "original_bytes": 7899573,
+      "png9_bytes": 7670408,
+      "png9_saved_bytes": 229165,
+      "png9_exact_pixels": true,
+      "webp_lossless_bytes": 4975780,
+      "webp_saved_bytes": 2923793,
+      "webp_exact_pixels": true,
+      "original_sha256": "9904beb7ad5d77c8df9e4107537a5f36b824c6fd944fd82e066724cc668f5c37",
+      "pixel_sha256": "36f94a7da219d7628a1a90fdf651c1043b3297f737c0a735ffc75db44702bea6",
+      "png9_sha256": "bbf6a845a214cba05c498e504c45ef813a87f5c384fdddf5c1a8cc5d893a950f",
+      "webp_sha256": "323edf84dd5a1d56d4b7a1caec0d345a1aa356b2c83e73b95f410fb8f6e008e9",
+      "restored_png_sha256": "9904beb7ad5d77c8df9e4107537a5f36b824c6fd944fd82e066724cc668f5c37",
+      "default_png_byte_restore_exact": true,
+      "elapsed_s": 14.692
+    },
+    {
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/ocr-cache/2a4a2d8415eece001034cc8f3aad9ca2967d99b66d05fa4fa0e9f4ba2e74ac46-header.png",
+      "inode": 108500282,
+      "hardlinks": 1,
+      "pixel_size": [
+        3000,
+        3200
+      ],
+      "mode": "RGB",
+      "metadata_keys": [],
+      "original_bytes": 11849678,
+      "png9_bytes": 11763925,
+      "png9_saved_bytes": 85753,
+      "png9_exact_pixels": true,
+      "webp_lossless_bytes": 8079638,
+      "webp_saved_bytes": 3770040,
+      "webp_exact_pixels": true,
+      "original_sha256": "e186fc885d9e6872117830944e5f714f9687a0955b18e2a5ea59c2c89d46b44b",
+      "pixel_sha256": "24dfe2a1085e41a50bce0b57ac96ef2d2c63b824148450ebceb6454766ef2fea",
+      "png9_sha256": "4ed4abe2a1796a87bf063a82c1273f9701d48919acd2a98625367e9583277dcd",
+      "webp_sha256": "a2ea7e5766d16ba629ad0491760ef689d4dc6463897ea9a6c434b638c29a4a8e",
+      "restored_png_sha256": "e186fc885d9e6872117830944e5f714f9687a0955b18e2a5ea59c2c89d46b44b",
+      "default_png_byte_restore_exact": true,
+      "elapsed_s": 10.978
+    },
+    {
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/ocr-cache/2a4a2d8415eece001034cc8f3aad9ca2967d99b66d05fa4fa0e9f4ba2e74ac46-oriented.png",
+      "inode": 108500237,
+      "hardlinks": 1,
+      "pixel_size": [
+        2160,
+        3840
+      ],
+      "mode": "RGB",
+      "metadata_keys": [],
+      "original_bytes": 10374626,
+      "png9_bytes": 10403269,
+      "png9_saved_bytes": -28643,
+      "png9_exact_pixels": true,
+      "webp_lossless_bytes": 7283134,
+      "webp_saved_bytes": 3091492,
+      "webp_exact_pixels": true,
+      "original_sha256": "216dbddee99a512e650a75d35ec779e2b6a3bb4d4c9274c01b91b46691524650",
+      "pixel_sha256": "f5772327e09298a6abcfebd554959c1fba868c92425058b1096c9ed864d6e008",
+      "png9_sha256": "f527fafc91e6c2949ebea2c3d3df128cc9891d6001ce4d8ef0558e53ef02f788",
+      "webp_sha256": "e0bbb09df39b821c012b99690aa912bfd89c5b6dd6153ec700d9b7f951531921",
+      "restored_png_sha256": "216dbddee99a512e650a75d35ec779e2b6a3bb4d4c9274c01b91b46691524650",
+      "default_png_byte_restore_exact": true,
+      "elapsed_s": 8.472
+    }
+  ],
+  "model_input_before": {
+    "input_sha256": "b0eff4e00c9b0b4f64fcbe9567d86a6ca32b4e8c57b632edc34d7f6a1c5d6530",
+    "context_jpeg_sha256": "bf43575ff1a21c3fa254747d0e135a878ab664e996cf231adf7c96d473bc8b0b",
+    "role_jpeg_sha256": {
+      "consignee": "3f7a25ca23373ba61454f4e85354e95b2ae28ef7eeb0800f60d6b591a8cb8ec6",
+      "consignor": "4dccfc3de5830c126ae001c1a4e182a4b4a7959f2ce128979c8c834848f25c43",
+      "seller": "03767d8dc882fd0faed75b9783e1ad78b6807e721f3cd95892f1b9f1fdc3224e",
+      "document_header": "af77c95575034836d624aa728fe8ac053796ae5775bc78094c80eaeda434ed6c"
+    }
+  },
+  "model_input_after": {
+    "input_sha256": "b0eff4e00c9b0b4f64fcbe9567d86a6ca32b4e8c57b632edc34d7f6a1c5d6530",
+    "context_jpeg_sha256": "bf43575ff1a21c3fa254747d0e135a878ab664e996cf231adf7c96d473bc8b0b",
+    "role_jpeg_sha256": {
+      "consignee": "3f7a25ca23373ba61454f4e85354e95b2ae28ef7eeb0800f60d6b591a8cb8ec6",
+      "consignor": "4dccfc3de5830c126ae001c1a4e182a4b4a7959f2ce128979c8c834848f25c43",
+      "seller": "03767d8dc882fd0faed75b9783e1ad78b6807e721f3cd95892f1b9f1fdc3224e",
+      "document_header": "af77c95575034836d624aa728fe8ac053796ae5775bc78094c80eaeda434ed6c"
+    }
+  },
+  "actual_upload_hashes_and_input_equal": true,
+  "matching_success_paid_cache": [
+    "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/vision-cache/vision-7cd8cec0a5ec2b86f4f21d10e4973700ae2415ad69c1ca1269f53734e395f365.json"
+  ],
+  "free_bytes_after": 2488475648,
+  "final_original_byte_checks": [
+    {
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-4_132351/ocr-cache/df1caec0d65140bcb38dd8d64ea507bcce7df6bd068beba388eeee5863d9d4dd-oriented.png",
+      "original_sha256": "9904beb7ad5d77c8df9e4107537a5f36b824c6fd944fd82e066724cc668f5c37",
+      "current_sha256": "9904beb7ad5d77c8df9e4107537a5f36b824c6fd944fd82e066724cc668f5c37",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/ocr-cache/2a4a2d8415eece001034cc8f3aad9ca2967d99b66d05fa4fa0e9f4ba2e74ac46-header.png",
+      "original_sha256": "e186fc885d9e6872117830944e5f714f9687a0955b18e2a5ea59c2c89d46b44b",
+      "current_sha256": "e186fc885d9e6872117830944e5f714f9687a0955b18e2a5ea59c2c89d46b44b",
+      "unchanged": true
+    },
+    {
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-2_133246/ocr-cache/2a4a2d8415eece001034cc8f3aad9ca2967d99b66d05fa4fa0e9f4ba2e74ac46-oriented.png",
+      "original_sha256": "216dbddee99a512e650a75d35ec779e2b6a3bb4d4c9274c01b91b46691524650",
+      "current_sha256": "216dbddee99a512e650a75d35ec779e2b6a3bb4d4c9274c01b91b46691524650",
+      "unchanged": true
+    }
+  ],
+  "pillow_version": "12.3.0",
+  "encoding_options": {
+    "png9": {
+      "format": "PNG",
+      "compress_level": 9,
+      "optimize": true
+    },
+    "webp": {
+      "format": "WEBP",
+      "lossless": true,
+      "quality": 100,
+      "method": 4,
+      "exact": true
+    },
+    "restore_png": {
+      "format": "PNG",
+      "compress_level": "Pillow default6",
+      "optimize": "Pillow default false"
+    }
+  },
+  "measurement_outputs": "In-memory only; no optimized PNG or WebP files saved; original generated PNG files not replaced."
+}

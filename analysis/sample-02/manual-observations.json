@@ -1,0 +1,556 @@
+{
+  "schema_version": "manual-video-review-v1",
+  "manual": true,
+  "source": "/Users/shchmisha/Downloads/20260818-2_133246.mp4",
+  "video_duration_s": 36.857811,
+  "container_duration_s": 37.119417,
+  "method": "Manual visual inspection of all three 0.5 s minimum-spacing contact sheets and selected original-resolution frames. FFmpeg applies the source display rotation; PIL rotations/crops were used only as diagnostic views. Boundaries are approximate, bracketed by sampled times, and are not exact page-turn ground truth.",
+  "reviewed_contact_sheets": [
+    "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/contact-sheet-1.jpg",
+    "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/contact-sheet-2.jpg",
+    "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/contact-sheet-3.jpg"
+  ],
+  "sample_count": 70,
+  "original_frame_index": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/index.json",
+  "target_classes": [
+    "UPD",
+    "TORG12",
+    "TTN",
+    "TRN"
+  ],
+  "target_scope_findings": {
+    "confirmed_target_classes": [],
+    "note": "No literal UPD, Russian TORG12, TTN, or TRN form was confirmed in this clip. Belarus TN-2, CMR and a standalone invoice must not be relabeled as the four target classes merely by visual similarity. Business mapping or expanded class coverage requires clarification."
+  },
+  "observations": [
+    {
+      "id": "tn2-main",
+      "manual": true,
+      "observed_document_type": "BELARUS_TN2",
+      "observed_label": "Товарная накладная, белорусская форма ТН-2",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 0.0,
+        "end": 3.5
+      },
+      "start_boundary_bracket_s": [
+        0.0,
+        0.0
+      ],
+      "end_boundary_bracket_s": [
+        3.198633,
+        3.731744
+      ],
+      "content_rotation_clockwise_deg_for_upright": 0,
+      "printed_page_number": null,
+      "relationship": null,
+      "evidence": [
+        {
+          "sample_id": 2,
+          "timestamp_s": 0.533111,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-01.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-01.jpg"
+        }
+      ],
+      "notes": [
+        "Green form headed ТОВАРНАЯ НАКЛАДНАЯ; Belarus Ministry of Finance form reference is visible.",
+        "Type ТН-2 is confirmed by the next sheet's explicit appendix reference. This is not proof of Russian ТОРГ-12.",
+        "Main sheet remains mostly steady; lower edges held by fingers; curl begins during turnover."
+      ],
+      "visually_read_document_number": "0790755",
+      "visually_read_document_date": "13.08.2026"
+    },
+    {
+      "id": "tn2-items-appendix",
+      "manual": true,
+      "observed_document_type": "BELARUS_TN2_APPENDIX",
+      "observed_label": "Приложение к ТН-2 ЯМ",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 3.5,
+        "end": 7.2
+      },
+      "start_boundary_bracket_s": [
+        3.198633,
+        3.731744
+      ],
+      "end_boundary_bracket_s": [
+        6.930378,
+        7.463489
+      ],
+      "content_rotation_clockwise_deg_for_upright": 0,
+      "printed_page_number": null,
+      "relationship": {
+        "kind": "explicit_appendix_reference",
+        "document_id": "tn2-main"
+      },
+      "evidence": [
+        {
+          "sample_id": 11,
+          "timestamp_s": 5.331056,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-02.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-02.jpg"
+        }
+      ],
+      "notes": [
+        "Goods table with totals and signatures; upper-left area partly covered by the turned green sheet.",
+        "Appendix explicitly refers to ТН-2, so it belongs with the preceding commodity note."
+      ],
+      "visually_read_document_number": "0790755",
+      "visually_read_document_date": "13.08.2026"
+    },
+    {
+      "id": "cmr",
+      "manual": true,
+      "observed_document_type": "CMR",
+      "observed_label": "Международная товарно-транспортная накладная (CMR)",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 7.2,
+        "end": 10.4
+      },
+      "start_boundary_bracket_s": [
+        6.930378,
+        7.463489
+      ],
+      "end_boundary_bracket_s": [
+        10.129011,
+        10.662122
+      ],
+      "content_rotation_clockwise_deg_for_upright": 0,
+      "printed_page_number": null,
+      "relationship": null,
+      "evidence": [
+        {
+          "sample_id": 17,
+          "timestamp_s": 8.5297,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-03.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-03.jpg"
+        }
+      ],
+      "notes": [
+        "CMR title and large CMR marking are visible.",
+        "This international form is distinct from the ТТН and ТрН target classes unless the business contract explicitly maps it.",
+        "Turned page masks upper-left corner; most blocks remain visible on steady frames."
+      ],
+      "visually_read_document_number": "345870",
+      "visually_read_document_date": null
+    },
+    {
+      "id": "invoice-front",
+      "manual": true,
+      "observed_document_type": "STANDALONE_INVOICE",
+      "observed_label": "СЧЕТ-ФАКТУРА",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 10.4,
+        "end": 13.1
+      },
+      "start_boundary_bracket_s": [
+        10.129011,
+        10.662122
+      ],
+      "end_boundary_bracket_s": [
+        12.794544,
+        13.327656
+      ],
+      "content_rotation_clockwise_deg_for_upright": 90,
+      "printed_page_number": null,
+      "relationship": null,
+      "evidence": [
+        {
+          "sample_id": 22,
+          "timestamp_s": 11.195222,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-04.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-04.jpg"
+        }
+      ],
+      "notes": [
+        "Standalone invoice heading visible at original resolution.",
+        "No visible УПД heading or УПД status block on this sheet; layout alone does not establish UPD.",
+        "Landscape paper lies sideways in the portrait recording; rotated diagnostic makes the heading legible.",
+        "Table and small QR code at the top-right; turned page partly masks the corner."
+      ],
+      "visually_read_document_number": "C01-345870",
+      "visually_read_document_date": "13.08.2026"
+    },
+    {
+      "id": "invoice-qr-supplement",
+      "manual": true,
+      "observed_document_type": "INVOICE_QR_SUPPLEMENT",
+      "observed_label": "QR код для ДОПП в системе СПОТ к СЧЕТ-ФАКТУРЕ",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 13.1,
+        "end": 16.3
+      },
+      "start_boundary_bracket_s": [
+        12.794544,
+        13.327656
+      ],
+      "end_boundary_bracket_s": [
+        15.993189,
+        16.526289
+      ],
+      "content_rotation_clockwise_deg_for_upright": 90,
+      "printed_page_number": null,
+      "relationship": {
+        "kind": "explicit_invoice_reference",
+        "document_id": "invoice-front"
+      },
+      "evidence": [
+        {
+          "sample_id": 28,
+          "timestamp_s": 14.393856,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-05.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-05.jpg"
+        }
+      ],
+      "notes": [
+        "Large QR code on mostly blank sheet; heading explicitly refers to the invoice.",
+        "QR payload was not decoded or followed."
+      ],
+      "visually_read_document_number": "C01-345870",
+      "visually_read_document_date": "13.08.2026",
+      "number_role": "Referenced invoice number."
+    },
+    {
+      "id": "commodity-note-quality-register",
+      "manual": true,
+      "observed_document_type": "QUALITY_DOCUMENT_REGISTER",
+      "observed_label": "Реестр документов, подтверждающих качество и безопасность товара",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 16.3,
+        "end": 18.4
+      },
+      "start_boundary_bracket_s": [
+        15.993189,
+        16.526289
+      ],
+      "end_boundary_bracket_s": [
+        18.1256,
+        18.658711
+      ],
+      "content_rotation_clockwise_deg_for_upright": 90,
+      "printed_page_number": null,
+      "relationship": {
+        "kind": "explicit_commodity_note_reference",
+        "document_id": "tn2-main"
+      },
+      "evidence": [
+        {
+          "sample_id": 32,
+          "timestamp_s": 16.526289,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-06.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-06.jpg"
+        }
+      ],
+      "notes": [
+        "Header says Приложение к товарной накладной and names a registry of supporting quality/safety documents.",
+        "This is an appendix listing certificates/declarations, not a transport note."
+      ],
+      "visually_read_document_number": "0790755",
+      "visually_read_document_date": "13.08.2026",
+      "number_role": "Referenced commodity note number, not an independent register identifier."
+    },
+    {
+      "id": "quality-page-1",
+      "manual": true,
+      "observed_document_type": "FOOD_QUALITY_SAFETY_CERTIFICATE",
+      "observed_label": "Сводное удостоверение качества и безопасности продовольственного сырья и пищевых продуктов",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 18.4,
+        "end": 21.1
+      },
+      "start_boundary_bracket_s": [
+        18.1256,
+        18.658711
+      ],
+      "end_boundary_bracket_s": [
+        20.791144,
+        21.324244
+      ],
+      "content_rotation_clockwise_deg_for_upright": 90,
+      "printed_page_number": "1 из 4",
+      "relationship": null,
+      "evidence": [
+        {
+          "sample_id": 37,
+          "timestamp_s": 19.191811,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-07.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-07.jpg"
+        }
+      ],
+      "notes": [
+        "Visible heading confirms food quality/safety certificate.",
+        "Printed footer Страница 1 из 4.",
+        "Many small rows and narrow columns; page is sideways and slightly curved."
+      ],
+      "visually_read_document_number": "01/1112",
+      "visually_read_document_date": "13.08.2026"
+    },
+    {
+      "id": "quality-page-2",
+      "manual": true,
+      "observed_document_type": "FOOD_QUALITY_SAFETY_CERTIFICATE_CONTINUATION",
+      "observed_label": "Продолжение сводного удостоверения качества и безопасности",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 21.1,
+        "end": 23.2
+      },
+      "start_boundary_bracket_s": [
+        20.791144,
+        21.324244
+      ],
+      "end_boundary_bracket_s": [
+        22.923556,
+        23.456656
+      ],
+      "content_rotation_clockwise_deg_for_upright": 90,
+      "printed_page_number": "2 из 4",
+      "relationship": {
+        "kind": "printed_multipage_continuation",
+        "document_id": "quality-page-1"
+      },
+      "evidence": [
+        {
+          "sample_id": 42,
+          "timestamp_s": 21.857344,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-08.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-08.jpg"
+        }
+      ],
+      "notes": [
+        "Printed footer Страница 2 из 4.",
+        "Only a short continuation block at the top; the rest of the page is blank.",
+        "The common table continuation and page footer tie it to the quality document; it is not a new transport form."
+      ],
+      "visually_read_document_number": null,
+      "visually_read_document_date": null
+    },
+    {
+      "id": "quality-page-3",
+      "manual": true,
+      "observed_document_type": "FOOD_QUALITY_SAFETY_CERTIFICATE_CONTINUATION",
+      "observed_label": "Сводное удостоверение качества и безопасности, страница 3",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 23.2,
+        "end": 29.6
+      },
+      "start_boundary_bracket_s": [
+        22.923556,
+        23.456656
+      ],
+      "end_boundary_bracket_s": [
+        29.320833,
+        29.853944
+      ],
+      "content_rotation_clockwise_deg_for_upright": 90,
+      "printed_page_number": "3 из 4",
+      "relationship": {
+        "kind": "printed_multipage_continuation",
+        "document_id": "quality-page-1"
+      },
+      "evidence": [
+        {
+          "sample_id": 47,
+          "timestamp_s": 24.522878,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-09.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-09.jpg"
+        },
+        {
+          "sample_id": 54,
+          "timestamp_s": 28.254622,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-10.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-10.jpg"
+        }
+      ],
+      "notes": [
+        "Same quality/safety title and printed footer Страница 3 из 4.",
+        "One product row with totals, quality statements, signatures and manufacturing address; large blank lower area.",
+        "This single page is held for several seconds, with perspective/curl changes; repeated samples should not count as multiple pages."
+      ],
+      "visually_read_document_number": "01/1112",
+      "visually_read_document_date": "13.08.2026"
+    },
+    {
+      "id": "quality-page-4",
+      "manual": true,
+      "observed_document_type": "FOOD_QUALITY_SAFETY_CERTIFICATE_CONTINUATION",
+      "observed_label": "Сводное удостоверение качества и безопасности, страница 4",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 29.6,
+        "end": 32.3
+      },
+      "start_boundary_bracket_s": [
+        29.320833,
+        29.853944
+      ],
+      "end_boundary_bracket_s": [
+        31.986356,
+        32.519467
+      ],
+      "content_rotation_clockwise_deg_for_upright": 90,
+      "printed_page_number": "4 из 4",
+      "relationship": {
+        "kind": "printed_multipage_continuation",
+        "document_id": "quality-page-1"
+      },
+      "evidence": [
+        {
+          "sample_id": 59,
+          "timestamp_s": 30.920156,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-11.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-11.jpg"
+        }
+      ],
+      "notes": [
+        "Same quality/safety title and printed footer Страница 4 из 4.",
+        "Short product table and signature block; landscape paper still sideways."
+      ],
+      "visually_read_document_number": "01/1112",
+      "visually_read_document_date": "13.08.2026"
+    },
+    {
+      "id": "veterinary-certificate",
+      "manual": true,
+      "observed_document_type": "VETERINARY_CERTIFICATE",
+      "observed_label": "ВЕТЕРИНАРНЫЙ СЕРТИФИКАТ, форма №2",
+      "classification_basis": "visible title or continuation reference",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 32.3,
+        "end": 34.9
+      },
+      "start_boundary_bracket_s": [
+        31.986356,
+        32.519467
+      ],
+      "end_boundary_bracket_s": [
+        34.651889,
+        35.158533
+      ],
+      "content_rotation_clockwise_deg_for_upright": 0,
+      "printed_page_number": null,
+      "relationship": null,
+      "evidence": [
+        {
+          "sample_id": 64,
+          "timestamp_s": 33.585689,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-12.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-12.jpg"
+        }
+      ],
+      "notes": [
+        "Decorative red/pink certificate background, printed heading and form №2 visible.",
+        "Upper-left area partly covered by turned pages; portrait text orientation is upright.",
+        "Dense overprints, handwriting and stamp overlap portions of the form."
+      ],
+      "visually_read_document_number": "01-00752486",
+      "visually_read_document_date": "13.08.2026",
+      "number_role": "Printed certificate series/number; series reads BY, followed by 01-00752486."
+    },
+    {
+      "id": "invoice-tail-candidate",
+      "manual": true,
+      "observed_document_type": "INVOICE_STYLE_CONTINUATION",
+      "observed_label": "Окончание товарной таблицы с подписями руководителя и главного бухгалтера",
+      "classification_basis": "visible table columns and signature block; document linkage inferred",
+      "target_class": null,
+      "scope_relation": "outside the literal four target classes; business mapping not established",
+      "approximate_interval_s": {
+        "start": 34.9,
+        "end": 36.857811
+      },
+      "start_boundary_bracket_s": [
+        34.651889,
+        35.158533
+      ],
+      "end_boundary_bracket_s": [
+        36.821167,
+        36.857811
+      ],
+      "content_rotation_clockwise_deg_for_upright": 270,
+      "printed_page_number": null,
+      "relationship": {
+        "kind": "inferred_from_layout_only",
+        "candidate_document_id": "invoice-front",
+        "confirmed": false
+      },
+      "evidence": [
+        {
+          "sample_id": 68,
+          "timestamp_s": 35.691644,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/original-13.png",
+          "upright_diagnostic_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/selected-frames/upright-13.jpg"
+        }
+      ],
+      "notes": [
+        "White sheet with final three product rows, totals, director/accountant signatures and blue seal.",
+        "Columns match the earlier invoice-style layout; the document heading/identifier is absent, so linkage to invoice-front is inferred, not independently confirmed.",
+        "It is not the veterinary certificate reverse based on the visible invoice table/signature layout.",
+        "Content is rotated in the opposite direction from the earlier landscape pages; diagnostic rotated 90 degrees counterclockwise.",
+        "Sheet is strongly curled near one edge; fingers intrude on the opposite margin."
+      ],
+      "visually_read_document_number": null,
+      "visually_read_document_date": null
+    }
+  ],
+  "capture_conditions": [
+    {
+      "manual": true,
+      "kind": "rotation",
+      "note": "Source encoded 3840x2160 with display rotation -90 degrees, rendered by FFmpeg as 2160x3840. Invoice, QR supplement, registry and quality pages additionally need content rotation +90 degrees clockwise; the final white continuation needs -90 degrees."
+    },
+    {
+      "manual": true,
+      "kind": "motion",
+      "note": "Paper movement and blur occur around sampled page turns, particularly about 3.2-3.7, 7.0-7.5, 10.1-10.7, 12.8-13.3, 16.0-16.5, 18.1-18.7, 20.8-21.3, 22.9-23.5, 29.3-29.9, 32.0-32.5 and 34.7-35.2 s. More stable holds appear between turns."
+    },
+    {
+      "manual": true,
+      "kind": "occlusion_and_perspective",
+      "note": "A folded prior sheet covers portions of the upper-left corners for much of the recording; fingers sometimes cover lower/marginal content. Curvature and perspective change especially during turns and on the final continuation. Several sheets show other documents beneath them."
+    },
+    {
+      "manual": true,
+      "kind": "readability",
+      "note": "Selected original-resolution headings and page footers are visually legible after rotation. Dense small tables, decorative backgrounds, stamps and overprints remain separate field-extraction challenges. No OCR field accuracy, calibrated quality score or automated classification accuracy was measured."
+    }
+  ],
+  "validation_limits": [
+    "Manual observations of this one supplied clip only.",
+    "No remote services used; QR content not followed.",
+    "No document-field extraction accuracy or target-class acceptance measured.",
+    "The final invoice continuation linkage is an inference from layout because its title is absent."
+  ],
+  "distinct_page_intervals": 12,
+  "selected_original_frames": 13,
+  "selected_frame_note": "Two original frames represent quality certificate page 3 (24.52 and 28.25 s); 13 selected originals do not mean 13 distinct pages."
+}

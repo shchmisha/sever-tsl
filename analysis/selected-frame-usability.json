@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "customer_approved": false,
+  "manual": true,
+  "independently_reviewed": true,
+  "reviewed_at": "2026-10-04T17:52:32.720767+00:00",
+  "provenance": "requirements_check manually viewed four full-resolution selected original PNGs with view_image(original); no model field outputs or OCR text used to judge legibility, no GT values changed.",
+  "scope": "Only first two fully field-annotated target leaf intervals in each of clips 04 and 05; selected primary frames only.",
+  "population_coverage": {
+    "reviewed_target_leaves": 4,
+    "usable_reviewed_target_leaves": 4,
+    "all_video_usable_frame_rate_measured": false
+  },
+  "limitations": [
+    "Результат 4/4 относится только к проверенным листам и не переносится на все кандидаты/документы.",
+    "Пригодность исходного кадра не доказывает точность OCR/LLM и не устанавливает полноту листа.",
+    "Разметка предварительная, без утверждения Заказчиком."
+  ],
+  "videos": {
+    "/Users/shchmisha/Downloads/20260818-4_132351.mp4": {
+      "sample-04-page-001": {
+        "selected_frame_id": "frame-000007",
+        "prediction_page_id": "page-0001",
+        "timestamp_s": 3.1986444444444446,
+        "frame_path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-4_132351/video/frames/frame-000007.png",
+        "usable": true,
+        "independently_reviewed": true,
+        "document_type_reviewed": "upd",
+        "required_header_readable": true,
+        "required_field_legibility": {
+          "invoice_number": true,
+          "invoice_date": true,
+          "consignor": true,
+          "consignor_address": true,
+          "consignee": true,
+          "consignee_address": true
+        },
+        "criteria": "Собственный заголовок и все согласованные поля этого типа различимы на полном исходном выбранном кадре; читаемость оценивается вручную, не по OCR/ответу модели.",
+        "evidence": [
+          "Собственный заголовок УПД и отдельная строка счёта-фактуры видны и читаются.",
+          "Видны продавец/адрес как антецедент явного «он же», отдельные грузополучатель и его адрес.",
+          "Рука закрывает часть товарной таблицы; обязательные поля УПД не перекрыты."
+        ],
+        "pixelsha256": "1a03e44ec409568194ce88d031a8950edc8e0496348af70a2a5a3c817fca3611",
+        "pixelsha256_definition": "SHA-256 of decoded full-frame RGB pixel bytes",
+        "source_file_sha256": "5391d9fd8a31adacdf56808309d026258ed075b1d57685c791053e8c5a11f06e",
+        "source_video_sha256": "3f6c876d8974fc549923cf005eff399833f445976fd50f2a714487c8260336e2"
+      },
+      "sample-04-page-002": {
+        "selected_frame_id": "frame-000015",
+        "prediction_page_id": "page-0002",
+        "timestamp_s": 7.463488888888889,
+        "frame_path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-4_132351/video/frames/frame-000015.png",
+        "usable": true,
+        "independently_reviewed": true,
+        "document_type_reviewed": "ttn",
+        "required_header_readable": true,
+        "required_field_legibility": {
+          "consignor": true,
+          "consignee": true,
+          "document_number": true,
+          "document_date": true
+        },
+        "criteria": "Собственный заголовок и все согласованные поля этого типа различимы на полном исходном выбранном кадре; читаемость оценивается вручную, не по OCR/ответу модели.",
+        "evidence": [
+          "Основной лист имеет читаемый собственный заголовок ТТН и блок собственных номера/даты.",
+          "Отдельные строки грузоотправителя и грузополучателя читаются.",
+          "Подложенный УПД и отогнутый лист присутствуют в кадре; четыре требуемых поля основного ТТН не закрыты."
+        ],
+        "pixelsha256": "c229d82649b0c03249c10a42e949930b1717d2eab4a064d4bbcf973bbf808205",
+        "pixelsha256_definition": "SHA-256 of decoded full-frame RGB pixel bytes",
+        "source_file_sha256": "32e496c1e1c11dcb894ac3ae1a993f08c3856aeceeadfd337e7b98f45fd55b67",
+        "source_video_sha256": "3f6c876d8974fc549923cf005eff399833f445976fd50f2a714487c8260336e2"
+      }
+    },
+    "/Users/shchmisha/Downloads/20260818-5_132107.mp4": {
+      "sample-05-page-001": {
+        "selected_frame_id": "frame-000006",
+        "prediction_page_id": "page-0001",
+        "timestamp_s": 2.6655333333333333,
+        "frame_path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000006.png",
+        "usable": true,
+        "independently_reviewed": true,
+        "document_type_reviewed": "upd",
+        "required_header_readable": true,
+        "required_field_legibility": {
+          "invoice_number": true,
+          "invoice_date": true,
+          "consignor": true,
+          "consignor_address": true,
+          "consignee": true,
+          "consignee_address": true
+        },
+        "criteria": "Собственный заголовок и все согласованные поля этого типа различимы на полном исходном выбранном кадре; читаемость оценивается вручную, не по OCR/ответу модели.",
+        "evidence": [
+          "Собственный заголовок УПД, строка счёта-фактуры и её дата читаются.",
+          "Ссылка «он же», реквизиты продавца и отдельная строка грузополучателя с адресом читаются.",
+          "Пальцы перекрывают часть таблицы ниже реквизитов; согласованные поля доступны."
+        ],
+        "pixelsha256": "f460fe2c7f9dd7b100e278a2998018354ff72c1faeddb15d5d35382b5ef3ed03",
+        "pixelsha256_definition": "SHA-256 of decoded full-frame RGB pixel bytes",
+        "source_file_sha256": "f347480e94d1d93f12fbfcf941eb5991081de1104f3cecc3140f0d5bce63d592",
+        "source_video_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91"
+      },
+      "sample-05-page-002": {
+        "selected_frame_id": "frame-000011",
+        "prediction_page_id": "page-0002",
+        "timestamp_s": 5.331055555555555,
+        "frame_path": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/video/frames/frame-000011.png",
+        "usable": true,
+        "independently_reviewed": true,
+        "document_type_reviewed": "ttn",
+        "required_header_readable": true,
+        "required_field_legibility": {
+          "consignor": true,
+          "consignee": true,
+          "document_number": true,
+          "document_date": true
+        },
+        "criteria": "Собственный заголовок и все согласованные поля этого типа различимы на полном исходном выбранном кадре; читаемость оценивается вручную, не по OCR/ответу модели.",
+        "evidence": [
+          "Собственный заголовок ТТН и блок номера/даты читаются.",
+          "Обе требуемые роли сторон напечатаны отдельно и доступны чтению.",
+          "Небольшая перспектива и палец на нижнем краю не скрывают требуемые поля."
+        ],
+        "pixelsha256": "a0128cc4089fce3131679b6ab99e5891e7007626d801093f8dfd4491dc610dcb",
+        "pixelsha256_definition": "SHA-256 of decoded full-frame RGB pixel bytes",
+        "source_file_sha256": "0d586e4bf17a30c7e9a13bc020d0c503eca912e3334dcc1f540bddfa8e15bb9a",
+        "source_video_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91"
+      }
+    }
+  }
+}

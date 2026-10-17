@@ -1,0 +1,1930 @@
+{
+  "source": "/Users/shchmisha/Downloads/20260818-4_132351.mp4",
+  "source_id": "sample-04",
+  "partition": "test",
+  "manual": true,
+  "customer_approved": false,
+  "video_duration_s": 183.6606,
+  "sample_count": 120,
+  "sample_min_spacing_s": 1.5,
+  "reviewed_contact_sheets": [
+    "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/contact-sheet-1.jpg",
+    "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/contact-sheet-2.jpg",
+    "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/contact-sheet-3.jpg",
+    "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/contact-sheet-4.jpg",
+    "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/contact-sheet-5.jpg"
+  ],
+  "observed_target_types": [
+    "upd",
+    "ttn"
+  ],
+  "not_observed_target_types": [
+    "torg12",
+    "trn"
+  ],
+  "pages": [
+    {
+      "page_id": "sample-04-page-001",
+      "start_s": 0.0,
+      "end_s": 3.8317,
+      "document_type": "upd",
+      "manual": true,
+      "observed_form": "УПД, лицевая страница",
+      "fields": {
+        "invoice_number": {
+          "value": "2559",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "2559",
+          "provenance": {
+            "timestamp_s": 0.0,
+            "sample_id": 1,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-001.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-01.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-01.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upd-parties-crop.png"
+          },
+          "uncertainty": "The invoice-row number is read; the separate upper internal УР identifier is not used."
+        },
+        "invoice_date": {
+          "value": "20.08.2026",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "20 августа 2026 г.",
+          "provenance": {
+            "timestamp_s": 0.0,
+            "sample_id": 1,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-001.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-01.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-01.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upd-parties-crop.png"
+          },
+          "uncertainty": "No visually ambiguous characters in the selected field."
+        },
+        "consignor": {
+          "value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "он же",
+          "provenance": {
+            "timestamp_s": 0.0,
+            "sample_id": 1,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-001.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-01.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-01.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upd-parties-crop.png"
+          },
+          "uncertainty": "Explicit same-seller reference resolved from the seller block.",
+          "reference_resolution": {
+            "literal_row": "он же",
+            "refers_to": "Продавец и его адрес на строках 2/2а этого же кадра",
+            "resolved_company": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+            "resolved_address": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59"
+          }
+        },
+        "consignor_address": {
+          "value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "он же; 454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+          "provenance": {
+            "timestamp_s": 0.0,
+            "sample_id": 1,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-001.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-01.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-01.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upd-parties-crop.png"
+          },
+          "uncertainty": "Address resolved from the seller block because consignor is explicitly он же.",
+          "reference_resolution": {
+            "literal_row": "он же",
+            "refers_to": "Продавец и его адрес на строках 2/2а этого же кадра",
+            "resolved_company": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+            "resolved_address": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59"
+          }
+        },
+        "consignee": {
+          "value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001, РЦ ООО \"Профреш\"",
+          "provenance": {
+            "timestamp_s": 0.0,
+            "sample_id": 1,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-001.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-01.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-01.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upd-parties-crop.png"
+          },
+          "uncertainty": "Only the printed legal-name portion is the value. INN/KPP and РЦ ООО Профреш remain in raw evidence; the separate buyer block is not substituted."
+        },
+        "consignee_address": {
+          "value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "provenance": {
+            "timestamp_s": 0.0,
+            "sample_id": 1,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-001.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-01.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-01.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upd-parties-crop.png"
+          },
+          "uncertainty": "No visually ambiguous characters in the selected field."
+        }
+      },
+      "field_annotation_status": "fully_labeled_for_type",
+      "first_sample_id": 1,
+      "last_sample_id": 3,
+      "provenance": [
+        {
+          "timestamp_s": 1.532678,
+          "sample_id": 2,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-002.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          0.0,
+          0.0
+        ],
+        "end_bracket_s": [
+          3.065367,
+          4.598033
+        ]
+      },
+      "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading.",
+      "observed_internal_identifier": "УР-10625708"
+    },
+    {
+      "page_id": "sample-04-page-002",
+      "start_s": 3.8317,
+      "end_s": 11.4951,
+      "document_type": "ttn",
+      "manual": true,
+      "observed_form": "ТТН формы 1-Т, товарный раздел, страница 1",
+      "fields": {
+        "consignor": {
+          "value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "provenance": {
+            "timestamp_s": 9.196078,
+            "sample_id": 7,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-007.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-02.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-02.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/ttn-header-crop.png"
+          },
+          "uncertainty": "No visually ambiguous characters in the selected field."
+        },
+        "consignee": {
+          "value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "provenance": {
+            "timestamp_s": 9.196078,
+            "sample_id": 7,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-007.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-02.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-02.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/ttn-header-crop.png"
+          },
+          "uncertainty": "No visually ambiguous characters in the selected field."
+        },
+        "document_number": {
+          "value": "2559",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "2559",
+          "provenance": {
+            "timestamp_s": 9.196078,
+            "sample_id": 7,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-007.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-02.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-02.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/ttn-header-crop.png"
+          },
+          "uncertainty": "No visually ambiguous characters in the selected field."
+        },
+        "document_date": {
+          "value": "20.08.2026",
+          "status": "recognized",
+          "labeled": true,
+          "manual": true,
+          "raw_value": "20.08.2026",
+          "provenance": {
+            "timestamp_s": 9.196078,
+            "sample_id": 7,
+            "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-007.jpg",
+            "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-02.jpg",
+            "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-02.jpg",
+            "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/ttn-header-crop.png"
+          },
+          "uncertainty": "No visually ambiguous characters in the selected field."
+        }
+      },
+      "field_annotation_status": "fully_labeled_for_type",
+      "first_sample_id": 4,
+      "last_sample_id": 8,
+      "provenance": [
+        {
+          "timestamp_s": 7.6634,
+          "sample_id": 6,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-006.jpg"
+        },
+        {
+          "timestamp_s": 9.196078,
+          "sample_id": 7,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-007.jpg",
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-02.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-02.jpg",
+          "crop": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/ttn-header-crop.png"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          3.065367,
+          4.598033
+        ],
+        "end_bracket_s": [
+          10.728756,
+          12.261444
+        ]
+      },
+      "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading."
+    },
+    {
+      "page_id": "sample-04-page-003",
+      "start_s": 11.4951,
+      "end_s": 14.560461,
+      "document_type": "ttn",
+      "manual": true,
+      "observed_form": "ТТН формы 1-Т, транспортный раздел",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 9,
+      "last_sample_id": 10,
+      "provenance": [
+        {
+          "timestamp_s": 12.261444,
+          "sample_id": 9,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-009.jpg"
+        },
+        {
+          "timestamp_s": 13.794122,
+          "sample_id": 10,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-010.jpg",
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-03.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-03.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          10.728756,
+          12.261444
+        ],
+        "end_bracket_s": [
+          13.794122,
+          15.3268
+        ]
+      },
+      "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading.",
+      "observed_document_number": "2560",
+      "identity_uncertainty": "Transport reverse says ТТН №2560 while the previously shown TTN front says2559. Do not join by adjacency without resolving this observed conflict."
+    },
+    {
+      "page_id": "sample-04-page-004",
+      "start_s": 14.560461,
+      "end_s": 20.691172,
+      "document_type": "upd",
+      "manual": true,
+      "observed_form": "Повторный показ лицевой страницы УПД",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 11,
+      "last_sample_id": 14,
+      "provenance": [
+        {
+          "timestamp_s": 16.859478,
+          "sample_id": 12,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-012.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          13.794122,
+          15.3268
+        ],
+        "end_bracket_s": [
+          19.924833,
+          21.457511
+        ]
+      },
+      "repeat_of": "sample-04-page-001",
+      "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading."
+    },
+    {
+      "page_id": "sample-04-page-005",
+      "start_s": 20.691172,
+      "end_s": 25.289212,
+      "document_type": "ttn",
+      "manual": true,
+      "observed_form": "Повторный показ товарного раздела ТТН, страница 1",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 15,
+      "last_sample_id": 17,
+      "provenance": [
+        {
+          "timestamp_s": 22.9902,
+          "sample_id": 16,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-016.jpg",
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-05.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-05.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          19.924833,
+          21.457511
+        ],
+        "end_bracket_s": [
+          24.522867,
+          26.055556
+        ]
+      },
+      "repeat_of": "sample-04-page-002",
+      "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading."
+    },
+    {
+      "page_id": "sample-04-page-006",
+      "start_s": 25.289212,
+      "end_s": 29.887256,
+      "document_type": "ttn",
+      "manual": true,
+      "observed_form": "Транспортный раздел ТТН №2559",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 18,
+      "last_sample_id": 20,
+      "provenance": [
+        {
+          "timestamp_s": 27.588233,
+          "sample_id": 19,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-019.jpg",
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-06.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-06.jpg"
+        },
+        {
+          "sample_id": 19,
+          "timestamp_s": 27.588233,
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-06.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-06.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          24.522867,
+          26.055556
+        ],
+        "end_bracket_s": [
+          29.120911,
+          30.6536
+        ]
+      },
+      "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading.",
+      "observed_document_number": "2559",
+      "identity_uncertainty": "This later transport reverse explicitly says ТТН №2559; the earlier reverse says2560. They are separate document identities, despite similar layouts."
+    },
+    {
+      "page_id": "sample-04-page-007",
+      "start_s": 29.887256,
+      "end_s": 31.416078,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Доверенность, типовая форма М-2",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 21,
+      "last_sample_id": 21,
+      "provenance": [
+        {
+          "timestamp_s": 30.6536,
+          "sample_id": 21,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-021.jpg",
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-07.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-07.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          29.120911,
+          30.6536
+        ],
+        "end_bracket_s": [
+          30.6536,
+          32.178556
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-008",
+      "start_s": 31.416078,
+      "end_s": 36.010255,
+      "document_type": "ttn",
+      "manual": true,
+      "observed_form": "Товарный раздел ТТН, продолжение, страница 2",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 22,
+      "last_sample_id": 24,
+      "provenance": [
+        {
+          "timestamp_s": 33.711233,
+          "sample_id": 23,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-023.jpg",
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-08.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-08.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          30.6536,
+          32.178556
+        ],
+        "end_bracket_s": [
+          35.243911,
+          36.7766
+        ]
+      },
+      "classification_basis": "Manual matching of continuation heading/table and explicit earlier form title; not a separate document merely because the paper turned."
+    },
+    {
+      "page_id": "sample-04-page-009",
+      "start_s": 36.010255,
+      "end_s": 39.060078,
+      "document_type": "upd",
+      "manual": true,
+      "observed_form": "УПД, продолжение таблицы и передаточная часть",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 25,
+      "last_sample_id": 26,
+      "provenance": [
+        {
+          "timestamp_s": 36.7766,
+          "sample_id": 25,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-025.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          35.243911,
+          36.7766
+        ],
+        "end_bracket_s": [
+          38.309278,
+          39.810878
+        ]
+      },
+      "classification_basis": "Manual matching of continuation heading/table and explicit earlier form title; not a separate document merely because the paper turned."
+    },
+    {
+      "page_id": "sample-04-page-010",
+      "start_s": 39.060078,
+      "end_s": 43.642567,
+      "document_type": "ttn",
+      "manual": true,
+      "observed_form": "Повторный показ продолжения товарного раздела ТТН",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 27,
+      "last_sample_id": 29,
+      "provenance": [
+        {
+          "timestamp_s": 41.343556,
+          "sample_id": 28,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-028.jpg",
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-10.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-10.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          38.309278,
+          39.810878
+        ],
+        "end_bracket_s": [
+          42.876222,
+          44.408911
+        ]
+      },
+      "repeat_of": "sample-04-page-008",
+      "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading."
+    },
+    {
+      "page_id": "sample-04-page-011",
+      "start_s": 43.642567,
+      "end_s": 45.17525,
+      "document_type": "upd",
+      "manual": true,
+      "observed_form": "Повторный показ продолжения УПД",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 30,
+      "last_sample_id": 30,
+      "provenance": [
+        {
+          "timestamp_s": 44.408911,
+          "sample_id": 30,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-030.jpg",
+          "original_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/original-11.jpg",
+          "upright_frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upright-11.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          42.876222,
+          44.408911
+        ],
+        "end_bracket_s": [
+          44.408911,
+          45.941589
+        ]
+      },
+      "repeat_of": "sample-04-page-009",
+      "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading."
+    },
+    {
+      "page_id": "sample-04-page-012",
+      "start_s": 45.17525,
+      "end_s": 46.696422,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Чистая оборотная сторона / перелистывание",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 31,
+      "last_sample_id": 31,
+      "provenance": [
+        {
+          "timestamp_s": 45.941589,
+          "sample_id": 31,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-031.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          44.408911,
+          45.941589
+        ],
+        "end_bracket_s": [
+          45.941589,
+          47.451256
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-013",
+      "start_s": 46.696422,
+      "end_s": 49.750277,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 32,
+      "last_sample_id": 33,
+      "provenance": [
+        {
+          "timestamp_s": 47.451256,
+          "sample_id": 32,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-032.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          45.941589,
+          47.451256
+        ],
+        "end_bracket_s": [
+          48.983933,
+          50.516622
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-014",
+      "start_s": 49.750277,
+      "end_s": 51.282955,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 34,
+      "last_sample_id": 34,
+      "provenance": [
+        {
+          "timestamp_s": 50.516622,
+          "sample_id": 34,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-034.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          48.983933,
+          50.516622
+        ],
+        "end_bracket_s": [
+          50.516622,
+          52.049289
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-015",
+      "start_s": 51.282955,
+      "end_s": 55.881,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 35,
+      "last_sample_id": 37,
+      "provenance": [
+        {
+          "timestamp_s": 53.581978,
+          "sample_id": 36,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-036.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          50.516622,
+          52.049289
+        ],
+        "end_bracket_s": [
+          55.114656,
+          56.647344
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-016",
+      "start_s": 55.881,
+      "end_s": 58.94635,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Продолжение табличного приложения",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 38,
+      "last_sample_id": 39,
+      "provenance": [
+        {
+          "timestamp_s": 56.647344,
+          "sample_id": 38,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-038.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          55.114656,
+          56.647344
+        ],
+        "end_bracket_s": [
+          58.180011,
+          59.712689
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-017",
+      "start_s": 58.94635,
+      "end_s": 65.077072,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 40,
+      "last_sample_id": 43,
+      "provenance": [
+        {
+          "timestamp_s": 61.245378,
+          "sample_id": 41,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-041.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          58.180011,
+          59.712689
+        ],
+        "end_bracket_s": [
+          64.310733,
+          65.843411
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-018",
+      "start_s": 65.077072,
+      "end_s": 68.142433,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 44,
+      "last_sample_id": 45,
+      "provenance": [
+        {
+          "timestamp_s": 65.843411,
+          "sample_id": 44,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-044.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          64.310733,
+          65.843411
+        ],
+        "end_bracket_s": [
+          67.3761,
+          68.908767
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-019",
+      "start_s": 68.142433,
+      "end_s": 69.675111,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 46,
+      "last_sample_id": 46,
+      "provenance": [
+        {
+          "timestamp_s": 68.908767,
+          "sample_id": 46,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-046.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          67.3761,
+          68.908767
+        ],
+        "end_bracket_s": [
+          68.908767,
+          70.441456
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-020",
+      "start_s": 69.675111,
+      "end_s": 74.273156,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 47,
+      "last_sample_id": 49,
+      "provenance": [
+        {
+          "timestamp_s": 71.974133,
+          "sample_id": 48,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-048.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          68.908767,
+          70.441456
+        ],
+        "end_bracket_s": [
+          73.506811,
+          75.0395
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-021",
+      "start_s": 74.273156,
+      "end_s": 77.338517,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 50,
+      "last_sample_id": 51,
+      "provenance": [
+        {
+          "timestamp_s": 75.0395,
+          "sample_id": 50,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-050.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          73.506811,
+          75.0395
+        ],
+        "end_bracket_s": [
+          76.572178,
+          78.104856
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-022",
+      "start_s": 77.338517,
+      "end_s": 80.403872,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 52,
+      "last_sample_id": 53,
+      "provenance": [
+        {
+          "timestamp_s": 78.104856,
+          "sample_id": 52,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-052.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          76.572178,
+          78.104856
+        ],
+        "end_bracket_s": [
+          79.637533,
+          81.170211
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-023",
+      "start_s": 80.403872,
+      "end_s": 81.93655,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Письмо ООО ГЛОРИ ФРУТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 54,
+      "last_sample_id": 54,
+      "provenance": [
+        {
+          "timestamp_s": 81.170211,
+          "sample_id": 54,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-054.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          79.637533,
+          81.170211
+        ],
+        "end_bracket_s": [
+          81.170211,
+          82.702889
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-024",
+      "start_s": 81.93655,
+      "end_s": 86.534594,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 55,
+      "last_sample_id": 57,
+      "provenance": [
+        {
+          "timestamp_s": 84.235578,
+          "sample_id": 56,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-056.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          81.170211,
+          82.702889
+        ],
+        "end_bracket_s": [
+          85.768256,
+          87.300933
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-025",
+      "start_s": 86.534594,
+      "end_s": 94.197994,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС, следующий показанный лист",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 58,
+      "last_sample_id": 62,
+      "provenance": [
+        {
+          "timestamp_s": 90.366289,
+          "sample_id": 60,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-060.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          85.768256,
+          87.300933
+        ],
+        "end_bracket_s": [
+          93.431656,
+          94.964333
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes.",
+      "notes": [
+        "Consecutive declarations with similar layouts; separate leaf showings inferred from page-turn/content changes. Customer confirmation of physical leaf count remains pending."
+      ]
+    },
+    {
+      "page_id": "sample-04-page-026",
+      "start_s": 94.197994,
+      "end_s": 97.263361,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 63,
+      "last_sample_id": 64,
+      "provenance": [
+        {
+          "timestamp_s": 94.964333,
+          "sample_id": 63,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-063.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          93.431656,
+          94.964333
+        ],
+        "end_bracket_s": [
+          96.497022,
+          98.0297
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-027",
+      "start_s": 97.263361,
+      "end_s": 98.796033,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 65,
+      "last_sample_id": 65,
+      "provenance": [
+        {
+          "timestamp_s": 98.0297,
+          "sample_id": 65,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-065.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          96.497022,
+          98.0297
+        ],
+        "end_bracket_s": [
+          98.0297,
+          99.562367
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-028",
+      "start_s": 98.796033,
+      "end_s": 103.394072,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Официальное письмо на бланке",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 66,
+      "last_sample_id": 68,
+      "provenance": [
+        {
+          "timestamp_s": 101.095044,
+          "sample_id": 67,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-067.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          98.0297,
+          99.562367
+        ],
+        "end_bracket_s": [
+          102.627733,
+          104.160411
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-029",
+      "start_s": 103.394072,
+      "end_s": 106.459434,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 69,
+      "last_sample_id": 70,
+      "provenance": [
+        {
+          "timestamp_s": 104.160411,
+          "sample_id": 69,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-069.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          102.627733,
+          104.160411
+        ],
+        "end_bracket_s": [
+          105.693089,
+          107.225778
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-030",
+      "start_s": 106.459434,
+      "end_s": 107.992111,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 71,
+      "last_sample_id": 71,
+      "provenance": [
+        {
+          "timestamp_s": 107.225778,
+          "sample_id": 71,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-071.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          105.693089,
+          107.225778
+        ],
+        "end_bracket_s": [
+          107.225778,
+          108.758444
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-031",
+      "start_s": 107.992111,
+      "end_s": 111.057472,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 72,
+      "last_sample_id": 73,
+      "provenance": [
+        {
+          "timestamp_s": 108.758444,
+          "sample_id": 72,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-072.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          107.225778,
+          108.758444
+        ],
+        "end_bracket_s": [
+          110.291133,
+          111.823811
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-032",
+      "start_s": 111.057472,
+      "end_s": 114.122833,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Продолжение табличного приложения",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 74,
+      "last_sample_id": 75,
+      "provenance": [
+        {
+          "timestamp_s": 111.823811,
+          "sample_id": 74,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-074.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          110.291133,
+          111.823811
+        ],
+        "end_bracket_s": [
+          113.356489,
+          114.889178
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-033",
+      "start_s": 114.122833,
+      "end_s": 117.188195,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 76,
+      "last_sample_id": 77,
+      "provenance": [
+        {
+          "timestamp_s": 114.889178,
+          "sample_id": 76,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-076.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          113.356489,
+          114.889178
+        ],
+        "end_bracket_s": [
+          116.421856,
+          117.954533
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-034",
+      "start_s": 117.188195,
+      "end_s": 120.253545,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 78,
+      "last_sample_id": 79,
+      "provenance": [
+        {
+          "timestamp_s": 117.954533,
+          "sample_id": 78,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-078.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          116.421856,
+          117.954533
+        ],
+        "end_bracket_s": [
+          119.4872,
+          121.019889
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-035",
+      "start_s": 120.253545,
+      "end_s": 121.786228,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 80,
+      "last_sample_id": 80,
+      "provenance": [
+        {
+          "timestamp_s": 121.019889,
+          "sample_id": 80,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-080.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          119.4872,
+          121.019889
+        ],
+        "end_bracket_s": [
+          121.019889,
+          122.552567
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-036",
+      "start_s": 121.786228,
+      "end_s": 127.91695,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС, частично перекрытая при начале показа",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 81,
+      "last_sample_id": 84,
+      "provenance": [
+        {
+          "timestamp_s": 124.085244,
+          "sample_id": 82,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-082.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          121.019889,
+          122.552567
+        ],
+        "end_bracket_s": [
+          127.150611,
+          128.683289
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes.",
+      "notes": [
+        "Consecutive declarations with similar layouts; separate leaf showings inferred from page-turn/content changes. Customer confirmation of physical leaf count remains pending."
+      ]
+    },
+    {
+      "page_id": "sample-04-page-037",
+      "start_s": 127.91695,
+      "end_s": 130.982305,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС, следующий показанный лист",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 85,
+      "last_sample_id": 86,
+      "provenance": [
+        {
+          "timestamp_s": 128.683289,
+          "sample_id": 85,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-085.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          127.150611,
+          128.683289
+        ],
+        "end_bracket_s": [
+          130.215967,
+          131.748644
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-038",
+      "start_s": 130.982305,
+      "end_s": 134.047672,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Официальное письмо на бланке",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 87,
+      "last_sample_id": 88,
+      "provenance": [
+        {
+          "timestamp_s": 131.748644,
+          "sample_id": 87,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-087.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          130.215967,
+          131.748644
+        ],
+        "end_bracket_s": [
+          133.281333,
+          134.814011
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-039",
+      "start_s": 134.047672,
+      "end_s": 138.645706,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 89,
+      "last_sample_id": 91,
+      "provenance": [
+        {
+          "timestamp_s": 136.346689,
+          "sample_id": 90,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-090.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          133.281333,
+          134.814011
+        ],
+        "end_bracket_s": [
+          137.879367,
+          139.412044
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-040",
+      "start_s": 138.645706,
+      "end_s": 141.711067,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 92,
+      "last_sample_id": 93,
+      "provenance": [
+        {
+          "timestamp_s": 139.412044,
+          "sample_id": 92,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-092.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          137.879367,
+          139.412044
+        ],
+        "end_bracket_s": [
+          140.944722,
+          142.477411
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-041",
+      "start_s": 141.711067,
+      "end_s": 143.24375,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 94,
+      "last_sample_id": 94,
+      "provenance": [
+        {
+          "timestamp_s": 142.477411,
+          "sample_id": 94,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-094.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          140.944722,
+          142.477411
+        ],
+        "end_bracket_s": [
+          142.477411,
+          144.010089
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-042",
+      "start_s": 143.24375,
+      "end_s": 147.841794,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 95,
+      "last_sample_id": 97,
+      "provenance": [
+        {
+          "timestamp_s": 145.542767,
+          "sample_id": 96,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-096.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          142.477411,
+          144.010089
+        ],
+        "end_bracket_s": [
+          147.075456,
+          148.608133
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-043",
+      "start_s": 147.841794,
+      "end_s": 150.907145,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 98,
+      "last_sample_id": 99,
+      "provenance": [
+        {
+          "timestamp_s": 148.608133,
+          "sample_id": 98,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-098.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          147.075456,
+          148.608133
+        ],
+        "end_bracket_s": [
+          150.1408,
+          151.673489
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-044",
+      "start_s": 150.907145,
+      "end_s": 152.439828,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 100,
+      "last_sample_id": 100,
+      "provenance": [
+        {
+          "timestamp_s": 151.673489,
+          "sample_id": 100,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-100.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          150.1408,
+          151.673489
+        ],
+        "end_bracket_s": [
+          151.673489,
+          153.206167
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-045",
+      "start_s": 152.439828,
+      "end_s": 157.037872,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 101,
+      "last_sample_id": 103,
+      "provenance": [
+        {
+          "timestamp_s": 154.738844,
+          "sample_id": 102,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-102.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          151.673489,
+          153.206167
+        ],
+        "end_bracket_s": [
+          156.271533,
+          157.804211
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-046",
+      "start_s": 157.037872,
+      "end_s": 160.103223,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Официальное письмо на бланке",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 104,
+      "last_sample_id": 105,
+      "provenance": [
+        {
+          "timestamp_s": 157.804211,
+          "sample_id": 104,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-104.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          156.271533,
+          157.804211
+        ],
+        "end_bracket_s": [
+          159.336878,
+          160.869567
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-047",
+      "start_s": 160.103223,
+      "end_s": 166.233945,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 106,
+      "last_sample_id": 109,
+      "provenance": [
+        {
+          "timestamp_s": 162.402244,
+          "sample_id": 107,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-107.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          159.336878,
+          160.869567
+        ],
+        "end_bracket_s": [
+          165.4676,
+          167.000289
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-048",
+      "start_s": 166.233945,
+      "end_s": 169.299306,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 110,
+      "last_sample_id": 111,
+      "provenance": [
+        {
+          "timestamp_s": 167.000289,
+          "sample_id": 110,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-110.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          165.4676,
+          167.000289
+        ],
+        "end_bracket_s": [
+          168.532967,
+          170.065644
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-049",
+      "start_s": 169.299306,
+      "end_s": 172.364661,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 112,
+      "last_sample_id": 113,
+      "provenance": [
+        {
+          "timestamp_s": 170.065644,
+          "sample_id": 112,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-112.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          168.532967,
+          170.065644
+        ],
+        "end_bracket_s": [
+          171.598322,
+          173.131
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-050",
+      "start_s": 172.364661,
+      "end_s": 175.430023,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Официальное письмо на бланке",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 114,
+      "last_sample_id": 115,
+      "provenance": [
+        {
+          "timestamp_s": 173.131,
+          "sample_id": 114,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-114.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          171.598322,
+          173.131
+        ],
+        "end_bracket_s": [
+          174.663678,
+          176.196367
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-051",
+      "start_s": 175.430023,
+      "end_s": 178.495383,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Декларация о соответствии ЕАЭС",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 116,
+      "last_sample_id": 117,
+      "provenance": [
+        {
+          "timestamp_s": 176.196367,
+          "sample_id": 116,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-116.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          174.663678,
+          176.196367
+        ],
+        "end_bracket_s": [
+          177.729044,
+          179.261722
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-052",
+      "start_s": 178.495383,
+      "end_s": 181.560744,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Акт, заголовок АКТ",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 118,
+      "last_sample_id": 119,
+      "provenance": [
+        {
+          "timestamp_s": 179.261722,
+          "sample_id": 118,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-118.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          177.729044,
+          179.261722
+        ],
+        "end_bracket_s": [
+          180.7944,
+          182.327089
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    },
+    {
+      "page_id": "sample-04-page-053",
+      "start_s": 181.560744,
+      "end_s": 183.6606,
+      "document_type": "unknown",
+      "manual": true,
+      "observed_form": "Табличное приложение с печатями",
+      "fields": {},
+      "field_annotation_status": "unlabeled",
+      "first_sample_id": 120,
+      "last_sample_id": 120,
+      "provenance": [
+        {
+          "timestamp_s": 182.327089,
+          "sample_id": 120,
+          "frame": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/sampled-frames/frame-120.jpg"
+        }
+      ],
+      "boundary_uncertainty": {
+        "method": "midpoints of adjacent manually grouped sampled frames; approximate, not frame-exact",
+        "start_bracket_s": [
+          180.7944,
+          182.327089
+        ],
+        "end_bracket_s": [
+          182.327089,
+          183.6606
+        ]
+      },
+      "classification_basis": "Visible non-target heading/layout; not forced into one of the four target classes."
+    }
+  ],
+  "shooting_errors": [
+    {
+      "manual": true,
+      "code": "CONTENT_ROTATED_90",
+      "description": "Landscape target forms are sideways in the portrait video; content rotation beyond the FFmpeg display-matrix correction is required."
+    },
+    {
+      "manual": true,
+      "code": "HAND_OR_PAGE_OCCLUSION",
+      "description": "Fingers or an earlier curled sheet sometimes cover margins, headings or table areas during page turns."
+    },
+    {
+      "manual": true,
+      "code": "PAGE_CURVATURE_AND_PERSPECTIVE",
+      "description": "Paper bends during lifting; several sheets are tilted and shift position relative to the camera."
+    },
+    {
+      "manual": true,
+      "code": "MOTION_DURING_PAGE_TURN",
+      "description": "Turn frames may be blurred or show two pages. Boundaries are approximate and sampled, not exact cuts."
+    },
+    {
+      "manual": true,
+      "code": "REPEATED_PAGE_VISITS",
+      "description": "Target front and continuation pages are revisited. Repeated visits are recorded, not counted as distinct document identities."
+    },
+    {
+      "manual": true,
+      "code": "SMALL_TEXT_AND_STAMP_OVERLAP",
+      "description": "Small tables and overprinted stamps/signatures require original resolution; no OCR accuracy is inferred from visibility."
+    },
+    {
+      "manual": true,
+      "code": "MIXED_TTN_NUMBER",
+      "description": "Front TTN2559 and transport reverse TTN2560 coexist; physical document grouping requires review."
+    }
+  ],
+  "inventory_limit": "Complete inventory of leaf showings observed in the diagnostic sampled frames. Very brief fully occluded intermediate leaves cannot be ruled out; the inventory is provisional and not customer-approved."
+}

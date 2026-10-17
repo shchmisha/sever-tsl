@@ -1,0 +1,194 @@
+{
+  "source_path": "/Users/shchmisha/Downloads/20260818-1_133402.mp4",
+  "analysis_type": "Diagnostic temporal sampling, visual manual inspection and selected-frame local OCR; not end-to-end pipeline validation.",
+  "manual_boundaries": true,
+  "boundaries_note": "Approximate stable-view windows from sampled frames, excluding most turning transitions; not exact physical page boundaries or detection metrics.",
+  "observed_page_intervals": 8,
+  "proposed_document_groups": 5,
+  "agreed_scope": [
+    "UPD",
+    "TORG12",
+    "TTN",
+    "TRN"
+  ],
+  "contractual_accuracy_metrics": null,
+  "ground_truth_status": "No customer-approved field values supplied.",
+  "observations": [
+    {
+      "page_candidate_id": 1,
+      "visible_stable_interval_approx_s": [
+        0.0,
+        1.8
+      ],
+      "observed_form": "BEL_TN2",
+      "title_ru": "Товарная накладная ТН-2",
+      "proposed_document_group": "doc-01",
+      "page_role": "first",
+      "manual": true,
+      "scope_status": "outside_literal_scope_or_mapping_unconfirmed",
+      "note": "Mapping to TORG12 is not established; form explicitly refers to TN-2.",
+      "selected_frame": {
+        "page_candidate_id": 1,
+        "sample_id": 2,
+        "timestamp_s": 0.533111,
+        "source_frame_index": 16,
+        "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-01.jpg",
+        "selection": "Manual representative of visual page interval, not automatic detection."
+      }
+    },
+    {
+      "page_candidate_id": 2,
+      "visible_stable_interval_approx_s": [
+        2.1,
+        4.4
+      ],
+      "observed_form": "BEL_TN2_ATTACHMENT",
+      "title_ru": "Приложение к ТН-2",
+      "proposed_document_group": "doc-01",
+      "page_role": "continuation",
+      "manual": true,
+      "scope_status": "outside_literal_scope_or_mapping_unconfirmed",
+      "note": "Document grouping is a manual hypothesis based on matching references.",
+      "selected_frame": {
+        "page_candidate_id": 2,
+        "sample_id": 8,
+        "timestamp_s": 3.731744,
+        "source_frame_index": 112,
+        "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-02.jpg",
+        "selection": "Manual representative of visual page interval, not automatic detection."
+      }
+    },
+    {
+      "page_candidate_id": 3,
+      "visible_stable_interval_approx_s": [
+        5.1,
+        7.8
+      ],
+      "observed_form": "CMR",
+      "title_ru": "Международная товарно-транспортная накладная CMR",
+      "proposed_document_group": "doc-02",
+      "page_role": "first",
+      "manual": true,
+      "scope_status": "outside_literal_scope_or_mapping_unconfirmed",
+      "note": "Not the Russian TTN form specified in the four-type scope.",
+      "selected_frame": {
+        "page_candidate_id": 3,
+        "sample_id": 13,
+        "timestamp_s": 6.397278,
+        "source_frame_index": 192,
+        "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-03.jpg",
+        "selection": "Manual representative of visual page interval, not automatic detection."
+      }
+    },
+    {
+      "page_candidate_id": 4,
+      "visible_stable_interval_approx_s": [
+        8.4,
+        12.5
+      ],
+      "observed_form": "INVOICE",
+      "title_ru": "Счёт-фактура",
+      "proposed_document_group": "doc-03",
+      "page_role": "first",
+      "manual": true,
+      "scope_status": "outside_literal_scope_or_mapping_unconfirmed",
+      "note": "No visible UPD title or status block; mapping to UPD is not established.",
+      "selected_frame": {
+        "page_candidate_id": 4,
+        "sample_id": 20,
+        "timestamp_s": 10.129011,
+        "source_frame_index": 304,
+        "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-04.jpg",
+        "selection": "Manual representative of visual page interval, not automatic detection."
+      }
+    },
+    {
+      "page_candidate_id": 5,
+      "visible_stable_interval_approx_s": [
+        13.2,
+        15.7
+      ],
+      "observed_form": "QUALITY_DOCUMENT_REGISTRY",
+      "title_ru": "Приложение к товарной накладной с реестром документов качества и безопасности",
+      "proposed_document_group": "doc-01",
+      "page_role": "attachment",
+      "manual": true,
+      "scope_status": "outside_literal_scope_or_mapping_unconfirmed",
+      "note": "Visual title references goods note0790741 dated13.08.2026. Link to TN-2 is a reference-based manual draft; it is not an invoice continuation.",
+      "selected_frame": {
+        "page_candidate_id": 5,
+        "sample_id": 28,
+        "timestamp_s": 14.393856,
+        "source_frame_index": 432,
+        "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-05.jpg",
+        "selection": "Manual representative of visual page interval, not automatic detection."
+      }
+    },
+    {
+      "page_candidate_id": 6,
+      "visible_stable_interval_approx_s": [
+        16.3,
+        17.9
+      ],
+      "observed_form": "QUALITY_CERTIFICATE",
+      "title_ru": "Удостоверение качества и безопасности пищевых продуктов",
+      "proposed_document_group": "doc-04",
+      "page_role": "first",
+      "manual": true,
+      "scope_status": "outside_literal_scope_or_mapping_unconfirmed",
+      "note": "Outside the fixed four document types.",
+      "selected_frame": {
+        "page_candidate_id": 6,
+        "sample_id": 33,
+        "timestamp_s": 17.059389,
+        "source_frame_index": 512,
+        "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-06.jpg",
+        "selection": "Manual representative of visual page interval, not automatic detection."
+      }
+    },
+    {
+      "page_candidate_id": 7,
+      "visible_stable_interval_approx_s": [
+        18.5,
+        20.6
+      ],
+      "observed_form": "QUALITY_CERTIFICATE",
+      "title_ru": "Продолжение удостоверения качества",
+      "proposed_document_group": "doc-04",
+      "page_role": "continuation",
+      "manual": true,
+      "scope_status": "outside_literal_scope_or_mapping_unconfirmed",
+      "note": "Printed page2of2 is visible; grouping with preceding quality certificate is manual.",
+      "selected_frame": {
+        "page_candidate_id": 7,
+        "sample_id": 38,
+        "timestamp_s": 19.724922,
+        "source_frame_index": 592,
+        "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-07.jpg",
+        "selection": "Manual representative of visual page interval, not automatic detection."
+      }
+    },
+    {
+      "page_candidate_id": 8,
+      "visible_stable_interval_approx_s": [
+        21.2,
+        23.06
+      ],
+      "observed_form": "VETERINARY_CERTIFICATE",
+      "title_ru": "Ветеринарный сертификат",
+      "proposed_document_group": "doc-05",
+      "page_role": "first",
+      "manual": true,
+      "scope_status": "outside_literal_scope_or_mapping_unconfirmed",
+      "note": "Outside the fixed four document types.",
+      "selected_frame": {
+        "page_candidate_id": 8,
+        "sample_id": 42,
+        "timestamp_s": 21.857344,
+        "source_frame_index": 656,
+        "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-01/selected-frames/page-08.jpg",
+        "selection": "Manual representative of visual page interval, not automatic detection."
+      }
+    }
+  ]
+}

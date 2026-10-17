@@ -1,0 +1,76 @@
+{
+  "updated_at": "2026-10-11T14:09:07.586916+00:00",
+  "status": "candidate_validation_in_progress",
+  "deployed": false,
+  "production_release": "/opt/sever-tsl/releases/20261011-customer-trial-v1",
+  "staged_release": "/opt/sever-tsl/releases/20261011-customer-trial-v3",
+  "address_contract": "Entire printed own field including organization, RC, INN/KPP and other contents when inside the field; exclude neighboring roles. No code-side semantic trimming.",
+  "ground_truth_read": false,
+  "original_results_preserved": true,
+  "tests": {
+    "local_full": {
+      "passed": 1263,
+      "seconds": 45.9
+    },
+    "staged_linux_full": {
+      "passed": 1260,
+      "skipped": 3,
+      "seconds": 28.29
+    },
+    "local_pre_final": {
+      "passed": 1270,
+      "seconds": 47.37
+    },
+    "local_final": {
+      "passed": 1285,
+      "seconds": 51.12
+    },
+    "staged_linux_final": {
+      "passed": 1281,
+      "skipped": 4,
+      "seconds": 30.2
+    }
+  },
+  "staged_code_snapshot": "/tmp/sever-v8-code-hashes.json",
+  "validation_root": "/srv/sever/validation/accuracy-speed-v8-20261011",
+  "initial_baseline": {
+    "id": "b69cfce7-b368-4964-948f-61706834aa0f-baseline",
+    "images": 6,
+    "responses": 49,
+    "elapsed_seconds": 348.42,
+    "timing_usable_for_uncontended_comparison": false,
+    "reason": "API job started during baseline"
+  },
+  "active_customer_api_job": null,
+  "queued_comparison": {
+    "unit": "sever-v8-image-comparison-20261011.service",
+    "controller": "/srv/sever/validation/accuracy-speed-v8-20261011/compare_after_idle.py",
+    "state": "/srv/sever/validation/accuracy-speed-v8-20261011/comparison-state.json",
+    "baseline_output": "a3a72801-2074-4678-b04c-3289a2df3f18-baseline-idle",
+    "candidate_output": "0af060f3-1989-4c88-b53d-7bd9879aed45-candidate",
+    "policy": "Wait for queued/processing API jobs before each stage; record any new overlap; preserve all actual outputs"
+  },
+  "video_segmentation": {
+    "initial_candidate_count": 69,
+    "old_candidate_count": 53,
+    "new_singletons": 15,
+    "mixed_frame_27_28_fixed": true,
+    "remaining_issue": null,
+    "source": "/srv/sever/input/20260818-4_132351.mp4",
+    "evidence": "output/accuracy-review/video4-singletons.jpg",
+    "final_clip_candidates": 4,
+    "final_clip_seconds": 18.92,
+    "full_video_regroup_before_final_hull_candidates": 57,
+    "full_video_regroup_seconds": 95,
+    "final_blank_singleton_45_808_rejected": true
+  },
+  "pending": [
+    "Fresh short original-video end-to-end validation and pixel review",
+    "Switch production when customer jobs idle and validation acceptable"
+  ],
+  "candidate_video": {
+    "unit": "sever-v8-video-final-20261011.service",
+    "output": "/srv/sever/validation/accuracy-speed-v8-20261011/767df52a-4b63-4f6b-8d07-45c09e7a1784-video-candidate",
+    "status": "running"
+  }
+}

@@ -1,0 +1,706 @@
+{
+  "source": "/Users/shchmisha/Downloads/20260818-2_133246.mp4",
+  "sampling": "Source-time select with minimum spacing 0.5 s; FFmpeg applies rotation metadata. Indicators are diagnostic, not field accuracy or a calibrated quality score.",
+  "samples": [
+    {
+      "sample_id": 1,
+      "timestamp_s": 0.0,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-001.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 758.504,
+      "mean_abs_diff_previous": null,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 2,
+      "timestamp_s": 0.533111,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-002.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 791.114,
+      "mean_abs_diff_previous": 10.963,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 3,
+      "timestamp_s": 1.066211,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-003.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 818.395,
+      "mean_abs_diff_previous": 15.607,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 4,
+      "timestamp_s": 1.599311,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-004.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 841.858,
+      "mean_abs_diff_previous": 7.733,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 5,
+      "timestamp_s": 2.132422,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-005.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 830.75,
+      "mean_abs_diff_previous": 8.931,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 6,
+      "timestamp_s": 2.665533,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-006.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 814.131,
+      "mean_abs_diff_previous": 9.998,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 7,
+      "timestamp_s": 3.198633,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-007.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 668.086,
+      "mean_abs_diff_previous": 21.62,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 8,
+      "timestamp_s": 3.731744,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-008.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 730.934,
+      "mean_abs_diff_previous": 37.707,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 9,
+      "timestamp_s": 4.264844,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-009.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 796.948,
+      "mean_abs_diff_previous": 12.623,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 10,
+      "timestamp_s": 4.797956,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-010.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 766.894,
+      "mean_abs_diff_previous": 9.19,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 11,
+      "timestamp_s": 5.331056,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-011.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 770.191,
+      "mean_abs_diff_previous": 8.103,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 12,
+      "timestamp_s": 5.864167,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-012.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 764.14,
+      "mean_abs_diff_previous": 5.181,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 13,
+      "timestamp_s": 6.397267,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-013.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 746.841,
+      "mean_abs_diff_previous": 13.029,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 14,
+      "timestamp_s": 6.930378,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-014.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 757.062,
+      "mean_abs_diff_previous": 21.054,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 15,
+      "timestamp_s": 7.463489,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-015.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1270.247,
+      "mean_abs_diff_previous": 36.744,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 16,
+      "timestamp_s": 7.996589,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-016.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1659.001,
+      "mean_abs_diff_previous": 32.076,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 17,
+      "timestamp_s": 8.5297,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-017.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1573.819,
+      "mean_abs_diff_previous": 13.806,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 18,
+      "timestamp_s": 9.0628,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-018.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1590.885,
+      "mean_abs_diff_previous": 19.36,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 19,
+      "timestamp_s": 9.595911,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-019.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1626.3,
+      "mean_abs_diff_previous": 21.725,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 20,
+      "timestamp_s": 10.129011,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-020.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1243.451,
+      "mean_abs_diff_previous": 19.581,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 21,
+      "timestamp_s": 10.662122,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-021.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 820.236,
+      "mean_abs_diff_previous": 20.931,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 22,
+      "timestamp_s": 11.195222,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-022.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 782.218,
+      "mean_abs_diff_previous": 10.761,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 23,
+      "timestamp_s": 11.728333,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-023.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 792.901,
+      "mean_abs_diff_previous": 14.228,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 24,
+      "timestamp_s": 12.261444,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-024.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 789.776,
+      "mean_abs_diff_previous": 13.422,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 25,
+      "timestamp_s": 12.794544,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-025.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1301.482,
+      "mean_abs_diff_previous": 25.765,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 26,
+      "timestamp_s": 13.327656,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-026.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 4764.669,
+      "mean_abs_diff_previous": 33.796,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 27,
+      "timestamp_s": 13.860756,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-027.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 4938.241,
+      "mean_abs_diff_previous": 23.271,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 28,
+      "timestamp_s": 14.393856,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-028.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 4991.906,
+      "mean_abs_diff_previous": 17.246,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 29,
+      "timestamp_s": 14.926967,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-029.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 4645.294,
+      "mean_abs_diff_previous": 7.692,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 30,
+      "timestamp_s": 15.460078,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-030.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 5004.685,
+      "mean_abs_diff_previous": 9.747,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 31,
+      "timestamp_s": 15.993189,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-031.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 2058.314,
+      "mean_abs_diff_previous": 16.31,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 32,
+      "timestamp_s": 16.526289,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-032.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 414.13,
+      "mean_abs_diff_previous": 20.757,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 33,
+      "timestamp_s": 17.059389,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-033.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 381.395,
+      "mean_abs_diff_previous": 8.775,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 34,
+      "timestamp_s": 17.5925,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-034.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 406.05,
+      "mean_abs_diff_previous": 13.035,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 35,
+      "timestamp_s": 18.1256,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-035.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 937.928,
+      "mean_abs_diff_previous": 28.594,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 36,
+      "timestamp_s": 18.658711,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-036.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1162.938,
+      "mean_abs_diff_previous": 25.411,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 37,
+      "timestamp_s": 19.191811,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-037.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1182.25,
+      "mean_abs_diff_previous": 15.058,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 38,
+      "timestamp_s": 19.724922,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-038.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1056.48,
+      "mean_abs_diff_previous": 15.49,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 39,
+      "timestamp_s": 20.258033,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-039.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1204.215,
+      "mean_abs_diff_previous": 12.988,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 40,
+      "timestamp_s": 20.791144,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-040.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 91.281,
+      "mean_abs_diff_previous": 30.263,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 41,
+      "timestamp_s": 21.324244,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-041.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 227.392,
+      "mean_abs_diff_previous": 24.166,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 42,
+      "timestamp_s": 21.857344,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-042.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 203.159,
+      "mean_abs_diff_previous": 6.537,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 43,
+      "timestamp_s": 22.390456,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-043.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 198.762,
+      "mean_abs_diff_previous": 8.055,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 44,
+      "timestamp_s": 22.923556,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-044.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 489.962,
+      "mean_abs_diff_previous": 26.694,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 45,
+      "timestamp_s": 23.456656,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-045.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 713.911,
+      "mean_abs_diff_previous": 23.923,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 46,
+      "timestamp_s": 23.989767,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-046.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 718.145,
+      "mean_abs_diff_previous": 11.304,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 47,
+      "timestamp_s": 24.522878,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-047.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 712.954,
+      "mean_abs_diff_previous": 9.979,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 48,
+      "timestamp_s": 25.055989,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-048.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 693.254,
+      "mean_abs_diff_previous": 8.181,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 49,
+      "timestamp_s": 25.589089,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-049.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 718.662,
+      "mean_abs_diff_previous": 9.562,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 50,
+      "timestamp_s": 26.1222,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-050.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 727.912,
+      "mean_abs_diff_previous": 9.226,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 51,
+      "timestamp_s": 26.6553,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-051.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 724.462,
+      "mean_abs_diff_previous": 7.709,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 52,
+      "timestamp_s": 27.188411,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-052.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 730.488,
+      "mean_abs_diff_previous": 9.688,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 53,
+      "timestamp_s": 27.721511,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-053.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 710.276,
+      "mean_abs_diff_previous": 10.955,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 54,
+      "timestamp_s": 28.254622,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-054.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 733.182,
+      "mean_abs_diff_previous": 8.731,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 55,
+      "timestamp_s": 28.787733,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-055.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 692.872,
+      "mean_abs_diff_previous": 10.653,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 56,
+      "timestamp_s": 29.320833,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-056.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 546.75,
+      "mean_abs_diff_previous": 29.167,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 57,
+      "timestamp_s": 29.853944,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-057.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 815.668,
+      "mean_abs_diff_previous": 31.567,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 58,
+      "timestamp_s": 30.387044,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-058.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 812.333,
+      "mean_abs_diff_previous": 15.56,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 59,
+      "timestamp_s": 30.920156,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-059.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 768.943,
+      "mean_abs_diff_previous": 16.268,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 60,
+      "timestamp_s": 31.453256,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-060.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 904.219,
+      "mean_abs_diff_previous": 18.088,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 61,
+      "timestamp_s": 31.986356,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-061.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 1024.886,
+      "mean_abs_diff_previous": 13.9,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 62,
+      "timestamp_s": 32.519467,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-062.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 509.693,
+      "mean_abs_diff_previous": 42.574,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 63,
+      "timestamp_s": 33.052578,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-063.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 724.499,
+      "mean_abs_diff_previous": 40.558,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 64,
+      "timestamp_s": 33.585689,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-064.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 754.7,
+      "mean_abs_diff_previous": 23.417,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 65,
+      "timestamp_s": 34.118789,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-065.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 759.256,
+      "mean_abs_diff_previous": 13.658,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 66,
+      "timestamp_s": 34.651889,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-066.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 747.404,
+      "mean_abs_diff_previous": 8.168,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 67,
+      "timestamp_s": 35.158533,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-067.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 421.935,
+      "mean_abs_diff_previous": 42.58,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 68,
+      "timestamp_s": 35.691644,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-068.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 424.125,
+      "mean_abs_diff_previous": 3.171,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 69,
+      "timestamp_s": 36.224756,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-069.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 400.065,
+      "mean_abs_diff_previous": 7.01,
+      "near_white_fraction_center": 0.0
+    },
+    {
+      "sample_id": 70,
+      "timestamp_s": 36.8245,
+      "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-02/sampled-frames/frame-070.jpg",
+      "width": 720,
+      "height": 1280,
+      "laplacian_variance_center": 384.173,
+      "mean_abs_diff_previous": 4.157,
+      "near_white_fraction_center": 0.0
+    }
+  ]
+}

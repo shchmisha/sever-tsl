@@ -1,0 +1,19 @@
+{
+  "source": "/Users/shchmisha/Downloads/20260818-4_132351.mp4",
+  "timestamp_s": 38.37591111111111,
+  "source_pts": 3453832,
+  "source_time_base": "1/90000",
+  "method": "Independent local FFmpeg source decodes: input seek one second before elapsed target versus decode from the beginning; copyts, exact eq(pts), showinfo, full-resolution JPEG q=2",
+  "same_jpeg_bytes": true,
+  "jpeg_sha256": "3799ffb92de61a095e4c9707c6d316f1bb01529322918cd95cbe9279ae861250",
+  "jpeg_size_bytes": 1016264,
+  "seek_elapsed_seconds": 5.0,
+  "no_seek_elapsed_seconds": 59.832,
+  "temporary_images_removed": true,
+  "model_requests": 0,
+  "http_requests": 0,
+  "limitations": [
+    "Timing is one local comparison under current machine load, not a general throughput guarantee",
+    "This verifies source-frame identity and encoding, not document/field recognition accuracy"
+  ]
+}

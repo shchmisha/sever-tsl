@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "reviewed_at_utc": "2026-10-07T12:13:16.382446+00:00",
+  "customer_approved": false,
+  "provider_calls": 0,
+  "model_outputs_used": false,
+  "ground_truth_path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/ground-truth-expanded-provisional.json",
+  "ground_truth_sha256": "e2c6cda14a1239c4f6fb494a405cb5f9cc38470248b43bafd8149d9e915d91d3",
+  "historical_ground_truth_unchanged": {
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/analysis/provisional-ground-truth.json",
+    "sha256": "ef71154fef70b4539a3ac5215b96e14ce0077d022eb93357cb8a3c302d35033a"
+  },
+  "scope": "All eight UPD intervals in four videos; four full fronts have shipping-address labels, four continuations remain unlabelled. Negative videos contain no UPD. Existing first four fully-labelled field objects and demo expectations are not altered.",
+  "result": "no_ground_truth_correction_needed",
+  "correction_log": [
+    {
+      "page_id": "sample-04-page-001",
+      "source_id": "sample-04",
+      "source_sha256": "3f6c876d8974fc549923cf005eff399833f445976fd50f2a714487c8260336e2",
+      "source_interval_s": [
+        0.0,
+        3.8317
+      ],
+      "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-04/selected-frames/upd-parties-crop.png",
+      "proof_sha256": "4d1d1032b9fb07bd2c2e01351c79d07145045044617d8eb528976db716eb47e1",
+      "timestamp_s": 0.0,
+      "independently_visually_rechecked": true,
+      "field": "consignor_address",
+      "old_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+      "new_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+      "old_labeled": true,
+      "new_labeled": true,
+      "action": "confirmed_no_change",
+      "printed_role_evidence": "Продавец (2) / Адрес (2а): Челябинск, Братьев Кашириных158,квартира59; Грузоотправитель и его адрес (3): он же; Грузополучатель и его адрес (4): Сургут, Индустриальная21,соор16",
+      "decision_reason": "Explicit same-frame он же resolves to seller address, not the consignee row beneath the line."
+    },
+    {
+      "page_id": "sample-04-page-004",
+      "source_id": "sample-04",
+      "source_sha256": "3f6c876d8974fc549923cf005eff399833f445976fd50f2a714487c8260336e2",
+      "source_interval_s": [
+        14.560461,
+        20.691172
+      ],
+      "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-4_132351/ocr-cache/220a06a521efc7cc7b9a7358f21175604772afff3c31f6b7c3073f192f146875-oriented.png",
+      "proof_sha256": "8db261755ca14ccd7823af92d82919b9010ea7b94f9c2f190db3e8f55b66aa6d",
+      "timestamp_s": 15.460077777777778,
+      "independently_visually_rechecked": true,
+      "field": "consignor_address",
+      "old_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+      "new_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+      "old_labeled": true,
+      "new_labeled": true,
+      "action": "confirmed_no_change",
+      "printed_role_evidence": "Продавец (2) / Адрес (2а): Челябинск, Братьев Кашириных158,квартира59; Грузоотправитель и его адрес (3): он же; Грузополучатель и его адрес (4): Сургут, Индустриальная21,соор16",
+      "decision_reason": "Explicit same-frame он же resolves to seller address, not the consignee row beneath the line."
+    },
+    {
+      "page_id": "sample-04-page-009",
+      "source_id": "sample-04",
+      "source_sha256": "3f6c876d8974fc549923cf005eff399833f445976fd50f2a714487c8260336e2",
+      "source_interval_s": [
+        36.010255,
+        39.060078
+      ],
+      "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-4_132351/ocr-cache/51d1f2203b7f93956f1c242f2a489f3363b849eb43deb6083df6bac7a449adeb-oriented.png",
+      "proof_sha256": "085fc02862575d174f415deedef7cf981b17c90ba18e7ec458cbca543ef5df5c",
+      "timestamp_s": 38.90902222222222,
+      "independently_visually_rechecked": true,
+      "field": "consignor_address",
+      "old_value": null,
+      "new_value": null,
+      "old_labeled": false,
+      "new_labeled": false,
+      "action": "confirmed_no_change",
+      "printed_role_evidence": "Табличное продолжение и нижние подписи; собственных строк грузоотправителя/грузополучателя и адресов нет. Экономический субъект-составитель не заменяет роль.",
+      "decision_reason": "Non-visible shipping-address role remains unlabelled; no value copied from another side."
+    },
+    {
+      "page_id": "sample-04-page-011",
+      "source_id": "sample-04",
+      "source_sha256": "3f6c876d8974fc549923cf005eff399833f445976fd50f2a714487c8260336e2",
+      "source_interval_s": [
+        43.642567,
+        45.17525
+      ],
+      "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-4_132351/ocr-cache/3d7babe07ed4b7f70d673ca0e8847f341a0daa596320ae053d6907660ad6c7d3-oriented.png",
+      "proof_sha256": "0c36e849cc3134c6c4062ad294dadbcde525cfeccb2f3a3f49a4b0a7b9531bcd",
+      "timestamp_s": 44.7421,
+      "independently_visually_rechecked": true,
+      "field": "consignor_address",
+      "old_value": null,
+      "new_value": null,
+      "old_labeled": false,
+      "new_labeled": false,
+      "action": "confirmed_no_change",
+      "printed_role_evidence": "Табличное продолжение и нижние подписи; собственных строк грузоотправителя/грузополучателя и адресов нет. Экономический субъект-составитель не заменяет роль.",
+      "decision_reason": "Non-visible shipping-address role remains unlabelled; no value copied from another side."
+    },
+    {
+      "page_id": "sample-05-page-001",
+      "source_id": "sample-05",
+      "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+      "source_interval_s": [
+        0.0,
+        3.615128
+      ],
+      "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/analysis/sample-05/selected-frames/upd-parties-crop.png",
+      "proof_sha256": "2b6d2b1e91807a63afba29c77caf987188af1dd00c6c2b72f7073acf86c650cf",
+      "timestamp_s": 1.032889,
+      "independently_visually_rechecked": true,
+      "field": "consignor_address",
+      "old_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+      "new_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+      "old_labeled": true,
+      "new_labeled": true,
+      "action": "confirmed_no_change",
+      "printed_role_evidence": "Продавец (2) / Адрес (2а): Челябинск, Братьев Кашириных158,квартира59; Грузоотправитель и его адрес (3): он же; Грузополучатель и его адрес (4): Сургут, Индустриальная21,соор16",
+      "decision_reason": "Explicit same-frame он же resolves to seller address, not the consignee row beneath the line."
+    },
+    {
+      "page_id": "sample-05-page-004",
+      "source_id": "sample-05",
+      "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+      "source_interval_s": [
+        11.878266,
+        19.108522
+      ],
+      "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/46a301fe838ee17ebb7a2afb43a7aba392535161983fb5e47655f5d443504828-oriented.png",
+      "proof_sha256": "1f2c7da79b693374d73432fc73c233598fb596db01d4b277a032184e4b0e587d",
+      "timestamp_s": 14.926966666666667,
+      "independently_visually_rechecked": true,
+      "field": "consignor_address",
+      "old_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+      "new_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+      "old_labeled": true,
+      "new_labeled": true,
+      "action": "confirmed_no_change",
+      "printed_role_evidence": "Продавец (2) / Адрес (2а): Челябинск, Братьев Кашириных158,квартира59; Грузоотправитель и его адрес (3): он же; Грузополучатель и его адрес (4): Сургут, Индустриальная21,соор16",
+      "decision_reason": "Explicit same-frame он же resolves to seller address, not the consignee row beneath the line."
+    },
+    {
+      "page_id": "sample-05-page-013",
+      "source_id": "sample-05",
+      "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+      "source_interval_s": [
+        61.440011,
+        66.599277
+      ],
+      "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/69c3ec2e0f633c6c1e486d69f5139b1cb83749303213ea8601324f32982bd8a9-oriented.png",
+      "proof_sha256": "c837237ac15e90ad8375566dddec004412ef92dd5fb2e89c20be433db71e8ce0",
+      "timestamp_s": 63.42251111111111,
+      "independently_visually_rechecked": true,
+      "field": "consignor_address",
+      "old_value": null,
+      "new_value": null,
+      "old_labeled": false,
+      "new_labeled": false,
+      "action": "confirmed_no_change",
+      "printed_role_evidence": "Табличное продолжение и нижние подписи; собственных строк грузоотправителя/грузополучателя и адресов нет. Экономический субъект-составитель не заменяет роль.",
+      "decision_reason": "Non-visible shipping-address role remains unlabelled; no value copied from another side."
+    },
+    {
+      "page_id": "sample-05-page-015",
+      "source_id": "sample-05",
+      "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+      "source_interval_s": [
+        69.69275,
+        72.808
+      ],
+      "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/runs/mvp/20260818-5_132107/ocr-cache/f4543bc6726299e70a9eef3d6a8a1eb72315b81b5a30e2cfd76d2a425ba2c6ab-oriented.png",
+      "proof_sha256": "b910b95dcf5ef21484f6fca0202c097478a1e6ae17514c60597e3c2174bafadc",
+      "timestamp_s": 72.4749,
+      "independently_visually_rechecked": true,
+      "field": "consignor_address",
+      "old_value": null,
+      "new_value": null,
+      "old_labeled": false,
+      "new_labeled": false,
+      "action": "confirmed_no_change",
+      "printed_role_evidence": "Табличное продолжение и нижние подписи; собственных строк грузоотправителя/грузополучателя и адресов нет. Экономический субъект-составитель не заменяет роль.",
+      "decision_reason": "Non-visible shipping-address role remains unlabelled; no value copied from another side."
+    }
+  ],
+  "demo_expectation_check": {
+    "path": "/Users/shchmisha/Documents/ChatGPT/север/runs/demo-send/expected-fields.json",
+    "sha256": "74e8f2fd4bb1a2d6b0a725dd06d7c8a527e40da124e8a57847c3c0380f61b9e4",
+    "proof_image": "/Users/shchmisha/Documents/ChatGPT/север/runs/demo-send/processing/input-3s/ocr-cache/91c15533cdf54b5ce70fb3475b0904e2c5d96b2a84ced9c2ce37b86b5d4547bb-oriented.png",
+    "proof_sha256": "9f18d43030aa00f1aacb56207c1ef768f5afa9e8c4b0ae4324d0cc84dafc0814",
+    "visually_rechecked": true,
+    "old_consignor_address": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+    "new_consignor_address": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+    "action": "confirmed_no_change",
+    "reason": "Consignor literal он же refers to own seller/address2/2а; Surgut belongs to consignee4."
+  },
+  "counts": {
+    "upd_intervals_reviewed": 8,
+    "labelled_upd_consignor_addresses": 4,
+    "unlabelled_upd_continuation_addresses": 4,
+    "field_value_changes": 0
+  },
+  "evaluation_note": "Use this unchanged current GT for both baseline and final comparison. No new processing accuracy conclusion follows from this role audit."
+}

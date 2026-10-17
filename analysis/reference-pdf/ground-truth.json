@@ -1,0 +1,55 @@
+{
+  "customer_approved": false,
+  "provenance": "Independent manual visual reading of all four rendered original PDF reference pages on 2026-10-04. No model outputs were read. Organization values retain the printed legal name without INN, KPP, bank details or addresses. These labels require customer review.",
+  "unit": "PDF reference page; start_s/end_s are synthetic page-index intervals for evaluation and are not video timestamps or video detection evidence",
+  "pages": [
+    {
+      "page_id": "reference-1", "start_s": 0, "end_s": 1, "document_type": "upd",
+      "image_provenance": "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-pdf/ocr-page-1.jpg",
+      "verification": "visually_verified",
+      "fields": {
+        "invoice_number": {"value": "43660", "status": "recognized", "labeled": true, "label": "Счет-фактура №"},
+        "invoice_date": {"value": "3 июня 2026", "status": "recognized", "labeled": true, "label": "от"},
+        "consignor": {"value": "Общество с ограниченной ответственностью \"Диета +\"", "status": "recognized", "labeled": true, "label": "Грузоотправитель и его адрес"},
+        "consignor_address": {"value": "192236, Санкт-Петербург, ул.Софийская, д.6, к.2, литер А", "status": "recognized", "labeled": true, "label": "Грузоотправитель и его адрес", "note": "The consignor's own printed address is used. Seller row contains a different address at Гороховая улица and is not the target."},
+        "consignee": {"value": "ООО \"ЭЛЕМЕНТ-ТРЕЙД\"", "status": "recognized", "labeled": true, "label": "Грузополучатель и его адрес"},
+        "consignee_address": {"value": "628300, Российская Федерация, Ханты-Мансийский Автономный округ - Югра АО, Нефтеюганск г, Февральная", "status": "recognized", "labeled": true, "label": "Грузополучатель и его адрес", "note": "The consignor/consignee row, not the buyer address in Екатеринбург, is used. The displayed address ends with Февральная; no house number is supplied."}
+      }
+    },
+    {
+      "page_id": "reference-2", "start_s": 1, "end_s": 2, "document_type": "torg12",
+      "image_provenance": "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-pdf/ocr-page-2.jpg",
+      "additional_image_provenance": "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-pdf/page-2-header.jpg",
+      "verification": "visually_verified",
+      "fields": {
+        "supplier": {"value": "Общество с ограниченной ответственностью \"Новые Фермы\"", "status": "recognized", "labeled": true, "label": "Поставщик"},
+        "consignee": {"value": "Общество с ограниченной ответственностью \"Абсолют\"", "status": "recognized", "labeled": true, "label": "Грузополучатель"},
+        "document_number": {"value": "ПЕ0006980", "status": "recognized", "labeled": true, "label": "Номер документа", "note": "The highlighted товарная накладная header is used, not the distinct транспортная накладная reference 17817."},
+        "document_date": {"value": "15.03.2026", "status": "recognized", "labeled": true, "label": "Дата составления"}
+      }
+    },
+    {
+      "page_id": "reference-3", "start_s": 2, "end_s": 3, "document_type": "ttn",
+      "image_provenance": "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-pdf/ocr-page-3.jpg",
+      "verification": "visually_verified",
+      "fields": {
+        "consignor": {"value": "Общество с ограниченной ответственностью \"Савушкин продукт\"", "status": "recognized", "labeled": true, "label": "Грузоотправитель"},
+        "consignee": {"value": "Акционерное общество \"Тандер\"", "status": "recognized", "labeled": true, "label": "Грузополучатель"},
+        "document_number": {"value": "СТ-98616", "status": "recognized", "labeled": true, "label": "№", "accepted_variants": ["CT-98616"], "note": "The printed CT/СТ glyphs do not establish Latin versus Cyrillic script visually. Both readings describe the same visibly verified reference; no character correction is assumed."},
+        "document_date": {"value": "04.09.2025", "status": "recognized", "labeled": true, "label": "Дата составления"}
+      }
+    },
+    {
+      "page_id": "reference-4", "start_s": 3, "end_s": 4, "document_type": "trn",
+      "image_provenance": "/Users/shchmisha/Documents/ChatGPT/север/analysis/reference-pdf/ocr-page-4.jpg",
+      "verification": "visually_verified",
+      "fields": {
+        "document_date": {"value": "04.09.2025", "status": "recognized", "labeled": true, "label": "Транспортная накладная Дата"},
+        "document_number": {"value": null, "status": "not_present", "labeled": true, "label": "Транспортная накладная №", "note": "The consignment's own highlighted number cell is empty. The order/application number УВ19023514 and accompanying ТТН СТ-98617 are distinct references and must not fill it."},
+        "consignor": {"value": "Общество с ограниченной ответственностью \"Савушкин продукт\"", "status": "recognized", "labeled": true, "label": "1. Грузоотправитель"},
+        "customer": {"value": "Общество с ограниченной ответственностью \"Савушкин продукт\"", "status": "recognized", "labeled": true, "label": "1а. Заказчик услуг, связанных с перевозкой груза (при наличии)", "note": "Read independently from section 1а; its value happens to match the consignor. Carrier ООО ТК СУД ТРИ in section 6 is not this field."},
+        "consignee": {"value": "Акционерное общество \"Тандер\"", "status": "recognized", "labeled": true, "label": "2. Грузополучатель"}
+      }
+    }
+  ]
+}
