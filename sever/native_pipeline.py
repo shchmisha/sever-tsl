@@ -393,9 +393,9 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
     consecutive_failures = 0
     for position, page in enumerate(pages, 1):
         page_id = page["page_id"]
-        # The default reader shares one upright rotation across this leaf's
-        # views; custom readers keep their own signature and get no extra state.
-        read = partial(reader, leaf_orientation={}) if default_reader else reader
+        # The default reader shares one upright rotation and one scope triage
+        # across this leaf's views; custom readers keep their own signature.
+        read = partial(reader, leaf_orientation={}, leaf_triage={}) if default_reader else reader
         trace(trace_path, "page_selected", **page)
         accepted = set(page["quality_gate"].get("accepted_frame_ids", []))
         ordered = sorted((f for f in page["frames"] if f["frame_id"] in accepted),

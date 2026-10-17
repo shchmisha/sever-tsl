@@ -98,7 +98,7 @@ class JobRequest(BaseModel):
 def _native_source_hashes():
     root=Path(__file__).resolve().parent
     names=("image_reader.py","image_fusion.py","native_pipeline.py","schema.py",
-           "adaptive_image_reader.py","image_orientation.py","image_detail.py",
+           "adaptive_image_reader.py","image_orientation.py","image_triage.py","image_detail.py",
            "image_agent.py","zoom_image_reader.py","image_conflicts.py","inference_gate.py",
            "pipeline.py","video.py","frame_pool.py","quality.py","normalize.py","coverage.py",
            "agents.py","cli.py","tracing.py","api.py")
@@ -114,6 +114,8 @@ def native_implementation():
     from .image_agent import IMAGE_AGENT_VERSION,INSTRUCTIONS as AGENT_INSTRUCTIONS,ZOOM_INSTRUCTIONS,MAX_MODEL_REQUESTS,MAX_ZOOM_IMAGES
     from .image_orientation import ORIENTATION_VERSION,ORIENTATION_OUTPUT_LIMIT,INSTRUCTIONS as ORIENTATION_INSTRUCTIONS,_OrientationDecision
     from .zoom_image_reader import ZOOM_READER_VERSION
+    from .image_triage import TRIAGE_VERSION,TRIAGE_OUTPUT_LIMIT,INSTRUCTIONS as TRIAGE_INSTRUCTIONS,_TriageDecision
+    from .native_pipeline import _NO_PROGRESS_POLICY
     from . import image_conflicts
     from .schema import FIELDS_BY_TYPE
     model=os.getenv("HARNESS_MODEL_NAME","openai/gpt-4.1-mini")
@@ -143,6 +145,12 @@ def native_implementation():
             "instructions_sha256":hashlib.sha256(ORIENTATION_INSTRUCTIONS.encode()).hexdigest(),
             "schema_sha256":hashlib.sha256(json.dumps(_OrientationDecision.model_json_schema(),sort_keys=True,
                 ensure_ascii=False,separators=(",",":")).encode()).hexdigest()},
+        "triage":{"version":TRIAGE_VERSION,"output_limit":TRIAGE_OUTPUT_LIMIT,
+            "output_mode":"native_output",
+            "instructions_sha256":hashlib.sha256(TRIAGE_INSTRUCTIONS.encode()).hexdigest(),
+            "schema_sha256":hashlib.sha256(json.dumps(_TriageDecision.model_json_schema(),sort_keys=True,
+                ensure_ascii=False,separators=(",",":")).encode()).hexdigest()},
+        "leaf_search":{"no_progress_stop":_NO_PROGRESS_POLICY,"orientation":"first_fresh_decision_shared_by_leaf"},
         "source_sha256":_native_source_hashes(),
         "configuration":{"document_reader":reader,"provider_kind":"local" if local else "remote",
             "model_name":model,"vision_model":os.getenv("HARNESS_VISION_MODEL",model),
