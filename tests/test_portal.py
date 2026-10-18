@@ -425,3 +425,16 @@ def test_stopped_job_card_summary_is_preliminary(environment):
     assert current["status"] == "failed"
     assert current["summary"]["preliminary"] is True
     assert current["summary"]["documents"][0]["title"] == "УПД № 7"
+
+
+def test_report_shows_the_customers_file_name_not_the_stored_upload_name(environment):
+    client, _, states = environment
+    job = upload(client, name="ТВ_2.mp4").json()
+    directory = portal.RUNS / job["job_id"]
+    directory.mkdir(parents=True)
+    (directory / "job.json").write_text(json.dumps({"source_path": "/srv/sever/customer/uploads/abc-123.mp4"}))
+    (directory / "report.html").write_text('<h1>Север ТСЛ — результат обработки</h1><p class="lead"><strong>abc-123.mp4</strong> · найдено документов: 2</p>')
+    states[job["job_id"]] = {"status": "completed"}
+    page = client.get(f"/jobs/{job['job_id']}/report.html", headers=AUTH).text
+    assert '<p class="lead"><strong>ТВ_2.mp4</strong>' in page and "abc-123.mp4" not in page
+    assert (directory / "report.html").read_text().count("abc-123.mp4") == 1

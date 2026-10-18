@@ -16,6 +16,7 @@ import re
 import shutil
 import sqlite3
 import uuid
+from html import escape as html_escape
 from urllib.parse import urlsplit
 
 import httpx
@@ -471,5 +472,16 @@ async def download(job_id: str, path: str, request: Request):
             heading = "Видео обработано не полностью." if coverage["candidate_limit"] else "Охват видео требует проверки."
             banner += '<p role="alert"><strong>' + heading + '</strong> ' + warning + '</p>'
         content = re.sub(r'(<h1[^>]*>.*?</h1>)', lambda match: match.group(1) + banner, content, count=1, flags=re.S)
+        # The report knows only the stored upload name; show the customer's own file name.
+        stored = row.get("source") or ""
+        stored_name = PurePosixPath(stored).name if stored else ""
+        job_source = job_file(job_id, "job.json")
+        try:
+            stored_name = PurePosixPath(json.loads(job_source.read_text())["source_path"]).name if job_source else stored_name
+        except (OSError, ValueError, KeyError, TypeError):
+            pass
+        if stored_name and row.get("name"):
+            content = content.replace(f'<p class="lead"><strong>{html_escape(stored_name)}</strong>',
+                                      f'<p class="lead"><strong>{html_escape(row["name"])}</strong>', 1)
         return HTMLResponse(content)
     return FileResponse(target, filename=target.name if target.suffix == ".csv" else None)
