@@ -5679,8 +5679,45 @@
           "page_id": "sample-01-page-001",
           "start_s": 0.0,
           "end_s": 1.9500000000000002,
-          "document_type": "unknown",
-          "fields": {},
+          "document_type": "torg12",
+          "fields": {
+            "supplier": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "document_number": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "document_date": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            }
+          },
           "manual": true,
           "observed_form": "Товарная накладная ТН-2",
           "provenance": "analysis/sample-01/manual-observations.json",
@@ -5690,14 +5727,58 @@
               0.0,
               1.8
             ]
-          }
+          },
+          "scope_change": {
+            "previous_document_type": "unknown",
+            "rule": "2026-10-18 customer decision: a standalone счёт-фактура is read as УПД (same fields); the Belarusian ТН-2 товарная накладная and its appendix are read as ТОРГ-12 (supplier = Грузоотправитель line)"
+          },
+          "document_id": "torg12:sample-01-ТН-2",
+          "document_id_basis": "sheet group from observed_form; number not labelled yet",
+          "field_annotation_status": "pending_relabel_after_scope_change"
         },
         {
           "page_id": "sample-01-page-002",
           "start_s": 1.9500000000000002,
           "end_s": 4.75,
-          "document_type": "unknown",
-          "fields": {},
+          "document_type": "torg12",
+          "fields": {
+            "supplier": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "document_number": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "document_date": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            }
+          },
           "manual": true,
           "observed_form": "Приложение к ТН-2",
           "provenance": "analysis/sample-01/manual-observations.json",
@@ -5707,7 +5788,14 @@
               2.1,
               4.4
             ]
-          }
+          },
+          "scope_change": {
+            "previous_document_type": "unknown",
+            "rule": "2026-10-18 customer decision: a standalone счёт-фактура is read as УПД (same fields); the Belarusian ТН-2 товарная накладная and its appendix are read as ТОРГ-12 (supplier = Грузоотправитель line)"
+          },
+          "document_id": "torg12:sample-01-ТН-2",
+          "document_id_basis": "sheet group from observed_form; number not labelled yet",
+          "field_annotation_status": "pending_relabel_after_scope_change"
         },
         {
           "page_id": "sample-01-page-003",
@@ -5730,8 +5818,63 @@
           "page_id": "sample-01-page-004",
           "start_s": 8.1,
           "end_s": 12.85,
-          "document_type": "unknown",
-          "fields": {},
+          "document_type": "upd",
+          "fields": {
+            "invoice_number": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "invoice_date": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignor": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignor_address": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee_address": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            }
+          },
           "manual": true,
           "observed_form": "Счёт-фактура",
           "provenance": "analysis/sample-01/manual-observations.json",
@@ -5741,7 +5884,14 @@
               8.4,
               12.5
             ]
-          }
+          },
+          "scope_change": {
+            "previous_document_type": "unknown",
+            "rule": "2026-10-18 customer decision: a standalone счёт-фактура is read as УПД (same fields); the Belarusian ТН-2 товарная накладная and its appendix are read as ТОРГ-12 (supplier = Грузоотправитель line)"
+          },
+          "document_id": "upd:sample-01-счёт-фактура",
+          "document_id_basis": "sheet group from observed_form; number not labelled yet",
+          "field_annotation_status": "pending_relabel_after_scope_change"
         },
         {
           "page_id": "sample-01-page-005",
@@ -9091,7 +9241,7 @@
           "page_id": "set2-20260821_145110-page-015",
           "start_s": 96.225639,
           "end_s": 101.118417,
-          "document_type": "unknown",
+          "document_type": "upd",
           "manual": true,
           "observed_form": "Счет-фактура № РРРБ-128027 от 17 августа 2026 г.; Исправление № -- от -- (Приложение № 1 к постановлению Правительства РФ от 26 декабря 2011 г. № 1137)",
           "side": "single",
@@ -9126,8 +9276,73 @@
             null,
             null
           ],
-          "fields": {},
-          "field_annotation_status": "not_applicable"
+          "fields": {
+            "invoice_number": {
+              "value": "РРРБ-128027",
+              "status": "recognized",
+              "labeled": true,
+              "manual": true,
+              "raw_value": "РРРБ-128027",
+              "manual_visibility": "visible_readable",
+              "provenance": {
+                "source": "labeller observed_form heading transcription (round 2026-10-18)"
+              }
+            },
+            "invoice_date": {
+              "value": "17 августа 2026 г.",
+              "status": "recognized",
+              "labeled": true,
+              "manual": true,
+              "raw_value": "17 августа 2026 г.",
+              "manual_visibility": "visible_readable",
+              "provenance": {
+                "source": "labeller observed_form heading transcription (round 2026-10-18)"
+              }
+            },
+            "consignor": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignor_address": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee_address": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            }
+          },
+          "field_annotation_status": "number_and_date_from_heading_parties_pending",
+          "scope_change": {
+            "previous_document_type": "unknown",
+            "rule": "2026-10-18 customer decision: a standalone счёт-фактура is read as УПД (same fields); the Belarusian ТН-2 товарная накладная and its appendix are read as ТОРГ-12 (supplier = Грузоотправитель line)"
+          },
+          "document_id": "upd:РРРБ-128027",
+          "document_id_basis": "own printed number (heading)"
         }
       ],
       "document_ids_assigned": {
@@ -12050,7 +12265,7 @@
           "page_id": "set2-20260821_145342-page-014",
           "start_s": 78.633139,
           "end_s": 86.825313,
-          "document_type": "unknown",
+          "document_type": "upd",
           "manual": true,
           "observed_form": "Счет-фактура № РРРБ-127817 от 17 августа 2026 г. (Приложение № 1 к постановлению Правительства РФ от 26.12.2011 № 1137; 'Исправление № -- от --')",
           "side": "single",
@@ -12085,8 +12300,73 @@
             null,
             null
           ],
-          "fields": {},
-          "field_annotation_status": "not_applicable"
+          "fields": {
+            "invoice_number": {
+              "value": "РРРБ-127817",
+              "status": "recognized",
+              "labeled": true,
+              "manual": true,
+              "raw_value": "РРРБ-127817",
+              "manual_visibility": "visible_readable",
+              "provenance": {
+                "source": "labeller observed_form heading transcription (round 2026-10-18)"
+              }
+            },
+            "invoice_date": {
+              "value": "17 августа 2026 г.",
+              "status": "recognized",
+              "labeled": true,
+              "manual": true,
+              "raw_value": "17 августа 2026 г.",
+              "manual_visibility": "visible_readable",
+              "provenance": {
+                "source": "labeller observed_form heading transcription (round 2026-10-18)"
+              }
+            },
+            "consignor": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignor_address": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee_address": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            }
+          },
+          "field_annotation_status": "number_and_date_from_heading_parties_pending",
+          "scope_change": {
+            "previous_document_type": "unknown",
+            "rule": "2026-10-18 customer decision: a standalone счёт-фактура is read as УПД (same fields); the Belarusian ТН-2 товарная накладная and its appendix are read as ТОРГ-12 (supplier = Грузоотправитель line)"
+          },
+          "document_id": "upd:РРРБ-127817",
+          "document_id_basis": "own printed number (heading)"
         }
       ],
       "document_ids_assigned": {
@@ -12365,7 +12645,7 @@
           "page_id": "set2-20260818_131702-page-003",
           "start_s": 6.130717,
           "end_s": 9.329355,
-          "document_type": "unknown",
+          "document_type": "upd",
           "manual": true,
           "observed_form": "Счет-фактура № 2913116 от 20 августа 2026 г. / Исправление № -- от -- (Приложение № 1 к постановлению Правительства РФ № 1137)",
           "side": "single",
@@ -12400,8 +12680,73 @@
             null,
             null
           ],
-          "fields": {},
-          "field_annotation_status": "not_applicable"
+          "fields": {
+            "invoice_number": {
+              "value": "2913116",
+              "status": "recognized",
+              "labeled": true,
+              "manual": true,
+              "raw_value": "2913116",
+              "manual_visibility": "visible_readable",
+              "provenance": {
+                "source": "labeller observed_form heading transcription (round 2026-10-18)"
+              }
+            },
+            "invoice_date": {
+              "value": "20 августа 2026 г.",
+              "status": "recognized",
+              "labeled": true,
+              "manual": true,
+              "raw_value": "20 августа 2026 г.",
+              "manual_visibility": "visible_readable",
+              "provenance": {
+                "source": "labeller observed_form heading transcription (round 2026-10-18)"
+              }
+            },
+            "consignor": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignor_address": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            },
+            "consignee_address": {
+              "value": null,
+              "status": "unreadable",
+              "labeled": false,
+              "manual": false,
+              "raw_value": null,
+              "manual_visibility": "pending_relabel_after_scope_change",
+              "uncertainty": "Sheet retyped on 2026-10-18 by the customer's scope decision; field not labelled yet."
+            }
+          },
+          "field_annotation_status": "number_and_date_from_heading_parties_pending",
+          "scope_change": {
+            "previous_document_type": "unknown",
+            "rule": "2026-10-18 customer decision: a standalone счёт-фактура is read as УПД (same fields); the Belarusian ТН-2 товарная накладная and its appendix are read as ТОРГ-12 (supplier = Грузоотправитель line)"
+          },
+          "document_id": "upd:2913116",
+          "document_id_basis": "own printed number (heading)"
         },
         {
           "page_id": "set2-20260818_131702-page-004",

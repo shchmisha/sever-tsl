@@ -26,7 +26,7 @@ from .image_reader import (EVIDENCE_ORIGIN, TRNFields, TTNFields, TORGFields,
 from .normalize import normalize
 from .schema import DocumentType, Evidence, FIELDS_BY_TYPE, FieldValue
 
-IMAGE_CONFLICTS_VERSION = "fresh-joint-source-visibility-and-field-review-v7.1-ttn-continuation"
+IMAGE_CONFLICTS_VERSION = "fresh-joint-source-visibility-and-field-review-v7.2-ttn-continuation-invoice-tn2"
 MAX_MODEL_REQUESTS = 12
 MAX_ZOOM_IMAGES = 12
 MAX_REVIEW_FRAMES = 4
@@ -123,8 +123,10 @@ TYPE_INSTRUCTIONS = """
 или форма вне перечисленных ниже, верни unknown, сохрани видимый заголовок.
 
 Различай четыре формы по собственному заголовку и видимому контексту:
-upd — универсальный передаточный документ; torg12 — товарная накладная формы
-ТОРГ-12; ttn — товарно-транспортная накладная формы № 1-Т, включая её оборотную
+upd — универсальный передаточный документ, а также отдельный счёт-фактура
+(Приложение № 1 к постановлению № 1137) с теми же полями; torg12 — товарная накладная
+формы ТОРГ-12, а также белорусская товарная накладная формы ТН-2 и приложение к ней
+(у ТН-2 нет строки «Поставщик»: поставщик — организация в строке «Грузоотправитель»); ttn — товарно-транспортная накладная формы № 1-Т, включая её оборотную
 сторону и продолжение товарного раздела (лист «Товарная накладная» с отметкой
 «Страница 2» и/или строкой «Товарная накладная имеет продолжение на ___ листах,
 на бланках за N ___» без кода ТОРГ-12); trn — отдельная транспортная накладная.

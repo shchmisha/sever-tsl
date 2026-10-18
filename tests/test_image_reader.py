@@ -707,3 +707,18 @@ def test_instructions_name_the_ttn_continuation_sheet():
     assert "Товарная накладная имеет продолжение на ___ листах, на бланках за N ___" in INSTRUCTIONS
     assert "имеет приложение на ___ листах" in INSTRUCTIONS
     assert "ttn-continuation" in IMAGE_READER_VERSION
+
+
+def test_instructions_read_standalone_invoice_as_upd_and_belarus_tn2_as_torg12():
+    from sever.image_reader import INSTRUCTIONS, ImageReading
+    from sever.image_triage import INSTRUCTIONS as TRIAGE
+    from sever.image_conflicts import TYPE_INSTRUCTIONS
+    assert "A standalone СЧЕТ-ФАКТУРА is upd" in INSTRUCTIONS
+    flat = " ".join(INSTRUCTIONS.split())
+    assert "Belarusian ТН-2" in flat and "its supplier is the organization on its Грузоотправитель line" in flat
+    assert "Standalone счет-фактура, CMR, Belarus ТН-2" not in INSTRUCTIONS
+    assert "never call it УПД" not in INSTRUCTIONS
+    assert "ТН-2" not in TRIAGE.split("out_of_scope —", 1)[1].split("\n", 1)[0]
+    assert "белорусская товарная накладная формы ТН-2" in TYPE_INSTRUCTIONS
+    schema = json.dumps(ImageReading.model_json_schema(), ensure_ascii=False)
+    assert "on a Belarusian ТН-2 without a Поставщик line" in schema
