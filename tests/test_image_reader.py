@@ -722,3 +722,11 @@ def test_instructions_read_standalone_invoice_as_upd_and_belarus_tn2_as_torg12()
     assert "белорусская товарная накладная формы ТН-2" in TYPE_INSTRUCTIONS
     schema = json.dumps(ImageReading.model_json_schema(), ensure_ascii=False)
     assert "on a Belarusian ТН-2 without a Поставщик line" in schema
+
+
+def test_organization_names_exclude_a_numeric_code_before_the_name():
+    from sever.image_reader import INSTRUCTIONS
+    from sever.image_conflicts import INSTRUCTIONS as REVIEW
+    flat = " ".join(INSTRUCTIONS.split())
+    assert "a separate numeric code printed before the name" in flat
+    assert "отдельного числового кода перед ним" in REVIEW

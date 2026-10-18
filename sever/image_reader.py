@@ -29,7 +29,7 @@ from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProvi
 from .normalize import normalize
 from .schema import DocumentResult, Evidence, FieldValue, FIELDS_BY_TYPE
 
-IMAGE_READER_VERSION = "native-source-images-model-authority-v6.3-ttn-continuation-invoice-tn2"
+IMAGE_READER_VERSION = "native-source-images-model-authority-v6.4-ttn-continuation-invoice-tn2-name-code"
 IMAGE_SCHEMA_VERSION = "native-image-model-authority-v6.1-compact-no-frame-conflict"
 EVIDENCE_ORIGIN = "model_pixel_transcription"
 
@@ -150,7 +150,8 @@ seller caption), never the value again; panel_ids identify the real images that
 contain the caption and the value. Give reason only for unreadable or not_present,
 set explicit_blank=true only for not_present, and omit confidence.
 Never silently repair characters, digits, postal indexes or names.
-Organization-name values exclude addresses and INN/KPP.
+Organization-name values exclude addresses, INN/KPP and a separate numeric code printed before the
+name on the role line (for «Грузополучатель 3320 ООО "Ромашка" 143908, …» the name is ООО "Ромашка").
 Address values retain the ENTIRE printed value of their own address field/block,
 including organization/warehouse names, INN/KPP and other printed details when
 the field combines them. Never reduce a combined address field to postal text only.

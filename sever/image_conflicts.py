@@ -26,7 +26,7 @@ from .image_reader import (EVIDENCE_ORIGIN, TRNFields, TTNFields, TORGFields,
 from .normalize import normalize
 from .schema import DocumentType, Evidence, FIELDS_BY_TYPE, FieldValue
 
-IMAGE_CONFLICTS_VERSION = "fresh-joint-source-visibility-and-field-review-v7.2-ttn-continuation-invoice-tn2"
+IMAGE_CONFLICTS_VERSION = "fresh-joint-source-visibility-and-field-review-v7.3-ttn-continuation-invoice-tn2-name-code"
 MAX_MODEL_REQUESTS = 12
 MAX_ZOOM_IMAGES = 12
 MAX_REVIEW_FRAMES = 4
@@ -50,6 +50,8 @@ INSTRUCTIONS = """
 банковские реквизиты, оператор электронного обмена или создатель документа
 внизу страницы. Плательщик, перевозчик, пункт погрузки/разгрузки и заказчик
 не заменяют грузоотправителя или грузополучателя.
+Название организации пиши без ИНН/КПП, адреса и отдельного числового кода перед ним
+(в строке «Грузополучатель 3320 ООО "Ромашка" 143908, …» название — ООО "Ромашка").
 Если в собственном блоке роли виден только адрес, а название организации
 не читается или не указано, для организационного поля верни unreadable и
 raw_value=null. Полный видимый блок сохрани в evidence_text; не подставляй
