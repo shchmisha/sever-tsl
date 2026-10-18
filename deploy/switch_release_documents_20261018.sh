@@ -5,6 +5,7 @@
 # under history/), and resumes the paused internal round-2 evaluation.
 set -euo pipefail
 NEW=${NEW:-/opt/sever-tsl/releases/20261018-documents}
+NOTE=${NOTE:-per-document export (documents.csv/json, report document table); model and reading code unchanged from 61c7274 except output}
 RUNS_DIR=/srv/sever/runs
 PORTAL_DB=/srv/sever/customer/portal.sqlite3
 LOG=${LOG:-/srv/sever/validation/switch-documents-20261018.log}
@@ -26,8 +27,8 @@ say "waiting for an idle API (current release $OLD)"
 while [ "$(active_jobs)" -gt 0 ]; do sleep 30; done
 # A job submitted in the last seconds must not be cut: check twice.
 sleep 20; while [ "$(active_jobs)" -gt 0 ]; do sleep 30; done
-printf 'deployed_at_utc=%s\nprevious_release=%s\ncommit=%s\nnote=per-document export (documents.csv/json, report document table); model and reading code unchanged from 61c7274 except output\n' \
-  "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$OLD" "$(git -C "$NEW" rev-parse HEAD)" > "$NEW/DEPLOYED.txt"
+printf 'deployed_at_utc=%s\nprevious_release=%s\ncommit=%s\nnote=%s\n' \
+  "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$OLD" "$(git -C "$NEW" rev-parse HEAD)" "$NOTE" > "$NEW/DEPLOYED.txt"
 ln -sfn "$NEW" /opt/sever-tsl/current.next && mv -T /opt/sever-tsl/current.next /opt/sever-tsl/current
 systemctl restart sever-tsl sever-portal
 ok=0; for i in $(seq 1 12); do sleep 5; if healthy; then ok=1; break; fi; done
