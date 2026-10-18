@@ -12,6 +12,7 @@ from PIL import Image
 from .coverage import REASONS, load_video_coverage
 from .documents import FIELD_LABELS, assemble_documents, customer_summary
 
+TYPE_TITLES = {"upd": "УПД", "torg12": "ТОРГ-12", "ttn": "ТТН", "trn": "ТрН"}
 SHEET_STATUS = {"recognized": "прочитано", "not_present": "поле пустое", "unreadable": "не читается",
                 "conflict": "кадры расходятся"}
 
@@ -327,16 +328,12 @@ def _documents_section(assembly: dict, esc, processing: bool, thumbs: dict) -> s
     if assembly.get("other_forms"):
         rows = "".join(
             f'<tr><td><a href="#sheet-{esc(item["page_id"])}">{item["start_s"]:.1f}–{item["end_s"]:.1f} с</a></td>'
-            f'<td>{esc(item.get("observed_form") or "Форма не прочитана")}</td>'
-            f'<td>{"сопроводительный лист" if item.get("reason") == "out_of_scope_form_confirmed" else "форма не определена"}</td></tr>'
+            f'<td>{esc(item.get("observed_form") or "—")}</td></tr>'
             for item in assembly["other_forms"]
             if isinstance(item.get("start_s"), (int, float)) and isinstance(item.get("end_s"), (int, float)))
-        other = (f'<h2 id="other-sheets">Сопроводительные листы: {len(assembly["other_forms"])}</h2>'
-                 '<p>Сертификаты, CMR, реестры и другие листы: их реквизиты не входят в выгрузку.</p>'
-                 '<div class="table"><table><thead><tr><th>Время</th><th>Что на листе</th><th>Примечание</th></tr></thead>'
-                 f'<tbody>{rows}</tbody></table></div>')
-    if assembly.get("unassigned_sheets"):
-        other += (f'<p>Листов без номера и без данных, не отнесённых к документу: {len(assembly["unassigned_sheets"])}.</p>')
+        other = (f'<details class="others" id="other-sheets"><summary>Прочие листы: {len(assembly["other_forms"])}</summary>'
+                 '<div class="table"><table><thead><tr><th>Время</th><th>Что на листе</th></tr></thead>'
+                 f'<tbody>{rows}</tbody></table></div></details>')
     return (f'<section id="documents"><h2>Документы в видео: {count}</h2>{lead}{body}{other}</section>')
 
 
@@ -389,10 +386,9 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
             registry=check.get("registry",{})
             inn_rows.append(f'<tr><td>{esc(role)}</td><td>{esc(check.get("printed_inn"))}</td><td>{esc(check.get("printed_company_name"))}</td><td>{esc(registry.get("status"))}</td><td>{esc(registry.get("reason"))}</td></tr>')
         inns='<h3>Сверка ИНН с ФНС</h3><table><thead><tr><th>Роль</th><th>Печатный ИНН</th><th>Печатное название</th><th>Результат реестра</th><th>Пояснение</th></tr></thead><tbody>'+"".join(inn_rows)+'</tbody></table><p>Проверяется текущая запись реестра; исходные реквизиты не заменяются.</p>' if inn_rows else ""
-        display_type = "Форма не подтверждена" if doc["document_type"] == "unknown" else doc["document_type"]
+        display_type = "Прочий лист" if doc["document_type"] == "unknown" else TYPE_TITLES.get(doc["document_type"], doc["document_type"])
         native_stop = (page.get("image_recognition") or {}).get("stop_reason")
-        if doc["document_type"] == "unknown" and native_stop == "out_of_scope_form_confirmed":
-            display_type = "Прочитана другая форма документа"
+
         fragments = ""
         source_frames = {frame["frame_id"]: Path(frame["path"]).resolve() for frame in page["frames"]}
         if "image_recognition" in page:
@@ -405,9 +401,7 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
                 reference = f'<a href="{url(source)}">{esc(identifier)}</a>' if source else esc(identifier)
                 observed_form = reading.get("observed_form") or "Форма не прочитана"
                 scope = reading.get("form_scope")
-                scope_note = ("Форма вне четырёх типов, предусмотренных ТЗ." if scope == "out_of_scope"
-                              else "Недостаточно видимых данных для определения формы." if scope == "insufficient_evidence"
-                              else "")
+                scope_note = ""
                 visible_text = reading.get("visible_text") or ""
                 text = f'<pre class="image-text">{esc(visible_text)}</pre>' if visible_text.strip() else '<p>Модель не вернула читаемый текст для этого вида.</p>'
                 proposals = []
@@ -415,7 +409,7 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
                     proposals.append(f'<tr><td>{esc(FIELD_LABELS.get(reading.get("document_type") or doc["document_type"], {}).get(name, name))}</td><td>{esc(field.get("raw_value"))}</td><td>{esc(SHEET_STATUS.get(field.get("status"), field.get("status")))}</td></tr>')
                 proposal_table = ('<div class="table"><table><thead><tr><th>Поле</th><th>Ответ модели на этом кадре</th><th>Статус модели</th></tr></thead><tbody>'
                                   + "".join(proposals) + '</tbody></table></div>') if proposals else ""
-                image_readings.append(f'<section class="image-reading"><p>{reference} · Определённая моделью форма: <strong>{esc(observed_form)}</strong></p><p>{esc(scope_note)}</p>{text}{proposal_table}</section>')
+                image_readings.append(f'<section class="image-reading"><p>{reference} · Форма на кадре: <strong>{esc(observed_form)}</strong></p>{text}{proposal_table}</section>')
             fragments = '<h3>Чтение изображения моделью</h3><p>Текст приведён из ответа модели для указанного кадра. Координаты доказательств относятся к изображению или фрагменту.</p>' + ("".join(image_readings) if image_readings else '<p>В результате нет сохранённого чтения изображения.</p>')
         elif doc["document_type"] == "unknown":
             excerpts = []
@@ -440,10 +434,11 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
             conflict_reviews, public_reviews = _conflict_review_sections(
                 recognition["conflict_reviews"], review_sources, report_root, esc, url)
             details_page = {**page, "image_recognition": {**recognition, "conflict_reviews": public_reviews}}
-        field_table = '<div class="table"><table><thead><tr><th>Поле</th><th>Исходное значение</th><th>Нормализованное</th><th>Статус</th><th>Доказательство</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table></div>' if rows else '<p>Подтверждённых полей нет.</p>'
+        field_table = '<div class="table"><table><thead><tr><th>Поле</th><th>Исходное значение</th><th>Нормализованное</th><th>Статус</th><th>Доказательство</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table></div>' if rows else ""
+        errors_html = f'<p class="sheet-errors">Ошибка обработки: {esc("; ".join(doc["errors"]))}</p>' if doc["errors"] else ""
         belongs = membership.get(page["page_id"])
-        role = f"лист документа {belongs}" if belongs else ("другая форма, не входит в ТЗ" if doc["document_type"] == "unknown" else "не отнесён к документу")
-        cards.append(f'<details class="sheet"><summary>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с · {esc(role)}</summary><article id="sheet-{esc(page["page_id"])}"><h2>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с</h2><p>{esc("; ".join(doc["errors"]+doc["notes"]))}</p>{views}{fragments}{conflict_reviews}<div class="frames">{"".join(frames)}</div>{field_table}{inns}<details><summary>Качество и координаты доказательств</summary><pre>{esc(json.dumps(details_page,ensure_ascii=False,indent=2))}</pre></details></article></details>')
+        role = f"лист документа {belongs}" if belongs else ("прочий лист" if doc["document_type"] == "unknown" else "лист без реквизитов")
+        cards.append(f'<details class="sheet"><summary>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с · {esc(role)}</summary><article id="sheet-{esc(page["page_id"])}"><h2>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с</h2>{errors_html}{fragments}{conflict_reviews}<div class="frames">{"".join(frames)}</div>{field_table}{inns}<details><summary>Качество и координаты доказательств</summary><pre>{esc(json.dumps(details_page,ensure_ascii=False,indent=2))}</pre></details></article></details>')
     processing = result.get("status") == "processing"
     failed = result.get("status") == "failed"
     refresh = '<meta http-equiv="refresh" content="10">' if processing else ""
@@ -459,7 +454,7 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
         title = "Север ТСЛ — результат"
         heading = "Север ТСЛ — результат обработки"
         notice = ""
-    coverage_html = ""
+    coverage_html = limit_html = ""
     coverage = result.get("video_coverage") or load_video_coverage(out / "video" / "video-analysis.json")
     if coverage.get("warning"):
         heading_text = "Видео обработано не полностью." if coverage.get("candidate_limit") else "Охват видео требует проверки."
@@ -469,7 +464,9 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
             moment = f"{timestamp:.2f} с" if isinstance(timestamp, (int, float)) else "Время не сохранено"
             details.append(f'<li>{esc(moment)} — {esc(REASONS.get(view.get("reason"), REASONS["unconfirmed_excluded_view"]))}</li>')
         exclusions = ('<details><summary>Исключённые неподтверждённые кадры</summary><ul>' + "".join(details) + '</ul></details>') if details else ""
-        coverage_html = f'<section id="video-coverage-warning" role="alert"><p><strong>{heading_text}</strong> {esc(coverage["warning"])}</p>{exclusions}</section>'
+        if coverage.get("candidate_limit"):
+            limit_html = f'<section role="alert"><p><strong>{heading_text}</strong> {esc(coverage["warning"])}</p></section>'
+        coverage_html = f'<section id="video-coverage-warning"><p><strong>Выбор кадров.</strong> {esc(coverage["warning"])}</p>{exclusions}</section>'
     links = ('<a class="btn" href="partial-results.json">Промежуточный JSON</a> <a class="btn" href="trace.jsonl">Трасса шагов</a>' if processing or failed
              else '<a class="btn primary" href="documents.csv">Скачать таблицу документов (CSV)</a> <a class="btn" href="results.json">JSON</a> <a class="btn" href="fields.csv">CSV по листам</a> <a class="btn" href="trace.jsonl">Трасса шагов</a>')
     video_name = Path(str(result["source"].get("path") or "")).name or "видео"
@@ -481,8 +478,8 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
             f' · обработка: {minutes:.0f} с</p>')
     technical = (f'<details class="technical"><summary>Технические сведения</summary><p>Проверяемые формы: УПД, ТОРГ-12, '
                  f'товарно-транспортная накладная и транспортная накладная.</p><p>{esc(result["source"]["path"])}<br>SHA-256: '
-                 f'{esc(result["source"]["sha256"])}</p><p>{len(result["pages"])} кандидатов листов · {result["elapsed_seconds"]:.1f} с обработки. '
-                 f'Уверенность модели и показатели качества не являются измеренной точностью.</p></details>')
+                 f'{esc(result["source"]["sha256"])}</p><p>{len(result["pages"])} листов · {result["elapsed_seconds"]:.1f} с обработки.</p>'
+                 f'{coverage_html}</details>')
     documents_section = _documents_section(assembly, esc, processing or failed, thumbs)
-    page=f'''<!doctype html><html lang="ru"><meta charset="utf-8">{refresh}<meta name="viewport" content="width=device-width"><title>{title}</title><style>body{{font:15px system-ui;max-width:1300px;margin:28px auto;padding:0 18px;color:#182333;background:#f4f6fa}}article{{background:white;padding:20px;margin:20px 0;border-radius:10px}}h1{{font-size:26px}}h2{{font-size:18px}}.frames{{display:flex;flex-wrap:wrap;gap:20px}}figure{{margin:0}}img{{display:block;width:auto;height:auto;max-height:380px;max-width:42vw}}figcaption{{font-size:12px;color:#586475}}.table{{overflow:auto}}table{{border-collapse:collapse;margin-top:18px;width:100%}}td,th{{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid #dae0ea}}pre{{white-space:pre-wrap;font-size:12px}}.image-text{{padding:12px;background:#f4f6fa;font-size:14px;overflow-wrap:anywhere}}a{{color:#165dca}}.doc-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}}.doc-card{{margin:0;border:1px solid #dae0ea;border-radius:12px;padding:16px 18px;background:#fbfcfe}}.doc-card header{{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:10px}}.doc-card h3{{margin:0;font-size:17px}}.badge{{background:#185c47;color:white;border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}}.state{{font-size:12px;border-radius:6px;padding:2px 8px}}.state.ok{{background:#e7f1e8;color:#2b6745}}.state.warn{{background:#fbf0d9;color:#815c13}}.doc-fields{{display:grid;grid-template-columns:minmax(140px,210px) minmax(0,1fr);gap:7px 14px;margin:0}}.doc-fields dt{{color:#586475}}.doc-fields dd{{margin:0;overflow-wrap:anywhere}}.doc-fields dd.missing{{color:#815c13;font-style:italic}}.doc-sheets-title{{font-size:12px;color:#586475;margin:14px 0 6px}}.doc-sheets{{display:flex;flex-wrap:wrap;gap:8px}}.sheet-thumb{{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:#586475;text-decoration:none}}.sheet-thumb img{{width:72px;height:96px;object-fit:cover;object-position:top;border-radius:6px;border:1px solid #dae0ea;max-width:none;max-height:none}}.noimg{{width:72px;height:96px;display:grid;place-items:center;border:1px dashed #c7cfdb;border-radius:6px}}.empty-docs{{background:#fbf6e9;color:#5c4a1f;border-radius:9px;padding:12px 14px}}@media (max-width:640px){{.doc-grid{{grid-template-columns:1fr}}.doc-fields{{grid-template-columns:1fr;gap:2px}}.doc-fields dt{{margin-top:8px}}}}.lead{{font-size:16px;margin:4px 0 14px}}.downloads{{display:flex;flex-wrap:wrap;gap:8px}}.btn{{display:inline-block;border:1px solid #c9d3e0;border-radius:8px;padding:7px 12px;text-decoration:none;background:white;font-size:13px}}.btn.primary{{background:#185c47;border-color:#185c47;color:white}}#video-coverage-warning{{background:#fbf6e9;border-radius:10px;padding:12px 16px;color:#5c4a1f}}.technical{{margin:24px 0;color:#586475}}details.sheet{{background:white;margin:10px 0;border-radius:10px;padding:10px 16px}}details.sheet>summary{{cursor:pointer;font-weight:600}}details.sheet article{{margin:0;padding:10px 0}}#documents{{background:white;padding:20px;margin:20px 0;border-radius:10px}}</style><h1>{heading}</h1>{notice}{lead}<p class="downloads">{links}</p>{documents_section}{coverage_html}<h2>Листы видео подробно</h2><p>Распознавание каждого листа с кадрами и ответами модели. Нажмите на строку листа, чтобы раскрыть его.</p>{"".join(cards)}{technical}</html>'''
+    page=f'''<!doctype html><html lang="ru"><meta charset="utf-8">{refresh}<meta name="viewport" content="width=device-width"><title>{title}</title><style>body{{font:15px system-ui;max-width:1300px;margin:28px auto;padding:0 18px;color:#182333;background:#f4f6fa}}article{{background:white;padding:20px;margin:20px 0;border-radius:10px}}h1{{font-size:26px}}h2{{font-size:18px}}.frames{{display:flex;flex-wrap:wrap;gap:20px}}figure{{margin:0}}img{{display:block;width:auto;height:auto;max-height:380px;max-width:42vw}}figcaption{{font-size:12px;color:#586475}}.table{{overflow:auto}}table{{border-collapse:collapse;margin-top:18px;width:100%}}td,th{{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid #dae0ea}}pre{{white-space:pre-wrap;font-size:12px}}.image-text{{padding:12px;background:#f4f6fa;font-size:14px;overflow-wrap:anywhere}}a{{color:#165dca}}.doc-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}}.doc-card{{margin:0;border:1px solid #dae0ea;border-radius:12px;padding:16px 18px;background:#fbfcfe}}.doc-card header{{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:10px}}.doc-card h3{{margin:0;font-size:17px}}.badge{{background:#185c47;color:white;border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}}.state{{font-size:12px;border-radius:6px;padding:2px 8px}}.state.ok{{background:#e7f1e8;color:#2b6745}}.state.warn{{background:#fbf0d9;color:#815c13}}.doc-fields{{display:grid;grid-template-columns:minmax(140px,210px) minmax(0,1fr);gap:7px 14px;margin:0}}.doc-fields dt{{color:#586475}}.doc-fields dd{{margin:0;overflow-wrap:anywhere}}.doc-fields dd.missing{{color:#815c13;font-style:italic}}.doc-sheets-title{{font-size:12px;color:#586475;margin:14px 0 6px}}.doc-sheets{{display:flex;flex-wrap:wrap;gap:8px}}.sheet-thumb{{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:#586475;text-decoration:none}}.sheet-thumb img{{width:72px;height:96px;object-fit:cover;object-position:top;border-radius:6px;border:1px solid #dae0ea;max-width:none;max-height:none}}.noimg{{width:72px;height:96px;display:grid;place-items:center;border:1px dashed #c7cfdb;border-radius:6px}}.empty-docs{{background:#fbf6e9;color:#5c4a1f;border-radius:9px;padding:12px 14px}}@media (max-width:640px){{.doc-grid{{grid-template-columns:1fr}}.doc-fields{{grid-template-columns:1fr;gap:2px}}.doc-fields dt{{margin-top:8px}}}}.lead{{font-size:16px;margin:4px 0 14px}}.downloads{{display:flex;flex-wrap:wrap;gap:8px}}.btn{{display:inline-block;border:1px solid #c9d3e0;border-radius:8px;padding:7px 12px;text-decoration:none;background:white;font-size:13px}}.btn.primary{{background:#185c47;border-color:#185c47;color:white}}details.others{{margin-top:18px}}details.others>summary{{cursor:pointer;font-weight:600}}.technical{{margin:24px 0;color:#586475}}details.sheet{{background:white;margin:10px 0;border-radius:10px;padding:10px 16px}}details.sheet>summary{{cursor:pointer;font-weight:600}}details.sheet article{{margin:0;padding:10px 0}}#documents{{background:white;padding:20px;margin:20px 0;border-radius:10px}}</style><h1>{heading}</h1>{notice}{lead}<p class="downloads">{links}</p>{limit_html}{documents_section}<h2>Листы видео подробно</h2><p>Кадры и прочитанные значения каждого листа. Нажмите на строку листа, чтобы раскрыть его.</p>{"".join(cards)}{technical}</html>'''
     (out/"report.html").write_text(page,encoding="utf-8")

@@ -212,7 +212,9 @@ def public_job(row):
     result["summary"] = documents_summary(row)
     coverage = video_coverage(row)
     result["video_coverage"] = coverage
-    warning = coverage["warning"]
+    # Only a real processing limit (part of the video unread) is shown on the card; uncertain
+    # excluded views stay in the report's technical details and in video_coverage.
+    warning = coverage["warning"] if coverage["candidate_limit"] else None
     result["coverage_warning"] = warning
     if warning:
         if result["status"] == "completed":
@@ -464,7 +466,7 @@ async def download(job_id: str, path: str, request: Request):
             banner += '<p role="alert"><strong>Обработка остановлена. Это частичный результат.</strong> Исходные чтения сохранены без изменений.</p>'
         coverage = video_coverage(row)
         warning = coverage["warning"]
-        if warning and 'id="video-coverage-warning"' not in content:
+        if warning and coverage["candidate_limit"] and 'id="video-coverage-warning"' not in content:
             # The summary contains only fixed text and validated numeric timestamps.
             heading = "Видео обработано не полностью." if coverage["candidate_limit"] else "Охват видео требует проверки."
             banner += '<p role="alert"><strong>' + heading + '</strong> ' + warning + '</p>'

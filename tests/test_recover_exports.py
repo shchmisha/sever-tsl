@@ -204,7 +204,7 @@ def test_native_image_reading_is_visible_for_all_forms_with_original_source_and_
     assert "Прочитанные фрагменты" not in visible
     assert "Координаты доказательств относятся к изображению или фрагменту" in visible
     if document_type == "unknown":
-        assert "Форма не подтверждена" in visible and "Подтверждённых полей нет" in visible
+        assert "Прочий лист" in visible and "Подтверждённых полей нет" not in visible
 
 
 def test_report_shows_each_model_proposal_even_when_final_field_conflicts(machine):
@@ -234,7 +234,7 @@ def test_failed_native_image_reading_preserves_unknown_and_error_without_ocr_fal
     page["image_recognition"] = {"views": []}
     write_report(machine["out"], result)
     visible = (machine["out"] / "report.html").read_text().split("<details>", 1)[0]
-    assert "Форма не подтверждена" in visible and "image_reading_failed" in visible
+    assert "Прочий лист" in visible and "image_reading_failed" in visible
     assert "В результате нет сохранённого чтения изображения" in visible
     assert "Legacy OCR quote" not in visible
     del page["image_recognition"]

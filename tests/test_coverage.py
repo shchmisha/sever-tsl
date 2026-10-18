@@ -63,7 +63,7 @@ def test_report_shows_coverage_in_partial_and_final_without_changing_values(tmp_
         write_report(tmp_path, result)
         report = (tmp_path / "report.html").read_text()
         assert 'id="video-coverage-warning"' in report
-        assert "Охват видео требует проверки" in report
+        assert "Выбор кадров" in report
         assert "1.25 с" in report and "4.50 с" in report
         assert "Короткий показ не подтверждён соседними кадрами" in report
         assert "Видео обработано не полностью" not in report

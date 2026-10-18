@@ -161,7 +161,7 @@
     <p class="intro">Загрузите видео с документами. Здесь появятся найденные документы — УПД, ТОРГ-12, ТТН и транспортные накладные — с их реквизитами. Исходные кадры и подробности — в отчёте.</p>
     <div class="beta" role="note">
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 9v5M10 5.8v.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <div><strong>Тестовая версия — проверьте распознанные значения.</strong><span>Ошибки и пропуски возможны. Сравнивайте реквизиты с кадрами и оставляйте замечания к результату.</span></div>
+      <div><strong>Проверка результатов</strong><span>Значения можно сверить с исходными кадрами в отчёте. Замечание к любому видео сохраняется рядом с результатом.</span></div>
     </div>
     <div class="workspace">
       <aside>
@@ -485,7 +485,7 @@
         const forms = (Array.isArray(summary.other_forms) ? summary.other_forms : []).map(form => form.form).filter(Boolean);
         const short = forms.slice(0, 6).map(form => form.length > 48 ? form.slice(0, 46).trimEnd() + '…' : form);
         const shown = short.join(', ') + (forms.length > 6 ? ' и другие' : '');
-        box.append(node('p', 'docs-other', 'Сопроводительные листы: ' + summary.other_form_sheets + (shown ? ' (' + shown + ')' : '') + '.'));
+        box.append(node('p', 'docs-other', 'Прочие листы: ' + summary.other_form_sheets + (shown ? ' (' + shown + ')' : '') + '.'));
       }
     }
     function renderJobs(jobs) {

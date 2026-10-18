@@ -359,13 +359,14 @@ def test_discarded_views_visible_as_uncertain_coverage_not_known_missing_documen
     for current in (detail, history):
         assert current["status"] == "completed"
         assert current["error"] is None
-        assert current["progress"] == "Обработка завершена; охват требует проверки"
-        assert "1.25 с" in current["coverage_warning"]
+        # Uncertain excluded views are kept in video_coverage and the report's technical details, not on the card.
+        assert current["progress"] == "Обработка завершена"
+        assert current["coverage_warning"] is None
         assert current["video_coverage"]["uncertain_view_count"] == 1
-        assert "число исключений не равно числу пропущенных документов" in current["coverage_warning"]
+        assert "число исключений не равно числу пропущенных документов" in current["video_coverage"]["warning"]
         assert "/private" not in json.dumps(current)
     response = client.get(detail["report_url"], headers=AUTH)
-    assert "Охват видео требует проверки" in response.text and "1.25 с" in response.text
+    assert "Охват видео требует проверки" not in response.text
     assert "Видео обработано не полностью" not in response.text
     assert (directory / "report.html").read_text() == report
     assert (directory / "video" / "video-analysis.json").read_bytes() == analysis_bytes
