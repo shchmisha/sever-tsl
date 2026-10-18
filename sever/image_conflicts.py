@@ -26,7 +26,7 @@ from .image_reader import (EVIDENCE_ORIGIN, TRNFields, TTNFields, TORGFields,
 from .normalize import normalize
 from .schema import DocumentType, Evidence, FIELDS_BY_TYPE, FieldValue
 
-IMAGE_CONFLICTS_VERSION = "fresh-joint-source-visibility-and-field-review-v7-no-reference-values"
+IMAGE_CONFLICTS_VERSION = "fresh-joint-source-visibility-and-field-review-v7.1-ttn-continuation"
 MAX_MODEL_REQUESTS = 12
 MAX_ZOOM_IMAGES = 12
 MAX_REVIEW_FRAMES = 4
@@ -125,7 +125,11 @@ TYPE_INSTRUCTIONS = """
 Различай четыре формы по собственному заголовку и видимому контексту:
 upd — универсальный передаточный документ; torg12 — товарная накладная формы
 ТОРГ-12; ttn — товарно-транспортная накладная формы № 1-Т, включая её оборотную
-сторону; trn — отдельная транспортная накладная. Надпись «II. ТРАНСПОРТНЫЙ
+сторону и продолжение товарного раздела (лист «Товарная накладная» с отметкой
+«Страница 2» и/или строкой «Товарная накладная имеет продолжение на ___ листах,
+на бланках за N ___» без кода ТОРГ-12); trn — отдельная транспортная накладная.
+Строка ТОРГ-12 иная: «Товарная накладная имеет приложение на ___ листах и
+содержит ___ порядковых номеров записей». Надпись «II. ТРАНСПОРТНЫЙ
 РАЗДЕЛ» обозначает раздел документа и сама по себе не подтверждает отдельную
 транспортную накладную. Читай заголовок самого листа, обозначение формы и
 окружающий контекст, а не ссылку на другой документ, соседнюю бумагу или

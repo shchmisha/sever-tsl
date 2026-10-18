@@ -30,9 +30,13 @@ from .image_reader import (EVIDENCE_ORIGIN, IMAGE_SCHEMA_VERSION, INSTRUCTIONS,
                            _NativeReadingResponse, _inverse_affine, _sha,
                            _source_transform, _validate_reading)
 
-IMAGE_AGENT_VERSION = "fresh-model-selected-batched-source-crops-v6-compact"
+IMAGE_AGENT_VERSION = "fresh-model-selected-batched-source-crops-v6.1-overview-1376"
 MAX_MODEL_REQUESTS = 8
 MAX_ZOOM_IMAGES = 8
+# The server's vision encoder resizes a 9:16 context image to 768x1376 (its
+# 1024-token floor) anyway; sending that size from the native frame keeps real
+# detail instead of letting the server upscale a 576x1024 JPEG.
+OVERVIEW_LONG_EDGE = 1376
 Coordinate = Annotated[float, Field(ge=0, le=1, allow_inf_nan=False)]
 
 
@@ -61,7 +65,7 @@ class CropRegion(BaseModel):
 
 ZOOM_INSTRUCTIONS = """
 You initially receive ONE upright context image of this frame, reduced to a
-1024-pixel long edge. Use zoom_regions to request the heading and all needed
+1376-pixel long edge. Use zoom_regions to request the heading and all needed
 caption-and-value regions together in ONE call whenever their positions are
 visible. This saves round trips while returning every region at native resolution.
 Use zoom_source for a single additional region after examining those details.
@@ -138,7 +142,7 @@ class _Source:
         box = _source_box(upright_box, self.image.size, self.rotation)
         uploaded = _rotate(self.image.crop(box), self.rotation)
         if context:
-            uploaded.thumbnail((1024, 1024), Image.Resampling.LANCZOS)
+            uploaded.thumbnail((OVERVIEW_LONG_EDGE, OVERVIEW_LONG_EDGE), Image.Resampling.LANCZOS)
         buffer = BytesIO()
         if context:
             uploaded.save(buffer, "JPEG", quality=95, subsampling=0)
@@ -167,7 +171,7 @@ class _Source:
             "rotation_clockwise_degrees": self.rotation, "upload_pixel_size": list(uploaded.size),
             "upload_sha256": digest, "upload_path": str(target),
             "source_to_upload_pixels": transform, "upload_to_source_pixels": _inverse_affine(transform),
-            "prep": {"format": "JPEG" if context else "PNG", "max_edge": 1024 if context else None,
+            "prep": {"format": "JPEG" if context else "PNG", "max_edge": OVERVIEW_LONG_EDGE if context else None,
                 **({"quality": 95, "subsampling": 0} if context else {}),
                 "resize": "LANCZOS" if context else "none", "native_source_detail": not context,
                 "exif_orientation_applied": False, "recipe": IMAGE_AGENT_VERSION}}

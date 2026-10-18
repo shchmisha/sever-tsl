@@ -141,7 +141,7 @@ def load_run(directory):
     return results, summary, per_leaf
 
 
-def score(results, truth_path, *, address_boundary="current"):
+def score(results, truth_path, *, address_boundary="current", matching="strict"):
     """Score one run against the truth video with the same source SHA-256."""
     from sever.evaluation import evaluate
 
@@ -150,9 +150,10 @@ def score(results, truth_path, *, address_boundary="current"):
     video = next((video for video in truth.get("videos", []) if video.get("source_sha256") == sha), None)
     if video is None:
         return {"status": "no_labels_for_this_video"}
-    report = evaluate(results, video, address_boundary=address_boundary)
+    report = evaluate(results, video, address_boundary=address_boundary, matching=matching)
     labelled = [value for value in report["field_accuracy"].values()]
     return {"status": "scored", "truth_video": video.get("source_id"), "address_boundary": address_boundary,
+            "matching": matching, "bracket_matches": report.get("bracket_matches", []),
             "labelled_fields": {"correct": sum(v["correct"] for v in labelled), "total": sum(v["total"] for v in labelled)},
             "abstention_checks": {key: report["abstention_checks"][key] for key in
                                   ("correct", "total", "undetected_rows", "semantic_pending_rows", "failures")},
@@ -196,11 +197,11 @@ def _ratio(new, old):
     return round(new / old, 3) if isinstance(new, (int, float)) and isinstance(old, (int, float)) and old else None
 
 
-def compare(a_dir, b_dir, *, label_a="A", label_b="B", truth=None, address_boundary=("current", "current")):
+def compare(a_dir, b_dir, *, label_a="A", label_b="B", truth=None, address_boundary=("current", "current"), matching="strict"):
     runs = {}
     for label, directory, boundary in ((label_a, a_dir, address_boundary[0]), (label_b, b_dir, address_boundary[1])):
         results, summary, per_leaf = load_run(directory)
-        accuracy = score(results, truth, address_boundary=boundary) if truth and summary["complete"] else (
+        accuracy = score(results, truth, address_boundary=boundary, matching=matching) if truth and summary["complete"] else (
             {"status": "run_incomplete_not_scored"} if truth else {"status": "no_truth_supplied"})
         runs[label] = {"summary": summary, "accuracy": accuracy, "per_leaf": per_leaf}
     a, b = runs[label_a]["summary"], runs[label_b]["summary"]
@@ -267,7 +268,8 @@ def markdown(report):
     lines += [f"| Calls: {kind} | {cell(sa['trace']['call_kinds'].get(kind, 0))} | {cell(sb['trace']['call_kinds'].get(kind, 0))} | |" for kind in kinds]
     if ra["accuracy"].get("status") == "scored" or rb["accuracy"].get("status") == "scored":
         boundaries = [run["accuracy"].get("address_boundary", "current") for run in (ra, rb)]
-        lines += ["", f"| Accuracy (provisional labels; address boundary {a}: {boundaries[0]}, {b}: {boundaries[1]}) | " + a + " | " + b + " |", "|---|---|---|"]
+        matching = ra["accuracy"].get("matching", "strict")
+        lines += ["", f"| Accuracy (provisional labels; matching {matching}; address boundary {a}: {boundaries[0]}, {b}: {boundaries[1]}) | " + a + " | " + b + " |", "|---|---|---|"]
         intervals = {"labelled_fields": "labeled_fields", "type_accuracy_targets": "type_accuracy_targets",
                      "unknown_rejection": "unknown_rejection", "e2e_on_fully_labeled": "e2e_on_fully_labeled",
                      "intervals_detected": "detection", "abstention_checks": "abstention_checks"}
@@ -296,6 +298,11 @@ def markdown(report):
                     changed.append(f"- {item_a['truth_page_id']} {field}: {a}={'ok' if left else 'wrong'}, {b}={'ok' if right else 'wrong'}")
         if changed:
             lines += ["", "Fields that changed:", *changed]
+        brackets = [(label, m) for label, run in ((a, ra), (b, rb)) for m in run["accuracy"].get("bracket_matches", [])]
+        if brackets:
+            lines += ["", "Matched through a boundary bracket (check by hand):",
+                      *[f"- {label}: {m['truth_page_id']} primary at {m['primary_timestamp_s']:.2f} s, core {m['core_interval_s'][0]:.2f}–{m['core_interval_s'][1]:.2f} s"
+                        for label, m in brackets]]
     else:
         lines += ["", f"Accuracy: {ra['accuracy'].get('status')} / {rb['accuracy'].get('status')}"]
     lines += ["", "| Leaf | " + a + " requests | " + b + " requests | " + a + " s | " + b + " s | " + a + " stop | " + b + " stop |",
@@ -323,13 +330,15 @@ def main(argv=None):
     parser.add_argument("--address-boundary-a", choices=["current", "legacy"], default="current",
                         help="Score run A's address fields against legacy_value (pre-2026-10-11 postal-only labels)")
     parser.add_argument("--address-boundary-b", choices=["current", "legacy"], default="current")
+    parser.add_argument("--matching", choices=["strict", "bracket"], default="strict",
+                        help="bracket: a primary frame inside a label's boundary bracket may match it (reported separately)")
     parser.add_argument("--out", required=True, type=Path)
     parser.add_argument("--markdown", type=Path)
     args = parser.parse_args(argv)
     if args.label_a == args.label_b:
         parser.error("Labels must differ")
     report = compare(args.a, args.b, label_a=args.label_a, label_b=args.label_b, truth=args.truth,
-                     address_boundary=(args.address_boundary_a, args.address_boundary_b))
+                     address_boundary=(args.address_boundary_a, args.address_boundary_b), matching=args.matching)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.markdown:

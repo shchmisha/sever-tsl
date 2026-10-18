@@ -123,7 +123,8 @@ def test_tool_output_two_actual_requests_and_full_proof_without_native_grammar(f
     assert result["recognition"]["zoom_images"] == 1
     proof = result["recognition"]["pixel_proof"]
     first_image = next(item for item in content(calls[0]) if isinstance(item, BinaryContent))
-    assert Image.open(BytesIO(first_image.data)).size == (640, 1024)
+    assert Image.open(BytesIO(first_image.data)).size == (860, 1376)
+    assert proof["panels"]["context_r90"]["prep"]["max_edge"] == 1376
     images = [item for item in content(calls[1]) if isinstance(item, BinaryContent)]
     for actual, panel in zip(images, proof["panels"].values(), strict=True):
         assert hashlib.sha256(actual.data).hexdigest() == panel["upload_sha256"]

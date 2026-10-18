@@ -700,3 +700,10 @@ def test_unknown_reading_without_visible_text_keeps_its_literal_heading():
              "bbox": [0, 0, 1, 1]} for identifier in panel_ids}}
     result = _validate_reading(decision, proof, source_id="s", page_id="p", model_identity="m")
     assert result["recognition"]["visible_text"] == payload["heading_text"]
+
+
+def test_instructions_name_the_ttn_continuation_sheet():
+    from sever.image_reader import IMAGE_READER_VERSION, INSTRUCTIONS
+    assert "Товарная накладная имеет продолжение на ___ листах, на бланках за N ___" in INSTRUCTIONS
+    assert "имеет приложение на ___ листах" in INSTRUCTIONS
+    assert "ttn-continuation" in IMAGE_READER_VERSION

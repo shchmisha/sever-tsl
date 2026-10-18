@@ -372,3 +372,42 @@ def test_missing_heading_does_not_hide_contradictory_own_field():
     assert result.document_type == "upd"
     assert result.fields["invoice_number"].status == "conflict"
     assert len(meta["field_confirmations"]["invoice_number"]["value_groups"]) == 2
+
+
+def test_numeric_strong_agreement_accepts_many_identical_views_over_one_glyph_dissent():
+    items = [reading(f"f{n}", values={"invoice_number": "2559"}) for n in range(3)]
+    items.append(reading("f9", values={"invoice_number": "2660"}))
+    result, meta = fuse(items)
+    field = result.fields["invoice_number"]
+    assert field.status == "recognized" and field.raw_value == "2559"
+    assert "strong agreement" in field.reason.lower() and "preserved" in field.reason
+    assert {e.text for e in field.evidence} == {"2559", "2660"}
+    strong = meta["field_confirmations"]["invoice_number"]["strong_agreement"]
+    assert strong["accepted_comparison"] == "2559" and strong["agreeing_frame_ids"] == ["f0", "f1", "f2"]
+    assert strong["dissent"] == [{"comparison": "2660", "raw_values": ["2660"], "frame_ids": ["f9"]}]
+    assert strong["policy"]["version"] == "numeric-strong-agreement-v1"
+    # Every raw reading, including the dissent, remains in the record.
+    assert [item["fields"]["invoice_number"]["raw_value"] for item in meta["readings"]] == ["2559"] * 3 + ["2660"]
+
+
+@pytest.mark.parametrize("agreeing,dissent", [
+    (2, ["2660"]),                 # fewer than three agreeing views
+    (3, ["2660", "2650"]),         # two dissenting views
+    (3, ["9999"]),                 # dissent too far from the leader (edit distance 4)
+    (5, ["2660", "2560"]),         # ratio 5:2 is below 3:1
+])
+def test_numeric_strong_agreement_stays_a_conflict_outside_its_bounds(agreeing, dissent):
+    items = [reading(f"f{n}", kind="ttn", values={"document_number": "2559"}) for n in range(agreeing)]
+    items += [reading(f"d{n}", kind="ttn", values={"document_number": value}) for n, value in enumerate(dissent)]
+    result, meta = fuse(items)
+    assert result.fields["document_number"].status == "conflict"
+    assert "strong_agreement" not in meta["field_confirmations"]["document_number"]
+
+
+def test_strong_agreement_never_applies_to_names_addresses_or_blank_claims():
+    names = [reading(f"f{n}", values={"consignee": 'ООО "Получатель"'}) for n in range(4)]
+    names.append(reading("f9", values={"consignee": 'ООО "Получитель"'}))
+    assert fuse(names)[0].fields["consignee"].status == "conflict"
+    blank = [reading(f"f{n}", values={"invoice_number": "2559"}) for n in range(3)]
+    blank.append(reading("f9", absent=["invoice_number"]))
+    assert fuse(blank)[0].fields["invoice_number"].status == "conflict"

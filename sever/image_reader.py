@@ -29,7 +29,7 @@ from .agents import (AgentConfig, AnalysisError, BatchBudgetExceeded, FatalProvi
 from .normalize import normalize
 from .schema import DocumentResult, Evidence, FieldValue, FIELDS_BY_TYPE
 
-IMAGE_READER_VERSION = "native-source-images-model-authority-v6.1-compact"
+IMAGE_READER_VERSION = "native-source-images-model-authority-v6.2-ttn-continuation"
 IMAGE_SCHEMA_VERSION = "native-image-model-authority-v6.1-compact-no-frame-conflict"
 EVIDENCE_ORIGIN = "model_pixel_transcription"
 
@@ -70,7 +70,15 @@ unreadable с raw_value=null. Ничего не восстанавливай п�
 Выбери document_type по собственному заголовку читаемого документа:
 «Транспортная накладная» — trn; «Товарно-транспортная накладная»,
 «форма 1-Т» и её обозначенная оборотная сторона — ttn. Это разные формы:
-не сокращай «Транспортная накладная» до ttn. Для trn обязательны все пять
+не сокращай «Транспортная накладная» до ttn.
+Продолжение товарного раздела ТТН формы 1-Т узнаётся по строке
+«Товарная накладная имеет продолжение на ___ листах, на бланках за N ___»
+и/или отметке «Страница 2» под заголовком «Товарная накладная» без кода
+ТОРГ-12: такой лист — ttn (продолжение), а не torg12 и не unknown. У ТОРГ-12
+иная строка: «Товарная накладная имеет приложение на ___ листах и содержит
+___ порядковых номеров записей». Если на таком продолжении свои реквизиты
+сторон, номера и даты не напечатаны, верни для них unreadable с причиной
+«напечатаны на первой странице». Для trn обязательны все пять
 полей, включая customer — «Заказчик услуг, связанных с перевозкой груза».
 «Составитель документа», продавец, покупатель, плательщик и подписант
 не становятся грузоотправителем или грузополучателем без явной подписи роли
@@ -106,7 +114,9 @@ are unknown. A body reference to a form does not establish this page's own type.
 observed_form quotes the literal own visible form name, never an assumed alias.
 A standalone СЧЕТ-ФАКТУРА without a visibly printed own УПД identifier/status and
 transfer section is unknown; never call it УПД just because its invoice fields
-look similar. Generic Товарная накладная alone is neither ТОРГ-12 nor TTN.
+look similar. Generic Товарная накладная alone is neither ТОРГ-12 nor TTN, except
+the 1-Т continuation sheet described above (line «Товарная накладная имеет продолжение
+на ___ листах, на бланках за N ___» or «Страница 2» without a ТОРГ-12 code), which is ttn.
 Unknown must still transcribe readable visible heading/header text and observed_form,
 with fields={}. For unknown set form_scope=out_of_scope only when the visible
 own heading establishes a different readable form. Use insufficient_evidence

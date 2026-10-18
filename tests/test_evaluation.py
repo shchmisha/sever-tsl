@@ -367,3 +367,33 @@ def test_legacy_address_boundary_scores_against_the_legacy_label_only_when_asked
     assert evaluate({"pages": [full]}, truth, address_boundary="legacy")["labeled_fields"]["correct"] == 0
     with pytest.raises(ValueError, match="address_boundary"):
         evaluate({"pages": [full]}, truth, address_boundary="old")
+
+
+def test_bracket_matching_credits_a_primary_just_outside_an_approximate_boundary():
+    truth = {"pages": [
+        {"page_id": "a", "start_s": 19.1, "end_s": 21.17, "document_type": "ttn",
+         "boundary_uncertainty": {"start_bracket_s": [18.4, 19.8], "end_bracket_s": [20.66, 21.69]},
+         "fields": {"document_number": "2560"}},
+        {"page_id": "b", "start_s": 21.17, "end_s": 26.3, "document_type": "ttn",
+         "boundary_uncertainty": {"start_bracket_s": [20.66, 21.69], "end_bracket_s": [25.9, 26.8]},
+         "fields": {"document_number": "2560"}}]}
+    first = _prediction("ttn", {"document_number": "2560"}, timestamp=21.32, start_s=18.93, end_s=21.59)
+    second = _prediction("ttn", {"document_number": "2560"}, timestamp=23.99, start_s=21.59, end_s=26.39)
+    second["page_id"] = "second"
+    strict = evaluate({"pages": [first, second]}, truth)
+    assert strict["detection"]["correct"] == 1 and strict["unmatched_predictions"] == 1
+    assert strict["matching"] == "strict" and strict["bracket_matches"] == []
+    bracket = evaluate({"pages": [first, second]}, truth, matching="bracket")
+    assert bracket["detection"]["correct"] == 2 and bracket["unmatched_predictions"] == 0
+    assert bracket["labeled_fields"] == {"correct": 2, "total": 2, "rate": 1.0}
+    assert bracket["bracket_matches"] == [{"truth_page_id": "a", "primary_timestamp_s": 21.32,
+                                           "prediction_interval_s": [18.93, 21.59],
+                                           "core_interval_s": [19.1, 21.17], "bracket_window_s": [18.4, 21.69]}]
+    # A primary owned by a neighbour's core is taken only when this leaf overlaps
+    # the label more than that neighbour; the second prediction stays with "b".
+    only_second = evaluate({"pages": [second]}, truth, matching="bracket")
+    assert only_second["detection"]["correct"] == 1 and only_second["bracket_matches"] == []
+    mostly_b = _prediction("ttn", {"document_number": "2560"}, timestamp=21.32, start_s=21.0, end_s=25.0)
+    assert evaluate({"pages": [mostly_b]}, truth, matching="bracket")["bracket_matches"] == []
+    with pytest.raises(ValueError, match="matching"):
+        evaluate({"pages": []}, truth, matching="loose")

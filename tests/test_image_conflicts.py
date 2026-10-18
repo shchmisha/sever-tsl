@@ -577,7 +577,7 @@ def test_batched_review_overflow_returns_explicit_nonimage_declines(frames, tmp_
 
 
 def test_joint_instructions_forbid_reference_markers_as_values():
-    from sever.image_conflicts import IMAGE_CONFLICTS_VERSION, INSTRUCTIONS
+    from sever.image_conflicts import IMAGE_CONFLICTS_VERSION, INSTRUCTIONS, TYPE_INSTRUCTIONS
     assert "raw_value НИКОГДА не содержит слов «он же»" in INSTRUCTIONS
     assert "без префикса «он же;»" in INSTRUCTIONS
-    assert IMAGE_CONFLICTS_VERSION.endswith("v7-no-reference-values")
+    assert "ttn-continuation" in IMAGE_CONFLICTS_VERSION and "имеет продолжение" in TYPE_INSTRUCTIONS

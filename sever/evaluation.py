@@ -118,15 +118,38 @@ def _selected_frame_quality(actual: list[dict]) -> dict:
     }
 
 
-def evaluate(result: dict, truth: dict, *, address_boundary: str = "current") -> dict:
+def _label_window(item: dict, matching: str) -> tuple[float, float]:
+    """The time window a prediction's primary frame must fall in to match this label.
+
+    "strict" uses the hand-drawn interval. "bracket" widens it to the label's own
+    boundary brackets (midpoints of adjacent sampled frames are approximate), so a
+    primary frame just outside an approximate boundary still counts as this sheet.
+    """
+    start, end = item["start_s"], item["end_s"]
+    if matching == "bracket":
+        brackets = item.get("boundary_uncertainty") or {}
+        start_bracket, end_bracket = brackets.get("start_bracket_s"), brackets.get("end_bracket_s")
+        if isinstance(start_bracket, list) and len(start_bracket) == 2:
+            start = min(start, float(start_bracket[0]))
+        if isinstance(end_bracket, list) and len(end_bracket) == 2:
+            end = max(end, float(end_bracket[1]))
+    return start, end
+
+
+def evaluate(result: dict, truth: dict, *, address_boundary: str = "current", matching: str = "strict") -> dict:
     """Score one run against one labelled video.
 
     address_boundary="legacy" scores a field against its ``legacy_value`` (the
     label under the pre-2026-10-11 postal-only boundary) when the label has one;
     use it only for runs whose instructions predate that rule.
+    matching="bracket" lets a primary frame inside a label's boundary bracket
+    match that label when no label's core interval contains it; the strict
+    one-to-one rule and the preference for the core interval are kept.
     """
     if address_boundary not in {"current", "legacy"}:
         raise ValueError("address_boundary must be 'current' or 'legacy'")
+    if matching not in {"strict", "bracket"}:
+        raise ValueError("matching must be 'strict' or 'bracket'")
     if truth.get("source_sha256") and result.get("source", {}).get("sha256") != truth["source_sha256"]:
         raise ValueError("Ground truth source hash does not match the processed video")
     expected = truth.get("pages", [])
@@ -143,6 +166,7 @@ def evaluate(result: dict, truth: dict, *, address_boundary: str = "current") ->
     abstention = {"correct": 0, "total": 0, "undetected": 0, "semantic_pending": 0,
                   "failures": [], "by_field": defaultdict(lambda: {"correct": 0, "total": 0})}
     target_total = unknown_total = unknown_correct = 0
+    bracket_matches = []
     for item in expected:
         start, end = item["start_s"], item["end_s"]
         choices = []
@@ -153,6 +177,35 @@ def evaluate(result: dict, truth: dict, *, address_boundary: str = "current") ->
             if timestamp is not None and start <= timestamp < end:
                 choices.append((abs((start + end) / 2 - timestamp), i))
         index = min(choices)[1] if choices else None
+        if index is None and matching == "bracket":
+            # A primary inside this label's boundary bracket may be taken only
+            # when the prediction's own leaf interval overlaps this label more
+            # than any other label whose core contains that primary, so a
+            # neighbour sheet is never stolen through an approximate boundary.
+            wide_start, wide_end = _label_window(item, matching)
+            fallback = []
+            for i, frame in enumerate(primary_frames):
+                if i in used or frame is None:
+                    continue
+                timestamp = frame.get("timestamp_s")
+                if timestamp is None or not wide_start <= timestamp < wide_end:
+                    continue
+                page = actual[i]
+                p_start, p_end = page.get("start_s"), page.get("end_s")
+
+                def overlap(label):
+                    if p_start is None or p_end is None:
+                        return 0.0
+                    return max(0.0, min(float(p_end), label["end_s"]) - max(float(p_start), label["start_s"]))
+                owners = [other for other in expected if other is not item and other["start_s"] <= timestamp < other["end_s"]]
+                if all(overlap(item) > overlap(other) for other in owners):
+                    fallback.append((abs((start + end) / 2 - timestamp), i))
+            if fallback:
+                index = min(fallback)[1]
+                bracket_matches.append({"truth_page_id": item.get("page_id"),
+                                        "primary_timestamp_s": primary_frames[index].get("timestamp_s"),
+                                        "prediction_interval_s": [actual[index].get("start_s"), actual[index].get("end_s")],
+                                        "core_interval_s": [start, end], "bracket_window_s": [wide_start, wide_end]})
         prediction = actual[index].get("result", {}) if index is not None else {}
         failure = _processing_failures(prediction)
         if index is not None:
@@ -258,6 +311,7 @@ def evaluate(result: dict, truth: dict, *, address_boundary: str = "current") ->
     report = {
         "ground_truth_provenance": truth.get("provenance", "independent manual provisional"),
         "address_boundary": address_boundary,
+        "matching": matching, "bracket_matches": bracket_matches,
         "customer_approved": truth.get("customer_approved", False),
         "unit": "visible leaf interval, including repeat showings; one-to-one match by primary selected-frame timestamp",
         "frame_document_detection_rate": _metric(usable_correct, usable_total,
