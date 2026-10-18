@@ -1,0 +1,342 @@
+{
+  "version": "documents-by-type-and-own-number-v2-number-variants",
+  "policy": {
+    "version": "documents-by-type-and-own-number-v2-number-variants",
+    "identity": "document type plus its own number as read on the sheet, compared after formatting-only normalization",
+    "number_variants": "readings with the same digits whose letters differ by at most two look-alike or repeated-letter edits are one document unless their dates disagree; the number shown is the reading on most sheets",
+    "sheets_without_number": "joined to the document of the same type shown immediately before, else immediately after, else to the only document of that type in the video; a sheet with values and no such document becomes its own document, a sheet with no values is listed as unassigned",
+    "field_value": "taken unchanged from the sheets that read it; when sheets disagree the value supported by more sheets is kept and the others are listed; equal support is reported as a conflict without a value",
+    "unread_on_a_sheet": "a sheet that does not show a field does not vote; only recognized and printed-blank readings count",
+    "out_of_scope_forms": "sheets of forms outside the four contract types are not documents and are listed separately"
+  },
+  "documents": [
+    {
+      "document_id": "doc-001",
+      "document_type": "upd",
+      "document_type_label": "УПД",
+      "number": "2560",
+      "date": "20 августа 2026 г.",
+      "number_readings_joined": [
+        "2560"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "invoice_number": {
+          "status": "recognized",
+          "raw_value": "2560",
+          "normalized_value": "2560",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004",
+            "page-0013",
+            "page-0015"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "invoice_date": {
+          "status": "recognized",
+          "raw_value": "20 августа 2026 г.",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004",
+            "page-0013",
+            "page-0015"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "normalized_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor_address": {
+          "status": "recognized",
+          "raw_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+          "normalized_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом No 158, квартира 59",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee_address": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0001",
+          "start_s": 0.0,
+          "end_s": 3.9982944444444444,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0004",
+          "start_s": 11.99488888888889,
+          "end_s": 18.925261111111112,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0013",
+          "start_s": 60.223861111111106,
+          "end_s": 66.34938333333332,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0015",
+          "start_s": 69.80936666666666,
+          "end_s": 72.808,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 0.0,
+      "end_s": 72.808,
+      "errors": []
+    },
+    {
+      "document_id": "doc-002",
+      "document_type": "ttn",
+      "document_type_label": "ТТН",
+      "number": "2560",
+      "date": "20.08.2026",
+      "number_readings_joined": [
+        "2560"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "normalized_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "2560",
+          "normalized_value": "2560",
+          "source_page_ids": [
+            "page-0002",
+            "page-0003",
+            "page-0005",
+            "page-0006"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "20.08.2026",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0002",
+          "start_s": 3.9982944444444444,
+          "end_s": 8.79625,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0003",
+          "start_s": 8.79625,
+          "end_s": 11.99488888888889,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0005",
+          "start_s": 18.925261111111112,
+          "end_s": 21.5908,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0006",
+          "start_s": 21.5908,
+          "end_s": 26.38875,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0012",
+          "start_s": 56.75975555555556,
+          "end_s": 60.223861111111106,
+          "document_type": "ttn",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [],
+          "errors": []
+        },
+        {
+          "page_id": "page-0014",
+          "start_s": 66.34938333333332,
+          "end_s": 69.80936666666666,
+          "document_type": "ttn",
+          "assignment": "only_document_of_this_type",
+          "fields_with_values": [],
+          "errors": []
+        }
+      ],
+      "start_s": 3.9982944444444444,
+      "end_s": 69.80936666666666,
+      "errors": []
+    }
+  ],
+  "unassigned_sheets": [],
+  "other_forms": [
+    {
+      "page_id": "page-0007",
+      "start_s": 26.38875,
+      "end_s": 38.90178888888889,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0008",
+      "start_s": 38.90178888888889,
+      "end_s": 42.36698333333334,
+      "observed_form": "АКТ КАРАНТИННОГО ФИТОСАНИТАРНОГО КОНТРОЛЯ (НАДЗОРА)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0009",
+      "start_s": 42.36698333333334,
+      "end_s": 45.832161111111105,
+      "observed_form": "Приложение к акту карантинного (фитосанитарного) контроля (надзора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0010",
+      "start_s": 45.832161111111105,
+      "end_s": 52.22943333333333,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0011",
+      "start_s": 52.22943333333333,
+      "end_s": 56.75975555555556,
+      "observed_form": "Письмо Россельхознадзора",
+      "reason": "out_of_scope_form_confirmed"
+    }
+  ],
+  "summary": {
+    "documents": 2,
+    "complete_documents": 2,
+    "documents_by_type": {
+      "upd": 1,
+      "ttn": 1
+    },
+    "sheets_total": 15,
+    "sheets_in_documents": 10,
+    "unassigned_sheets": 0,
+    "other_form_sheets": 5
+  }
+}

@@ -1,0 +1,629 @@
+{
+  "version": "documents-by-type-and-own-number-v2-number-variants",
+  "policy": {
+    "version": "documents-by-type-and-own-number-v2-number-variants",
+    "identity": "document type plus its own number as read on the sheet, compared after formatting-only normalization",
+    "number_variants": "readings with the same digits whose letters differ by at most two look-alike or repeated-letter edits are one document unless their dates disagree; the number shown is the reading on most sheets",
+    "sheets_without_number": "joined to the document of the same type shown immediately before, else immediately after, else to the only document of that type in the video; a sheet with values and no such document becomes its own document, a sheet with no values is listed as unassigned",
+    "field_value": "taken unchanged from the sheets that read it; when sheets disagree the value supported by more sheets is kept and the others are listed; equal support is reported as a conflict without a value",
+    "unread_on_a_sheet": "a sheet that does not show a field does not vote; only recognized and printed-blank readings count",
+    "out_of_scope_forms": "sheets of forms outside the four contract types are not documents and are listed separately"
+  },
+  "documents": [
+    {
+      "document_id": "doc-001",
+      "document_type": "upd",
+      "document_type_label": "УПД",
+      "number": "2559",
+      "date": "20 августа 2026 г.",
+      "number_readings_joined": [
+        "2559"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "invoice_number": {
+          "status": "recognized",
+          "raw_value": "2559",
+          "normalized_value": "2559",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004",
+            "page-0009",
+            "page-0011"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "invoice_date": {
+          "status": "recognized",
+          "raw_value": "20 августа 2026 г.",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004",
+            "page-0009",
+            "page-0011"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "normalized_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor_address": {
+          "status": "recognized",
+          "raw_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом № 158, квартира 59",
+          "normalized_value": "454004, Челябинская обл, Челябинск г, Братьев Кашириных ул, дом No 158, квартира 59",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee_address": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0001",
+          "start_s": 0.0,
+          "end_s": 4.5314,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0004",
+          "start_s": 14.660422222222223,
+          "end_s": 20.258027777777777,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0009",
+          "start_s": 35.71038333333333,
+          "end_s": 39.16003333333333,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0011",
+          "start_s": 43.409333333333336,
+          "end_s": 45.530255555555556,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 0.0,
+      "end_s": 45.530255555555556,
+      "errors": []
+    },
+    {
+      "document_id": "doc-002",
+      "document_type": "ttn",
+      "document_type_label": "ТТН",
+      "number": "2559",
+      "date": "20.08.2026",
+      "number_readings_joined": [
+        "2559"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "normalized_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "2559",
+          "normalized_value": "2559",
+          "source_page_ids": [
+            "page-0002",
+            "page-0003",
+            "page-0005",
+            "page-0006"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "20.08.2026",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0002",
+          "start_s": 4.5314,
+          "end_s": 10.928672222222222,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0003",
+          "start_s": 10.928672222222222,
+          "end_s": 14.660422222222223,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0005",
+          "start_s": 20.258027777777777,
+          "end_s": 25.055977777777777,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0006",
+          "start_s": 25.055977777777777,
+          "end_s": 29.85393888888889,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0008",
+          "start_s": 32.24905,
+          "end_s": 35.71038333333333,
+          "document_type": "ttn",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [],
+          "errors": []
+        },
+        {
+          "page_id": "page-0010",
+          "start_s": 39.16003333333333,
+          "end_s": 43.409333333333336,
+          "document_type": "ttn",
+          "assignment": "only_document_of_this_type",
+          "fields_with_values": [],
+          "errors": []
+        }
+      ],
+      "start_s": 4.5314,
+      "end_s": 43.409333333333336,
+      "errors": []
+    }
+  ],
+  "unassigned_sheets": [],
+  "other_forms": [
+    {
+      "page_id": "page-0007",
+      "start_s": 29.85393888888889,
+      "end_s": 32.24905,
+      "observed_form": "ДОВЕРЕННОСТЬ № 6",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0012",
+      "start_s": 45.530255555555556,
+      "end_s": 48.983938888888886,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0013",
+      "start_s": 48.983938888888886,
+      "end_s": 51.38291666666667,
+      "observed_form": "АКТ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0014",
+      "start_s": 51.38291666666667,
+      "end_s": 55.64776111111111,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (надзора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0015",
+      "start_s": 55.64776111111111,
+      "end_s": 58.84639444444444,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (надзора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0016",
+      "start_s": 58.84639444444444,
+      "end_s": 63.64435,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0017",
+      "start_s": 63.64435,
+      "end_s": 67.37609444444445,
+      "observed_form": "АКТ КАРАНТИННОГО ФИТОСАНИТАРНОГО КОНТРОЛЯ (НАДЗОРА)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0018",
+      "start_s": 67.37609444444445,
+      "end_s": 69.50852222222223,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (надзора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0019",
+      "start_s": 69.50852222222223,
+      "end_s": 74.03991666666667,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0020",
+      "start_s": 74.03991666666667,
+      "end_s": 77.23856111111111,
+      "observed_form": "АКТ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0021",
+      "start_s": 77.23856111111111,
+      "end_s": 79.9040888888889,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (выбора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0022",
+      "start_s": 79.9040888888889,
+      "end_s": 82.56961666666666,
+      "observed_form": "Доверенность Б/Н",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0023",
+      "start_s": 82.56961666666666,
+      "end_s": 88.16722777777778,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0024",
+      "start_s": 88.16722777777778,
+      "end_s": 93.76484444444444,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0025",
+      "start_s": 93.76484444444444,
+      "end_s": 96.43037222222222,
+      "observed_form": "АКТ КАРАНТИННОГО ФИТОСАНИТАРНОГО КОНТРОЛЯ (НАДЗОРА)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0026",
+      "start_s": 96.43037222222222,
+      "end_s": 99.36245555555556,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (надзора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0027",
+      "start_s": 99.36245555555556,
+      "end_s": 100.42866666666667,
+      "observed_form": "ФЕДЕРАЛЬНАЯ СЛУЖБА ПО ВЕТЕРИНАРНОМУ И ФИТОСАНИТАРНОМУ НАДЗОРУ (Россельхознадзор)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0028",
+      "start_s": 100.42866666666667,
+      "end_s": 100.96177777777778,
+      "observed_form": "Письмо ФГБУ «ВНИИЗЖ» / Россельхознадзора",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0029",
+      "start_s": 100.96177777777778,
+      "end_s": 102.82765,
+      "observed_form": "ФЕДЕРАЛЬНАЯ СЛУЖБА ПО ВЕТЕРИНАРНОМУ И ФИТОСАНИТАРНОМУ НАДЗОРУ (Россельхознадзор)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0030",
+      "start_s": 102.82765,
+      "end_s": 106.02628333333334,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0031",
+      "start_s": 106.02628333333334,
+      "end_s": 108.42526111111111,
+      "observed_form": "АКТ КАРАНТИННОГО ФИТОСАНИТАРНОГО КОНТРОЛЯ (НАДЗОРА)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0032",
+      "start_s": 108.42526111111111,
+      "end_s": 111.6239,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (запора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0033",
+      "start_s": 111.6239,
+      "end_s": 113.75631666666666,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (выбора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0034",
+      "start_s": 113.75631666666666,
+      "end_s": 117.22150555555555,
+      "observed_form": "ЕВРАЗИЙСКИЙ ЭКОНОМИЧЕСКИЙ СОЮЗ ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0035",
+      "start_s": 117.22150555555555,
+      "end_s": 119.35392777777778,
+      "observed_form": "АКТ КАРАНТИННОГО ФИТОСАНИТАРНОГО КОНТРОЛЯ (НАДЗОРА)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0036",
+      "start_s": 119.35392777777778,
+      "end_s": 121.75291111111112,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (патрона)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0037",
+      "start_s": 121.75291111111112,
+      "end_s": 127.08397222222223,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0038",
+      "start_s": 127.08397222222223,
+      "end_s": 131.0822611111111,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0039",
+      "start_s": 131.0822611111111,
+      "end_s": 134.28090555555556,
+      "observed_form": "ФЕДЕРАЛЬНАЯ СЛУЖБА ПО ВЕТЕРИНАРНОМУ И ФИТОСАНИТАРНОМУ НАДЗОРУ (Россельхознадзор)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0040",
+      "start_s": 134.28090555555556,
+      "end_s": 138.27919444444444,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0041",
+      "start_s": 138.27919444444444,
+      "end_s": 141.21128333333334,
+      "observed_form": "АКТ КАРАНТИННОГО ФИТОСАНИТАРНОГО КОНТРОЛЯ (НАДЗОРА)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0042",
+      "start_s": 141.21128333333334,
+      "end_s": 143.87681111111112,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (надзора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0043",
+      "start_s": 143.87681111111112,
+      "end_s": 147.87511111111112,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0044",
+      "start_s": 147.87511111111112,
+      "end_s": 148.40821666666668,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0045",
+      "start_s": 148.40821666666668,
+      "end_s": 150.54063333333335,
+      "observed_form": "АКТ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0046",
+      "start_s": 150.54063333333335,
+      "end_s": 152.93961666666667,
+      "observed_form": "Приложение к акту сверки взаиморасчетов",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0047",
+      "start_s": 152.93961666666667,
+      "end_s": 156.93790555555557,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0048",
+      "start_s": 156.93790555555557,
+      "end_s": 159.3368888888889,
+      "observed_form": "Письмо/ответ: ФЕДЕРАЛЬНАЯ СЛУЖБА ПО ВЕТЕРИНАРНОМУ И ФИТОСАНИТАРНОМУ НАДЗОРУ (Россельхознадзор), СЕВЕРОМОРСКОЕ МЕЖРЕГИОНАЛЬНОЕ УПРАВЛЕНИЕ; 13.08.2025 № 06/К-25788",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0049",
+      "start_s": 159.3368888888889,
+      "end_s": 162.80207777777778,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0050",
+      "start_s": 162.80207777777778,
+      "end_s": 167.06692222222222,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0051",
+      "start_s": 167.06692222222222,
+      "end_s": 169.73245555555556,
+      "observed_form": "АКТ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0052",
+      "start_s": 169.73245555555556,
+      "end_s": 172.1314277777778,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (надзора)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0053",
+      "start_s": 172.1314277777778,
+      "end_s": 175.0635111111111,
+      "observed_form": "Федеральная служба по ветеринарному и фитосанитарному надзору (Россельхознадзор), Управление по городу Москва, Московской и Тульской областям",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0054",
+      "start_s": 175.0635111111111,
+      "end_s": 178.79525555555554,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0055",
+      "start_s": 178.79525555555554,
+      "end_s": 181.19422777777777,
+      "observed_form": "АКТ КАРАНТИННОГО ФИТОСАНИТАРНОГО КОНТРОЛЯ (НАДЗОРА)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0056",
+      "start_s": 181.19422777777777,
+      "end_s": 183.6606,
+      "observed_form": "Приложение к акту карантинного фитосанитарного контроля (надзора)",
+      "reason": "out_of_scope_form_confirmed"
+    }
+  ],
+  "summary": {
+    "documents": 2,
+    "complete_documents": 2,
+    "documents_by_type": {
+      "upd": 1,
+      "ttn": 1
+    },
+    "sheets_total": 56,
+    "sheets_in_documents": 10,
+    "unassigned_sheets": 0,
+    "other_form_sheets": 46
+  }
+}
