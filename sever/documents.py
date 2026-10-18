@@ -16,7 +16,7 @@ from pathlib import Path
 from .normalize import comparison, text
 from .schema import FIELDS_BY_TYPE
 
-DOCUMENT_ASSEMBLY_VERSION = "documents-by-type-and-own-number-v2-number-variants"
+DOCUMENT_ASSEMBLY_VERSION = "documents-by-type-and-own-number-v3-lookalike-letters"
 
 NUMBER_FIELD = {"upd": "invoice_number", "torg12": "document_number", "ttn": "document_number", "trn": "document_number"}
 DATE_FIELD = {"upd": "invoice_date", "torg12": "document_date", "ttn": "document_date", "trn": "document_date"}
@@ -95,9 +95,10 @@ def number_variants(left: str, right: str) -> bool:
 
 
 def _key(field: str, value) -> str | None:
+    """Comparison key for joining sheets: formatting-only differences and look-alike letters agree."""
     if not isinstance(value, str) or not value.strip():
         return None
-    return comparison(field, value) or text(value)
+    return (comparison(field, value) or text(value)).casefold().translate(_LOOKALIKE)
 
 
 def _frames(field: dict) -> int:

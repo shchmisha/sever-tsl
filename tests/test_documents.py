@@ -272,3 +272,14 @@ def test_documents_command_restores_the_previous_report_when_rebuilding_fails(tm
     assert outcome.exit_code != 0
     assert (tmp_path / "report.html").read_text() == "old"
     assert (tmp_path / "documents.csv").is_file()
+
+
+def test_lookalike_letters_across_sheets_are_one_value_not_a_conflict():
+    # 20260818-3: one УПД read «С01-345853» (Cyrillic С) on one sheet and «C01-345853» (Latin C) on another.
+    upd = {**UPD, "invoice_number": "С01-345853"}
+    result = video(sheet("p1", 0, "upd", **upd), sheet("p2", 4, "upd", **{**upd, "invoice_number": "C01-345853"}))
+    [record] = assemble_documents(result)["documents"]
+    assert record["status"] == "complete"
+    assert record["fields"]["invoice_number"]["status"] == "recognized"
+    assert record["fields"]["invoice_number"]["candidates"] == []
+    assert [s["page_id"] for s in record["sheets"]] == ["p1", "p2"]
