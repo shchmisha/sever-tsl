@@ -1,0 +1,2702 @@
+{
+  "matching": "bracket",
+  "unit": "visible sheet showing (leaf interval)",
+  "runs": [
+    {
+      "status": "scored",
+      "truth_video": "sample-04",
+      "address_boundary": "current",
+      "matching": "bracket",
+      "bracket_matches": [
+        {
+          "truth_page_id": "sample-04-page-007",
+          "primary_timestamp_s": 31.986355555555555,
+          "prediction_interval_s": [
+            29.85393888888889,
+            32.24905
+          ],
+          "core_interval_s": [
+            29.887256,
+            31.416078
+          ],
+          "bracket_window_s": [
+            29.120911,
+            32.178556
+          ]
+        },
+        {
+          "truth_page_id": "sample-04-page-023",
+          "primary_timestamp_s": 82.03651111111111,
+          "prediction_interval_s": [
+            79.9040888888889,
+            82.56961666666666
+          ],
+          "core_interval_s": [
+            80.403872,
+            81.93655
+          ],
+          "bracket_window_s": [
+            79.637533,
+            82.702889
+          ]
+        },
+        {
+          "truth_page_id": "sample-04-page-027",
+          "primary_timestamp_s": 96.96347777777778,
+          "prediction_interval_s": [
+            96.43037222222222,
+            99.36245555555556
+          ],
+          "core_interval_s": [
+            97.263361,
+            98.796033
+          ],
+          "bracket_window_s": [
+            96.497022,
+            99.562367
+          ]
+        },
+        {
+          "truth_page_id": "sample-04-page-030",
+          "primary_timestamp_s": 108.15871111111112,
+          "prediction_interval_s": [
+            106.02628333333334,
+            108.42526111111111
+          ],
+          "core_interval_s": [
+            106.459434,
+            107.992111
+          ],
+          "bracket_window_s": [
+            105.693089,
+            108.758444
+          ]
+        }
+      ],
+      "labelled_fields": {
+        "correct": 21,
+        "total": 22
+      },
+      "abstention_checks": {
+        "correct": 22,
+        "total": 22,
+        "undetected_rows": 0,
+        "semantic_pending_rows": 4,
+        "failures": []
+      },
+      "confidence_intervals": {
+        "candidate_coverage": [
+          0.9006,
+          0.9967
+        ],
+        "detection": [
+          0.9006,
+          0.9967
+        ],
+        "type_accuracy_all_expected": [
+          0.9006,
+          0.9967
+        ],
+        "type_accuracy_targets": [
+          0.7225,
+          1.0
+        ],
+        "e2e": [
+          0.1078,
+          0.6032
+        ],
+        "e2e_on_fully_labeled": [
+          0.3006,
+          0.9544
+        ],
+        "unknown_rejection": [
+          0.8794,
+          0.9959
+        ],
+        "abstention_checks": [
+          0.8513,
+          1.0
+        ],
+        "labeled_fields": [
+          0.782,
+          0.9919
+        ]
+      },
+      "field_accuracy": {
+        "ttn.consignee": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.consignor": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.document_date": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.document_number": {
+          "correct": 4,
+          "total": 4
+        },
+        "upd.consignee": {
+          "correct": 1,
+          "total": 2
+        },
+        "upd.consignee_address": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.consignor": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.consignor_address": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.invoice_date": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.invoice_number": {
+          "correct": 2,
+          "total": 2
+        }
+      },
+      "type_accuracy_targets": {
+        "correct": 10,
+        "total": 10
+      },
+      "unknown_rejection": {
+        "correct": 42,
+        "total": 43
+      },
+      "e2e_on_fully_labeled": {
+        "correct": 3,
+        "total": 4
+      },
+      "intervals_detected": {
+        "correct": 52,
+        "total": 53
+      },
+      "unmatched_predictions": 4,
+      "per_interval": [
+        {
+          "truth_page_id": "sample-04-page-001",
+          "prediction_page_id": "page-0001",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-002",
+          "prediction_page_id": "page-0002",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-003",
+          "prediction_page_id": "page-0003",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "sample-04-page-004",
+          "prediction_page_id": "page-0004",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": false,
+            "consignee_address": true
+          },
+          "e2e_success": false,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-005",
+          "prediction_page_id": "page-0005",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-006",
+          "prediction_page_id": "page-0006",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "sample-04-page-007",
+          "prediction_page_id": "page-0007",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-008",
+          "prediction_page_id": "page-0008",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "sample-04-page-009",
+          "prediction_page_id": "page-0009",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          }
+        },
+        {
+          "truth_page_id": "sample-04-page-010",
+          "prediction_page_id": "page-0010",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "sample-04-page-011",
+          "prediction_page_id": "page-0011",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          }
+        },
+        {
+          "truth_page_id": "sample-04-page-012",
+          "prediction_page_id": null,
+          "detected": false,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-013",
+          "prediction_page_id": "page-0012",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-014",
+          "prediction_page_id": "page-0013",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-015",
+          "prediction_page_id": "page-0014",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-016",
+          "prediction_page_id": "page-0015",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-017",
+          "prediction_page_id": "page-0016",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-018",
+          "prediction_page_id": "page-0017",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-019",
+          "prediction_page_id": "page-0018",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-020",
+          "prediction_page_id": "page-0019",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-021",
+          "prediction_page_id": "page-0020",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-022",
+          "prediction_page_id": "page-0021",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-023",
+          "prediction_page_id": "page-0022",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-024",
+          "prediction_page_id": "page-0023",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-025",
+          "prediction_page_id": "page-0024",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-026",
+          "prediction_page_id": "page-0025",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-027",
+          "prediction_page_id": "page-0026",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-028",
+          "prediction_page_id": "page-0029",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-029",
+          "prediction_page_id": "page-0030",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-030",
+          "prediction_page_id": "page-0031",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-031",
+          "prediction_page_id": "page-0032",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-032",
+          "prediction_page_id": "page-0033",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-033",
+          "prediction_page_id": "page-0034",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-034",
+          "prediction_page_id": "page-0035",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-035",
+          "prediction_page_id": "page-0036",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-036",
+          "prediction_page_id": "page-0037",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-037",
+          "prediction_page_id": "page-0038",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-038",
+          "prediction_page_id": "page-0039",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-039",
+          "prediction_page_id": "page-0040",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-040",
+          "prediction_page_id": "page-0041",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-041",
+          "prediction_page_id": "page-0042",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-042",
+          "prediction_page_id": "page-0043",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-043",
+          "prediction_page_id": "page-0045",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-044",
+          "prediction_page_id": "page-0046",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-045",
+          "prediction_page_id": "page-0047",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-046",
+          "prediction_page_id": "page-0048",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-047",
+          "prediction_page_id": "page-0050",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-048",
+          "prediction_page_id": "page-0051",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-049",
+          "prediction_page_id": "page-0052",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-050",
+          "prediction_page_id": "page-0053",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-051",
+          "prediction_page_id": "page-0054",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-052",
+          "prediction_page_id": "page-0055",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-04-page-053",
+          "prediction_page_id": "page-0056",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        }
+      ],
+      "target_sheets_detected": {
+        "correct": 10,
+        "total": 10
+      },
+      "run": "/srv/sever/runs/61eead11-6868-4275-8739-0665b0a9d04d/results.json",
+      "sheets_in_output": 56,
+      "elapsed_seconds": 1089.26
+    },
+    {
+      "status": "scored",
+      "truth_video": "sample-05",
+      "address_boundary": "current",
+      "matching": "bracket",
+      "bracket_matches": [
+        {
+          "truth_page_id": "sample-05-page-005",
+          "primary_timestamp_s": 21.324244444444446,
+          "prediction_interval_s": [
+            18.925261111111112,
+            21.5908
+          ],
+          "core_interval_s": [
+            19.108522,
+            21.174306
+          ],
+          "bracket_window_s": [
+            18.592078,
+            21.690756
+          ]
+        }
+      ],
+      "labelled_fields": {
+        "correct": 22,
+        "total": 22
+      },
+      "abstention_checks": {
+        "correct": 22,
+        "total": 22,
+        "undetected_rows": 0,
+        "semantic_pending_rows": 4,
+        "failures": []
+      },
+      "confidence_intervals": {
+        "candidate_coverage": [
+          0.7961,
+          1.0
+        ],
+        "detection": [
+          0.7961,
+          1.0
+        ],
+        "type_accuracy_all_expected": [
+          0.7018,
+          0.9881
+        ],
+        "type_accuracy_targets": [
+          0.5958,
+          0.9821
+        ],
+        "e2e": [
+          0.1682,
+          0.6873
+        ],
+        "e2e_on_fully_labeled": [
+          0.5101,
+          1.0
+        ],
+        "unknown_rejection": [
+          0.5655,
+          1.0
+        ],
+        "abstention_checks": [
+          0.8513,
+          1.0
+        ],
+        "labeled_fields": [
+          0.8513,
+          1.0
+        ]
+      },
+      "field_accuracy": {
+        "ttn.consignee": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.consignor": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.document_date": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.document_number": {
+          "correct": 4,
+          "total": 4
+        },
+        "upd.consignee": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.consignee_address": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.consignor": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.consignor_address": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.invoice_date": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.invoice_number": {
+          "correct": 2,
+          "total": 2
+        }
+      },
+      "type_accuracy_targets": {
+        "correct": 9,
+        "total": 10
+      },
+      "unknown_rejection": {
+        "correct": 5,
+        "total": 5
+      },
+      "e2e_on_fully_labeled": {
+        "correct": 4,
+        "total": 4
+      },
+      "intervals_detected": {
+        "correct": 15,
+        "total": 15
+      },
+      "unmatched_predictions": 0,
+      "per_interval": [
+        {
+          "truth_page_id": "sample-05-page-001",
+          "prediction_page_id": "page-0001",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-002",
+          "prediction_page_id": "page-0002",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-003",
+          "prediction_page_id": "page-0003",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "sample-05-page-004",
+          "prediction_page_id": "page-0004",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-005",
+          "prediction_page_id": "page-0005",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-006",
+          "prediction_page_id": "page-0006",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "sample-05-page-007",
+          "prediction_page_id": "page-0007",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-008",
+          "prediction_page_id": "page-0008",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-009",
+          "prediction_page_id": "page-0009",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-010",
+          "prediction_page_id": "page-0010",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-011",
+          "prediction_page_id": "page-0011",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "sample-05-page-012",
+          "prediction_page_id": "page-0012",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "sample-05-page-013",
+          "prediction_page_id": "page-0013",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          }
+        },
+        {
+          "truth_page_id": "sample-05-page-014",
+          "prediction_page_id": "page-0014",
+          "detected": true,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "sample-05-page-015",
+          "prediction_page_id": "page-0015",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          }
+        }
+      ],
+      "target_sheets_detected": {
+        "correct": 10,
+        "total": 10
+      },
+      "run": "/srv/sever/runs/0ae91181-eb6e-4196-89b9-73b4dcb2a184/results.json",
+      "sheets_in_output": 15,
+      "elapsed_seconds": 604.74
+    },
+    {
+      "status": "scored",
+      "truth_video": "set2-20260821_144838",
+      "address_boundary": "current",
+      "matching": "bracket",
+      "bracket_matches": [],
+      "labelled_fields": {
+        "correct": 22,
+        "total": 22
+      },
+      "abstention_checks": {
+        "correct": 21,
+        "total": 21,
+        "undetected_rows": 0,
+        "semantic_pending_rows": 5,
+        "failures": []
+      },
+      "confidence_intervals": {
+        "candidate_coverage": [
+          0.7225,
+          1.0
+        ],
+        "detection": [
+          0.7225,
+          1.0
+        ],
+        "type_accuracy_all_expected": [
+          0.7225,
+          1.0
+        ],
+        "type_accuracy_targets": [
+          0.7225,
+          1.0
+        ],
+        "e2e": [
+          0.1682,
+          0.6873
+        ],
+        "e2e_on_fully_labeled": [
+          0.5101,
+          1.0
+        ],
+        "unknown_rejection": null,
+        "abstention_checks": [
+          0.8454,
+          1.0
+        ],
+        "labeled_fields": [
+          0.8513,
+          1.0
+        ]
+      },
+      "field_accuracy": {
+        "ttn.consignee": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.consignor": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.document_date": {
+          "correct": 2,
+          "total": 2
+        },
+        "ttn.document_number": {
+          "correct": 4,
+          "total": 4
+        },
+        "upd.consignee": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.consignee_address": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.consignor": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.consignor_address": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.invoice_date": {
+          "correct": 2,
+          "total": 2
+        },
+        "upd.invoice_number": {
+          "correct": 2,
+          "total": 2
+        }
+      },
+      "type_accuracy_targets": {
+        "correct": 10,
+        "total": 10
+      },
+      "unknown_rejection": {
+        "correct": 0,
+        "total": 0
+      },
+      "e2e_on_fully_labeled": {
+        "correct": 4,
+        "total": 4
+      },
+      "intervals_detected": {
+        "correct": 10,
+        "total": 10
+      },
+      "unmatched_predictions": 2,
+      "per_interval": [
+        {
+          "truth_page_id": "set2-20260821_144838-page-001",
+          "prediction_page_id": "page-0001",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-002",
+          "prediction_page_id": "page-0002",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-003",
+          "prediction_page_id": "page-0003",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-004",
+          "prediction_page_id": "page-0004",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-005",
+          "prediction_page_id": "page-0005",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-006",
+          "prediction_page_id": "page-0006",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-007",
+          "prediction_page_id": "page-0007",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-008",
+          "prediction_page_id": "page-0009",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-009",
+          "prediction_page_id": "page-0010",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260821_144838-page-010",
+          "prediction_page_id": "page-0011",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          }
+        }
+      ],
+      "target_sheets_detected": {
+        "correct": 10,
+        "total": 10
+      },
+      "run": "/srv/sever/runs/c47131cf-8c2c-456e-9413-ddbbe497e381/results.json",
+      "sheets_in_output": 12,
+      "elapsed_seconds": 649.46
+    },
+    {
+      "status": "scored",
+      "truth_video": "set2-20260821_145110",
+      "address_boundary": "current",
+      "matching": "bracket",
+      "bracket_matches": [],
+      "labelled_fields": {
+        "correct": 20,
+        "total": 25
+      },
+      "abstention_checks": {
+        "correct": 4,
+        "total": 4,
+        "undetected_rows": 0,
+        "semantic_pending_rows": 8,
+        "failures": []
+      },
+      "confidence_intervals": {
+        "candidate_coverage": [
+          0.7961,
+          1.0
+        ],
+        "detection": [
+          0.7961,
+          1.0
+        ],
+        "type_accuracy_all_expected": [
+          0.6212,
+          0.9626
+        ],
+        "type_accuracy_targets": [
+          0.5291,
+          0.9776
+        ],
+        "e2e": [
+          0.0715,
+          0.5907
+        ],
+        "e2e_on_fully_labeled": [
+          0.1176,
+          0.7693
+        ],
+        "unknown_rejection": [
+          0.4869,
+          0.9743
+        ],
+        "abstention_checks": [
+          0.5101,
+          1.0
+        ],
+        "labeled_fields": [
+          0.6087,
+          0.9114
+        ]
+      },
+      "field_accuracy": {
+        "torg12.consignee": {
+          "correct": 2,
+          "total": 2
+        },
+        "torg12.document_date": {
+          "correct": 2,
+          "total": 2
+        },
+        "torg12.document_number": {
+          "correct": 1,
+          "total": 2
+        },
+        "torg12.supplier": {
+          "correct": 2,
+          "total": 2
+        },
+        "trn.consignee": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.consignor": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.customer": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.document_date": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.document_number": {
+          "correct": 1,
+          "total": 3
+        },
+        "upd.invoice_date": {
+          "correct": 0,
+          "total": 1
+        },
+        "upd.invoice_number": {
+          "correct": 0,
+          "total": 1
+        }
+      },
+      "type_accuracy_targets": {
+        "correct": 7,
+        "total": 8
+      },
+      "unknown_rejection": {
+        "correct": 6,
+        "total": 7
+      },
+      "e2e_on_fully_labeled": {
+        "correct": 2,
+        "total": 5
+      },
+      "intervals_detected": {
+        "correct": 15,
+        "total": 15
+      },
+      "unmatched_predictions": 21,
+      "per_interval": [
+        {
+          "truth_page_id": "set2-20260821_145110-page-001",
+          "prediction_page_id": "page-0001",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-002",
+          "prediction_page_id": "page-0002",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-003",
+          "prediction_page_id": "page-0004",
+          "detected": true,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-004",
+          "prediction_page_id": "page-0007",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "supplier": true,
+            "consignee": true,
+            "document_number": false,
+            "document_date": true
+          },
+          "e2e_success": false,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-005",
+          "prediction_page_id": "page-0011",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "supplier": true,
+            "consignee": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-006",
+          "prediction_page_id": "page-0014",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "supplier": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-007",
+          "prediction_page_id": "page-0017",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "supplier": true,
+            "consignee": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-008",
+          "prediction_page_id": "page-0019",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-009",
+          "prediction_page_id": "page-0022",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-010",
+          "prediction_page_id": "page-0024",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-011",
+          "prediction_page_id": "page-0025",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-012",
+          "prediction_page_id": "page-0028",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": false,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "e2e_success": false,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-013",
+          "prediction_page_id": "page-0029",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": false,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "e2e_success": false,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-014",
+          "prediction_page_id": "page-0031",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145110-page-015",
+          "prediction_page_id": "page-0033",
+          "detected": true,
+          "type_correct": false,
+          "field_checks": {
+            "invoice_number": false,
+            "invoice_date": false
+          },
+          "e2e_success": null,
+          "abstention_checks": {}
+        }
+      ],
+      "target_sheets_detected": {
+        "correct": 8,
+        "total": 8
+      },
+      "run": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/results.json",
+      "sheets_in_output": 36,
+      "elapsed_seconds": 2350.87
+    },
+    {
+      "status": "scored",
+      "truth_video": "set2-20260818-6_131851",
+      "address_boundary": "current",
+      "matching": "bracket",
+      "bracket_matches": [],
+      "labelled_fields": {
+        "correct": 27,
+        "total": 27
+      },
+      "abstention_checks": {
+        "correct": 21,
+        "total": 21,
+        "undetected_rows": 0,
+        "semantic_pending_rows": 6,
+        "failures": []
+      },
+      "confidence_intervals": {
+        "candidate_coverage": [
+          0.8064,
+          1.0
+        ],
+        "detection": [
+          0.8064,
+          1.0
+        ],
+        "type_accuracy_all_expected": [
+          0.5699,
+          0.9341
+        ],
+        "type_accuracy_targets": [
+          0.4677,
+          0.9111
+        ],
+        "e2e": [
+          0.0889,
+          0.5323
+        ],
+        "e2e_on_fully_labeled": [
+          0.4385,
+          1.0
+        ],
+        "unknown_rejection": [
+          0.5101,
+          1.0
+        ],
+        "abstention_checks": [
+          0.8454,
+          1.0
+        ],
+        "labeled_fields": [
+          0.8754,
+          1.0
+        ]
+      },
+      "field_accuracy": {
+        "trn.consignor": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.customer": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.document_date": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.document_number": {
+          "correct": 3,
+          "total": 3
+        },
+        "ttn.consignee": {
+          "correct": 3,
+          "total": 3
+        },
+        "ttn.consignor": {
+          "correct": 3,
+          "total": 3
+        },
+        "ttn.document_date": {
+          "correct": 3,
+          "total": 3
+        },
+        "ttn.document_number": {
+          "correct": 6,
+          "total": 6
+        }
+      },
+      "type_accuracy_targets": {
+        "correct": 9,
+        "total": 12
+      },
+      "unknown_rejection": {
+        "correct": 4,
+        "total": 4
+      },
+      "e2e_on_fully_labeled": {
+        "correct": 3,
+        "total": 3
+      },
+      "intervals_detected": {
+        "correct": 16,
+        "total": 16
+      },
+      "unmatched_predictions": 9,
+      "per_interval": [
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-001",
+          "prediction_page_id": "page-0001",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-002",
+          "prediction_page_id": "page-0003",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-003",
+          "prediction_page_id": "page-0004",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-004",
+          "prediction_page_id": "page-0005",
+          "detected": true,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "document_date": true,
+            "document_number": true,
+            "customer": true,
+            "consignee": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-005",
+          "prediction_page_id": "page-0006",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-006",
+          "prediction_page_id": "page-0007",
+          "detected": true,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "document_date": true,
+            "document_number": true,
+            "customer": true,
+            "consignee": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-007",
+          "prediction_page_id": "page-0008",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-008",
+          "prediction_page_id": "page-0009",
+          "detected": true,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "document_date": true,
+            "document_number": true,
+            "customer": true,
+            "consignee": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-009",
+          "prediction_page_id": "page-0010",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-010",
+          "prediction_page_id": "page-0013",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-011",
+          "prediction_page_id": "page-0015",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-012",
+          "prediction_page_id": "page-0017",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-013",
+          "prediction_page_id": "page-0018",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-014",
+          "prediction_page_id": "page-0019",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-015",
+          "prediction_page_id": "page-0020",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818-6_131851-page-016",
+          "prediction_page_id": "page-0025",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        }
+      ],
+      "target_sheets_detected": {
+        "correct": 12,
+        "total": 12
+      },
+      "run": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/results.json",
+      "sheets_in_output": 25,
+      "elapsed_seconds": 1132.92
+    },
+    {
+      "status": "scored",
+      "truth_video": "set2-20260821_145342",
+      "address_boundary": "current",
+      "matching": "bracket",
+      "bracket_matches": [],
+      "labelled_fields": {
+        "correct": 21,
+        "total": 25
+      },
+      "abstention_checks": {
+        "correct": 0,
+        "total": 0,
+        "undetected_rows": 0,
+        "semantic_pending_rows": 4,
+        "failures": []
+      },
+      "confidence_intervals": {
+        "candidate_coverage": [
+          0.6853,
+          0.9873
+        ],
+        "detection": [
+          0.6853,
+          0.9873
+        ],
+        "type_accuracy_all_expected": [
+          0.6006,
+          0.9599
+        ],
+        "type_accuracy_targets": [
+          0.6097,
+          1.0
+        ],
+        "e2e": [
+          0.1876,
+          0.8124
+        ],
+        "e2e_on_fully_labeled": [
+          0.2307,
+          0.8824
+        ],
+        "unknown_rejection": [
+          0.4093,
+          0.9285
+        ],
+        "abstention_checks": null,
+        "labeled_fields": [
+          0.6535,
+          0.936
+        ]
+      },
+      "field_accuracy": {
+        "torg12.consignee": {
+          "correct": 2,
+          "total": 2
+        },
+        "torg12.document_date": {
+          "correct": 2,
+          "total": 2
+        },
+        "torg12.document_number": {
+          "correct": 2,
+          "total": 2
+        },
+        "torg12.supplier": {
+          "correct": 2,
+          "total": 2
+        },
+        "trn.consignee": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.consignor": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.customer": {
+          "correct": 2,
+          "total": 3
+        },
+        "trn.document_date": {
+          "correct": 3,
+          "total": 3
+        },
+        "trn.document_number": {
+          "correct": 2,
+          "total": 3
+        },
+        "upd.invoice_date": {
+          "correct": 0,
+          "total": 1
+        },
+        "upd.invoice_number": {
+          "correct": 0,
+          "total": 1
+        }
+      },
+      "type_accuracy_targets": {
+        "correct": 6,
+        "total": 6
+      },
+      "unknown_rejection": {
+        "correct": 6,
+        "total": 8
+      },
+      "e2e_on_fully_labeled": {
+        "correct": 3,
+        "total": 5
+      },
+      "intervals_detected": {
+        "correct": 13,
+        "total": 14
+      },
+      "unmatched_predictions": 18,
+      "per_interval": [
+        {
+          "truth_page_id": "set2-20260821_145342-page-001",
+          "prediction_page_id": "page-0001",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-002",
+          "prediction_page_id": "page-0003",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-003",
+          "prediction_page_id": "page-0004",
+          "detected": true,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-004",
+          "prediction_page_id": null,
+          "detected": false,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-005",
+          "prediction_page_id": "page-0006",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "supplier": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-006",
+          "prediction_page_id": "page-0007",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "supplier": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-007",
+          "prediction_page_id": "page-0009",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-008",
+          "prediction_page_id": "page-0014",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-009",
+          "prediction_page_id": "page-0017",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-010",
+          "prediction_page_id": "page-0020",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-011",
+          "prediction_page_id": "page-0022",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": false,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "e2e_success": false,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-012",
+          "prediction_page_id": "page-0023",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": false,
+            "consignee": true
+          },
+          "e2e_success": false,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-013",
+          "prediction_page_id": "page-0025",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260821_145342-page-014",
+          "prediction_page_id": "page-0028",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": false,
+            "invoice_date": false
+          },
+          "e2e_success": null,
+          "abstention_checks": {}
+        }
+      ],
+      "target_sheets_detected": {
+        "correct": 6,
+        "total": 6
+      },
+      "run": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/results.json",
+      "sheets_in_output": 31,
+      "elapsed_seconds": 2402.61
+    },
+    {
+      "status": "scored",
+      "truth_video": "set2-20260818_131702",
+      "address_boundary": "current",
+      "matching": "bracket",
+      "bracket_matches": [],
+      "labelled_fields": {
+        "correct": 26,
+        "total": 30
+      },
+      "abstention_checks": {
+        "correct": 14,
+        "total": 14,
+        "undetected_rows": 0,
+        "semantic_pending_rows": 4,
+        "failures": []
+      },
+      "confidence_intervals": {
+        "candidate_coverage": [
+          0.7018,
+          0.9881
+        ],
+        "detection": [
+          0.7018,
+          0.9881
+        ],
+        "type_accuracy_all_expected": [
+          0.6212,
+          0.9626
+        ],
+        "type_accuracy_targets": [
+          0.523,
+          0.9486
+        ],
+        "e2e": [
+          0.2127,
+          0.7199
+        ],
+        "e2e_on_fully_labeled": [
+          0.4365,
+          0.9699
+        ],
+        "unknown_rejection": [
+          0.5101,
+          1.0
+        ],
+        "abstention_checks": [
+          0.7847,
+          1.0
+        ],
+        "labeled_fields": [
+          0.7032,
+          0.9469
+        ]
+      },
+      "field_accuracy": {
+        "torg12.consignee": {
+          "correct": 1,
+          "total": 2
+        },
+        "torg12.document_date": {
+          "correct": 1,
+          "total": 2
+        },
+        "torg12.document_number": {
+          "correct": 1,
+          "total": 2
+        },
+        "torg12.supplier": {
+          "correct": 1,
+          "total": 2
+        },
+        "trn.consignee": {
+          "correct": 1,
+          "total": 1
+        },
+        "trn.consignor": {
+          "correct": 1,
+          "total": 1
+        },
+        "trn.customer": {
+          "correct": 1,
+          "total": 1
+        },
+        "trn.document_date": {
+          "correct": 1,
+          "total": 1
+        },
+        "trn.document_number": {
+          "correct": 1,
+          "total": 1
+        },
+        "ttn.consignee": {
+          "correct": 3,
+          "total": 3
+        },
+        "ttn.consignor": {
+          "correct": 3,
+          "total": 3
+        },
+        "ttn.document_date": {
+          "correct": 3,
+          "total": 3
+        },
+        "ttn.document_number": {
+          "correct": 6,
+          "total": 6
+        },
+        "upd.invoice_date": {
+          "correct": 1,
+          "total": 1
+        },
+        "upd.invoice_number": {
+          "correct": 1,
+          "total": 1
+        }
+      },
+      "type_accuracy_targets": {
+        "correct": 9,
+        "total": 11
+      },
+      "unknown_rejection": {
+        "correct": 4,
+        "total": 4
+      },
+      "e2e_on_fully_labeled": {
+        "correct": 5,
+        "total": 6
+      },
+      "intervals_detected": {
+        "correct": 14,
+        "total": 15
+      },
+      "unmatched_predictions": 3,
+      "per_interval": [
+        {
+          "truth_page_id": "set2-20260818_131702-page-001",
+          "prediction_page_id": null,
+          "detected": false,
+          "type_correct": false,
+          "field_checks": {
+            "supplier": false,
+            "consignee": false,
+            "document_number": false,
+            "document_date": false
+          },
+          "e2e_success": false,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-002",
+          "prediction_page_id": "page-0001",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "supplier": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-003",
+          "prediction_page_id": "page-0002",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-004",
+          "prediction_page_id": "page-0003",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-005",
+          "prediction_page_id": "page-0004",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-006",
+          "prediction_page_id": "page-0005",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-007",
+          "prediction_page_id": "page-0006",
+          "detected": true,
+          "type_correct": false,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-008",
+          "prediction_page_id": "page-0007",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-009",
+          "prediction_page_id": "page-0008",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-010",
+          "prediction_page_id": "page-0009",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-011",
+          "prediction_page_id": "page-0010",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-012",
+          "prediction_page_id": "page-0011",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "e2e_success": true,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-013",
+          "prediction_page_id": "page-0012",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {
+            "document_number": true
+          },
+          "e2e_success": null,
+          "abstention_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_date": true
+          }
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-014",
+          "prediction_page_id": "page-0013",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        },
+        {
+          "truth_page_id": "set2-20260818_131702-page-015",
+          "prediction_page_id": "page-0016",
+          "detected": true,
+          "type_correct": true,
+          "field_checks": {},
+          "e2e_success": null,
+          "abstention_checks": {}
+        }
+      ],
+      "target_sheets_detected": {
+        "correct": 10,
+        "total": 11
+      },
+      "run": "/srv/sever/runs/943548f5-e539-4bb6-a821-ac144f5e5972/results.json",
+      "sheets_in_output": 17,
+      "elapsed_seconds": 543.83
+    }
+  ],
+  "total": {
+    "intervals_detected": {
+      "correct": 135,
+      "total": 138,
+      "rate": 0.9782608695652174,
+      "wilson95": [
+        0.938,
+        0.9926
+      ]
+    },
+    "target_sheets_detected": {
+      "correct": 66,
+      "total": 67,
+      "rate": 0.9850746268656716,
+      "wilson95": [
+        0.9202,
+        0.9974
+      ]
+    },
+    "type_accuracy_targets": {
+      "correct": 60,
+      "total": 67,
+      "rate": 0.8955223880597015,
+      "wilson95": [
+        0.7997,
+        0.9485
+      ]
+    },
+    "labelled_fields": {
+      "correct": 159,
+      "total": 173,
+      "rate": 0.9190751445086706,
+      "wilson95": [
+        0.8688,
+        0.9512
+      ]
+    },
+    "e2e_on_fully_labeled": {
+      "correct": 24,
+      "total": 31,
+      "rate": 0.7741935483870968,
+      "wilson95": [
+        0.6019,
+        0.886
+      ]
+    },
+    "unknown_rejection": {
+      "correct": 67,
+      "total": 71,
+      "rate": 0.9436619718309859,
+      "wilson95": [
+        0.8639,
+        0.9779
+      ]
+    }
+  },
+  "field_accuracy": {
+    "ttn.consignee": {
+      "correct": 12,
+      "total": 12
+    },
+    "ttn.consignor": {
+      "correct": 12,
+      "total": 12
+    },
+    "ttn.document_date": {
+      "correct": 12,
+      "total": 12
+    },
+    "ttn.document_number": {
+      "correct": 24,
+      "total": 24
+    },
+    "upd.consignee": {
+      "correct": 5,
+      "total": 6
+    },
+    "upd.consignee_address": {
+      "correct": 6,
+      "total": 6
+    },
+    "upd.consignor": {
+      "correct": 6,
+      "total": 6
+    },
+    "upd.consignor_address": {
+      "correct": 6,
+      "total": 6
+    },
+    "upd.invoice_date": {
+      "correct": 7,
+      "total": 9
+    },
+    "upd.invoice_number": {
+      "correct": 7,
+      "total": 9
+    },
+    "torg12.consignee": {
+      "correct": 5,
+      "total": 6
+    },
+    "torg12.document_date": {
+      "correct": 5,
+      "total": 6
+    },
+    "torg12.document_number": {
+      "correct": 4,
+      "total": 6
+    },
+    "torg12.supplier": {
+      "correct": 5,
+      "total": 6
+    },
+    "trn.consignee": {
+      "correct": 7,
+      "total": 7
+    },
+    "trn.consignor": {
+      "correct": 10,
+      "total": 10
+    },
+    "trn.customer": {
+      "correct": 9,
+      "total": 10
+    },
+    "trn.document_date": {
+      "correct": 10,
+      "total": 10
+    },
+    "trn.document_number": {
+      "correct": 7,
+      "total": 10
+    }
+  }
+}

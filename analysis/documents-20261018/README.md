@@ -31,4 +31,8 @@ Errors found only at document level, in set2-20260821_145110:
 - a plain счёт-фактура (no УПД title or transfer section visible) is typed УПД and becomes an extra document;
 - the video is cut into 36 sheets where the labels have 15, which also made the run slow (3,206 s).
 
-Three more labelled videos (20260818-6_131851, 20260821_145342, 20260818_131702) are still being read.
+## Final measurement (all 7 labelled videos, release 8519b29)
+
+See `final-7-videos/`: per document 17/18 documents found, 70/75 labelled fields, 12/14 fully labelled documents
+fully correct, 4 extra documents; on the 4 videos above again 38/39 fields and 7/8 documents. The Russian final
+report with error statistics by cause is `analysis/final-report-20261018/`.

@@ -1,0 +1,920 @@
+{
+  "version": "documents-by-type-and-own-number-v3-lookalike-letters",
+  "policy": {
+    "version": "documents-by-type-and-own-number-v3-lookalike-letters",
+    "identity": "document type plus its own number as read on the sheet, compared after formatting-only normalization",
+    "number_variants": "readings with the same digits whose letters differ by at most two look-alike or repeated-letter edits are one document unless their dates disagree; the number shown is the reading on most sheets",
+    "sheets_without_number": "joined to the document of the same type shown immediately before, else immediately after, else to the only document of that type in the video; a sheet with values and no such document becomes its own document, a sheet with no values is listed as unassigned",
+    "field_value": "taken unchanged from the sheets that read it; when sheets disagree the value supported by more sheets is kept and the others are listed; equal support is reported as a conflict without a value",
+    "unread_on_a_sheet": "a sheet that does not show a field does not vote; only recognized and printed-blank readings count",
+    "out_of_scope_forms": "sheets of forms outside the four contract types are not documents and are listed separately"
+  },
+  "documents": [
+    {
+      "document_id": "doc-001",
+      "document_type": "ttn",
+      "document_type_label": "ТТН",
+      "number": "РБ-00048248",
+      "date": "14 августа 2026 г.",
+      "number_readings_joined": [
+        "РБ-00048248"
+      ],
+      "status": "incomplete",
+      "undetermined_fields": [
+        "consignor",
+        "consignee"
+      ],
+      "fields": {
+        "consignor": {
+          "status": "unreadable",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [],
+          "candidates": [],
+          "reason": "no sheet of this document shows a readable value"
+        },
+        "consignee": {
+          "status": "unreadable",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [],
+          "candidates": [],
+          "reason": "no sheet of this document shows a readable value"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "РБ-00048248",
+          "normalized_value": "РБ-00048248",
+          "source_page_ids": [
+            "page-0003",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "14 августа 2026 г.",
+          "normalized_value": "2026-08-14",
+          "source_page_ids": [
+            "page-0003",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0003",
+          "start_s": 8.79625,
+          "end_s": 13.32765,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0004",
+          "start_s": 13.32765,
+          "end_s": 17.32595,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 8.79625,
+      "end_s": 17.32595,
+      "errors": []
+    },
+    {
+      "document_id": "doc-002",
+      "document_type": "torg12",
+      "document_type_label": "ТОРГ-12",
+      "number": "РРРБ-128027",
+      "date": "17.08.2026",
+      "number_readings_joined": [
+        "РРРБ-128027",
+        "РРБ-128027",
+        "РРРВ-128027"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "supplier": {
+          "status": "recognized",
+          "raw_value": "Общество с ограниченной ответственностью \"Русское молоко\"",
+          "normalized_value": "Общество с ограниченной ответственностью \"Русское молоко\"",
+          "source_page_ids": [
+            "page-0007",
+            "page-0008",
+            "page-0013",
+            "page-0014",
+            "page-0015"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0007",
+            "page-0008",
+            "page-0013",
+            "page-0014",
+            "page-0015"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "РРРБ-128027",
+          "normalized_value": "РРРБ-128027",
+          "source_page_ids": [
+            "page-0006",
+            "page-0008",
+            "page-0012",
+            "page-0013",
+            "page-0014",
+            "page-0015"
+          ],
+          "candidates": [
+            {
+              "status": "recognized",
+              "raw_value": "РРРБ-128027",
+              "source_page_ids": [
+                "page-0006",
+                "page-0008",
+                "page-0012",
+                "page-0013",
+                "page-0014",
+                "page-0015"
+              ]
+            },
+            {
+              "status": "recognized",
+              "raw_value": "РРРВ-128027",
+              "source_page_ids": [
+                "page-0016",
+                "page-0017"
+              ]
+            },
+            {
+              "status": "recognized",
+              "raw_value": "РРБ-128027",
+              "source_page_ids": [
+                "page-0007"
+              ]
+            }
+          ],
+          "reason": "sheets disagree; the value read on more sheets is kept and the others are listed"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "17.08.2026",
+          "normalized_value": "2026-08-17",
+          "source_page_ids": [
+            "page-0006",
+            "page-0007",
+            "page-0008",
+            "page-0012",
+            "page-0013",
+            "page-0014",
+            "page-0015",
+            "page-0016",
+            "page-0017"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0006",
+          "start_s": 21.324244444444446,
+          "end_s": 22.923561111111113,
+          "document_type": "torg12",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0007",
+          "start_s": 22.923561111111113,
+          "end_s": 27.45496111111111,
+          "document_type": "torg12",
+          "assignment": "own_number_variant",
+          "fields_with_values": [
+            "supplier",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0008",
+          "start_s": 27.45496111111111,
+          "end_s": 30.120494444444446,
+          "document_type": "torg12",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "supplier",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0009",
+          "start_s": 30.120494444444446,
+          "end_s": 31.186700000000002,
+          "document_type": "torg12",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [],
+          "errors": []
+        },
+        {
+          "page_id": "page-0012",
+          "start_s": 33.31913333333333,
+          "end_s": 37.050872222222225,
+          "document_type": "torg12",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0013",
+          "start_s": 37.050872222222225,
+          "end_s": 42.381933333333336,
+          "document_type": "torg12",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "supplier",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0014",
+          "start_s": 42.381933333333336,
+          "end_s": 48.246094444444445,
+          "document_type": "torg12",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "supplier",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0015",
+          "start_s": 48.246094444444445,
+          "end_s": 49.312305555555554,
+          "document_type": "torg12",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "supplier",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0016",
+          "start_s": 49.312305555555554,
+          "end_s": 52.51094444444445,
+          "document_type": "torg12",
+          "assignment": "own_number_variant",
+          "fields_with_values": [
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0017",
+          "start_s": 52.51094444444445,
+          "end_s": 56.77579444444444,
+          "document_type": "torg12",
+          "assignment": "own_number_variant",
+          "fields_with_values": [
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 21.324244444444446,
+      "end_s": 56.77579444444444,
+      "errors": []
+    },
+    {
+      "document_id": "doc-003",
+      "document_type": "torg12",
+      "document_type_label": "ТОРГ-12",
+      "number": "РРБ5-128027",
+      "date": "17.08.2026",
+      "number_readings_joined": [
+        "РРБ5-128027"
+      ],
+      "status": "incomplete",
+      "undetermined_fields": [
+        "supplier",
+        "consignee"
+      ],
+      "fields": {
+        "supplier": {
+          "status": "unreadable",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [],
+          "candidates": [],
+          "reason": "no sheet of this document shows a readable value"
+        },
+        "consignee": {
+          "status": "unreadable",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [],
+          "candidates": [],
+          "reason": "no sheet of this document shows a readable value"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "РРБ5-128027",
+          "normalized_value": "РРБ5-128027",
+          "source_page_ids": [
+            "page-0010"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "17.08.2026",
+          "normalized_value": "2026-08-17",
+          "source_page_ids": [
+            "page-0010",
+            "page-0011"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0010",
+          "start_s": 31.186700000000002,
+          "end_s": 32.25291111111111,
+          "document_type": "torg12",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0011",
+          "start_s": 32.25291111111111,
+          "end_s": 33.31913333333333,
+          "document_type": "torg12",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [
+            "document_date"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 31.186700000000002,
+      "end_s": 33.31913333333333,
+      "errors": []
+    },
+    {
+      "document_id": "doc-004",
+      "document_type": "trn",
+      "document_type_label": "ТрН",
+      "number": "РРРБ-128027",
+      "date": "17.08.2026",
+      "number_readings_joined": [
+        "РРРБ-128027",
+        "ПРРБ-128027",
+        "РРРВ-128027"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "17.08.2026",
+          "normalized_value": "2026-08-17",
+          "source_page_ids": [
+            "page-0025",
+            "page-0026",
+            "page-0028",
+            "page-0029",
+            "page-0030"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "РРРБ-128027",
+          "normalized_value": "РРРБ-128027",
+          "source_page_ids": [
+            "page-0025",
+            "page-0026",
+            "page-0030"
+          ],
+          "candidates": [
+            {
+              "status": "recognized",
+              "raw_value": "РРРБ-128027",
+              "source_page_ids": [
+                "page-0025",
+                "page-0026",
+                "page-0030"
+              ]
+            },
+            {
+              "status": "recognized",
+              "raw_value": "ПРРБ-128027",
+              "source_page_ids": [
+                "page-0028"
+              ]
+            },
+            {
+              "status": "recognized",
+              "raw_value": "РРРВ-128027",
+              "source_page_ids": [
+                "page-0029"
+              ]
+            }
+          ],
+          "reason": "sheets disagree; the value read on more sheets is kept and the others are listed"
+        },
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ООО РУССКОЕ МОЛОКО",
+          "normalized_value": "ООО РУССКОЕ МОЛОКО",
+          "source_page_ids": [
+            "page-0025",
+            "page-0026",
+            "page-0028",
+            "page-0029",
+            "page-0030"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "customer": {
+          "status": "not_present",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [
+            "page-0025",
+            "page-0026",
+            "page-0028",
+            "page-0029",
+            "page-0030"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0025",
+            "page-0026",
+            "page-0028",
+            "page-0029",
+            "page-0030"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0025",
+          "start_s": 74.36829444444444,
+          "end_s": 78.63314444444444,
+          "document_type": "trn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer",
+            "consignee"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0026",
+          "start_s": 78.63314444444444,
+          "end_s": 80.23246111111112,
+          "document_type": "trn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer",
+            "consignee"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0027",
+          "start_s": 80.23246111111112,
+          "end_s": 80.76556111111111,
+          "document_type": "trn",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [],
+          "errors": []
+        },
+        {
+          "page_id": "page-0028",
+          "start_s": 80.76556111111111,
+          "end_s": 86.62973333333333,
+          "document_type": "trn",
+          "assignment": "own_number_variant",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer",
+            "consignee"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0029",
+          "start_s": 86.62973333333333,
+          "end_s": 88.22905,
+          "document_type": "trn",
+          "assignment": "own_number_variant",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer",
+            "consignee"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0030",
+          "start_s": 88.22905,
+          "end_s": 90.89458333333334,
+          "document_type": "trn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer",
+            "consignee"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 74.36829444444444,
+      "end_s": 90.89458333333334,
+      "errors": []
+    },
+    {
+      "document_id": "doc-005",
+      "document_type": "upd",
+      "document_type_label": "УПД",
+      "number": "РРБ-128027",
+      "date": "17 августа 2026 г.",
+      "number_readings_joined": [
+        "РРБ-128027",
+        "РРРБ-128027"
+      ],
+      "status": "incomplete",
+      "undetermined_fields": [
+        "consignee",
+        "consignee_address"
+      ],
+      "fields": {
+        "invoice_number": {
+          "status": "recognized",
+          "raw_value": "РРБ-128027",
+          "normalized_value": "РРБ-128027",
+          "source_page_ids": [
+            "page-0032",
+            "page-0034",
+            "page-0036"
+          ],
+          "candidates": [
+            {
+              "status": "recognized",
+              "raw_value": "РРБ-128027",
+              "source_page_ids": [
+                "page-0032",
+                "page-0034",
+                "page-0036"
+              ]
+            },
+            {
+              "status": "recognized",
+              "raw_value": "РРРБ-128027",
+              "source_page_ids": [
+                "page-0035"
+              ]
+            }
+          ],
+          "reason": "sheets disagree; the value read on more sheets is kept and the others are listed"
+        },
+        "invoice_date": {
+          "status": "recognized",
+          "raw_value": "17 августа 2026 г.",
+          "normalized_value": "2026-08-17",
+          "source_page_ids": [
+            "page-0032",
+            "page-0034",
+            "page-0035",
+            "page-0036"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "Общество с ограниченной ответственностью \"Русское молоко\"",
+          "normalized_value": "Общество с ограниченной ответственностью \"Русское молоко\"",
+          "source_page_ids": [
+            "page-0032",
+            "page-0034",
+            "page-0035",
+            "page-0036"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor_address": {
+          "status": "recognized",
+          "raw_value": "Общество с ограниченной ответственностью \"Русское молоко\", 117449, Москва г, Карьер ул, дом № 2А, строение 2, этаж 3, офис 309, тел/факс 8-800-333-88-22; 8-495-221-34-12",
+          "normalized_value": "Общество с ограниченной ответственностью \"Русское молоко\", 117449, Москва г, Карьер ул, дом No 2А, строение 2, этаж 3, офис 309, тел/факс 8-800-333-88-22; 8-495-221-34-12",
+          "source_page_ids": [
+            "page-0032",
+            "page-0034",
+            "page-0035",
+            "page-0036"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "conflict",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [],
+          "candidates": [
+            {
+              "status": "recognized",
+              "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+              "source_page_ids": [
+                "page-0032",
+                "page-0034"
+              ]
+            },
+            {
+              "status": "recognized",
+              "raw_value": "Общество с ограниченной ответственностью \"Русское молоко\"",
+              "source_page_ids": [
+                "page-0035",
+                "page-0036"
+              ]
+            }
+          ],
+          "reason": "sheets of this document read different values with equal support"
+        },
+        "consignee_address": {
+          "status": "conflict",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [],
+          "candidates": [
+            {
+              "status": "recognized",
+              "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\";620138, Свердловская обл, Екатеринбург г, Дублер Сибирского тракта тракт, дом № 38/2",
+              "source_page_ids": [
+                "page-0032",
+                "page-0034"
+              ]
+            },
+            {
+              "status": "recognized",
+              "raw_value": "Общество с ограниченной ответственностью \"Русское молоко\", 117449, Москва г., Карьер ул, дом № 2А, строение 2, этаж 3, офис 309, тел/факс 8-800-333-88-22; 8-495-221-34-12",
+              "source_page_ids": [
+                "page-0035",
+                "page-0036"
+              ]
+            }
+          ],
+          "reason": "sheets of this document read different values with equal support"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0032",
+          "start_s": 95.69253333333333,
+          "end_s": 98.09150555555556,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0034",
+          "start_s": 98.89116666666666,
+          "end_s": 99.42427222222221,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0035",
+          "start_s": 99.42427222222221,
+          "end_s": 99.95737777777778,
+          "document_type": "upd",
+          "assignment": "own_number_variant",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0036",
+          "start_s": 99.95737777777778,
+          "end_s": 100.990278,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 95.69253333333333,
+      "end_s": 100.990278,
+      "errors": []
+    }
+  ],
+  "unassigned_sheets": [],
+  "other_forms": [
+    {
+      "page_id": "page-0001",
+      "start_s": 0.0,
+      "end_s": 3.4651944444444442,
+      "observed_form": "Маршрутный лист № РВ-00048248 от 14 августа 2026 г.",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0002",
+      "start_s": 3.4651944444444442,
+      "end_s": 8.79625,
+      "observed_form": "ТТН № РБ-00048248 от 14 августа 2026 г.",
+      "reason": "source_views_unread_after_no_progress"
+    },
+    {
+      "page_id": "page-0005",
+      "start_s": 17.32595,
+      "end_s": 21.324244444444446,
+      "observed_form": "ТТН № РБ-00048248 от 14 августа 2026 г.",
+      "reason": "source_views_unread_after_no_progress"
+    },
+    {
+      "page_id": "page-0018",
+      "start_s": 56.77579444444444,
+      "end_s": 58.908211111111115,
+      "observed_form": "Реестр ВСД (суммар, сверочная форма)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0019",
+      "start_s": 58.908211111111115,
+      "end_s": 61.573750000000004,
+      "observed_form": "Реестр ВСД (счета, сорационная форма) по накладной РРРВ 128027 от 17.08.2026",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0020",
+      "start_s": 61.573750000000004,
+      "end_s": 62.639961111111106,
+      "observed_form": "Реестр ВСД (сжатая, сокращенная форма) по накладной; МАРШРУТНЫЙ ЛИСТ № РБ-00048248 от 14.08.2026",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0021",
+      "start_s": 62.639961111111106,
+      "end_s": 63.70617222222222,
+      "observed_form": "ФИКАТОВ СООТВЕТСТВИЯ И ДЕКЛАРАЦИИ О СООТВЕТСТВИИ НА ОТГРУЖЕННЫЙ ТОВАР",
+      "reason": "source_views_exhausted"
+    },
+    {
+      "page_id": "page-0022",
+      "start_s": 63.70617222222222,
+      "end_s": 69.5703388888889,
+      "observed_form": "СЕРТИФИКАТОВ СООТВЕТСТВИЯ И ДЕКЛАРАЦИИ О СООТВЕТСТВИИ НА ОТГРУЖЕННЫЙ ТОВАР",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0023",
+      "start_s": 69.5703388888889,
+      "end_s": 71.7027611111111,
+      "observed_form": "Реализация товаров и услуг РРРБ-128027 от 17.08.2026 0:00:00",
+      "reason": "source_views_unread_after_no_progress"
+    },
+    {
+      "page_id": "page-0024",
+      "start_s": 71.7027611111111,
+      "end_s": 74.36829444444444,
+      "observed_form": "Реализация товаров и услуг РРРБ-128027 от 17.08.2026 0:00:00",
+      "reason": "source_views_unread_after_no_progress"
+    },
+    {
+      "page_id": "page-0031",
+      "start_s": 90.89458333333334,
+      "end_s": 95.69253333333333,
+      "observed_form": "ДОВЕРЕННОСТЬ № РРРВ-128027",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0033",
+      "start_s": 98.09150555555556,
+      "end_s": 98.89116666666666,
+      "observed_form": "Универсальный передаточный документ",
+      "reason": "source_views_exhausted"
+    }
+  ],
+  "summary": {
+    "documents": 5,
+    "complete_documents": 2,
+    "documents_by_type": {
+      "ttn": 1,
+      "torg12": 2,
+      "trn": 1,
+      "upd": 1
+    },
+    "sheets_total": 36,
+    "sheets_in_documents": 24,
+    "unassigned_sheets": 0,
+    "other_form_sheets": 12
+  }
+}

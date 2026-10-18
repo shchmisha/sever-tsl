@@ -1,0 +1,484 @@
+{
+  "version": "documents-by-type-and-own-number-v3-lookalike-letters",
+  "policy": {
+    "version": "documents-by-type-and-own-number-v3-lookalike-letters",
+    "identity": "document type plus its own number as read on the sheet, compared after formatting-only normalization",
+    "number_variants": "readings with the same digits whose letters differ by at most two look-alike or repeated-letter edits are one document unless their dates disagree; the number shown is the reading on most sheets",
+    "sheets_without_number": "joined to the document of the same type shown immediately before, else immediately after, else to the only document of that type in the video; a sheet with values and no such document becomes its own document, a sheet with no values is listed as unassigned",
+    "field_value": "taken unchanged from the sheets that read it; when sheets disagree the value supported by more sheets is kept and the others are listed; equal support is reported as a conflict without a value",
+    "unread_on_a_sheet": "a sheet that does not show a field does not vote; only recognized and printed-blank readings count",
+    "out_of_scope_forms": "sheets of forms outside the four contract types are not documents and are listed separately"
+  },
+  "documents": [
+    {
+      "document_id": "doc-001",
+      "document_type": "torg12",
+      "document_type_label": "ТОРГ-12",
+      "number": "Чл000067597",
+      "date": "20.08.2026",
+      "number_readings_joined": [
+        "Чл000067597"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "supplier": {
+          "status": "recognized",
+          "raw_value": "Общество с ограниченной ответственностью \"Кондитерская фабрика \"ФАНТЭЛЬ\"",
+          "normalized_value": "Общество с ограниченной ответственностью \"Кондитерская фабрика \"ФАНТЭЛЬ\"",
+          "source_page_ids": [
+            "page-0001"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"Прометей\"",
+          "normalized_value": "ООО \"Прометей\"",
+          "source_page_ids": [
+            "page-0001"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "Чл000067597",
+          "normalized_value": "Чл000067597",
+          "source_page_ids": [
+            "page-0001"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "20.08.2026",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0001"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0001",
+          "start_s": 0.0,
+          "end_s": 5.597611111111111,
+          "document_type": "torg12",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "supplier",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 0.0,
+      "end_s": 5.597611111111111,
+      "errors": []
+    },
+    {
+      "document_id": "doc-002",
+      "document_type": "upd",
+      "document_type_label": "УПД",
+      "number": "2913116",
+      "date": "20 августа 2026 г.",
+      "number_readings_joined": [
+        "2913116"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "invoice_number": {
+          "status": "recognized",
+          "raw_value": "2913116",
+          "normalized_value": "2913116",
+          "source_page_ids": [
+            "page-0002"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "invoice_date": {
+          "status": "recognized",
+          "raw_value": "20 августа 2026 г.",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0002"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "Общество с ограниченной ответственностью \"Кондитерская фабрика \"ФАНТЭЛЬ\"",
+          "normalized_value": "Общество с ограниченной ответственностью \"Кондитерская фабрика \"ФАНТЭЛЬ\"",
+          "source_page_ids": [
+            "page-0002"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor_address": {
+          "status": "recognized",
+          "raw_value": "454038, Челябинская обл, Челябинск г., Хлебозаводская ул, дом № 20, помещение18",
+          "normalized_value": "454038, Челябинская обл, Челябинск г., Хлебозаводская ул, дом No 20, помещение18",
+          "source_page_ids": [
+            "page-0002"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"Прометей\"",
+          "normalized_value": "ООО \"Прометей\"",
+          "source_page_ids": [
+            "page-0002"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee_address": {
+          "status": "recognized",
+          "raw_value": "ООО \"Прометей\", 614530, Россия, Пермский край, Пермский м.о., д. Паздерино, ул. Осенняя, зд. 15",
+          "normalized_value": "ООО \"Прометей\", 614530, Россия, Пермский край, Пермский м.о., д. Паздерино, ул. Осенняя, зд. 15",
+          "source_page_ids": [
+            "page-0002"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0002",
+          "start_s": 5.597611111111111,
+          "end_s": 9.329355555555555,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 5.597611111111111,
+      "end_s": 9.329355555555555,
+      "errors": []
+    },
+    {
+      "document_id": "doc-003",
+      "document_type": "trn",
+      "document_type_label": "ТрН",
+      "number": "Чл000067597",
+      "date": "20.08.2026",
+      "number_readings_joined": [
+        "Чл000067597"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "20.08.2026",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "Чл000067597",
+          "normalized_value": "Чл000067597",
+          "source_page_ids": [
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "Общество с ограниченной ответственностью \"Кондитерская фабрика \"ФАНТЭЛЬ\"",
+          "normalized_value": "Общество с ограниченной ответственностью \"Кондитерская фабрика \"ФАНТЭЛЬ\"",
+          "source_page_ids": [
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "customer": {
+          "status": "not_present",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"Прометей\"",
+          "normalized_value": "ООО \"Прометей\"",
+          "source_page_ids": [
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0005",
+          "start_s": 17.325944444444445,
+          "end_s": 21.05768888888889,
+          "document_type": "trn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer",
+            "consignee"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 17.325944444444445,
+      "end_s": 21.05768888888889,
+      "errors": []
+    },
+    {
+      "document_id": "doc-004",
+      "document_type": "ttn",
+      "document_type_label": "ТТН",
+      "number": "Чл000067597",
+      "date": "20.08.2026",
+      "number_readings_joined": [
+        "Чл000067597"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "Общество с ограниченной ответственностью \"Кондитерская фабрика \"ФАНТЭЛЬ\"",
+          "normalized_value": "Общество с ограниченной ответственностью \"Кондитерская фабрика \"ФАНТЭЛЬ\"",
+          "source_page_ids": [
+            "page-0007",
+            "page-0009",
+            "page-0011"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"Прометей\"",
+          "normalized_value": "ООО \"Прометей\"",
+          "source_page_ids": [
+            "page-0007",
+            "page-0009",
+            "page-0011"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "Чл000067597",
+          "normalized_value": "Чл000067597",
+          "source_page_ids": [
+            "page-0007",
+            "page-0008",
+            "page-0009",
+            "page-0010",
+            "page-0011",
+            "page-0012"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "20.08.2026",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0007",
+            "page-0009",
+            "page-0011"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0007",
+          "start_s": 24.789433333333335,
+          "end_s": 29.58738888888889,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0008",
+          "start_s": 29.58738888888889,
+          "end_s": 33.05257777777778,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0009",
+          "start_s": 33.05257777777778,
+          "end_s": 36.25120555555556,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0010",
+          "start_s": 36.25120555555556,
+          "end_s": 39.7164,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0011",
+          "start_s": 39.7164,
+          "end_s": 43.18159444444444,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0012",
+          "start_s": 43.18159444444444,
+          "end_s": 46.38022222222222,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 24.789433333333335,
+      "end_s": 46.38022222222222,
+      "errors": []
+    }
+  ],
+  "unassigned_sheets": [],
+  "other_forms": [
+    {
+      "page_id": "page-0003",
+      "start_s": 9.329355555555555,
+      "end_s": 13.86075,
+      "observed_form": "УДОСТОВЕРЕНИЕ О КАЧЕСТВЕ № Чл000067597 от 20 августа 2026 г.",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0004",
+      "start_s": 13.86075,
+      "end_s": 17.325944444444445,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0006",
+      "start_s": 21.05768888888889,
+      "end_s": 24.789433333333335,
+      "observed_form": "Продолжение приложения № 4, оборотная сторона",
+      "reason": "source_views_unread_after_no_progress"
+    },
+    {
+      "page_id": "page-0013",
+      "start_s": 46.38022222222222,
+      "end_s": 48.51265,
+      "observed_form": "Заказ на отгрузку",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0014",
+      "start_s": 48.51265,
+      "end_s": 52.51094444444445,
+      "observed_form": "Заказ на отгрузку 000049965 от 14.08.2026 22:09:30 (67597)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0015",
+      "start_s": 52.51094444444445,
+      "end_s": 53.04405,
+      "observed_form": "Заказ на отгрузку 000049965 от 14.08.2026 22:09:30 (67597)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0016",
+      "start_s": 53.04405,
+      "end_s": 55.17647222222222,
+      "observed_form": "Заказ на отгрузку 000049965 от 14.08.2026 22:09:30 (67597)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0017",
+      "start_s": 55.17647222222222,
+      "end_s": 56.4759,
+      "observed_form": "Не читается: в кадре видна только поверхность стола, скрепка и край бумаги; заголовок документа отсутствует",
+      "reason": "source_views_exhausted"
+    }
+  ],
+  "summary": {
+    "documents": 4,
+    "complete_documents": 4,
+    "documents_by_type": {
+      "torg12": 1,
+      "upd": 1,
+      "trn": 1,
+      "ttn": 1
+    },
+    "sheets_total": 17,
+    "sheets_in_documents": 9,
+    "unassigned_sheets": 0,
+    "other_form_sheets": 8
+  }
+}

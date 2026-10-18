@@ -1,0 +1,427 @@
+{
+  "version": "documents-by-type-and-own-number-v3-lookalike-letters",
+  "policy": {
+    "version": "documents-by-type-and-own-number-v3-lookalike-letters",
+    "identity": "document type plus its own number as read on the sheet, compared after formatting-only normalization",
+    "number_variants": "readings with the same digits whose letters differ by at most two look-alike or repeated-letter edits are one document unless their dates disagree; the number shown is the reading on most sheets",
+    "sheets_without_number": "joined to the document of the same type shown immediately before, else immediately after, else to the only document of that type in the video; a sheet with values and no such document becomes its own document, a sheet with no values is listed as unassigned",
+    "field_value": "taken unchanged from the sheets that read it; when sheets disagree the value supported by more sheets is kept and the others are listed; equal support is reported as a conflict without a value",
+    "unread_on_a_sheet": "a sheet that does not show a field does not vote; only recognized and printed-blank readings count",
+    "out_of_scope_forms": "sheets of forms outside the four contract types are not documents and are listed separately"
+  },
+  "documents": [
+    {
+      "document_id": "doc-001",
+      "document_type": "trn",
+      "document_type_label": "ТрН",
+      "number": "153-1",
+      "date": "20.08.2026",
+      "number_readings_joined": [
+        "153-1"
+      ],
+      "status": "incomplete",
+      "undetermined_fields": [
+        "consignee"
+      ],
+      "fields": {
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "20.08.2026",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0004",
+            "page-0006",
+            "page-0008"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "153-1",
+          "normalized_value": "153-1",
+          "source_page_ids": [
+            "page-0004",
+            "page-0006",
+            "page-0008"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ИП Боровинский Вадим Андреевич",
+          "normalized_value": "ИП Боровинский Вадим Андреевич",
+          "source_page_ids": [
+            "page-0004",
+            "page-0006",
+            "page-0008"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "customer": {
+          "status": "recognized",
+          "raw_value": "ООО \"Умный Ритейл\"",
+          "normalized_value": "ООО \"Умный Ритейл\"",
+          "source_page_ids": [
+            "page-0004",
+            "page-0006",
+            "page-0008"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "unreadable",
+          "raw_value": null,
+          "normalized_value": null,
+          "source_page_ids": [],
+          "candidates": [],
+          "reason": "no sheet of this document shows a readable value"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0004",
+          "start_s": 5.3310611111111115,
+          "end_s": 7.730038888888888,
+          "document_type": "trn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0006",
+          "start_s": 11.99488888888889,
+          "end_s": 19.724916666666665,
+          "document_type": "trn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0008",
+          "start_s": 26.655305555555557,
+          "end_s": 30.653594444444444,
+          "document_type": "trn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_date",
+            "document_number",
+            "consignor",
+            "customer"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 5.3310611111111115,
+      "end_s": 30.653594444444444,
+      "errors": []
+    },
+    {
+      "document_id": "doc-002",
+      "document_type": "ttn",
+      "document_type_label": "ТТН",
+      "number": "12032",
+      "date": "20.08.2026",
+      "number_readings_joined": [
+        "12032"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ИП Боровинский Вадим Андреевич",
+          "normalized_value": "ИП Боровинский Вадим Андреевич",
+          "source_page_ids": [
+            "page-0010",
+            "page-0011",
+            "page-0015",
+            "page-0016",
+            "page-0018"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0010",
+            "page-0011",
+            "page-0015",
+            "page-0016",
+            "page-0018"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "12032",
+          "normalized_value": "12032",
+          "source_page_ids": [
+            "page-0010",
+            "page-0013",
+            "page-0015",
+            "page-0016",
+            "page-0017",
+            "page-0018",
+            "page-0019"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "20.08.2026",
+          "normalized_value": "2026-08-20",
+          "source_page_ids": [
+            "page-0010",
+            "page-0015",
+            "page-0016",
+            "page-0018"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0009",
+          "start_s": 30.653594444444444,
+          "end_s": 35.984655555555555,
+          "document_type": "ttn",
+          "assignment": "precedes_next_sheet",
+          "fields_with_values": [],
+          "errors": []
+        },
+        {
+          "page_id": "page-0010",
+          "start_s": 35.984655555555555,
+          "end_s": 43.71469444444445,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0011",
+          "start_s": 43.71469444444445,
+          "end_s": 44.514355555555554,
+          "document_type": "ttn",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [
+            "consignor",
+            "consignee"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0012",
+          "start_s": 44.514355555555554,
+          "end_s": 45.847116666666665,
+          "document_type": "ttn",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [],
+          "errors": []
+        },
+        {
+          "page_id": "page-0013",
+          "start_s": 45.847116666666665,
+          "end_s": 53.04405,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0015",
+          "start_s": 53.57715555555556,
+          "end_s": 58.908211111111115,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0016",
+          "start_s": 58.908211111111115,
+          "end_s": 63.17306111111111,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0017",
+          "start_s": 63.17306111111111,
+          "end_s": 65.83859444444445,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0018",
+          "start_s": 65.83859444444445,
+          "end_s": 70.90310555555556,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0019",
+          "start_s": 70.90310555555556,
+          "end_s": 72.50242222222222,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 30.653594444444444,
+      "end_s": 72.50242222222222,
+      "errors": []
+    }
+  ],
+  "unassigned_sheets": [],
+  "other_forms": [
+    {
+      "page_id": "page-0001",
+      "start_s": 0.0,
+      "end_s": 2.3989777777777777,
+      "observed_form": "Заявка (без Интеграции)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0002",
+      "start_s": 2.3989777777777777,
+      "end_s": 2.9320833333333334,
+      "observed_form": "Заявка (без интеграции)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0003",
+      "start_s": 2.9320833333333334,
+      "end_s": 5.3310611111111115,
+      "observed_form": "Заявка (без Интеграции)",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0005",
+      "start_s": 7.730038888888888,
+      "end_s": 11.99488888888889,
+      "observed_form": "Продолжение приложения № 4, оборотная сторона",
+      "reason": "source_views_unread_after_no_progress"
+    },
+    {
+      "page_id": "page-0007",
+      "start_s": 19.724916666666665,
+      "end_s": 26.655305555555557,
+      "observed_form": "Продолжение приложения № 4, оборотная сторона",
+      "reason": "source_views_unread_after_no_progress"
+    },
+    {
+      "page_id": "page-0014",
+      "start_s": 53.04405,
+      "end_s": 53.57715555555556,
+      "observed_form": "Транспортный раздел, оборотная сторона формы № 1-Т",
+      "reason": "source_views_exhausted"
+    },
+    {
+      "page_id": "page-0020",
+      "start_s": 72.50242222222222,
+      "end_s": 76.50071111111112,
+      "observed_form": "ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0021",
+      "start_s": 76.50071111111112,
+      "end_s": 77.03381666666667,
+      "observed_form": "ФЕДЕРАЛЬНАЯ СЛУЖБА ПО ВЕТЕРИНАРНОМУ И ФИТОСАНИТАРНОМУ НАДЗОРУ (Россельхознадзор) УПРАВЛЕНИЕ ПО ОРЕНБУРГСКОЙ И САРАТОВСКОЙ ОБЛАСТЯМ",
+      "reason": "source_views_exhausted"
+    },
+    {
+      "page_id": "page-0022",
+      "start_s": 77.03381666666667,
+      "end_s": 77.56692222222222,
+      "observed_form": "Письмо ФГБУ «Управление по Орловской и Курской областям» ФГБУ «Россельхознадзор»",
+      "reason": "source_views_exhausted"
+    },
+    {
+      "page_id": "page-0023",
+      "start_s": 77.56692222222222,
+      "end_s": 78.10003333333333,
+      "observed_form": "Официальное письмо ФГБУ «Управление по Орловской и Курской областям» ФГВУ «Россельхознадзор»",
+      "reason": "source_views_exhausted"
+    },
+    {
+      "page_id": "page-0024",
+      "start_s": 78.10003333333333,
+      "end_s": 78.63313888888888,
+      "observed_form": "УПРАВЛЕНИЕ ПО ОРЛОВСКОЙ И КУРСКОЙ ОБЛАСТЯМ",
+      "reason": "out_of_scope_form_confirmed"
+    },
+    {
+      "page_id": "page-0025",
+      "start_s": 78.63313888888888,
+      "end_s": 82.1658,
+      "observed_form": "УПРАВЛЕНИЕ ПО ОРЛОВСКОЙ И КУРСКОЙ ОБЛАСТЯМ",
+      "reason": "out_of_scope_form_confirmed"
+    }
+  ],
+  "summary": {
+    "documents": 2,
+    "complete_documents": 1,
+    "documents_by_type": {
+      "trn": 1,
+      "ttn": 1
+    },
+    "sheets_total": 25,
+    "sheets_in_documents": 13,
+    "unassigned_sheets": 0,
+    "other_form_sheets": 12
+  }
+}

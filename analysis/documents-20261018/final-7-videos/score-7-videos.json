@@ -1,0 +1,1508 @@
+{
+  "runs": [
+    {
+      "run": "/srv/sever/runs/61eead11-6868-4275-8739-0665b0a9d04d/results.json",
+      "video": "sample-04",
+      "status": "scored",
+      "elapsed_seconds": 1089.26,
+      "sheets_in_output": 56,
+      "documents": {
+        "documents_found": {
+          "correct": 2,
+          "total": 2
+        },
+        "document_type_accuracy": {
+          "correct": 2,
+          "total": 2
+        },
+        "labeled_fields": {
+          "correct": 9,
+          "total": 10
+        },
+        "abstention_checks": {
+          "correct": 0,
+          "total": 0
+        },
+        "shown_values_correct": {
+          "correct": 9,
+          "total": 9
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 1,
+          "total": 2
+        }
+      },
+      "truth_documents": 2,
+      "output_documents": 2,
+      "extra_output_documents": [],
+      "abstention_failures": [],
+      "unscored_fields": {
+        "pending_customer_decision": 0,
+        "label_conflicts": 0
+      },
+      "field_accuracy": {
+        "ttn.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignee": {
+          "correct": 0,
+          "total": 1,
+          "accuracy": 0.0
+        },
+        "upd.consignee_address": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignor_address": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        }
+      },
+      "details": [
+        {
+          "truth_document": "upd:2559",
+          "document_type": "upd",
+          "truth_sheets": [
+            "sample-04-page-001",
+            "sample-04-page-004",
+            "sample-04-page-009",
+            "sample-04-page-011"
+          ],
+          "output_document": "doc-001",
+          "output_type": "upd",
+          "output_number": "2559",
+          "output_sheets": [
+            "page-0001",
+            "page-0004",
+            "page-0009",
+            "page-0011"
+          ],
+          "split_into_output_documents": [
+            "doc-001"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": false,
+            "consignee_address": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": false
+        },
+        {
+          "truth_document": "ttn:2559",
+          "document_type": "ttn",
+          "truth_sheets": [
+            "sample-04-page-002",
+            "sample-04-page-003",
+            "sample-04-page-005",
+            "sample-04-page-006",
+            "sample-04-page-008",
+            "sample-04-page-010"
+          ],
+          "output_document": "doc-002",
+          "output_type": "ttn",
+          "output_number": "2559",
+          "output_sheets": [
+            "page-0002",
+            "page-0003",
+            "page-0005",
+            "page-0006",
+            "page-0008",
+            "page-0010"
+          ],
+          "split_into_output_documents": [
+            "doc-002"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        }
+      ],
+      "sheet_level": {
+        "labeled_fields": {
+          "correct": 21,
+          "total": 22
+        }
+      }
+    },
+    {
+      "run": "/srv/sever/runs/0ae91181-eb6e-4196-89b9-73b4dcb2a184/results.json",
+      "video": "sample-05",
+      "status": "scored",
+      "elapsed_seconds": 604.74,
+      "sheets_in_output": 15,
+      "documents": {
+        "documents_found": {
+          "correct": 2,
+          "total": 2
+        },
+        "document_type_accuracy": {
+          "correct": 2,
+          "total": 2
+        },
+        "labeled_fields": {
+          "correct": 10,
+          "total": 10
+        },
+        "abstention_checks": {
+          "correct": 0,
+          "total": 0
+        },
+        "shown_values_correct": {
+          "correct": 10,
+          "total": 10
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 2,
+          "total": 2
+        }
+      },
+      "truth_documents": 2,
+      "output_documents": 2,
+      "extra_output_documents": [],
+      "abstention_failures": [],
+      "unscored_fields": {
+        "pending_customer_decision": 0,
+        "label_conflicts": 0
+      },
+      "field_accuracy": {
+        "ttn.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignee_address": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignor_address": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        }
+      },
+      "details": [
+        {
+          "truth_document": "upd:2560",
+          "document_type": "upd",
+          "truth_sheets": [
+            "sample-05-page-001",
+            "sample-05-page-004",
+            "sample-05-page-013",
+            "sample-05-page-015"
+          ],
+          "output_document": "doc-001",
+          "output_type": "upd",
+          "output_number": "2560",
+          "output_sheets": [
+            "page-0001",
+            "page-0004",
+            "page-0013",
+            "page-0015"
+          ],
+          "split_into_output_documents": [
+            "doc-001"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        },
+        {
+          "truth_document": "ttn:2560",
+          "document_type": "ttn",
+          "truth_sheets": [
+            "sample-05-page-002",
+            "sample-05-page-003",
+            "sample-05-page-005",
+            "sample-05-page-006",
+            "sample-05-page-012",
+            "sample-05-page-014"
+          ],
+          "output_document": "doc-002",
+          "output_type": "ttn",
+          "output_number": "2560",
+          "output_sheets": [
+            "page-0002",
+            "page-0003",
+            "page-0005",
+            "page-0006",
+            "page-0012"
+          ],
+          "split_into_output_documents": [
+            "doc-002"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        }
+      ],
+      "sheet_level": {
+        "labeled_fields": {
+          "correct": 22,
+          "total": 22
+        }
+      }
+    },
+    {
+      "run": "/srv/sever/runs/c47131cf-8c2c-456e-9413-ddbbe497e381/results.json",
+      "video": "set2-20260821_144838",
+      "status": "scored",
+      "elapsed_seconds": 649.46,
+      "sheets_in_output": 12,
+      "documents": {
+        "documents_found": {
+          "correct": 2,
+          "total": 2
+        },
+        "document_type_accuracy": {
+          "correct": 2,
+          "total": 2
+        },
+        "labeled_fields": {
+          "correct": 10,
+          "total": 10
+        },
+        "abstention_checks": {
+          "correct": 0,
+          "total": 0
+        },
+        "shown_values_correct": {
+          "correct": 10,
+          "total": 10
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 2,
+          "total": 2
+        }
+      },
+      "truth_documents": 2,
+      "output_documents": 2,
+      "extra_output_documents": [],
+      "abstention_failures": [],
+      "unscored_fields": {
+        "pending_customer_decision": 0,
+        "label_conflicts": 0
+      },
+      "field_accuracy": {
+        "ttn.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignee_address": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.consignor_address": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        }
+      },
+      "details": [
+        {
+          "truth_document": "upd:2591",
+          "document_type": "upd",
+          "truth_sheets": [
+            "set2-20260821_144838-page-001",
+            "set2-20260821_144838-page-004",
+            "set2-20260821_144838-page-008",
+            "set2-20260821_144838-page-010"
+          ],
+          "output_document": "doc-001",
+          "output_type": "upd",
+          "output_number": "2591",
+          "output_sheets": [
+            "page-0001",
+            "page-0004",
+            "page-0009",
+            "page-0011",
+            "page-0012"
+          ],
+          "split_into_output_documents": [
+            "doc-001"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true,
+            "consignor": true,
+            "consignor_address": true,
+            "consignee": true,
+            "consignee_address": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        },
+        {
+          "truth_document": "ttn:2591",
+          "document_type": "ttn",
+          "truth_sheets": [
+            "set2-20260821_144838-page-002",
+            "set2-20260821_144838-page-003",
+            "set2-20260821_144838-page-005",
+            "set2-20260821_144838-page-006",
+            "set2-20260821_144838-page-007",
+            "set2-20260821_144838-page-009"
+          ],
+          "output_document": "doc-002",
+          "output_type": "ttn",
+          "output_number": "2591",
+          "output_sheets": [
+            "page-0002",
+            "page-0003",
+            "page-0005",
+            "page-0006",
+            "page-0007",
+            "page-0008",
+            "page-0010"
+          ],
+          "split_into_output_documents": [
+            "doc-002"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        }
+      ],
+      "sheet_level": {
+        "labeled_fields": {
+          "correct": 22,
+          "total": 22
+        }
+      }
+    },
+    {
+      "run": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/results.json",
+      "video": "set2-20260821_145110",
+      "status": "scored",
+      "elapsed_seconds": 2350.87,
+      "sheets_in_output": 36,
+      "documents": {
+        "documents_found": {
+          "correct": 2,
+          "total": 3
+        },
+        "document_type_accuracy": {
+          "correct": 2,
+          "total": 3
+        },
+        "labeled_fields": {
+          "correct": 9,
+          "total": 11
+        },
+        "abstention_checks": {
+          "correct": 0,
+          "total": 0
+        },
+        "shown_values_correct": {
+          "correct": 8,
+          "total": 8
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 2,
+          "total": 2
+        }
+      },
+      "truth_documents": 3,
+      "output_documents": 5,
+      "extra_output_documents": [
+        {
+          "output_document": "doc-001",
+          "document_type": "ttn",
+          "number": "РБ-00048248",
+          "sheets": [
+            "page-0003",
+            "page-0004"
+          ],
+          "reason": "non_target_sheets_typed_as_target",
+          "shares_sheets_with": [],
+          "same_number_as": null
+        },
+        {
+          "output_document": "doc-003",
+          "document_type": "torg12",
+          "number": "РРБ5-128027",
+          "sheets": [
+            "page-0010",
+            "page-0011"
+          ],
+          "reason": "split_from_matched_document",
+          "shares_sheets_with": [
+            "torg12:РРРБ-128027"
+          ],
+          "same_number_as": null
+        },
+        {
+          "output_document": "doc-005",
+          "document_type": "upd",
+          "number": "РРБ-128027",
+          "sheets": [
+            "page-0032",
+            "page-0034",
+            "page-0035",
+            "page-0036"
+          ],
+          "reason": "sheets_not_matched_to_any_labelled_sheet",
+          "shares_sheets_with": [],
+          "same_number_as": null
+        }
+      ],
+      "abstention_failures": [],
+      "unscored_fields": {
+        "pending_customer_decision": 4,
+        "label_conflicts": 0
+      },
+      "field_accuracy": {
+        "torg12.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.supplier": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.customer": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_date": {
+          "correct": 0,
+          "total": 1,
+          "accuracy": 0.0
+        },
+        "upd.invoice_number": {
+          "correct": 0,
+          "total": 1,
+          "accuracy": 0.0
+        }
+      },
+      "details": [
+        {
+          "truth_document": "torg12:РРРБ-128027",
+          "document_type": "torg12",
+          "truth_sheets": [
+            "set2-20260821_145110-page-004",
+            "set2-20260821_145110-page-005",
+            "set2-20260821_145110-page-006",
+            "set2-20260821_145110-page-007"
+          ],
+          "output_document": "doc-002",
+          "output_type": "torg12",
+          "output_number": "РРРБ-128027",
+          "output_sheets": [
+            "page-0006",
+            "page-0007",
+            "page-0008",
+            "page-0009",
+            "page-0012",
+            "page-0013",
+            "page-0014",
+            "page-0015",
+            "page-0016",
+            "page-0017"
+          ],
+          "split_into_output_documents": [
+            "doc-002",
+            "doc-003"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "supplier": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        },
+        {
+          "truth_document": "trn:РРРБ-128027",
+          "document_type": "trn",
+          "truth_sheets": [
+            "set2-20260821_145110-page-011",
+            "set2-20260821_145110-page-012",
+            "set2-20260821_145110-page-013"
+          ],
+          "output_document": "doc-004",
+          "output_type": "trn",
+          "output_number": "РРРБ-128027",
+          "output_sheets": [
+            "page-0025",
+            "page-0026",
+            "page-0027",
+            "page-0028",
+            "page-0029",
+            "page-0030"
+          ],
+          "split_into_output_documents": [
+            "doc-004"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        },
+        {
+          "truth_document": "upd:РРРБ-128027",
+          "document_type": "upd",
+          "truth_sheets": [
+            "set2-20260821_145110-page-015"
+          ],
+          "output_document": null,
+          "output_type": null,
+          "output_number": null,
+          "output_sheets": [],
+          "split_into_output_documents": [],
+          "type_correct": false,
+          "field_checks": {
+            "invoice_number": false,
+            "invoice_date": false
+          },
+          "abstention_checks": {},
+          "fully_labelled": false,
+          "e2e_success": null
+        }
+      ],
+      "sheet_level": {
+        "labeled_fields": {
+          "correct": 20,
+          "total": 25
+        }
+      }
+    },
+    {
+      "run": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/results.json",
+      "video": "set2-20260818-6_131851",
+      "status": "scored",
+      "elapsed_seconds": 1132.92,
+      "sheets_in_output": 25,
+      "documents": {
+        "documents_found": {
+          "correct": 2,
+          "total": 2
+        },
+        "document_type_accuracy": {
+          "correct": 2,
+          "total": 2
+        },
+        "labeled_fields": {
+          "correct": 8,
+          "total": 8
+        },
+        "abstention_checks": {
+          "correct": 0,
+          "total": 0
+        },
+        "shown_values_correct": {
+          "correct": 8,
+          "total": 8
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 1,
+          "total": 1
+        }
+      },
+      "truth_documents": 2,
+      "output_documents": 2,
+      "extra_output_documents": [],
+      "abstention_failures": [],
+      "unscored_fields": {
+        "pending_customer_decision": 1,
+        "label_conflicts": 0
+      },
+      "field_accuracy": {
+        "trn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.customer": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        }
+      },
+      "details": [
+        {
+          "truth_document": "trn:153-1",
+          "document_type": "trn",
+          "truth_sheets": [
+            "set2-20260818-6_131851-page-003",
+            "set2-20260818-6_131851-page-004",
+            "set2-20260818-6_131851-page-005",
+            "set2-20260818-6_131851-page-006",
+            "set2-20260818-6_131851-page-007",
+            "set2-20260818-6_131851-page-008"
+          ],
+          "output_document": "doc-001",
+          "output_type": "trn",
+          "output_number": "153-1",
+          "output_sheets": [
+            "page-0004",
+            "page-0006",
+            "page-0008"
+          ],
+          "split_into_output_documents": [
+            "doc-001",
+            "doc-002"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": false,
+          "e2e_success": null
+        },
+        {
+          "truth_document": "ttn:12032",
+          "document_type": "ttn",
+          "truth_sheets": [
+            "set2-20260818-6_131851-page-009",
+            "set2-20260818-6_131851-page-010",
+            "set2-20260818-6_131851-page-011",
+            "set2-20260818-6_131851-page-012",
+            "set2-20260818-6_131851-page-013",
+            "set2-20260818-6_131851-page-014"
+          ],
+          "output_document": "doc-002",
+          "output_type": "ttn",
+          "output_number": "12032",
+          "output_sheets": [
+            "page-0009",
+            "page-0010",
+            "page-0011",
+            "page-0012",
+            "page-0013",
+            "page-0015",
+            "page-0016",
+            "page-0017",
+            "page-0018",
+            "page-0019"
+          ],
+          "split_into_output_documents": [
+            "doc-002"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        }
+      ],
+      "sheet_level": {
+        "labeled_fields": {
+          "correct": 27,
+          "total": 27
+        }
+      }
+    },
+    {
+      "run": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/results.json",
+      "video": "set2-20260821_145342",
+      "status": "scored",
+      "elapsed_seconds": 2402.61,
+      "sheets_in_output": 31,
+      "documents": {
+        "documents_found": {
+          "correct": 3,
+          "total": 3
+        },
+        "document_type_accuracy": {
+          "correct": 3,
+          "total": 3
+        },
+        "labeled_fields": {
+          "correct": 9,
+          "total": 11
+        },
+        "abstention_checks": {
+          "correct": 0,
+          "total": 0
+        },
+        "shown_values_correct": {
+          "correct": 8,
+          "total": 9
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 1,
+          "total": 2
+        }
+      },
+      "truth_documents": 3,
+      "output_documents": 4,
+      "extra_output_documents": [
+        {
+          "output_document": "doc-001",
+          "document_type": "ttn",
+          "number": "РБ-00048247",
+          "sheets": [
+            "page-0002",
+            "page-0004"
+          ],
+          "reason": "non_target_sheets_typed_as_target",
+          "shares_sheets_with": [],
+          "same_number_as": null
+        }
+      ],
+      "abstention_failures": [],
+      "unscored_fields": {
+        "pending_customer_decision": 4,
+        "label_conflicts": 0
+      },
+      "field_accuracy": {
+        "torg12.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.supplier": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.customer": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.document_number": {
+          "correct": 0,
+          "total": 1,
+          "accuracy": 0.0
+        },
+        "upd.invoice_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_number": {
+          "correct": 0,
+          "total": 1,
+          "accuracy": 0.0
+        }
+      },
+      "details": [
+        {
+          "truth_document": "torg12:РРРБ-127817",
+          "document_type": "torg12",
+          "truth_sheets": [
+            "set2-20260821_145342-page-005",
+            "set2-20260821_145342-page-006"
+          ],
+          "output_document": "doc-002",
+          "output_type": "torg12",
+          "output_number": "РРРБ-127817",
+          "output_sheets": [
+            "page-0006",
+            "page-0007"
+          ],
+          "split_into_output_documents": [
+            "doc-002"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "supplier": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        },
+        {
+          "truth_document": "trn:РРРБ-127817",
+          "document_type": "trn",
+          "truth_sheets": [
+            "set2-20260821_145342-page-010",
+            "set2-20260821_145342-page-011",
+            "set2-20260821_145342-page-012"
+          ],
+          "output_document": "doc-003",
+          "output_type": "trn",
+          "output_number": null,
+          "output_sheets": [
+            "page-0018",
+            "page-0019",
+            "page-0020",
+            "page-0021",
+            "page-0022",
+            "page-0023"
+          ],
+          "split_into_output_documents": [
+            "doc-003"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": false,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": false
+        },
+        {
+          "truth_document": "upd:РРРБ-127817",
+          "document_type": "upd",
+          "truth_sheets": [
+            "set2-20260821_145342-page-014"
+          ],
+          "output_document": "doc-004",
+          "output_type": "upd",
+          "output_number": "127817",
+          "output_sheets": [
+            "page-0026",
+            "page-0027",
+            "page-0028",
+            "page-0029",
+            "page-0030",
+            "page-0031"
+          ],
+          "split_into_output_documents": [
+            "doc-004"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": false,
+            "invoice_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": false,
+          "e2e_success": null
+        }
+      ],
+      "sheet_level": {
+        "labeled_fields": {
+          "correct": 21,
+          "total": 25
+        }
+      }
+    },
+    {
+      "run": "/srv/sever/runs/943548f5-e539-4bb6-a821-ac144f5e5972/results.json",
+      "video": "set2-20260818_131702",
+      "status": "scored",
+      "elapsed_seconds": 543.83,
+      "sheets_in_output": 17,
+      "documents": {
+        "documents_found": {
+          "correct": 4,
+          "total": 4
+        },
+        "document_type_accuracy": {
+          "correct": 4,
+          "total": 4
+        },
+        "labeled_fields": {
+          "correct": 15,
+          "total": 15
+        },
+        "abstention_checks": {
+          "correct": 0,
+          "total": 0
+        },
+        "shown_values_correct": {
+          "correct": 14,
+          "total": 14
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 3,
+          "total": 3
+        }
+      },
+      "truth_documents": 4,
+      "output_documents": 4,
+      "extra_output_documents": [],
+      "abstention_failures": [],
+      "unscored_fields": {
+        "pending_customer_decision": 4,
+        "label_conflicts": 0
+      },
+      "field_accuracy": {
+        "torg12.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "torg12.supplier": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.customer": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "trn.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.consignee": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.consignor": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "ttn.document_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_date": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        },
+        "upd.invoice_number": {
+          "correct": 1,
+          "total": 1,
+          "accuracy": 1.0
+        }
+      },
+      "details": [
+        {
+          "truth_document": "torg12:Чл000067597",
+          "document_type": "torg12",
+          "truth_sheets": [
+            "set2-20260818_131702-page-001",
+            "set2-20260818_131702-page-002"
+          ],
+          "output_document": "doc-001",
+          "output_type": "torg12",
+          "output_number": "Чл000067597",
+          "output_sheets": [
+            "page-0001"
+          ],
+          "split_into_output_documents": [
+            "doc-001"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "supplier": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        },
+        {
+          "truth_document": "upd:2913116",
+          "document_type": "upd",
+          "truth_sheets": [
+            "set2-20260818_131702-page-003"
+          ],
+          "output_document": "doc-002",
+          "output_type": "upd",
+          "output_number": "2913116",
+          "output_sheets": [
+            "page-0002"
+          ],
+          "split_into_output_documents": [
+            "doc-002"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "invoice_number": true,
+            "invoice_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": false,
+          "e2e_success": null
+        },
+        {
+          "truth_document": "trn:Чл000067597",
+          "document_type": "trn",
+          "truth_sheets": [
+            "set2-20260818_131702-page-006",
+            "set2-20260818_131702-page-007"
+          ],
+          "output_document": "doc-003",
+          "output_type": "trn",
+          "output_number": "Чл000067597",
+          "output_sheets": [
+            "page-0005"
+          ],
+          "split_into_output_documents": [
+            "doc-003"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "document_date": true,
+            "document_number": true,
+            "consignor": true,
+            "customer": true,
+            "consignee": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        },
+        {
+          "truth_document": "ttn:Чл000067597",
+          "document_type": "ttn",
+          "truth_sheets": [
+            "set2-20260818_131702-page-008",
+            "set2-20260818_131702-page-009",
+            "set2-20260818_131702-page-010",
+            "set2-20260818_131702-page-011",
+            "set2-20260818_131702-page-012",
+            "set2-20260818_131702-page-013"
+          ],
+          "output_document": "doc-004",
+          "output_type": "ttn",
+          "output_number": "Чл000067597",
+          "output_sheets": [
+            "page-0007",
+            "page-0008",
+            "page-0009",
+            "page-0010",
+            "page-0011",
+            "page-0012"
+          ],
+          "split_into_output_documents": [
+            "doc-004"
+          ],
+          "type_correct": true,
+          "field_checks": {
+            "consignor": true,
+            "consignee": true,
+            "document_number": true,
+            "document_date": true
+          },
+          "abstention_checks": {},
+          "fully_labelled": true,
+          "e2e_success": true
+        }
+      ],
+      "sheet_level": {
+        "labeled_fields": {
+          "correct": 26,
+          "total": 30
+        }
+      }
+    }
+  ],
+  "total": {
+    "documents_found": {
+      "correct": 17,
+      "total": 18,
+      "rate": 0.9444444444444444,
+      "wilson95": [
+        0.7424,
+        0.9901
+      ]
+    },
+    "document_type_accuracy": {
+      "correct": 17,
+      "total": 18,
+      "rate": 0.9444444444444444,
+      "wilson95": [
+        0.7424,
+        0.9901
+      ]
+    },
+    "labeled_fields": {
+      "correct": 70,
+      "total": 75,
+      "rate": 0.9333333333333333,
+      "wilson95": [
+        0.8532,
+        0.9712
+      ]
+    },
+    "abstention_checks": {
+      "correct": 0,
+      "total": 0,
+      "rate": null,
+      "wilson95": null
+    },
+    "shown_values_correct": {
+      "correct": 67,
+      "total": 68,
+      "rate": 0.9852941176470589,
+      "wilson95": [
+        0.9213,
+        0.9974
+      ]
+    },
+    "e2e_on_fully_labeled": {
+      "correct": 12,
+      "total": 14,
+      "rate": 0.8571428571428571,
+      "wilson95": [
+        0.6006,
+        0.9599
+      ]
+    }
+  },
+  "field_accuracy": {
+    "ttn.consignee": {
+      "correct": 5,
+      "total": 5
+    },
+    "ttn.consignor": {
+      "correct": 5,
+      "total": 5
+    },
+    "ttn.document_date": {
+      "correct": 5,
+      "total": 5
+    },
+    "ttn.document_number": {
+      "correct": 5,
+      "total": 5
+    },
+    "upd.consignee": {
+      "correct": 2,
+      "total": 3
+    },
+    "upd.consignee_address": {
+      "correct": 3,
+      "total": 3
+    },
+    "upd.consignor": {
+      "correct": 3,
+      "total": 3
+    },
+    "upd.consignor_address": {
+      "correct": 3,
+      "total": 3
+    },
+    "upd.invoice_date": {
+      "correct": 5,
+      "total": 6
+    },
+    "upd.invoice_number": {
+      "correct": 4,
+      "total": 6
+    },
+    "torg12.consignee": {
+      "correct": 3,
+      "total": 3
+    },
+    "torg12.document_date": {
+      "correct": 3,
+      "total": 3
+    },
+    "torg12.document_number": {
+      "correct": 3,
+      "total": 3
+    },
+    "torg12.supplier": {
+      "correct": 3,
+      "total": 3
+    },
+    "trn.consignee": {
+      "correct": 3,
+      "total": 3
+    },
+    "trn.consignor": {
+      "correct": 4,
+      "total": 4
+    },
+    "trn.customer": {
+      "correct": 4,
+      "total": 4
+    },
+    "trn.document_date": {
+      "correct": 4,
+      "total": 4
+    },
+    "trn.document_number": {
+      "correct": 3,
+      "total": 4
+    }
+  },
+  "truth_documents": 18,
+  "output_documents": 21,
+  "extra_output_documents": 4
+}

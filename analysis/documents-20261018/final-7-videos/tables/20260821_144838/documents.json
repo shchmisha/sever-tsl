@@ -1,0 +1,363 @@
+{
+  "version": "documents-by-type-and-own-number-v3-lookalike-letters",
+  "policy": {
+    "version": "documents-by-type-and-own-number-v3-lookalike-letters",
+    "identity": "document type plus its own number as read on the sheet, compared after formatting-only normalization",
+    "number_variants": "readings with the same digits whose letters differ by at most two look-alike or repeated-letter edits are one document unless their dates disagree; the number shown is the reading on most sheets",
+    "sheets_without_number": "joined to the document of the same type shown immediately before, else immediately after, else to the only document of that type in the video; a sheet with values and no such document becomes its own document, a sheet with no values is listed as unassigned",
+    "field_value": "taken unchanged from the sheets that read it; when sheets disagree the value supported by more sheets is kept and the others are listed; equal support is reported as a conflict without a value",
+    "unread_on_a_sheet": "a sheet that does not show a field does not vote; only recognized and printed-blank readings count",
+    "out_of_scope_forms": "sheets of forms outside the four contract types are not documents and are listed separately"
+  },
+  "documents": [
+    {
+      "document_id": "doc-001",
+      "document_type": "upd",
+      "document_type_label": "УПД",
+      "number": "2591",
+      "date": "23 августа 2026 г.",
+      "number_readings_joined": [
+        "2591"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "invoice_number": {
+          "status": "recognized",
+          "raw_value": "2591",
+          "normalized_value": "2591",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004",
+            "page-0009",
+            "page-0011",
+            "page-0012"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "invoice_date": {
+          "status": "recognized",
+          "raw_value": "23 августа 2026 г.",
+          "normalized_value": "2026-08-23",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004",
+            "page-0009",
+            "page-0011",
+            "page-0012"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "normalized_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignor_address": {
+          "status": "recognized",
+          "raw_value": "454004, Челябинская обл., Челябинск г., Братьев Кашириных ул, дом № 158, квартира 59",
+          "normalized_value": "454004, Челябинская обл., Челябинск г., Братьев Кашириных ул, дом No 158, квартира 59",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [
+            {
+              "status": "recognized",
+              "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+              "source_page_ids": [
+                "page-0001",
+                "page-0004"
+              ]
+            },
+            {
+              "status": "not_present",
+              "raw_value": null,
+              "source_page_ids": [
+                "page-0012"
+              ]
+            }
+          ],
+          "reason": "sheets disagree; the value read on more sheets is kept and the others are listed"
+        },
+        "consignee_address": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+          "source_page_ids": [
+            "page-0001",
+            "page-0004"
+          ],
+          "candidates": [
+            {
+              "status": "recognized",
+              "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"; ИНН/КПП 7725382984/860245001,РЦ ООО \"ПроФреш\", 628422, Ханты-Мансийский автономный округ - Югра, г. Сургут, Индустриальная ул., д. 21, соор. 16",
+              "source_page_ids": [
+                "page-0001",
+                "page-0004"
+              ]
+            },
+            {
+              "status": "not_present",
+              "raw_value": null,
+              "source_page_ids": [
+                "page-0012"
+              ]
+            }
+          ],
+          "reason": "sheets disagree; the value read on more sheets is kept and the others are listed"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0001",
+          "start_s": 0.0,
+          "end_s": 7.996594444444444,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0004",
+          "start_s": 19.191816666666668,
+          "end_s": 26.122194444444446,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignor",
+            "consignor_address",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0009",
+          "start_s": 41.565472222222226,
+          "end_s": 45.554138888888886,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0011",
+          "start_s": 50.34246111111111,
+          "end_s": 53.00799444444445,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0012",
+          "start_s": 53.00799444444445,
+          "end_s": 54.207478,
+          "document_type": "upd",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "invoice_number",
+            "invoice_date",
+            "consignee",
+            "consignee_address"
+          ],
+          "errors": []
+        }
+      ],
+      "start_s": 0.0,
+      "end_s": 54.207478,
+      "errors": []
+    },
+    {
+      "document_id": "doc-002",
+      "document_type": "ttn",
+      "document_type_label": "ТТН",
+      "number": "2591",
+      "date": "23.08.2026",
+      "number_readings_joined": [
+        "2591"
+      ],
+      "status": "complete",
+      "undetermined_fields": [],
+      "fields": {
+        "consignor": {
+          "status": "recognized",
+          "raw_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "normalized_value": "ООО \"ФРЭШ-ЭКСПРЕСС\"",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "consignee": {
+          "status": "recognized",
+          "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "normalized_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_number": {
+          "status": "recognized",
+          "raw_value": "2591",
+          "normalized_value": "2591",
+          "source_page_ids": [
+            "page-0002",
+            "page-0003",
+            "page-0005",
+            "page-0006"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        },
+        "document_date": {
+          "status": "recognized",
+          "raw_value": "23.08.2026",
+          "normalized_value": "2026-08-23",
+          "source_page_ids": [
+            "page-0002",
+            "page-0005"
+          ],
+          "candidates": [],
+          "reason": "read on the listed sheets"
+        }
+      },
+      "sheets": [
+        {
+          "page_id": "page-0002",
+          "start_s": 7.996594444444444,
+          "end_s": 13.594205555555556,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0003",
+          "start_s": 13.594205555555556,
+          "end_s": 19.191816666666668,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0005",
+          "start_s": 26.122194444444446,
+          "end_s": 31.719805555555553,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "consignor",
+            "consignee",
+            "document_number",
+            "document_date"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0006",
+          "start_s": 31.719805555555553,
+          "end_s": 35.443155555555556,
+          "document_type": "ttn",
+          "assignment": "own_number",
+          "fields_with_values": [
+            "document_number"
+          ],
+          "errors": []
+        },
+        {
+          "page_id": "page-0007",
+          "start_s": 35.443155555555556,
+          "end_s": 39.16650555555556,
+          "document_type": "ttn",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [],
+          "errors": []
+        },
+        {
+          "page_id": "page-0008",
+          "start_s": 39.16650555555556,
+          "end_s": 41.565472222222226,
+          "document_type": "ttn",
+          "assignment": "continues_previous_sheet",
+          "fields_with_values": [],
+          "errors": []
+        },
+        {
+          "page_id": "page-0010",
+          "start_s": 45.554138888888886,
+          "end_s": 50.34246111111111,
+          "document_type": "ttn",
+          "assignment": "only_document_of_this_type",
+          "fields_with_values": [],
+          "errors": []
+        }
+      ],
+      "start_s": 7.996594444444444,
+      "end_s": 50.34246111111111,
+      "errors": []
+    }
+  ],
+  "unassigned_sheets": [],
+  "other_forms": [],
+  "summary": {
+    "documents": 2,
+    "complete_documents": 2,
+    "documents_by_type": {
+      "upd": 1,
+      "ttn": 1
+    },
+    "sheets_total": 12,
+    "sheets_in_documents": 12,
+    "unassigned_sheets": 0,
+    "other_form_sheets": 0
+  }
+}

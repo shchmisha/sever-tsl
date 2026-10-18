@@ -1,0 +1,822 @@
+[
+ {
+  "level": "document",
+  "video": "sample-04",
+  "truth": "upd:2559",
+  "field": "consignee",
+  "kind": "field",
+  "truth_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+  "truth_status": "recognized",
+  "output_document": "doc-001",
+  "output_status": "conflict",
+  "output_value": null,
+  "candidates": [
+   {
+    "status": "recognized",
+    "raw_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+    "source_page_ids": [
+     "page-0001"
+    ]
+   },
+   {
+    "status": "recognized",
+    "raw_value": "ООО \"УМНЫЙ РИТЕИЛ\"",
+    "source_page_ids": [
+     "page-0004"
+    ]
+   }
+  ],
+  "reason": "sheets of this document read different values with equal support",
+  "output_sheets": [
+   "page-0001",
+   "page-0004",
+   "page-0009",
+   "page-0011"
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "sample-04",
+  "truth": "sample-04-page-004",
+  "kind": "sheet_field",
+  "field": "consignee",
+  "truth_value": "ООО \"УМНЫЙ РИТЕЙЛ\"",
+  "truth_status": "recognized",
+  "predicted_page": "page-0004",
+  "output_status": "recognized",
+  "output_value": "ООО \"УМНЫЙ РИТЕИЛ\"",
+  "evidence_frames": [
+   "frame-000030",
+   "frame-000037"
+  ],
+  "note": "Both frames show the same УПД (Универсальный передаточный документ, №УР-10625708). The 'Грузополучатель и его адрес' line carries its own full printed value, distinct from the 'Грузоотправитель' line which contains the 'он же' reference. The organization name in the consignee's own line is ООО \"УМНЫЙ РИТЕИЛ\" (followed by ИНН/КПП, РЦ and address, which are excluded from the organization name).",
+  "observed_form": "Повторный показ лицевой страницы УПД",
+  "interval": [
+   14.560461,
+   20.691172
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000030",
+    "timestamp_s": 15.460077777777778,
+    "path": "/srv/sever/runs/61eead11-6868-4275-8739-0665b0a9d04d/video/frames/frame-000030.png"
+   },
+   {
+    "frame_id": "frame-000031",
+    "timestamp_s": 15.99318888888889,
+    "path": "/srv/sever/runs/61eead11-6868-4275-8739-0665b0a9d04d/video/frames/frame-000031.png"
+   },
+   {
+    "frame_id": "frame-000037",
+    "timestamp_s": 19.19181111111111,
+    "path": "/srv/sever/runs/61eead11-6868-4275-8739-0665b0a9d04d/video/frames/frame-000037.png"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "sample-05",
+  "truth": "sample-05-page-014",
+  "kind": "sheet_wrong_type",
+  "truth_type": "ttn",
+  "predicted_type": "torg12",
+  "predicted_page": "page-0014",
+  "observed_form": "Повторный показ продолжения товарного раздела ТТН",
+  "interval": [
+   66.599277,
+   69.69275
+  ],
+  "errors": [],
+  "frames": [
+   {
+    "frame_id": "frame-000127",
+    "timestamp_s": 67.14384444444444,
+    "path": "/srv/sever/runs/0ae91181-eb6e-4196-89b9-73b4dcb2a184/video/frames/frame-000127.png"
+   },
+   {
+    "frame_id": "frame-000130",
+    "timestamp_s": 68.74315555555556,
+    "path": "/srv/sever/runs/0ae91181-eb6e-4196-89b9-73b4dcb2a184/video/frames/frame-000130.png"
+   },
+   {
+    "frame_id": "frame-000131",
+    "timestamp_s": 69.27625555555555,
+    "path": "/srv/sever/runs/0ae91181-eb6e-4196-89b9-73b4dcb2a184/video/frames/frame-000131.png"
+   }
+  ]
+ },
+ {
+  "level": "document",
+  "video": "set2-20260821_145110",
+  "truth": "upd:РРРБ-128027",
+  "kind": "document_not_found",
+  "truth_sheets": [
+   "set2-20260821_145110-page-015"
+  ]
+ },
+ {
+  "level": "document",
+  "video": "set2-20260821_145110",
+  "kind": "extra_document",
+  "output_document": "doc-001",
+  "document_type": "ttn",
+  "number": "РБ-00048248",
+  "sheets": [
+   "page-0003",
+   "page-0004"
+  ],
+  "reason": "non_target_sheets_typed_as_target",
+  "shares_sheets_with": [],
+  "same_number_as": null
+ },
+ {
+  "level": "document",
+  "video": "set2-20260821_145110",
+  "kind": "extra_document",
+  "output_document": "doc-003",
+  "document_type": "torg12",
+  "number": "РРБ5-128027",
+  "sheets": [
+   "page-0010",
+   "page-0011"
+  ],
+  "reason": "split_from_matched_document",
+  "shares_sheets_with": [
+   "torg12:РРРБ-128027"
+  ],
+  "same_number_as": null
+ },
+ {
+  "level": "document",
+  "video": "set2-20260821_145110",
+  "kind": "extra_document",
+  "output_document": "doc-005",
+  "document_type": "upd",
+  "number": "РРБ-128027",
+  "sheets": [
+   "page-0032",
+   "page-0034",
+   "page-0035",
+   "page-0036"
+  ],
+  "reason": "sheets_not_matched_to_any_labelled_sheet",
+  "shares_sheets_with": [],
+  "same_number_as": null
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145110",
+  "truth": "set2-20260821_145110-page-003",
+  "kind": "non_target_typed_as_target",
+  "predicted_page": "page-0004",
+  "predicted_type": "ttn",
+  "observed_form": "Маршрутный лист № РБ-00048248 от 14 августа 2026 г.",
+  "interval": [
+   13.0611,
+   21.590794
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000028",
+    "timestamp_s": 14.393855555555556,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000028.png"
+   },
+   {
+    "frame_id": "frame-000031",
+    "timestamp_s": 15.99318888888889,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000031.png"
+   },
+   {
+    "frame_id": "frame-000033",
+    "timestamp_s": 17.0594,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000033.png"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145110",
+  "truth": "set2-20260821_145110-page-004",
+  "kind": "sheet_field",
+  "field": "document_number",
+  "truth_value": "РРРБ-128027",
+  "truth_status": "recognized",
+  "predicted_page": "page-0007",
+  "output_status": "recognized",
+  "output_value": "РРБ-128027",
+  "evidence_frames": [
+   "frame-000045",
+   "frame-000046"
+  ],
+  "note": "Model raw values agree across at least two distinct image views after Unicode/case/whitespace and party-name/address presentation comparison; all original raw values are preserved",
+  "observed_form": "Унифицированная форма № ТОРГ-12, ОКУД 0330212; ТОВАРНАЯ НАКЛАДНАЯ № РРРБ-128027 от 17.08.2026; Страница 1 к товарной накладной",
+  "interval": [
+   22.657006,
+   29.054283
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000045",
+    "timestamp_s": 23.456666666666667,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000045.png"
+   },
+   {
+    "frame_id": "frame-000046",
+    "timestamp_s": 23.989766666666668,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000046.png"
+   },
+   {
+    "frame_id": "frame-000048",
+    "timestamp_s": 25.05598888888889,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000048.png"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145110",
+  "truth": "set2-20260821_145110-page-012",
+  "kind": "sheet_field",
+  "field": "document_number",
+  "truth_value": "РРРБ-128027",
+  "truth_status": "recognized",
+  "predicted_page": "page-0028",
+  "output_status": "recognized",
+  "output_value": "ПРРБ-128027",
+  "evidence_frames": [
+   "frame-000156",
+   "frame-000157"
+  ],
+  "note": "Оба кадра читаемо показывают собственную строку Транспортная накладная: Дата 17.08.2026, № ПРРБ-128027. Это не номер следующего блока Заказ (заявка), чья строка № видна пустой.",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; № РРРБ-128027 от 17.08.2026; Экземпляр № 2",
+  "interval": [
+   80.765561,
+   85.030411
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000156",
+    "timestamp_s": 82.63143333333333,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000156.png"
+   },
+   {
+    "frame_id": "frame-000157",
+    "timestamp_s": 83.16454444444445,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000157.png"
+   },
+   {
+    "frame_id": "frame-000158",
+    "timestamp_s": 83.69764444444445,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000158.png"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145110",
+  "truth": "set2-20260821_145110-page-013",
+  "kind": "sheet_field",
+  "field": "document_number",
+  "truth_value": "РРРБ-128027",
+  "truth_status": "recognized",
+  "predicted_page": "page-0029",
+  "output_status": "recognized",
+  "output_value": "РРРВ-128027",
+  "evidence_frames": [
+   "frame-000164",
+   "frame-000166"
+  ],
+  "note": "Both frames clearly show the Транспортная накладная header with Дата 17.08.2026 and № РРРВ-128027 in the immediately adjacent № slot. The value is identical and legible on both frames.",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; № РРРБ-128027 от 17.08.2026; Экземпляр № 3",
+  "interval": [
+   85.563523,
+   90.361478
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000164",
+    "timestamp_s": 86.89628888888889,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000164.png"
+   },
+   {
+    "frame_id": "frame-000165",
+    "timestamp_s": 87.4293888888889,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000165.png"
+   },
+   {
+    "frame_id": "frame-000166",
+    "timestamp_s": 87.9625,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000166.png"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145110",
+  "truth": "set2-20260821_145110-page-015",
+  "kind": "sheet_wrong_type",
+  "truth_type": "upd",
+  "predicted_type": "unknown",
+  "predicted_page": "page-0033",
+  "observed_form": "Счет-фактура № РРРБ-128027 от 17 августа 2026 г.; Исправление № -- от -- (Приложение № 1 к постановлению Правительства РФ от 26 декабря 2011 г. № 1137)",
+  "interval": [
+   96.225639,
+   101.118417
+  ],
+  "errors": [],
+  "frames": [
+   {
+    "frame_id": "frame-000186",
+    "timestamp_s": 98.62461111111111,
+    "path": "/srv/sever/runs/2de71c2b-9073-4a53-96cc-9355763cca16/video/frames/frame-000186.png"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260818-6_131851",
+  "truth": "set2-20260818-6_131851-page-004",
+  "kind": "sheet_wrong_type",
+  "truth_type": "trn",
+  "predicted_type": "unknown",
+  "predicted_page": "page-0005",
+  "observed_form": "Продолжение приложения № 4, Оборотная сторона (sections 8-17: Прием груза ... Стоимость перевозки)",
+  "interval": [
+   8.263144,
+   11.461783
+  ],
+  "errors": [],
+  "frames": [
+   {
+    "frame_id": "frame-000019",
+    "timestamp_s": 9.59591111111111,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000019.png"
+   },
+   {
+    "frame_id": "frame-000020",
+    "timestamp_s": 10.129011111111112,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000020.png"
+   },
+   {
+    "frame_id": "frame-000021",
+    "timestamp_s": 10.662122222222223,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000021.png"
+   },
+   {
+    "frame_id": "page-0005-extra-7a8de1fbf23f-pts-935601",
+    "timestamp_s": 10.395566666666667,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/additional-frames/page-0005-extra-7a8de1fbf23f-pts-935601.jpg"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260818-6_131851",
+  "truth": "set2-20260818-6_131851-page-006",
+  "kind": "sheet_wrong_type",
+  "truth_type": "trn",
+  "predicted_type": "unknown",
+  "predicted_page": "page-0007",
+  "observed_form": "Продолжение приложения № 4, Оборотная сторона",
+  "interval": [
+   19.991472,
+   26.38875
+  ],
+  "errors": [],
+  "frames": [
+   {
+    "frame_id": "frame-000042",
+    "timestamp_s": 21.857344444444443,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000042.png"
+   },
+   {
+    "frame_id": "frame-000043",
+    "timestamp_s": 22.390455555555555,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000043.png"
+   },
+   {
+    "frame_id": "frame-000044",
+    "timestamp_s": 22.923555555555556,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000044.png"
+   },
+   {
+    "frame_id": "page-0007-extra-7a8de1fbf23f-pts-2039130",
+    "timestamp_s": 22.657,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/additional-frames/page-0007-extra-7a8de1fbf23f-pts-2039130.jpg"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260818-6_131851",
+  "truth": "set2-20260818-6_131851-page-008",
+  "kind": "sheet_wrong_type",
+  "truth_type": "trn",
+  "predicted_type": "ttn",
+  "predicted_page": "page-0009",
+  "observed_form": "Продолжение приложения № 4, Оборотная сторона",
+  "interval": [
+   31.1867,
+   35.45155
+  ],
+  "errors": [],
+  "frames": [
+   {
+    "frame_id": "frame-000065",
+    "timestamp_s": 34.118788888888886,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000065.png"
+   },
+   {
+    "frame_id": "frame-000066",
+    "timestamp_s": 34.65188888888889,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000066.png"
+   },
+   {
+    "frame_id": "frame-000067",
+    "timestamp_s": 35.185,
+    "path": "/srv/sever/runs/d8ea7ae0-76a4-4de0-a90f-691487c148cc/video/frames/frame-000067.png"
+   }
+  ]
+ },
+ {
+  "level": "document",
+  "video": "set2-20260821_145342",
+  "truth": "trn:РРРБ-127817",
+  "field": "document_number",
+  "kind": "field",
+  "truth_value": "РРРБ-127817",
+  "truth_status": "recognized",
+  "output_document": "doc-003",
+  "output_status": "conflict",
+  "output_value": null,
+  "candidates": [
+   {
+    "status": "recognized",
+    "raw_value": "РРРВ-127817",
+    "source_page_ids": [
+     "page-0019",
+     "page-0021"
+    ]
+   },
+   {
+    "status": "recognized",
+    "raw_value": "РРРБ-127817",
+    "source_page_ids": [
+     "page-0020",
+     "page-0023"
+    ]
+   },
+   {
+    "status": "recognized",
+    "raw_value": "РРБ-127817",
+    "source_page_ids": [
+     "page-0018"
+    ]
+   },
+   {
+    "status": "recognized",
+    "raw_value": "PPRB-127817",
+    "source_page_ids": [
+     "page-0022"
+    ]
+   }
+  ],
+  "reason": "sheets of this document read different values with equal support",
+  "output_sheets": [
+   "page-0018",
+   "page-0019",
+   "page-0020",
+   "page-0021",
+   "page-0022",
+   "page-0023"
+  ]
+ },
+ {
+  "level": "document",
+  "video": "set2-20260821_145342",
+  "truth": "upd:РРРБ-127817",
+  "field": "invoice_number",
+  "kind": "field",
+  "truth_value": "РРРБ-127817",
+  "truth_status": "recognized",
+  "output_document": "doc-004",
+  "output_status": "recognized",
+  "output_value": "127817",
+  "candidates": [],
+  "reason": "read on the listed sheets",
+  "output_sheets": [
+   "page-0026",
+   "page-0027",
+   "page-0028",
+   "page-0029",
+   "page-0030",
+   "page-0031"
+  ]
+ },
+ {
+  "level": "document",
+  "video": "set2-20260821_145342",
+  "kind": "extra_document",
+  "output_document": "doc-001",
+  "document_type": "ttn",
+  "number": "РБ-00048247",
+  "sheets": [
+   "page-0002",
+   "page-0004"
+  ],
+  "reason": "non_target_sheets_typed_as_target",
+  "shares_sheets_with": [],
+  "same_number_as": null
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145342",
+  "truth": "set2-20260821_145342-page-003",
+  "kind": "non_target_typed_as_target",
+  "predicted_page": "page-0004",
+  "predicted_type": "ttn",
+  "observed_form": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "interval": [
+   9.862461,
+   14.660411
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000022",
+    "timestamp_s": 11.195233333333332,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000022.png"
+   },
+   {
+    "frame_id": "frame-000023",
+    "timestamp_s": 11.728333333333333,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000023.png"
+   },
+   {
+    "frame_id": "frame-000024",
+    "timestamp_s": 12.261444444444445,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000024.png"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145342",
+  "truth": "set2-20260821_145342-page-011",
+  "kind": "sheet_field",
+  "field": "document_number",
+  "truth_value": "РРРБ-127817",
+  "truth_status": "recognized",
+  "predicted_page": "page-0022",
+  "output_status": "recognized",
+  "output_value": "PPRB-127817",
+  "evidence_frames": [
+   "frame-000123",
+   "frame-000124"
+  ],
+  "note": "Оба кадра читаемо показывают шапку «Транспортная накладная» с собственным блоком Дата/№. В поле № напечатано PPRB-127817; это не номер соседнего блока «Заказ (заявка)», который пуст.",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4; Экземпляр № 2; № РРРБ-127817 от 17.08.2026",
+  "interval": [
+   58.908212,
+   67.437911
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000123",
+    "timestamp_s": 65.03893333333333,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000123.png"
+   },
+   {
+    "frame_id": "frame-000124",
+    "timestamp_s": 65.57204444444444,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000124.png"
+   },
+   {
+    "frame_id": "frame-000126",
+    "timestamp_s": 66.63825555555556,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000126.png"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145342",
+  "truth": "set2-20260821_145342-page-012",
+  "kind": "sheet_field",
+  "field": "customer",
+  "truth_value": null,
+  "truth_status": "not_present",
+  "predicted_page": "page-0023",
+  "output_status": "unreadable",
+  "output_value": null,
+  "evidence_frames": [
+   "frame-000133",
+   "frame-000134",
+   "frame-000135",
+   "page-0023-extra-45935ade15b0-pts-6336299",
+   "page-0023-extra-45935ade15b0-pts-6360288",
+   "page-0023-extra-45935ade15b0-pts-6384278",
+   "page-0023-extra-45935ade15b0-pts-6408268",
+   "page-0023-extra-45935ade15b0-pts-6432258"
+  ],
+  "note": "No corroborated literal value or two located blank own-field views",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4; Экземпляр № 3; № РРРБ-127817 от 17.08.2026",
+  "interval": [
+   68.504128,
+   71.169656
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000133",
+    "timestamp_s": 70.37,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000133.png"
+   },
+   {
+    "frame_id": "frame-000134",
+    "timestamp_s": 70.9031,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000134.png"
+   },
+   {
+    "frame_id": "frame-000135",
+    "timestamp_s": 71.4362111111111,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000135.png"
+   },
+   {
+    "frame_id": "page-0023-extra-45935ade15b0-pts-6360288",
+    "timestamp_s": 70.66986666666666,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0023-extra-45935ade15b0-pts-6360288.jpg"
+   },
+   {
+    "frame_id": "page-0023-extra-45935ade15b0-pts-6408268",
+    "timestamp_s": 71.20297777777778,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0023-extra-45935ade15b0-pts-6408268.jpg"
+   },
+   {
+    "frame_id": "page-0023-extra-45935ade15b0-pts-6384278",
+    "timestamp_s": 70.93642222222222,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0023-extra-45935ade15b0-pts-6384278.jpg"
+   },
+   {
+    "frame_id": "page-0023-extra-45935ade15b0-pts-6432258",
+    "timestamp_s": 71.46953333333333,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0023-extra-45935ade15b0-pts-6432258.jpg"
+   },
+   {
+    "frame_id": "page-0023-extra-45935ade15b0-pts-6336299",
+    "timestamp_s": 70.40332222222223,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0023-extra-45935ade15b0-pts-6336299.jpg"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145342",
+  "truth": "set2-20260821_145342-page-014",
+  "kind": "sheet_field",
+  "field": "invoice_number",
+  "truth_value": "РРРБ-127817",
+  "truth_status": "recognized",
+  "predicted_page": "page-0028",
+  "output_status": "unreadable",
+  "output_value": null,
+  "evidence_frames": [
+   "frame-000155",
+   "frame-000156",
+   "frame-000157",
+   "page-0028-extra-45935ade15b0-pts-7439828",
+   "page-0028-extra-45935ade15b0-pts-7487808"
+  ],
+  "note": "No corroborated literal value or two located blank own-field views",
+  "observed_form": "Счет-фактура № РРРБ-127817 от 17 августа 2026 г. (Приложение № 1 к постановлению Правительства РФ от 26.12.2011 № 1137; 'Исправление № -- от --')",
+  "interval": [
+   78.633139,
+   86.825313
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000155",
+    "timestamp_s": 82.09833333333333,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000155.png"
+   },
+   {
+    "frame_id": "frame-000156",
+    "timestamp_s": 82.63143333333333,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000156.png"
+   },
+   {
+    "frame_id": "frame-000157",
+    "timestamp_s": 83.16454444444445,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000157.png"
+   },
+   {
+    "frame_id": "page-0028-extra-45935ade15b0-pts-7439828",
+    "timestamp_s": 82.66475555555556,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0028-extra-45935ade15b0-pts-7439828.jpg"
+   },
+   {
+    "frame_id": "page-0028-extra-45935ade15b0-pts-7487808",
+    "timestamp_s": 83.19786666666667,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0028-extra-45935ade15b0-pts-7487808.jpg"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260821_145342",
+  "truth": "set2-20260821_145342-page-014",
+  "kind": "sheet_field",
+  "field": "invoice_date",
+  "truth_value": "17 августа 2026 г.",
+  "truth_status": "recognized",
+  "predicted_page": "page-0028",
+  "output_status": "unreadable",
+  "output_value": null,
+  "evidence_frames": [
+   "frame-000155",
+   "frame-000156",
+   "frame-000157",
+   "page-0028-extra-45935ade15b0-pts-7439828",
+   "page-0028-extra-45935ade15b0-pts-7487808"
+  ],
+  "note": "No corroborated literal value or two located blank own-field views",
+  "observed_form": "Счет-фактура № РРРБ-127817 от 17 августа 2026 г. (Приложение № 1 к постановлению Правительства РФ от 26.12.2011 № 1137; 'Исправление № -- от --')",
+  "interval": [
+   78.633139,
+   86.825313
+  ],
+  "frames": [
+   {
+    "frame_id": "frame-000155",
+    "timestamp_s": 82.09833333333333,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000155.png"
+   },
+   {
+    "frame_id": "frame-000156",
+    "timestamp_s": 82.63143333333333,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000156.png"
+   },
+   {
+    "frame_id": "frame-000157",
+    "timestamp_s": 83.16454444444445,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/video/frames/frame-000157.png"
+   },
+   {
+    "frame_id": "page-0028-extra-45935ade15b0-pts-7439828",
+    "timestamp_s": 82.66475555555556,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0028-extra-45935ade15b0-pts-7439828.jpg"
+   },
+   {
+    "frame_id": "page-0028-extra-45935ade15b0-pts-7487808",
+    "timestamp_s": 83.19786666666667,
+    "path": "/srv/sever/runs/f3641a0b-e052-4d68-8ae8-5e16a12e8276/additional-frames/page-0028-extra-45935ade15b0-pts-7487808.jpg"
+   }
+  ]
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260818_131702",
+  "truth": "set2-20260818_131702-page-001",
+  "kind": "sheet_not_detected",
+  "interval": [
+   0.0,
+   2.398977
+  ],
+  "observed_form": "Товарная накладная, Унифицированная форма № ТОРГ-12 (ОКУД 0330212), № Чл000067597 от 20.08.2026, Страница 1"
+ },
+ {
+  "level": "sheet",
+  "video": "set2-20260818_131702",
+  "truth": "set2-20260818_131702-page-007",
+  "kind": "sheet_wrong_type",
+  "truth_type": "trn",
+  "predicted_type": "unknown",
+  "predicted_page": "page-0006",
+  "observed_form": "Продолжение приложения № 4, Оборотная сторона (8. Прием груза ... 12. Стоимость перевозки груза; Сведения о грузе)",
+  "interval": [
+   21.590794,
+   24.789434
+  ],
+  "errors": [],
+  "frames": [
+   {
+    "frame_id": "frame-000042",
+    "timestamp_s": 21.857344444444443,
+    "path": "/srv/sever/runs/943548f5-e539-4bb6-a821-ac144f5e5972/video/frames/frame-000042.png"
+   },
+   {
+    "frame_id": "frame-000043",
+    "timestamp_s": 22.390455555555555,
+    "path": "/srv/sever/runs/943548f5-e539-4bb6-a821-ac144f5e5972/video/frames/frame-000043.png"
+   },
+   {
+    "frame_id": "frame-000044",
+    "timestamp_s": 22.923555555555556,
+    "path": "/srv/sever/runs/943548f5-e539-4bb6-a821-ac144f5e5972/video/frames/frame-000044.png"
+   },
+   {
+    "frame_id": "page-0006-extra-4e7a2201c378-pts-1970160",
+    "timestamp_s": 21.890666666666668,
+    "path": "/srv/sever/runs/943548f5-e539-4bb6-a821-ac144f5e5972/additional-frames/page-0006-extra-4e7a2201c378-pts-1970160.jpg"
+   }
+  ]
+ }
+]
