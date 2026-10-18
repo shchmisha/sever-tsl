@@ -297,7 +297,7 @@
       if (typeof value !== 'string' || !value.startsWith('/jobs/')) return null;
       try {
         const url = new URL(value, window.location.origin);
-        return url.origin === window.location.origin && /^\/jobs\/[a-zA-Z0-9-]+\/(?:report\.html|fields\.csv|(?:partial-)?results\.json)$/.test(url.pathname) && !url.search && !url.hash ? url.pathname : null;
+        return url.origin === window.location.origin && /^\/jobs\/[a-zA-Z0-9-]+\/(?:report\.html|documents\.csv|fields\.csv|(?:partial-)?results\.json)$/.test(url.pathname) && !url.search && !url.hash ? url.pathname : null;
       } catch (_) { return null; }
     }
     function updateLink(link, value) {
@@ -336,7 +336,7 @@
       const report = node('a', 'button primary', 'Открыть отчёт ↗');
       report.target = '_blank';
       report.rel = 'noopener';
-      const csv = node('a', 'button', 'CSV ↓');
+      const csv = node('a', 'button', 'Таблица документов CSV ↓');
       csv.download = '';
       const json = node('a', 'button', 'JSON ↓');
       json.download = '';

@@ -40,6 +40,23 @@ def process(source:Path,out:Path=typer.Option(Path("runs/latest")),interval:floa
         result=asyncio.run(process_video(source,out,config=config,sample_interval=interval,max_pages=max_pages,progress=typer.echo))
     typer.echo(json.dumps({"result":str(out.resolve()/"results.json"),"page_count":len(result["pages"]),"usage":result["usage"]},ensure_ascii=False))
 
+@app.command("documents")
+def documents_command(run:Path,report:bool=typer.Option(True,help="Also rebuild report.html; the previous report is kept under history/")):
+    """Build the per-document table (documents.csv, documents.json) from a finished run, without model calls."""
+    from .documents import assemble_documents, export_documents
+    from .report import write_report
+    from .tracing import archive_restart_artifacts
+    path=run/"results.json"
+    if not path.is_file():
+        raise typer.BadParameter(f"{path} not found")
+    result=json.loads(path.read_text(encoding="utf-8"))
+    assembly=assemble_documents(result)
+    export_documents(run,assembly)
+    if report:
+        archive_restart_artifacts(run,("report.html",),reason="documents-export")
+        write_report(run,{**result,"documents":assembly})
+    typer.echo(json.dumps({"documents_csv":str(run.resolve()/"documents.csv"),**assembly["summary"]},ensure_ascii=False))
+
 @app.command("evaluate")
 def evaluate_command(result:Path,truth:Path,out:Path=Path("runs/metrics.json")):
     """Evaluate against independently labeled expected leaf intervals."""

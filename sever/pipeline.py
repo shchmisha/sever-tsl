@@ -69,7 +69,8 @@ async def process_video(source: Path, out: Path, *, config, sample_interval: flo
     usage_before=config.usage.model_dump()
     source_id=source_hash(source)
     trace_path=out/"trace.jsonl"
-    history = archive_restart_artifacts(out, ("partial-results.json", "results.json", "metrics.json", "fields.csv", "report.html",
+    history = archive_restart_artifacts(out, ("partial-results.json", "results.json", "metrics.json", "fields.csv",
+                                             "documents.csv", "documents.json", "report.html",
                                              "selected-pages.json", "classifications.json"))
     trace(trace_path,"run_started",source=str(source),source_id=source_id,version=__version__,sample_interval=sample_interval,
           local_ocr_workers=ocr_workers,
@@ -243,8 +244,11 @@ async def process_video(source: Path, out: Path, *, config, sample_interval: flo
     save_json(out/"selected-pages.json",[{k:v for k,v in page.items() if k not in {"result", "classification", "inn_verification"}} for page in processed])
     if registry is not None and hasattr(registry, "stats"):
         result["registry_usage"] = registry.stats()
+    from .documents import assemble_documents, export_documents
+    result["documents"] = assemble_documents(result)
     try:
         export_csv(out,processed)
+        export_documents(out, result["documents"])
         from .report import write_report
         write_report(out,result)
         # Promote the final JSON only after the other exports succeeded.
@@ -255,7 +259,8 @@ async def process_video(source: Path, out: Path, *, config, sample_interval: flo
         # results path. Keep all generated data in history and the current
         # partial-results checkpoint, rather than deleting or hiding evidence.
         try:
-            archive_restart_artifacts(out, ("results.json", "metrics.json", "fields.csv", "report.html"), reason="failed-finalization")
+            archive_restart_artifacts(out, ("results.json", "metrics.json", "fields.csv", "documents.csv", "documents.json",
+                                            "report.html"), reason="failed-finalization")
         except OSError:
             # A same-directory rename needs no copy of a large result. Preserve
             # the original exception if exhausted storage also blocks history.

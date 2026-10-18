@@ -98,7 +98,7 @@ class JobRequest(BaseModel):
 def _native_source_hashes():
     root=Path(__file__).resolve().parent
     names=("image_reader.py","image_fusion.py","native_pipeline.py","schema.py",
-           "adaptive_image_reader.py","image_orientation.py","image_triage.py","image_detail.py",
+           "adaptive_image_reader.py","image_orientation.py","image_triage.py","image_detail.py","documents.py",
            "image_agent.py","zoom_image_reader.py","image_conflicts.py","inference_gate.py",
            "pipeline.py","video.py","frame_pool.py","quality.py","normalize.py","coverage.py",
            "agents.py","cli.py","tracing.py","api.py")
@@ -203,7 +203,7 @@ def execute(job_id:str, request:JobRequest, config):
                     return
                 result=asyncio.run(process_video(Path(request.source_path),directory(job_id),config=config,sample_interval=request.sample_interval,max_pages=request.max_pages,progress=progress))
                 failed=sum(bool(p["result"]["errors"]) for p in result["pages"])
-                state(job_id,{"status":"completed_with_errors" if failed else "completed","page_count":len(result["pages"]),"pages_with_errors":failed,"usage":result["usage"],"results_url":f"/v1/jobs/{job_id}/results","csv_url":f"/v1/jobs/{job_id}/fields.csv",**binding})
+                state(job_id,{"status":"completed_with_errors" if failed else "completed","page_count":len(result["pages"]),"pages_with_errors":failed,"usage":result["usage"],"results_url":f"/v1/jobs/{job_id}/results","csv_url":f"/v1/jobs/{job_id}/fields.csv","documents_csv_url":f"/v1/jobs/{job_id}/documents.csv",**binding})
             except Exception as exc:
                 state(job_id,{"status":"failed","error_type":type(exc).__name__,**binding})
     except Exception as exc:
@@ -275,3 +275,10 @@ def fields(job_id:str):
     path=directory(job_id)/"fields.csv"
     if not path.exists(): raise HTTPException(409,"Results are not available yet")
     return FileResponse(path,filename=f"{job_id}-fields.csv",media_type="text/csv")
+
+@app.get("/v1/jobs/{job_id}/documents.csv")
+def documents_csv(job_id:str):
+    """One row per document (form + own number); fields.csv keeps one row per sheet field."""
+    path=directory(job_id)/"documents.csv"
+    if not path.exists(): raise HTTPException(409,"Results are not available yet")
+    return FileResponse(path,filename=f"{job_id}-documents.csv",media_type="text/csv")

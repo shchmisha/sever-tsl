@@ -10,6 +10,7 @@ from uuid import uuid4
 from PIL import Image
 
 from .coverage import REASONS, load_video_coverage
+from .documents import BLANK_TEXT, COLUMNS, FIELD_COLUMN, TYPE_LABELS, assemble_documents, undetermined_text
 
 
 _PREVIEW_SIZE = (1024, 760)
@@ -254,6 +255,40 @@ def _frame_preview(path: Path, assets: Path) -> tuple[Path, tuple[int, int]]:
             temporary.unlink(missing_ok=True)
         return target, preview.size
 
+def _documents_section(assembly: dict, esc, processing: bool) -> str:
+    """Customer view first: one row per document, one column per contract field."""
+    summary = assembly["summary"]
+    by_type = ", ".join(f"{TYPE_LABELS[kind]} {count}" for kind, count in summary["documents_by_type"].items())
+    rows = []
+    titles = dict(COLUMNS)
+    for record in assembly["documents"]:
+        cells = {title: "" for _, title in COLUMNS}
+        for name, field in record["fields"].items():
+            value = field["raw_value"] if field["status"] == "recognized" else BLANK_TEXT if field["status"] == "not_present" else ""
+            cells[titles[FIELD_COLUMN[name]]] = value or ""
+        sheets = ", ".join(
+            f'<a href="#sheet-{esc(sheet["page_id"])}">{sheet["start_s"]:.1f}–{sheet["end_s"]:.1f} с</a>'
+            for sheet in record["sheets"]
+            if isinstance(sheet.get("start_s"), (int, float)) and isinstance(sheet.get("end_s"), (int, float)))
+        missing = undetermined_text(record)
+        rows.append("<tr>" + f'<td>{esc(record["document_type_label"])}</td>'
+                    + "".join(f"<td>{esc(cells[title])}</td>" for _, title in COLUMNS)
+                    + f'<td class="missing">{esc(missing)}</td><td>{sheets}</td></tr>')
+    head = "<tr><th>Тип</th>" + "".join(f"<th>{esc(title)}</th>" for _, title in COLUMNS) + "<th>Не удалось определить</th><th>Листы в видео</th></tr>"
+    table = (f'<div class="table"><table class="documents"><thead>{head}</thead><tbody>{"".join(rows)}</tbody></table></div>'
+             if rows else "<p>Документов четырёх типов из ТЗ не найдено.</p>")
+    note = "Предварительно: обработка продолжается, список документов ещё может измениться. " if processing else ""
+    extra = []
+    if summary["other_form_sheets"]:
+        extra.append(f'листов других форм вне ТЗ: {summary["other_form_sheets"]}')
+    if summary["unassigned_sheets"]:
+        extra.append(f'листов без номера и без данных, не отнесённых к документу: {summary["unassigned_sheets"]}')
+    return (f'<section id="documents"><h2>Документы: {summary["documents"]}' + (f" ({esc(by_type)})" if by_type else "") + "</h2>"
+            f'<p>{esc(note)}Листы одного документа (копии, оборот, продолжение, повторный показ) объединены по типу и собственному номеру. '
+            f'Каждое значение взято без изменений с листа, где оно напечатано. Всего листов в видео: {summary["sheets_total"]}'
+            + (f'; {esc("; ".join(extra))}' if extra else "") + ".</p>" + table + "</section>")
+
+
 def write_report(out:Path,result:dict,*,report_root:Path|None=None):
     out = Path(out).resolve()
     # A staged HTML export can link to persistent assets in its final run folder.
@@ -263,6 +298,9 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
     def url(path): return esc(quote(os.path.relpath(path, report_root).replace(os.sep, "/"), safe="/"))
     previews = {}
     cards=[]
+    assembly = result.get("documents") if isinstance(result.get("documents"), dict) else assemble_documents(result)
+    membership = {sheet["page_id"]: f'{record["document_type_label"]} № {record["number"]}' if record["number"] else f'{record["document_type_label"]} без номера'
+                  for record in assembly["documents"] for sheet in record["sheets"]}
     for page in result["pages"]:
         doc=page["result"]
         frames=[]
@@ -347,7 +385,9 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
                 recognition["conflict_reviews"], review_sources, report_root, esc, url)
             details_page = {**page, "image_recognition": {**recognition, "conflict_reviews": public_reviews}}
         field_table = '<div class="table"><table><thead><tr><th>Поле</th><th>Исходное значение</th><th>Нормализованное</th><th>Статус</th><th>Доказательство</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table></div>' if rows else '<p>Подтверждённых полей нет.</p>'
-        cards.append(f'<article><h2>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с</h2><p>{esc("; ".join(doc["errors"]+doc["notes"]))}</p>{views}{fragments}{conflict_reviews}<div class="frames">{"".join(frames)}</div>{field_table}{inns}<details><summary>Качество и координаты доказательств</summary><pre>{esc(json.dumps(details_page,ensure_ascii=False,indent=2))}</pre></details></article>')
+        belongs = membership.get(page["page_id"])
+        role = f"лист документа {belongs}" if belongs else ("другая форма, не входит в ТЗ" if doc["document_type"] == "unknown" else "не отнесён к документу")
+        cards.append(f'<details class="sheet"><summary>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с · {esc(role)}</summary><article id="sheet-{esc(page["page_id"])}"><h2>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с</h2><p>{esc("; ".join(doc["errors"]+doc["notes"]))}</p>{views}{fragments}{conflict_reviews}<div class="frames">{"".join(frames)}</div>{field_table}{inns}<details><summary>Качество и координаты доказательств</summary><pre>{esc(json.dumps(details_page,ensure_ascii=False,indent=2))}</pre></details></article></details>')
     processing = result.get("status") == "processing"
     failed = result.get("status") == "failed"
     refresh = '<meta http-equiv="refresh" content="10">' if processing else ""
@@ -374,6 +414,7 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
         exclusions = ('<details><summary>Исключённые неподтверждённые кадры</summary><ul>' + "".join(details) + '</ul></details>') if details else ""
         notice += f'<section id="video-coverage-warning" role="alert"><p><strong>{heading_text}</strong> {esc(coverage["warning"])}</p>{exclusions}</section>'
     links = ('<a href="partial-results.json">Промежуточный JSON</a> · <a href="trace.jsonl">Трасса шагов</a>' if processing or failed
-             else '<a href="results.json">JSON</a> · <a href="fields.csv">CSV</a> · <a href="trace.jsonl">Трасса шагов</a>')
-    page=f'''<!doctype html><html lang="ru"><meta charset="utf-8">{refresh}<meta name="viewport" content="width=device-width"><title>{title}</title><style>body{{font:15px system-ui;max-width:1300px;margin:28px auto;padding:0 18px;color:#182333;background:#f4f6fa}}article{{background:white;padding:20px;margin:20px 0;border-radius:10px}}h1{{font-size:26px}}h2{{font-size:18px}}.frames{{display:flex;flex-wrap:wrap;gap:20px}}figure{{margin:0}}img{{display:block;width:auto;height:auto;max-height:380px;max-width:42vw}}figcaption{{font-size:12px;color:#586475}}.table{{overflow:auto}}table{{border-collapse:collapse;margin-top:18px;width:100%}}td,th{{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid #dae0ea}}pre{{white-space:pre-wrap;font-size:12px}}.image-text{{padding:12px;background:#f4f6fa;font-size:14px;overflow-wrap:anywhere}}a{{color:#165dca}}</style><h1>{heading}</h1>{notice}<p>Проверяемые формы: УПД, ТОРГ-12, товарно-транспортная накладная и транспортная накладная.</p><p>{esc(result["source"]["path"])}<br>SHA-256: {esc(result["source"]["sha256"])}</p><p>{len(result["pages"])} кандидатов листов · {result["elapsed_seconds"]:.1f} с обработки. Уверенность модели и показатели качества не являются измеренной точностью.</p><p>{links}</p>{"".join(cards)}</html>'''
+             else '<a href="documents.csv">CSV по документам</a> · <a href="results.json">JSON</a> · <a href="fields.csv">CSV по листам</a> · <a href="trace.jsonl">Трасса шагов</a>')
+    documents_section = _documents_section(assembly, esc, processing or failed)
+    page=f'''<!doctype html><html lang="ru"><meta charset="utf-8">{refresh}<meta name="viewport" content="width=device-width"><title>{title}</title><style>body{{font:15px system-ui;max-width:1300px;margin:28px auto;padding:0 18px;color:#182333;background:#f4f6fa}}article{{background:white;padding:20px;margin:20px 0;border-radius:10px}}h1{{font-size:26px}}h2{{font-size:18px}}.frames{{display:flex;flex-wrap:wrap;gap:20px}}figure{{margin:0}}img{{display:block;width:auto;height:auto;max-height:380px;max-width:42vw}}figcaption{{font-size:12px;color:#586475}}.table{{overflow:auto}}table{{border-collapse:collapse;margin-top:18px;width:100%}}td,th{{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid #dae0ea}}pre{{white-space:pre-wrap;font-size:12px}}.image-text{{padding:12px;background:#f4f6fa;font-size:14px;overflow-wrap:anywhere}}a{{color:#165dca}}details.sheet{{background:white;margin:10px 0;border-radius:10px;padding:10px 16px}}details.sheet>summary{{cursor:pointer;font-weight:600}}details.sheet article{{margin:0;padding:10px 0}}#documents{{background:white;padding:20px;margin:20px 0;border-radius:10px}}table.documents td,table.documents th{{font-size:14px}}td.missing{{color:#a33}}</style><h1>{heading}</h1>{notice}<p>Проверяемые формы: УПД, ТОРГ-12, товарно-транспортная накладная и транспортная накладная.</p><p>{esc(result["source"]["path"])}<br>SHA-256: {esc(result["source"]["sha256"])}</p><p>{len(result["pages"])} кандидатов листов · {result["elapsed_seconds"]:.1f} с обработки. Уверенность модели и показатели качества не являются измеренной точностью.</p><p>{links}</p>{documents_section}<h2>Листы видео подробно</h2><p>Распознавание каждого листа с кадрами и ответами модели. Нажмите на строку листа, чтобы раскрыть его.</p>{"".join(cards)}</html>'''
     (out/"report.html").write_text(page,encoding="utf-8")

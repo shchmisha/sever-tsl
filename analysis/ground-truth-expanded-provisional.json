@@ -216,7 +216,9 @@
             ]
           },
           "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading.",
-          "observed_internal_identifier": "УР-10625708"
+          "observed_internal_identifier": "УР-10625708",
+          "document_id": "upd:2559",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-04-page-002",
@@ -320,7 +322,9 @@
               12.261444
             ]
           },
-          "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading."
+          "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading.",
+          "document_id": "ttn:2559",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-04-page-003",
@@ -466,7 +470,10 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Оборотная сторона формы №1-Т; II ТРАНСПОРТНЫЙ РАЗДЕЛ; ТТН № 2559."
-          }
+          },
+          "document_id": "ttn:2559",
+          "document_id_basis": "own printed number",
+          "identity_resolution": "2026-10-18: native crop of frame-000026 (transport reverse, top-right «ТТН №» box) reads 2559, blurred; the earlier note «2560» is not supported by the frame, so the sheet is joined to ТТН 2559"
         },
         {
           "page_id": "sample-04-page-004",
@@ -656,7 +663,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Счет-фактура № 2559 от 20 августа 2026 г.; собственная лицевая форма УПД."
-          }
+          },
+          "document_id": "upd:2559",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-04-page-005",
@@ -799,7 +808,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ; типовая межотраслевая форма №1-Т; № 2559; Дата составления 20.08.2026."
-          }
+          },
+          "document_id": "ttn:2559",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-04-page-006",
@@ -946,7 +957,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Оборотная сторона формы №1-Т; II ТРАНСПОРТНЫЙ РАЗДЕЛ; ТТН № 2559."
-          }
+          },
+          "document_id": "ttn:2559",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-04-page-007",
@@ -1117,7 +1130,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Товарная таблица продолжения, лист 2, отпуск/получение и подписи; собственной шапки с номером/датой/ролями нет."
-          }
+          },
+          "document_id": "ttn:2559",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "sample-04-page-009",
@@ -1287,7 +1302,9 @@
               "not_shipping_party_role": true
             },
             "customer_question": "Считать ли собственный №/дату УПД на продолжении №/датой счёт-фактуры и объединять ли повторные показы/стороны одного физического документа?"
-          }
+          },
+          "document_id": "upd:2559",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "sample-04-page-010",
@@ -1426,7 +1443,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Товарная таблица продолжения, лист 2, отпуск/получение и подписи; собственной шапки с номером/датой/ролями нет."
-          }
+          },
+          "document_id": "ttn:2559",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "sample-04-page-011",
@@ -1599,7 +1618,9 @@
               "not_shipping_party_role": true
             },
             "customer_question": "Считать ли собственный №/дату УПД на продолжении №/датой счёт-фактуры и объединять ли повторные показы/стороны одного физического документа?"
-          }
+          },
+          "document_id": "upd:2559",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "sample-04-page-012",
@@ -3711,7 +3732,11 @@
         48,
         64,
         72
-      ]
+      ],
+      "document_ids_assigned": {
+        "date": "2026-10-18",
+        "method": "own printed number from the sheet label; sheets without a readable own number take the only document of the same form in the video (each labelled video has at most one document per form)"
+      }
     },
     {
       "source": "/Users/shchmisha/Downloads/20260818-5_132107.mp4",
@@ -3886,7 +3911,9 @@
             ]
           },
           "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading.",
-          "observed_internal_identifier": "УР-10625695"
+          "observed_internal_identifier": "УР-10625695",
+          "document_id": "upd:2560",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-05-page-002",
@@ -3992,7 +4019,9 @@
               9.296033
             ]
           },
-          "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading."
+          "classification_basis": "Visible explicit УПД heading/status1 or ТТН/form1-Т heading.",
+          "document_id": "ttn:2560",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-05-page-003",
@@ -4132,7 +4161,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Оборотная сторона формы №1-Т; II ТРАНСПОРТНЫЙ РАЗДЕЛ; ТТН № 2560."
-          }
+          },
+          "document_id": "ttn:2560",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-05-page-004",
@@ -4322,7 +4353,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Счет-фактура № 2560 от 20 августа 2026 г.; собственная лицевая форма УПД."
-          }
+          },
+          "document_id": "upd:2560",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-05-page-005",
@@ -4448,7 +4481,9 @@
             },
             "boundary_note": "Автоматический основной кадр 21.324244с выходит за неизменённую границу 21.174306с. Для ручных значений использован сохранённый кадр frame-000040@20.791133с внутри исходного интервала; границы не подгонялись под результат.",
             "own_form_evidence": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ; типовая межотраслевая форма №1-Т; № 2560; Дата составления 20.08.2026."
-          }
+          },
+          "document_id": "ttn:2560",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-05-page-006",
@@ -4586,7 +4621,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Оборотная сторона формы №1-Т; II ТРАНСПОРТНЫЙ РАЗДЕЛ; ТТН № 2560."
-          }
+          },
+          "document_id": "ttn:2560",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "sample-05-page-007",
@@ -4879,7 +4916,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Товарная таблица продолжения, лист 2, отпуск/получение и подписи; собственной шапки с номером/датой/ролями нет."
-          }
+          },
+          "document_id": "ttn:2560",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "sample-05-page-013",
@@ -5049,7 +5088,9 @@
               "not_shipping_party_role": true
             },
             "customer_question": "Считать ли собственный №/дату УПД на продолжении №/датой счёт-фактуры и объединять ли повторные показы/стороны одного физического документа?"
-          }
+          },
+          "document_id": "upd:2560",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "sample-05-page-014",
@@ -5186,7 +5227,9 @@
               "inside_original_truth_interval": true
             },
             "own_form_evidence": "Товарная таблица продолжения, лист 2, отпуск/получение и подписи; собственной шапки с номером/датой/ролями нет."
-          }
+          },
+          "document_id": "ttn:2560",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "sample-05-page-015",
@@ -5358,7 +5401,9 @@
             },
             "customer_question": "Считать ли собственный №/дату УПД на продолжении №/датой счёт-фактуры и объединять ли повторные показы/стороны одного физического документа?",
             "occlusion_note": "Сверху справа присутствует вертикальный заголовок загнутого другого листа ТТН. Он не используется как тип или реквизиты основной страницы УПД."
-          }
+          },
+          "document_id": "upd:2560",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         }
       ],
       "shooting_errors": [
@@ -5617,7 +5662,11 @@
       "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
       "unmatched_selected_frame_review_indices": [
         77
-      ]
+      ],
+      "document_ids_assigned": {
+        "date": "2026-10-18",
+        "method": "own printed number from the sheet label; sheets without a readable own number take the only document of the same form in the video (each labelled video has at most one document per form)"
+      }
     },
     {
       "source": "/Users/shchmisha/Downloads/20260818-1_133402.mp4",
@@ -6417,7 +6466,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "upd:2591",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_144838-page-002",
@@ -6540,7 +6591,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "ttn:2591",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_144838-page-003",
@@ -6666,7 +6719,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:2591",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_144838-page-004",
@@ -6821,7 +6876,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "upd:2591",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_144838-page-005",
@@ -6944,7 +7001,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "ttn:2591",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_144838-page-006",
@@ -7091,7 +7150,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:2591",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_144838-page-007",
@@ -7237,7 +7298,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:2591",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260821_144838-page-008",
@@ -7413,7 +7476,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "upd:2591",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260821_144838-page-009",
@@ -7558,7 +7623,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:2591",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260821_144838-page-010",
@@ -7745,9 +7812,15 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "upd:2591",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         }
-      ]
+      ],
+      "document_ids_assigned": {
+        "date": "2026-10-18",
+        "method": "own printed number from the sheet label; sheets without a readable own number take the only document of the same form in the video (each labelled video has at most one document per form)"
+      }
     },
     {
       "source": "/srv/sever/input/20260821_145110.mp4",
@@ -8008,7 +8081,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "torg12:РРРБ-128027",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145110-page-005",
@@ -8143,7 +8218,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "torg12:РРРБ-128027",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260821_145110-page-006",
@@ -8270,7 +8347,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "torg12:РРРБ-128027",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145110-page-007",
@@ -8407,7 +8486,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "torg12:РРРБ-128027",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260821_145110-page-008",
@@ -8675,7 +8756,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "trn:РРРБ-128027",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145110-page-012",
@@ -8817,7 +8900,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "trn:РРРБ-128027",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145110-page-013",
@@ -8956,7 +9041,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "trn:РРРБ-128027",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145110-page-014",
@@ -9042,7 +9129,11 @@
           "fields": {},
           "field_annotation_status": "not_applicable"
         }
-      ]
+      ],
+      "document_ids_assigned": {
+        "date": "2026-10-18",
+        "method": "own printed number from the sheet label; sheets without a readable own number take the only document of the same form in the video (each labelled video has at most one document per form)"
+      }
     },
     {
       "source": "/srv/sever/input/20260818-6_131851.mp4",
@@ -9288,7 +9379,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "trn:153-1",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-004",
@@ -9448,7 +9541,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "trn:153-1",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260818-6_131851-page-005",
@@ -9595,7 +9690,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "trn:153-1",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-006",
@@ -9750,7 +9847,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "trn:153-1",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260818-6_131851-page-007",
@@ -9897,7 +9996,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "trn:153-1",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-008",
@@ -10057,7 +10158,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "trn:153-1",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260818-6_131851-page-009",
@@ -10180,7 +10283,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "ttn:12032",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-010",
@@ -10307,7 +10412,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:12032",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-011",
@@ -10428,7 +10535,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "ttn:12032",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-012",
@@ -10551,7 +10660,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:12032",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-013",
@@ -10676,7 +10787,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "ttn:12032",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-014",
@@ -10812,7 +10925,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:12032",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818-6_131851-page-015",
@@ -10898,7 +11013,11 @@
           "fields": {},
           "field_annotation_status": "not_applicable"
         }
-      ]
+      ],
+      "document_ids_assigned": {
+        "date": "2026-10-18",
+        "method": "own printed number from the sheet label; sheets without a readable own number take the only document of the same form in the video (each labelled video has at most one document per form)"
+      }
     },
     {
       "source": "/srv/sever/input/20260821_145342.mp4",
@@ -11196,7 +11315,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "torg12:РРРБ-127817",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145342-page-006",
@@ -11319,7 +11440,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "torg12:РРРБ-127817",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145342-page-007",
@@ -11587,7 +11710,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "trn:РРРБ-127817",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145342-page-011",
@@ -11729,7 +11854,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "trn:РРРБ-127817",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145342-page-012",
@@ -11873,7 +12000,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "trn:РРРБ-127817",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260821_145342-page-013",
@@ -11959,7 +12088,11 @@
           "fields": {},
           "field_annotation_status": "not_applicable"
         }
-      ]
+      ],
+      "document_ids_assigned": {
+        "date": "2026-10-18",
+        "method": "own printed number from the sheet label; sheets without a readable own number take the only document of the same form in the video (each labelled video has at most one document per form)"
+      }
     },
     {
       "source": "/srv/sever/input/20260818_131702.mp4",
@@ -12097,7 +12230,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "torg12:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-002",
@@ -12222,7 +12357,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "torg12:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-003",
@@ -12494,7 +12631,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "trn:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-007",
@@ -12659,7 +12798,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "trn:Чл000067597",
+          "document_id_basis": "only document of this form in the video (sheet shows no own number)"
         },
         {
           "page_id": "set2-20260818_131702-page-008",
@@ -12788,7 +12929,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "ttn:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-009",
@@ -12917,7 +13060,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-010",
@@ -13046,7 +13191,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "ttn:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-011",
@@ -13174,7 +13321,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-012",
@@ -13294,7 +13443,9 @@
               }
             }
           },
-          "field_annotation_status": "fully_labeled_for_type"
+          "field_annotation_status": "fully_labeled_for_type",
+          "document_id": "ttn:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-013",
@@ -13421,7 +13572,9 @@
               }
             }
           },
-          "field_annotation_status": "partially_labeled_for_type"
+          "field_annotation_status": "partially_labeled_for_type",
+          "document_id": "ttn:Чл000067597",
+          "document_id_basis": "own printed number"
         },
         {
           "page_id": "set2-20260818_131702-page-014",
@@ -13507,7 +13660,11 @@
           "fields": {},
           "field_annotation_status": "not_applicable"
         }
-      ]
+      ],
+      "document_ids_assigned": {
+        "date": "2026-10-18",
+        "method": "own printed number from the sheet label; sheets without a readable own number take the only document of the same form in the video (each labelled video has at most one document per form)"
+      }
     }
   ],
   "usability_provenance": {

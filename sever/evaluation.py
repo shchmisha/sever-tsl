@@ -355,3 +355,183 @@ def evaluate(result: dict, truth: dict, *, address_boundary: str = "current", ma
     }
     report["confidence_intervals"] = _intervals(report)
     return report
+
+
+def _truth_documents(truth: dict) -> "OrderedDict[str, dict]":
+    """Join labelled target sheets into documents by their explicit ``document_id``."""
+    from collections import OrderedDict
+    from .normalize import comparison
+
+    documents: "OrderedDict[str, dict]" = OrderedDict()
+    pages = {item.get("page_id"): item for item in truth.get("pages", [])}
+    for item in truth.get("pages", []):
+        kind = item["document_type"]
+        if kind == "unknown":
+            continue
+        identity = item.get("document_id")
+        if not identity:
+            raise ValueError(f"Target sheet {item.get('page_id')} has no document_id")
+        record = documents.setdefault(identity, {"document_id": identity, "document_type": kind, "page_ids": []})
+        if record["document_type"] != kind:
+            raise ValueError(f"Document {identity} mixes forms {record['document_type']} and {kind}")
+        record["page_ids"].append(item.get("page_id"))
+    for record in documents.values():
+        kind = record["document_type"]
+        fields = {}
+        for name in FIELDS_BY_TYPE[kind]:
+            labelled, visibility = [], []
+            for page_id in record["page_ids"]:
+                target = pages[page_id].get("fields", {}).get(name)
+                if target is None:
+                    continue
+                if isinstance(target, dict) and target.get("labeled", True) is False:
+                    visibility.append(target.get("manual_visibility"))
+                    continue
+                value = target.get("value") if isinstance(target, dict) else target
+                status = target.get("status", "recognized" if value is not None else "not_present") if isinstance(target, dict) else (
+                    "recognized" if value is not None else "not_present")
+                labelled.append({"status": status, "value": value, "target": target, "page_id": page_id})
+            if labelled:
+                distinct = {(entry["status"], comparison(name, entry["value"]) if entry["value"] else None) for entry in labelled}
+                fields[name] = ({"kind": "labelled", **labelled[0], "page_ids": [entry["page_id"] for entry in labelled]}
+                                if len(distinct) == 1 else {"kind": "label_conflict", "labels": labelled})
+            elif visibility and all(value == NOT_VISIBLE for value in visibility):
+                fields[name] = {"kind": "abstention"}
+            else:
+                fields[name] = {"kind": "pending"}
+        record["fields"] = fields
+    return documents
+
+
+def evaluate_documents(result: dict, truth: dict, *, matching: str = "bracket") -> dict:
+    """Score the per-document table: one truth document (form + own number) against one output document.
+
+    Output documents are built by ``sever.documents.assemble_documents`` from the
+    sheet results. A truth document is matched to the output document that holds
+    most of its sheets (sheets are matched one-to-one by the sheet evaluator);
+    each output document matches at most one truth document. Unmatched output
+    documents are reported as extra (duplicates, splits or non-target forms).
+    """
+    from .documents import assemble_documents
+
+    sheet_report = evaluate(result, truth, matching=matching)
+    truth_docs = _truth_documents(truth)
+    assembly = assemble_documents(result)
+    output_docs = {record["document_id"]: record for record in assembly["documents"]}
+    truth_of_sheet = {page_id: identity for identity, record in truth_docs.items() for page_id in record["page_ids"]}
+    kinds = {item.get("page_id"): item["document_type"] for item in truth.get("pages", [])}
+    truth_sheet_of_prediction = {detail["prediction_page_id"]: detail["truth_page_id"]
+                                 for detail in sheet_report["details"] if detail["prediction_page_id"]}
+    overlap = Counter()
+    non_target_sheets = Counter()
+    for identity, record in output_docs.items():
+        for sheet in record["sheets"]:
+            truth_page = truth_sheet_of_prediction.get(sheet["page_id"])
+            if truth_page in truth_of_sheet:
+                overlap[(identity, truth_of_sheet[truth_page])] += 1
+            elif truth_page is not None and kinds.get(truth_page) == "unknown":
+                non_target_sheets[identity] += 1
+    order = list(output_docs)
+    pairs = sorted(overlap.items(), key=lambda item: (-item[1], order.index(item[0][0])))
+    matched_output, matched_truth = {}, {}
+    for (output_id, truth_id), _ in pairs:
+        if output_id in matched_output or truth_id in matched_truth:
+            continue
+        matched_output[output_id], matched_truth[truth_id] = truth_id, output_id
+    touched = defaultdict(set)
+    for (output_id, truth_id), _ in overlap.items():
+        touched[truth_id].add(output_id)
+
+    found = typed = 0
+    field_stats = defaultdict(lambda: {"correct": 0, "total": 0})
+    abstention = {"correct": 0, "total": 0, "undetected": 0, "failures": []}
+    shown = {"correct": 0, "total": 0}
+    e2e = fully = pending = label_conflicts = 0
+    details = []
+    for truth_id, record in truth_docs.items():
+        kind = record["document_type"]
+        output_id = matched_truth.get(truth_id)
+        output = output_docs.get(output_id) if output_id else None
+        found += int(output is not None)
+        type_ok = output is not None and output["document_type"] == kind
+        typed += int(type_ok)
+        checks, abstentions = {}, {}
+        complete = True
+        for name, label in record["fields"].items():
+            got = (output or {}).get("fields", {}).get(name) or {} if type_ok else {}
+            if label["kind"] == "pending":
+                pending += 1
+                complete = False
+                continue
+            if label["kind"] == "label_conflict":
+                label_conflicts += 1
+                complete = False
+                continue
+            if label["kind"] == "abstention":
+                if output is None:
+                    abstention["undetected"] += 1
+                    continue
+                claimed = got.get("status") in {"recognized", "not_present"}
+                abstentions[name] = not claimed
+                abstention["total"] += 1
+                abstention["correct"] += int(not claimed)
+                if claimed:
+                    abstention["failures"].append({"truth_document": truth_id, "field": name,
+                                                   "status": got.get("status"), "raw_value": got.get("raw_value")})
+                continue
+            ok = (type_ok and got.get("status") == label["status"]
+                  and _value_matches(name, got.get("normalized_value") if got.get("status") == "recognized" else None,
+                                     label["target"], label["value"]))
+            checks[name] = ok
+            field_stats[f"{kind}.{name}"]["total"] += 1
+            field_stats[f"{kind}.{name}"]["correct"] += int(ok)
+            if got.get("status") == "recognized":
+                shown["total"] += 1
+                shown["correct"] += int(ok)
+        fully += int(complete)
+        success = complete and type_ok and all(checks.values()) and all(abstentions.values())
+        e2e += int(success) if complete else 0
+        details.append({"truth_document": truth_id, "document_type": kind, "truth_sheets": record["page_ids"],
+                        "output_document": output_id, "output_type": output["document_type"] if output else None,
+                        "output_number": output["number"] if output else None,
+                        "output_sheets": [sheet["page_id"] for sheet in output["sheets"]] if output else [],
+                        "split_into_output_documents": sorted(touched.get(truth_id, set())),
+                        "type_correct": type_ok, "field_checks": checks, "abstention_checks": abstentions,
+                        "fully_labelled": complete, "e2e_success": success if complete else None})
+    extra = []
+    for identity, record in output_docs.items():
+        if identity in matched_output:
+            continue
+        shares = [truth_id for (output_id, truth_id) in overlap if output_id == identity]
+        duplicate_of = next((other for other, truth_id in matched_output.items()
+                             if output_docs[other]["document_type"] == record["document_type"]
+                             and output_docs[other]["number"] and output_docs[other]["number"] == record["number"]), None)
+        reason = ("split_from_matched_document" if shares else
+                  "non_target_sheets_typed_as_target" if non_target_sheets[identity] else
+                  "sheets_not_matched_to_any_labelled_sheet")
+        extra.append({"output_document": identity, "document_type": record["document_type"], "number": record["number"],
+                      "sheets": [sheet["page_id"] for sheet in record["sheets"]], "reason": reason,
+                      "shares_sheets_with": shares, "same_number_as": duplicate_of})
+    labelled = _metric(sum(value["correct"] for value in field_stats.values()), sum(value["total"] for value in field_stats.values()))
+    report = {
+        "unit": "document = contract form + its own number; sheets (copies, reverse, continuation, repeat showings) joined",
+        "assembly_version": assembly["version"], "matching": matching,
+        "truth_documents": len(truth_docs), "output_documents": len(output_docs),
+        "documents_found": _metric(found, len(truth_docs)),
+        "document_type_accuracy": _metric(typed, len(truth_docs)),
+        "labeled_fields": labelled,
+        "field_accuracy": {name: {**value, "accuracy": value["correct"] / value["total"] if value["total"] else None}
+                           for name, value in sorted(field_stats.items())},
+        "abstention_checks": _metric(abstention["correct"], abstention["total"], undetected=abstention["undetected"],
+                                     failures=abstention["failures"]),
+        "shown_values_correct": _metric(shown["correct"], shown["total"],
+                                        interpretation="Of the values printed in the document table for labelled fields, how many are right."),
+        "e2e_on_fully_labeled": _metric(e2e, fully),
+        "extra_output_documents": extra,
+        "unscored_fields": {"pending_customer_decision": pending, "label_conflicts": label_conflicts},
+        "details": details,
+    }
+    report["confidence_intervals"] = {name: wilson_interval(report[name]["correct"], report[name]["total"])
+                                      for name in ("documents_found", "document_type_accuracy", "labeled_fields",
+                                                   "abstention_checks", "shown_values_correct", "e2e_on_fully_labeled")}
+    return report

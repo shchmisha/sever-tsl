@@ -10,6 +10,7 @@ import time
 from . import __version__
 from .agents import BatchBudgetExceeded, FatalProviderError
 from .pipeline import export_csv, save_json, source_hash, trace
+from .documents import assemble_documents, export_documents
 from .schema import DocumentResult, Evidence, FIELDS_BY_TYPE, FieldValue
 from .tracing import archive_restart_artifacts
 
@@ -368,7 +369,7 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
     source_id = source_hash(source)
     trace_path = out / "trace.jsonl"
     history = archive_restart_artifacts(out, ("partial-results.json", "results.json", "metrics.json",
-        "fields.csv", "report.html", "selected-pages.json", "classifications.json"))
+        "fields.csv", "documents.csv", "documents.json", "report.html", "selected-pages.json", "classifications.json"))
     trace(trace_path, "run_started", source=str(source), source_id=source_id, version=__version__,
           native_pipeline_version=NATIVE_PIPELINE_VERSION,
           sample_interval=sample_interval, document_reader="native_image", separate_classifier=False,
@@ -1147,12 +1148,16 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
     save_json(out / "selected-pages.json", [{k: v for k, v in p.items() if k not in
         {"result", "classification", "inn_verification", "image_recognition"}} for p in processed])
     save_json(out / "classifications.json", {p["page_id"]: p["classification"] for p in processed})
+    # One record per document (form + own number); sheet readings stay unchanged in "pages".
+    result["documents"] = assemble_documents(result)
     try:
         export_csv(out, processed)
+        export_documents(out, result["documents"])
         write_report(out, result)
         save_json(out / "results.json", result)
         trace(trace_path, "run_completed", page_count=len(processed), elapsed_seconds=result["elapsed_seconds"], usage=usage)
     except BaseException:
-        archive_restart_artifacts(out, ("results.json", "metrics.json", "fields.csv", "report.html"), reason="failed-finalization")
+        archive_restart_artifacts(out, ("results.json", "metrics.json", "fields.csv", "documents.csv", "documents.json",
+                                        "report.html"), reason="failed-finalization")
         raise
     return result

@@ -36,7 +36,7 @@ MIN_FREE_BYTES = 100 * 1024**2
 ACTIVE = ("uploading", "validating", "submitting", "submission_uncertain", "queued", "processing")
 TERMINAL = ("completed", "completed_with_errors", "failed")
 EXTENSIONS = {".mp4", ".mov", ".m4v", ".mkv", ".avi", ".webm"}
-FILES = {"report.html", "fields.csv", "results.json", "partial-results.json"}
+FILES = {"report.html", "documents.csv", "fields.csv", "results.json", "partial-results.json"}
 IMAGE_DIRS = {"video", "additional-frames", "image-reading-evidence", "report-assets", "frames"}
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
@@ -175,8 +175,11 @@ def public_job(row):
         notes = [dict(note) for note in db.execute(
             "SELECT id,created_at,page_id,field,comment,proposed_value FROM feedback WHERE portal_id=? ORDER BY created_at", (row["id"],))]
     result = {key: row[key] for key in ("id", "job_id", "name", "status", "progress", "created_at", "updated_at", "size_bytes", "error")}
-    for key, filename in (("report_url", "report.html"), ("csv_url", "fields.csv"), ("results_url", "results.json")):
+    for key, filename in (("report_url", "report.html"), ("csv_url", "documents.csv"), ("results_url", "results.json")):
         result[key] = f"/jobs/{row['job_id']}/{filename}" if row["job_id"] and artifact(row["job_id"], filename) else None
+    # Results finished before the per-document export keep their per-sheet table.
+    if not result["csv_url"] and row["job_id"] and artifact(row["job_id"], "fields.csv"):
+        result["csv_url"] = f"/jobs/{row['job_id']}/fields.csv"
     if not result["results_url"] and row["job_id"] and artifact(row["job_id"], "partial-results.json"):
         result["results_url"] = f"/jobs/{row['job_id']}/partial-results.json"
     result["feedback"] = notes

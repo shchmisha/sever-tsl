@@ -165,7 +165,7 @@ def test_three_failed_pages_publish_terminal_checkpoint_and_report_with_all_erro
     assert "Обработка остановлена" in report and "Итоговый результат не сформирован" in report
     assert 'http-equiv="refresh"' not in report
     assert 'href="results.json"' not in report and 'href="fields.csv"' not in report
-    assert 'href="partial-results.json"' in report and report.count("<article>") == 3
+    assert 'href="partial-results.json"' in report and report.count('<article id="sheet-') == 3
     for n, page in enumerate(checkpoint["pages"]):
         error = f"native_image: image_reading_failed:frame-{n}:TimeoutError"
         assert error in page["result"]["errors"] and error in report
