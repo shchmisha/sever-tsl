@@ -459,11 +459,10 @@
       const docs = Array.isArray(summary.documents) ? summary.documents : [];
       box.hidden = false;
       const head = node('p', 'docs-head');
-      head.append(node('strong', '', docs.length ? 'Найдено документов: ' + docs.length : 'Документы из ТЗ не найдены'));
+      head.append(node('strong', '', 'Документы: ' + docs.length));
       if (summary.preliminary) head.append(node('span', 'docs-pre', 'предварительно'));
       if (summary.sheets_total) head.append(node('span', 'docs-sheets', 'листов в видео: ' + summary.sheets_total));
       box.append(head);
-      if (!docs.length) box.append(node('p', 'docs-empty', 'Система ищет четыре типа документов из ТЗ: УПД, ТОРГ-12, ТТН и транспортную накладную. Среди листов этого видео их не нашлось.'));
       for (const doc of docs) {
         if (!doc || typeof doc.title !== 'string') continue;
         const item = node('details', 'doc');
@@ -486,7 +485,7 @@
         const forms = (Array.isArray(summary.other_forms) ? summary.other_forms : []).map(form => form.form).filter(Boolean);
         const short = forms.slice(0, 6).map(form => form.length > 48 ? form.slice(0, 46).trimEnd() + '…' : form);
         const shown = short.join(', ') + (forms.length > 6 ? ' и другие' : '');
-        box.append(node('p', 'docs-other', 'Другие листы: ' + summary.other_form_sheets + ' — не относятся к четырём типам из ТЗ' + (shown ? ': ' + shown : '') + '.'));
+        box.append(node('p', 'docs-other', 'Сопроводительные листы: ' + summary.other_form_sheets + (shown ? ' (' + shown + ')' : '') + '.'));
       }
     }
     function renderJobs(jobs) {

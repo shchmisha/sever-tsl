@@ -322,18 +322,18 @@ def _documents_section(assembly: dict, esc, processing: bool, thumbs: dict) -> s
     lead = (f"<p>{esc(note)}Листы одного документа объединены по типу и собственному номеру. Каждое значение взято без изменений "
             f"с листа, где оно напечатано; нажмите на миниатюру, чтобы открыть лист с кадрами.</p>")
     body = ('<div class="doc-grid">' + "".join(cards) + "</div>") if cards else (
-        '<p class="empty-docs">Документы четырёх типов из ТЗ (УПД, ТОРГ-12, ТТН, транспортная накладная) в этом видео не найдены.</p>')
+        '<p>В этом видео нет листов УПД, ТОРГ-12, ТТН или транспортной накладной.</p>')
     other = ""
     if assembly.get("other_forms"):
         rows = "".join(
             f'<tr><td><a href="#sheet-{esc(item["page_id"])}">{item["start_s"]:.1f}–{item["end_s"]:.1f} с</a></td>'
             f'<td>{esc(item.get("observed_form") or "Форма не прочитана")}</td>'
-            f'<td>{"форма вне четырёх типов ТЗ" if item.get("reason") == "out_of_scope_form_confirmed" else "форму не удалось определить"}</td></tr>'
+            f'<td>{"сопроводительный лист" if item.get("reason") == "out_of_scope_form_confirmed" else "форма не определена"}</td></tr>'
             for item in assembly["other_forms"]
             if isinstance(item.get("start_s"), (int, float)) and isinstance(item.get("end_s"), (int, float)))
-        other = (f'<h2 id="other-sheets">Другие листы в видео: {len(assembly["other_forms"])}</h2>'
-                 '<p>Эти листы не отнесены к четырём типам документов из ТЗ, поэтому их реквизиты не извлекаются.</p>'
-                 '<div class="table"><table><thead><tr><th>Время</th><th>Что на листе</th><th>Почему не документ</th></tr></thead>'
+        other = (f'<h2 id="other-sheets">Сопроводительные листы: {len(assembly["other_forms"])}</h2>'
+                 '<p>Сертификаты, CMR, реестры и другие листы: их реквизиты не входят в выгрузку.</p>'
+                 '<div class="table"><table><thead><tr><th>Время</th><th>Что на листе</th><th>Примечание</th></tr></thead>'
                  f'<tbody>{rows}</tbody></table></div>')
     if assembly.get("unassigned_sheets"):
         other += (f'<p>Листов без номера и без данных, не отнесённых к документу: {len(assembly["unassigned_sheets"])}.</p>')
