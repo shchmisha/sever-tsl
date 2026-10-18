@@ -130,14 +130,17 @@ def run(args):
            for job in manifest.get("jobs", [])):
         raise ValueError("Recognition jobs are still active or uncertain; evaluate after inference finishes")
     truth = json.loads(truth_path.read_text())
-    videos = truth["videos"]
+    # Later labelling rounds are scored only when asked for; by default the
+    # original four independently labelled videos keep their fixed denominators.
+    rounds = set(getattr(args, "include_round", None) or [])
+    videos = [video for video in truth["videos"] if video.get("labelling_round") is None or video.get("labelling_round") in rounds]
     by_hash = {}
     for video in videos:
         sha = video.get("source_sha256")
         if not sha or sha in by_hash:
             raise ValueError("Every truth video needs a unique full-source SHA-256")
         by_hash[sha] = video
-    if len(videos) != 4:
+    if sum(video.get("labelling_round") is None for video in videos) != 4:
         raise ValueError("This evaluation requires the four original independently labelled videos")
     jobs_by_hash = defaultdict(list)
     operational_jobs, unlabelled = [], []
@@ -244,6 +247,8 @@ def arguments():
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--truth", type=Path, required=True, help="Explicit private ground truth, read only by this post-inference process")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--include-round", action="append", default=[],
+                        help="Also score videos from this labelling round (e.g. 2026-10-18); repeatable")
     return parser.parse_args()
 
 

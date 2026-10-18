@@ -1,0 +1,2801 @@
+[
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-001",
+  "first_sample": 1,
+  "last_sample": 15,
+  "start_s": 0.0,
+  "end_s": 7.730039,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    0.0,
+    0.0
+   ],
+   "end_bracket_s": [
+    7.463489,
+    7.996589
+   ]
+  },
+  "document_type": "upd",
+  "side": "front",
+  "observed_form": "Универсальный передаточный документ, Статус 1, Счет-фактура № 2591 от 23 августа 2026 г. (page 1 with header)",
+  "observed_form_pass2": "Универсальный передаточный документ, Статус 1, Счет-фактура № 2591 от 23 августа 2026 г., №УР-10674460 (page 1: header + goods table, Итого)",
+  "rotation": 90,
+  "reading_samples": [
+   2,
+   12
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "First sheet of copy 1. A faint stamp shows through from the back (that face carries stamps). The sheet is turned onto the left pile at 16.",
+   "First sheet of the stack. Its back, visible on the turned pile during 18-25, carries blue stamps."
+  ],
+  "occlusion": [
+   "Fingers at the page's bottom-right edge (the image's top-right) from about sample 4 onward. The header is clear.",
+   "Fingers at the sheet's lower-right corner (frame top-right) in 4-15; the corner starts lifting in 13-15; header is never covered"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-002",
+  "first_sample": 17,
+  "last_sample": 25,
+  "start_s": 8.263144,
+  "end_s": 13.0611,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    7.996589,
+    8.5297
+   ],
+   "end_bracket_s": [
+    12.794544,
+    13.327656
+   ]
+  },
+  "document_type": "ttn",
+  "side": "front",
+  "observed_form": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т, ОКУД 0345009, № 2591, 23.08.2026, Страница 1, I ТОВАРНЫЙ РАЗДЕЛ",
+  "observed_form_pass2": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т, ОКУД 0345009, № 2591, 23.08.2026, I ТОВАРНЫЙ РАЗДЕЛ, Страница 1",
+  "rotation": 90,
+  "reading_samples": [
+   18,
+   23
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "TTN commodity section page 1, copy 1.",
+   "One goods row (Голубика 318 шт, 46 110,00)."
+  ],
+  "occlusion": [
+   "At 17 the sheet just turned away is still falling across the lower-left (consignee/table area). Hands sit at the image's top corners, and the left pile edge overlaps the lower-left a little. The header is clear.",
+   "In 17 the turned УПД sheet is still moving over the stack at the left edge. A hand rests on the right margin throughout; the turned sheet's corner overlaps the top-left area in 19-25"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-003",
+  "first_sample": 27,
+  "last_sample": 35,
+  "start_s": 13.594206,
+  "end_s": 18.392161,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    13.327656,
+    13.860756
+   ],
+   "end_bracket_s": [
+    18.125611,
+    18.658711
+   ]
+  },
+  "document_type": "ttn",
+  "side": "reverse",
+  "observed_form": "Оборотная сторона формы № 1-Т, II ТРАНСПОРТНЫЙ РАЗДЕЛ, ТТН № 2591",
+  "observed_form_pass2": "Оборотная сторона формы № 1-Т, II ТРАНСПОРТНЫЙ РАЗДЕЛ, ТТН № 2591 (Сведения о грузе, Прочие сведения), with blue stamps",
+  "rotation": 90,
+  "reading_samples": [
+   29,
+   34
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Separate sheet: it was under the TTN front, and is not that sheet's back. Blue stamp and Астахова П.Ю. доверенность stamp. Copy 1.",
+   "Shown as its own sheet in the stack after the TTN page 1. Its stamp placement differs from the later transport section (leaf 5), so it is a different physical copy."
+  ],
+  "occlusion": [
+   "At 27 the falling previous sheet covers the lower-left (the start of the 'ТРАНСПОРТНЫЙ РАЗДЕЛ' heading). The left pile edge clips the lower-left corner throughout, and a hand is at the image's top-right.",
+   "In 27 the turned sheet is still moving at the bottom-left; fingers on the right margin"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-004",
+  "first_sample": 41,
+  "last_sample": 49,
+  "start_s": 21.057694,
+  "end_s": 25.855645,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    19.191811,
+    21.324244
+   ],
+   "end_bracket_s": [
+    25.589089,
+    26.1222
+   ]
+  },
+  "document_type": "upd",
+  "side": "front",
+  "observed_form": "Универсальный передаточный документ, Статус 1, Счет-фактура № 2591 от 23 августа 2026 г. (page 1 with header)",
+  "observed_form_pass2": "Универсальный передаточный документ, Статус 1, Счет-фактура № 2591 от 23 августа 2026 г., №УР-10674460 (page 1)",
+  "rotation": 90,
+  "reading_samples": [
+   43,
+   47
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Same content as leaf 0, but a different physical copy (copy 2): at 38 it is seen lying under the TTN reverse while leaf 0 was already on the left pile. Not marked as a repeat.",
+   "Printed content is identical to leaf 0, but this is a second copy. It came out from under the transport sheet as that sheet was turned forward, and leaf 0 was already on the turned pile."
+  ],
+  "occlusion": [
+   "At 41 a moving hand blurs over the right-hand columns. At 49 hands are at the top and the page's far corner is starting to lift. The header is clear.",
+   "In 38-40 the turned transport sheet, showing its blank back, lies over the top-left part and is pushed away; in 40-41 a hand is over the header and table; in 49 the corner starts lifting"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-005",
+  "first_sample": 51,
+  "last_sample": 59,
+  "start_s": 26.38875,
+  "end_s": 31.1867,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    26.1222,
+    26.6553
+   ],
+   "end_bracket_s": [
+    30.920144,
+    31.453256
+   ]
+  },
+  "document_type": "ttn",
+  "side": "front",
+  "observed_form": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т, ОКУД 0345009, № 2591, 23.08.2026, Страница 1",
+  "observed_form_pass2": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, форма № 1-Т, ОКУД 0345009, № 2591, 23.08.2026, Страница 1",
+  "rotation": 90,
+  "reading_samples": [
+   52,
+   58
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Same content as leaf 1, copy 2. Not a repeat of the same physical sheet.",
+   "Second copy, identical in content to leaf 1. It is a distinct physical sheet, revealed beneath the previous sheet."
+  ],
+  "occlusion": [
+   "Fingers at the image's top-right (the page's bottom-right blank area). The left pile edge is at the far left.",
+   "Hand on the right margin; in 51 the corner of the turned sheet is at the bottom-left"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-006",
+  "first_sample": 61,
+  "last_sample": 67,
+  "start_s": 31.719806,
+  "end_s": 35.443156,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    31.453256,
+    31.986356
+   ],
+   "end_bracket_s": [
+    35.185,
+    35.701311
+   ]
+  },
+  "document_type": "ttn",
+  "side": "reverse",
+  "observed_form": "Оборотная сторона формы № 1-Т, II ТРАНСПОРТНЫЙ РАЗДЕЛ, ТТН № 2591",
+  "observed_form_pass2": "Оборотная сторона формы № 1-Т, II ТРАНСПОРТНЫЙ РАЗДЕЛ, ТТН № 2591, with blue stamps",
+  "rotation": 90,
+  "reading_samples": [
+   62,
+   66
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Same content as leaf 2, copy 2. At 68 the view jumps directly to a sheet rotated the other way.",
+   "Second transport-section copy. The round stamp and the Астахова stamp sit in different places than on leaf 2, so it is a distinct physical sheet. At 67 to 68 it is flipped, and from 68 on the sheets are upside down."
+  ],
+  "occlusion": [
+   "At 61 the falling previous sheet covers the lower-left corner. Fingers are at the image's top-right.",
+   "In 61 the turned sheet is still moving at the bottom-left; fingers on the right margin"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-007",
+  "first_sample": 68,
+  "last_sample": 77,
+  "start_s": 35.443156,
+  "end_s": 40.765817,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    35.185,
+    35.701311
+   ],
+   "end_bracket_s": [
+    40.499267,
+    41.565467
+   ]
+  },
+  "document_type": "ttn",
+  "side": "continuation",
+  "observed_form": "Страница 2: TTN commodity table continuation (rows НФ-00001372/НФ-00001373, Всего по накладной 398,000) with 'Товарная накладная имеет продолжение на ___ листах, на бланках за N ___', Отпуск разрешил/Груз получил signatures and the ФРЭШ-ЭКСПРЕСС stamp. No ТОРГ-12 code.",
+  "observed_form_pass2": "TTN commodity-section continuation: 'Страница 2', goods rows НФ-00001372/00001373, 'Товарная накладная имеет продолжение на ___ листах, на бланках за N ___', Всего по накладной 398,000 / 57 160,00, signatures and stamps; no ТОРГ-12 code",
+  "rotation": 270,
+  "reading_samples": [
+   69,
+   75
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "The stack is now presented rotated 180 degrees from the first half. This is probably the back face of a TTN page-1 sheet, so it is a different face and not a repeat.",
+   "Upside down in the raw frame. It appears with no transition sample right after leaf 5, probably as the other face of that same sheet."
+  ],
+  "occlusion": [
+   "From 76 to 78 the sheet curls slightly as it is lifted, and at 78 a hand blurs over the left part (stamp area). Otherwise clear.",
+   "Bottom-left corner of the frame curled in 68-69; edge starts lifting in 75-77"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-008",
+  "first_sample": 79,
+  "last_sample": 86,
+  "start_s": 41.298917,
+  "end_s": 45.554139,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    41.032367,
+    41.565467
+   ],
+   "end_bracket_s": [
+    45.297222,
+    45.811056
+   ]
+  },
+  "document_type": "upd",
+  "side": "continuation",
+  "observed_form": "Лист 2 of УПД: small heading 'Универсальный передаточный документ № 2591 от 23 августа 2026 г.' over the table (row 3 НФ-00001373, Итого, Всего к оплате 51 963,64), 'Документ составлен на 2 листах', signature block [8]-[19]. No Статус box.",
+  "observed_form_pass2": "УПД continuation: 'Универсальный передаточный документ № 2591 от 23 августа 2026 г.', 'Лист 2', table row 3 (Авокадо Hass), Всего к оплате, 'Документ составлен на 2 листах', signature blocks [8]-[19] with stamps",
+  "rotation": 270,
+  "reading_samples": [
+   81,
+   86
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "UPD second page, likely the back face of a UPD page-1 sheet. Copy 1 of the two UPD Лист 2 showings.",
+   "Upside down in the raw frame. No status box or header, table only."
+  ],
+  "occlusion": [
+   "The previous sheet (Страница 2) is lifted and held over the top-right corner, covering 'Лист 2' and part of column 11. This is heaviest at 79-80 and lighter by 85-86.",
+   "In 79-84 the turned TTN sheet lies at the top-right corner near 'Лист 2'; a thumb at the bottom-left"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-009",
+  "first_sample": 87,
+  "last_sample": 93,
+  "start_s": 45.554139,
+  "end_s": 49.27625,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    45.297222,
+    45.811056
+   ],
+   "end_bracket_s": [
+    49.0097,
+    49.5428
+   ]
+  },
+  "document_type": "ttn",
+  "side": "continuation",
+  "observed_form": "Страница 2: TTN commodity table continuation with 'Товарная накладная имеет продолжение на ___ листах, на бланках за N ___', signatures and the ФРЭШ-ЭКСПРЕСС stamp. No ТОРГ-12 code.",
+  "observed_form_pass2": "TTN continuation: 'Страница 2', 'Товарная накладная имеет продолжение на ___ листах, на бланках за N ___', Всего по накладной 398,000 / 57 160,00, stamps",
+  "rotation": 270,
+  "reading_samples": [
+   87,
+   93
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Same content as leaf 6, but the Астахова/доверенность stamps are placed differently, so it is a second copy, not a repeat.",
+   "Same content as leaf 6, but the round stamp and the Астахова stamps sit in different places, so it is a different physical copy."
+  ],
+  "occlusion": [
+   "A thumb is at the lower-left edge, and a turned sheet lies at the image's top-right outside the sheet. Clear.",
+   "Turned sheet (a transport section) lies at the top-right corner; a thumb at the bottom-left"
+  ]
+ },
+ {
+  "video": "20260821_144838",
+  "leaf": "leaf-010",
+  "first_sample": 95,
+  "last_sample": 102,
+  "start_s": 49.809355,
+  "end_s": 54.484479,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    49.5428,
+    50.075911
+   ],
+   "end_bracket_s": [
+    53.807656,
+    54.484479
+   ]
+  },
+  "document_type": "upd",
+  "side": "continuation",
+  "observed_form": "Лист 2 of УПД: 'Универсальный передаточный документ № 2591 от 23 августа 2026 г.', table continuation, 'Документ составлен на 2 листах', signature block [8]-[19]",
+  "observed_form_pass2": "УПД continuation: 'Универсальный передаточный документ № 2591 от 23 августа 2026 г.', 'Лист 2', 'Документ составлен на 2 листах', signatures and stamps",
+  "rotation": 270,
+  "reading_samples": [
+   99,
+   102
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Same content as leaf 7, and it came from under leaf 8, so treated as a second copy. The physical identity versus leaf 7 cannot be fully confirmed.",
+   "Same content as leaf 7. Treated as the second copy: it was revealed beneath leaf 8 while turning forward, and every other page in this video exists in two stamped copies."
+  ],
+  "occlusion": [
+   "At 95-96 the sheet is shifted left and partly out of frame, and 96 is motion-blurred. At 97-99 fingers are near the lower-left stamp area. 100-102 are clean.",
+   "Fingers at the sheet's bottom-left margin in 95-99; the turned sheet's corner at the top-right"
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-001",
+  "first_sample": 1,
+  "last_sample": 5,
+  "start_s": 0.0,
+  "end_s": 2.398977,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    0.0,
+    0.0
+   ],
+   "end_bracket_s": [
+    2.132422,
+    2.665533
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Маршрутный лист № РБ-00048248 от 14 августа 2026 г.",
+  "observed_form_pass2": "Маршрутный лист № РБ-00048248 от 14 августа 2026 г.",
+  "rotation": 90,
+  "reading_samples": [
+   1,
+   5
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "First physical copy of the route sheet. The stamp sits below the end of the table. The pages are stapled and turned to the left like a book, and turned pages pile up as a curl at the lower left of the frame.",
+   "Copy 1 of the route sheet. The stamp sits below the table and does not touch it. Sample 6 is the turn."
+  ],
+  "occlusion": [
+   "Fingers at the top-right edge in 2-5, away from the header; 1 is clean.",
+   "Fingertips at the top corners in 3-5; otherwise clean."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-002",
+  "first_sample": 8,
+  "last_sample": 22,
+  "start_s": 3.465194,
+  "end_s": 11.461778,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    3.198644,
+    3.731744
+   ],
+   "end_bracket_s": [
+    11.195233,
+    12.261444
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Маршрутный лист № РБ-00048248 от 14 августа 2026 г.",
+  "observed_form_pass2": "Маршрутный лист № РБ-00048248 от 14 августа 2026 г.",
+  "rotation": 90,
+  "reading_samples": [
+   10,
+   20
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second physical copy of the same route sheet: the stamp has a different position and angle from copy 1, so this is not a repeat of the same page.",
+   "A second physical copy with the same content; the stamp is closer to 'Груз сдал' than on copy 1. This is not a re-showing of leaf 0. Sample 7 is the end of the turn."
+  ],
+  "occlusion": [
+   "The curl of turned pages at the lower left covers the start of the heading ('Маршрутный лист') in every frame. A hand is at the top/right in most frames; corner lifting starts at 23.",
+   "The flipped sheet lies over the left edge and hides the 'Маршрутный ли' part of the heading; the number is visible. A hand rests on the blank right or top area."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-003",
+  "first_sample": 26,
+  "last_sample": 41,
+  "start_s": 13.0611,
+  "end_s": 21.590794,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    12.794544,
+    13.327656
+   ],
+   "end_bracket_s": [
+    21.324244,
+    21.857344
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Маршрутный лист № РБ-00048248 от 14 августа 2026 г.",
+  "observed_form_pass2": "Маршрутный лист № РБ-00048248 от 14 августа 2026 г.",
+  "rotation": 90,
+  "reading_samples": [
+   27,
+   39
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Third physical copy of the same route sheet. Its stamp overlaps the table edge and differs from copies 1 and 2, and show-through from the reverse is visible.",
+   "A third physical copy. The stamp overlaps the table's 'Итого' area and the signature line, and the next page shows through faintly. Samples 23-25 are the lift."
+  ],
+  "occlusion": [
+   "The curl covers the start of the heading. Fingers are at the lower left in 28-31 and hands at the top in 37-41; the corner is being lifted at 41.",
+   "The flipped stack covers the start of the heading. Fingers are at the bottom-left in 28-31 and hands at the top in 34-41."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-004",
+  "first_sample": 44,
+  "last_sample": 55,
+  "start_s": 22.657006,
+  "end_s": 29.054283,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    22.390456,
+    22.923556
+   ],
+   "end_bracket_s": [
+    28.787733,
+    29.320833
+   ]
+  },
+  "document_type": "torg12",
+  "side": "front",
+  "observed_form": "Унифицированная форма № ТОРГ-12, ОКУД 0330212; ТОВАРНАЯ НАКЛАДНАЯ № РРРБ-128027 от 17.08.2026; Страница 1 к товарной накладной",
+  "observed_form_pass2": "Товарная накладная № РРРБ-128027 от 17.08.2026; Унифицированная форма № ТОРГ-12, Форма по ОКУД 0330212; 'Страница 1 к товарной накладной № РРРБ-128027'",
+  "rotation": 90,
+  "reading_samples": [
+   44,
+   54
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Page 1 of the ТОРГ-12, with items 1-6 and Итого 37 / 20 222,04. The lower half of the sheet is blank, and it carries no stamp.",
+   "TORG-12 page 1, copy 1, with 6 goods lines on this page. Samples 42-43 are the incoming turn."
+  ],
+  "occlusion": [
+   "The curl covers the top-left of the header. The sheet's right edge (codes column) is partly cut by the frame top. Fingers are near the top-left in 45-51, and a blurred hand in 50.",
+   "44 has slight motion blur at the left. Fingers are near the left labels in 46-49."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-005",
+  "first_sample": 60,
+  "last_sample": 70,
+  "start_s": 31.1867,
+  "end_s": 37.050866,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    30.920144,
+    31.453256
+   ],
+   "end_bracket_s": [
+    36.784311,
+    37.317422
+   ]
+  },
+  "document_type": "torg12",
+  "side": "continuation",
+  "observed_form": "Страница 2 к товарной накладной № РРРБ-128027 от 17.08.2026; 'Товарная накладная имеет приложение на 2 листах и содержит Семь порядковых номеров записей'",
+  "observed_form_pass2": "Страница 2 к товарной накладной № РРРБ-128027 от 17.08.2026; 'Товарная накладная имеет приложение на 2 листах и содержит Семь порядковых номеров записей'",
+  "rotation": 90,
+  "reading_samples": [
+   60,
+   66
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Page 2 of the ТОРГ-12 (item 7 Европоддон, Всего по накладной, signatures and stamp). Its wording is the ТОРГ-12 one ('имеет приложение... содержит... порядковых номеров записей'), not the 1-Т one. This is the first copy: the stamp sits left of the signature.",
+   "TORG-12 page 2 (copy 1): Европоддон line 7, totals, stamp, signatures. Samples 56-59 are the turn."
+  ],
+  "occlusion": [
+   "The curl covers the upper-left corner. A hand is at the lower right. Hands pinch the top in 67-70.",
+   "Hands at the top edge in 67-70. The flipped stack is at the bottom-left."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-006",
+  "first_sample": 74,
+  "last_sample": 92,
+  "start_s": 38.650194,
+  "end_s": 48.7792,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    38.383644,
+    38.916744
+   ],
+   "end_bracket_s": [
+    48.512644,
+    49.578856
+   ]
+  },
+  "document_type": "torg12",
+  "side": "front",
+  "observed_form": "Унифицированная форма № ТОРГ-12, ОКУД 0330212; ТОВАРНАЯ НАКЛАДНАЯ № РРРБ-128027 от 17.08.2026; Страница 1 к товарной накладной",
+  "observed_form_pass2": "Товарная накладная № РРРБ-128027 от 17.08.2026; Унифицированная форма № ТОРГ-12, ОКУД 0330212; Страница 1",
+  "rotation": 90,
+  "reading_samples": [
+   74,
+   90
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "A second copy of ТОРГ-12 page 1, identical content to sample range 44-55. The sequence goes page 1, page 2, page 1, page 2, and the two page-2 sheets carry different stamp placements, so this is taken as a distinct physical sheet rather than a repeat. The page has no stamp, so this cannot be confirmed directly.",
+   "A second physical copy of TORG-12 page 1, reached by a forward turn, so it is a different sheet from leaf 3 (repeat_of is null). Samples 71-73 are the turn."
+  ],
+  "occlusion": [
+   "The curl covers the top-left of the header. In 82-87 hands pinch the frame top, over the right part of the table. Fingers are at the top-left in 75-77.",
+   "Hands over the top (right-hand columns) in 82-87."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-007",
+  "first_sample": 96,
+  "last_sample": 107,
+  "start_s": 50.378523,
+  "end_s": 56.775794,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    49.578856,
+    50.645078
+   ],
+   "end_bracket_s": [
+    56.509244,
+    57.042344
+   ]
+  },
+  "document_type": "torg12",
+  "side": "continuation",
+  "observed_form": "Страница 2 к товарной накладной № РРРБ-128027 от 17.08.2026; 'Товарная накладная имеет приложение на 2 листах и содержит Семь порядковых номеров записей'",
+  "observed_form_pass2": "Страница 2 к товарной накладной № РРРБ-128027 от 17.08.2026; 'Товарная накладная имеет приложение на 2 листах и содержит Семь порядковых номеров записей'",
+  "rotation": 90,
+  "reading_samples": [
+   96,
+   104
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second copy of ТОРГ-12 page 2. Its stamp and signature placement differ from the copy in 60-70.",
+   "A second physical copy of TORG-12 page 2. Samples 93-95 are the turn."
+  ],
+  "occlusion": [
+   "Sample 106 is motion-blurred because the sheet was briefly lifted and shifted, then put back. The curl covers the upper-left corner. A hand is at the top/right in 103-107.",
+   "A blurred moving hand is over the blank area in 100. 106 is slightly blurred."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-008",
+  "first_sample": 109,
+  "last_sample": 116,
+  "start_s": 57.3089,
+  "end_s": 61.57375,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    57.042344,
+    57.575456
+   ],
+   "end_bracket_s": [
+    61.3072,
+    62.373411
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Реестр ВСД (сжатая, сокращенная форма) по накладной РРРБ-128027 от 17.08.2026 (Страница № 1 из 1)",
+  "observed_form_pass2": "Реестр ВСД (сжатая, сокращенная форма) по накладной РРРБ-128027 от 17.08.2026",
+  "rotation": 0,
+  "reading_samples": [
+   111,
+   115
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Veterinary certificate register: six QR codes with ВСД entries and a Русское молоко stamp.",
+   "Veterinary certificate register with 6 QR codes and a stamp, marked 'Страница № 1 из 1'. Upright in the frame. Sample 108 is the incoming turn; 117-118 are the lift."
+  ],
+  "occlusion": [
+   "A finger at the top right touches the right QR column in 109-112. The curl is at the lower left.",
+   "A thumb is over the right QR text block in 109-110."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-009",
+  "first_sample": 119,
+  "last_sample": 130,
+  "start_s": 62.639961,
+  "end_s": 69.037233,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    62.373411,
+    62.906511
+   ],
+   "end_bracket_s": [
+    68.770678,
+    69.303789
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Приложение к накладной РРРБ-128027 от 17.08.2026; '... СЕРТИФИКАТОВ СООТВЕТСТВИЯ И ДЕКЛАРАЦИЙ О СООТВЕТСТВИИ НА ОТГРУЖЕННЫЙ ТОВАР' (start of the title is always covered)",
+  "observed_form_pass2": "Реестр сертификатов соответствия и деклараций о соответствии на отгруженный товар (Приложение к накладной РРРБ-128027 от 17.08.2026)",
+  "rotation": 90,
+  "reading_samples": [
+   123,
+   129
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Register of conformity certificates and declarations for six items, with a stamp and signature by Карасёва Т.А.",
+   "Certificates and declarations register from ООО 'Русское молоко'. Samples 131-132 are the turn."
+  ],
+  "occlusion": [
+   "The curl always covers the first words of the title. Hands are at the right of the frame (the document bottom). A finger points across the table in 119-120. The sheet is skewed in 121-122.",
+   "119: the turned page is still settling over the bottom-left corner. 121-122: the sheet is being straightened by hand."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-010",
+  "first_sample": 133,
+  "last_sample": 139,
+  "start_s": 70.103444,
+  "end_s": 73.835189,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    69.836889,
+    70.37
+   ],
+   "end_bracket_s": [
+    73.568633,
+    74.101744
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Реализация товаров и услуг РРРБ-128027 от 17.08.2026 0:00:00",
+  "observed_form_pass2": "Реализация товаров и услуг РРРБ-128027 от 17.08.2026 0:00:00",
+  "rotation": 0,
+  "reading_samples": [
+   133,
+   138
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Sales/realization printout from 1С with a 7-row table and a stamp.",
+   "Goods list for the shipment with a stamp. Samples 140-142 are the lift and turn."
+  ],
+  "occlusion": [
+   "A hand at the right covers part of the Количество columns in 133-134. Fingers are at the top in 138-139.",
+   "A hand is on the blank lower-right area."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-011",
+  "first_sample": 143,
+  "last_sample": 151,
+  "start_s": 75.434506,
+  "end_s": 80.232461,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    75.167956,
+    75.701056
+   ],
+   "end_bracket_s": [
+    79.965911,
+    80.499011
+   ]
+  },
+  "document_type": "trn",
+  "side": "single",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; № РРРБ-128027 от 17.08.2026; Экземпляр № 1",
+  "observed_form_pass2": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; № РРРБ-128027 от 17.08.2026; Экземпляр № 1",
+  "rotation": 0,
+  "reading_samples": [
+   145,
+   150
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Standalone transport waybill (sections 1-12), copy 1.",
+   "Standalone transport waybill, sections 1-12 on one sheet, copy (Экземпляр) 1. Sample 152 is the turn."
+  ],
+  "occlusion": [
+   "Hand at the right edge in 143-145 and a finger at the top-right corner in 147. Otherwise clean.",
+   "Minor: fingers at the top-right corner or right edge."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-012",
+  "first_sample": 153,
+  "last_sample": 160,
+  "start_s": 80.765561,
+  "end_s": 85.030411,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    80.499011,
+    81.032111
+   ],
+   "end_bracket_s": [
+    84.763856,
+    85.296967
+   ]
+  },
+  "document_type": "trn",
+  "side": "single",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; № РРРБ-128027 от 17.08.2026; Экземпляр № 2",
+  "observed_form_pass2": "Транспортная накладная (форма), Приложение № 4; № РРРБ-128027 от 17.08.2026; Экземпляр № 2",
+  "rotation": 0,
+  "reading_samples": [
+   156,
+   160
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "A second physical copy of the waybill (Экземпляр № 2, readable in 158 and 160).",
+   "TRN copy 2, a separate physical sheet. Sample 161 is the turn."
+  ],
+  "occlusion": [
+   "An arm over the top-left header in 153-154. The sheet is slightly tilted in 160.",
+   "153-155: the arm that just turned the page is withdrawing over the top-left."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-013",
+  "first_sample": 162,
+  "last_sample": 170,
+  "start_s": 85.563523,
+  "end_s": 90.361478,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    85.296967,
+    85.830078
+   ],
+   "end_bracket_s": [
+    90.094922,
+    90.628033
+   ]
+  },
+  "document_type": "trn",
+  "side": "single",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; № РРРБ-128027 от 17.08.2026; Экземпляр № 3",
+  "observed_form_pass2": "Транспортная накладная (форма), Приложение № 4; № РРРБ-128027 от 17.08.2026; Экземпляр № 3",
+  "rotation": 0,
+  "reading_samples": [
+   163,
+   169
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "A third physical copy of the waybill (Экземпляр № 3).",
+   "TRN copy 3. Sample 171 is the lift."
+  ],
+  "occlusion": [
+   "An arm over the top-left header in 162-163, a motion-blurred hand over the upper right in 164, and hands at the right/top in 165-167 and 169-170.",
+   "164: a blurred hand passes over the middle. 165-168: a finger on the right margin."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-014",
+  "first_sample": 173,
+  "last_sample": 180,
+  "start_s": 91.427689,
+  "end_s": 95.692539,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    90.628033,
+    91.694244
+   ],
+   "end_bracket_s": [
+    95.425989,
+    95.959089
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "ДОВЕРЕННОСТЬ № РРРБ-128027 (Типовая межотраслевая форма № М-2, ОКУД 0315001)",
+  "observed_form_pass2": "Доверенность № РРРБ-128027 (Типовая межотраслевая форма № М-2, Форма по ОКУД 0315001)",
+  "rotation": 0,
+  "reading_samples": [
+   176,
+   180
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Power of attorney for driver Пашин Ю.О. with its tear-off counterfoil at the top.",
+   "Power of attorney for driver Пашин Ю.О., with a goods list (Европоддон). Sample 181 is the turn."
+  ],
+  "occlusion": [
+   "An arm at the left in 173-174, a motion-blurred hand over the lower right in 175, and fingers at the top-right corner in 178-180.",
+   "172: a blurred hand sweeps over the upper half. 173-175: an arm with a bracelet is at the left."
+  ]
+ },
+ {
+  "video": "20260821_145110",
+  "leaf": "leaf-015",
+  "first_sample": 182,
+  "last_sample": 190,
+  "start_s": 96.225639,
+  "end_s": 101.118417,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    95.959089,
+    96.492189
+   ],
+   "end_bracket_s": [
+    100.757044,
+    101.118417
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Счет-фактура № РРРБ-128027 от 17 августа 2026 г.; Исправление № -- от -- (Приложение № 1 к постановлению Правительства РФ от 26 декабря 2011 г. № 1137)",
+  "observed_form_pass2": "Счет-фактура № РРРБ-128027 от 17 августа 2026 г.; Исправление № -- от --",
+  "rotation": 90,
+  "reading_samples": [
+   183,
+   190
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Standalone счет-фактура. The header and table begin at the sheet's left margin, so there is no УПД column, no Статус box and no 'Универсальный передаточный документ' caption. The bottom has only the счет-фактура signature block ('ПРИМЕЧАНИЕ. Первый экземпляр - покупателю...'), with no УПД transfer sections.",
+   "Standalone invoice, not a UPD. There is no Статус box: the header lines start at the table's left edge. The bottom has the Руководитель/Главный бухгалтер signatures and 'ПРИМЕЧАНИЕ. Первый экземпляр - покупателю, второй экземпляр - продавцу', with no transfer/acceptance section. The video ends on this sheet."
+  ],
+  "occlusion": [
+   "The curl always covers the upper-left start of the heading ('Счет-факт...'). A hand smooths the sheet in 185-187, with motion blur in 187. The sheet is skewed in 182.",
+   "The flipped stack covers the first word of the heading. 182-184: the sheet is skewed about 10 degrees. 185-187: a hand straightens it, with blur in 187."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-001",
+  "first_sample": 1,
+  "last_sample": 5,
+  "start_s": 0.0,
+  "end_s": 2.398977,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    0.0,
+    0.0
+   ],
+   "end_bracket_s": [
+    2.132422,
+    2.665533
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Заявка (без Интеграции) — Приложение № 1 к Договору на оказание комплексных логистических услуг",
+  "observed_form_pass2": "Заявка (без Интеграции) — Приложение № 1 к Договору на оказание комплексных логистических услуг",
+  "rotation": 270,
+  "reading_samples": [
+   1,
+   3
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Request form dated 17.08.2026, type 'прием', ООО Север ТСЛ, ул. Монтажников 22Б, № накладной 12032. Sheet lies landscape, turned 90 degrees in the frame.",
+   "Request dated 17 августа 2026, type прием, date 18.08.2026, consignee ООО Север ТСЛ, накладная 12032. Shot landscape, page top at the right of the image."
+  ],
+  "occlusion": [
+   "#4-#5 hand at the right edge, near the stamp; #5 corner starting to lift",
+   "From 4-5 a hand rests on the bottom-left, where the stamp is; in 5 the sheet starts to lift."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-002",
+  "first_sample": 6,
+  "last_sample": 10,
+  "start_s": 2.398977,
+  "end_s": 5.064506,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    2.132422,
+    2.665533
+   ],
+   "end_bracket_s": [
+    4.797956,
+    5.331056
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Заявка (без Интеграции) — Приложение № 1 к Договору на оказание комплексных логистических услуг",
+  "observed_form_pass2": "Заявка (без Интеграции) — Приложение № 1 к Договору на оказание комплексных логистических услуг",
+  "rotation": 270,
+  "reading_samples": [
+   6,
+   9
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "A second, different Заявка: type 'отгрузка', delivery 20.08.2026, recipient Умный Ритейлл, Сургут. Not a repeat of leaf 0.",
+   "A second, different Заявка: type отгрузка/доставка, date 20.08.2026, recipient Умный Ритейл in Сургут, накладная 12032."
+  ],
+  "occlusion": [
+   "#6 previous sheet being lifted away over the blank lower-left margin; #8-#10 hand over the stamp area",
+   "In 6 the previous sheet is still leaving over the left margin. In 8-10 a hand covers the stamp area at the bottom-left."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-003",
+  "first_sample": 12,
+  "last_sample": 14,
+  "start_s": 5.597612,
+  "end_s": 7.196934,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    5.331056,
+    5.864167
+   ],
+   "end_bracket_s": [
+    6.930378,
+    7.463489
+   ]
+  },
+  "document_type": "trn",
+  "side": "front",
+  "observed_form": "Транспортная накладная (форма) — Приложение № 4 к Правилам перевозок грузов автомобильным транспортом",
+  "observed_form_pass2": "Транспортная накладная (форма) — Приложение № 4 к Правилам перевозок грузов автомобильным транспортом",
+  "rotation": 0,
+  "reading_samples": [
+   12,
+   14
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "TRN № 153-1 dated 20.08.2026, Экземпляр № 1, sections 1-7. Stamp sits over section 5/6, which tells this copy apart from the later fronts.",
+   "TRN № 153-1 dated 20.08.2026, Экземпляр № 1, Заказ УР-10674239. Copy 1: the stamp sits low, over section 5 down to '6. Перевозчик'."
+  ],
+  "occlusion": [
+   "#12 edge of the turned sheet at the left; #14 hand over the blank bottom",
+   "Hand in the blank lower margin only."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-004",
+  "first_sample": 17,
+  "last_sample": 22,
+  "start_s": 8.263144,
+  "end_s": 11.461783,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    7.463489,
+    8.5297
+   ],
+   "end_bracket_s": [
+    11.195233,
+    11.728333
+   ]
+  },
+  "document_type": "trn",
+  "side": "reverse",
+  "observed_form": "Продолжение приложения № 4, Оборотная сторона (sections 8-17: Прием груза ... Стоимость перевозки)",
+  "observed_form_pass2": "Продолжение приложения № 4, Оборотная сторона (8. Прием груза ... 12. Стоимость перевозки)",
+  "rotation": 0,
+  "reading_samples": [
+   17,
+   22
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "TRN reverse page. Separate single-sided sheet: the turned sheets show blank backs.",
+   "TRN reverse that follows copy 1. It is a separate sheet under the front: the front is turned away to the left."
+  ],
+  "occlusion": [
+   "Turned sheet flap at the top-left in #16, #18, #19; fingers at the left edge in #20-#22",
+   "The turned sheet stays at the top-left edge; a finger is at the left edge in 20-21."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-005",
+  "first_sample": 24,
+  "last_sample": 37,
+  "start_s": 11.994888,
+  "end_s": 19.458367,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    11.728333,
+    12.261444
+   ],
+   "end_bracket_s": [
+    19.191811,
+    19.724922
+   ]
+  },
+  "document_type": "trn",
+  "side": "front",
+  "observed_form": "Транспортная накладная (форма) — Приложение № 4",
+  "observed_form_pass2": "Транспортная накладная (форма) — Приложение № 4 к Правилам перевозок грузов автомобильным транспортом",
+  "rotation": 0,
+  "reading_samples": [
+   25,
+   33
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second TRN copy, same content (№ 153-1). Stamp sits between sections 4 and 5, so this is a different physical sheet from leaf 2.",
+   "A second copy of TRN № 153-1 (also printed Экземпляр № 1). The stamp is higher than on copy 1, centred on the section 5 heading, so this is a different physical sheet."
+  ],
+  "occlusion": [
+   "#24-#26 flap at the top-left; #29-#37 hands over the blank lower part",
+   "In 24 the turned sheet's corner is above the form at the top-left. From 25 on, hands are in the blank lower half."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-006",
+  "first_sample": 39,
+  "last_sample": 50,
+  "start_s": 19.991472,
+  "end_s": 26.38875,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    19.724922,
+    20.258022
+   ],
+   "end_bracket_s": [
+    26.1222,
+    26.6553
+   ]
+  },
+  "document_type": "trn",
+  "side": "reverse",
+  "observed_form": "Продолжение приложения № 4, Оборотная сторона",
+  "observed_form_pass2": "Продолжение приложения № 4, Оборотная сторона",
+  "rotation": 0,
+  "reading_samples": [
+   40,
+   48
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second TRN reverse sheet",
+   "TRN reverse that follows copy 2."
+  ],
+  "occlusion": [
+   "Flap at the top-left throughout; hands at the bottom; #49-#50 bottom-left corner slightly lifted",
+   "39 is motion-blurred. Hands are in the blank lower area throughout; in 49-50 the sheet corner is lifted."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-007",
+  "first_sample": 52,
+  "last_sample": 57,
+  "start_s": 26.921855,
+  "end_s": 30.120494,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    26.1222,
+    27.188411
+   ],
+   "end_bracket_s": [
+    29.853944,
+    30.387044
+   ]
+  },
+  "document_type": "trn",
+  "side": "front",
+  "observed_form": "Транспортная накладная (форма) — Приложение № 4",
+  "observed_form_pass2": "Транспортная накладная (форма) — Приложение № 4 к Правилам перевозок грузов автомобильным транспортом",
+  "rotation": 0,
+  "reading_samples": [
+   53,
+   56
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Third TRN copy. Stamp sits over section 4, a third distinct stamp position.",
+   "A third copy of TRN № 153-1. The stamp is highest here, over the bottom of section 4, so this is a third distinct sheet."
+  ],
+  "occlusion": [
+   "#51-#52 flap at the top-left; #55-#57 hand at the bottom",
+   "In 52 the edge of the turned sheet is at the left. Hands are at the bottom."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-008",
+  "first_sample": 60,
+  "last_sample": 67,
+  "start_s": 31.1867,
+  "end_s": 35.45155,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    30.387044,
+    31.453256
+   ],
+   "end_bracket_s": [
+    35.185,
+    35.7181
+   ]
+  },
+  "document_type": "trn",
+  "side": "reverse",
+  "observed_form": "Продолжение приложения № 4, Оборотная сторона",
+  "observed_form_pass2": "Продолжение приложения № 4, Оборотная сторона",
+  "rotation": 0,
+  "reading_samples": [
+   60,
+   66
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Third TRN reverse sheet",
+   "TRN reverse that follows copy 3."
+  ],
+  "occlusion": [
+   "Turned sheet covers the left margin in several samples, partly hiding the stamp; hands at the bottom",
+   "The turned sheet stays at the top-left edge; hands are in the lower blank area."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-009",
+  "first_sample": 70,
+  "last_sample": 82,
+  "start_s": 36.517761,
+  "end_s": 43.448144,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    35.7181,
+    36.784311
+   ],
+   "end_bracket_s": [
+    43.181589,
+    43.7147
+   ]
+  },
+  "document_type": "ttn",
+  "side": "front",
+  "observed_form": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ — Типовая межотраслевая форма № 1-Т, ОКУД 0345009, I ТОВАРНЫЙ РАЗДЕЛ, Страница 1",
+  "observed_form_pass2": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ — Типовая межотраслевая форма № 1-Т, I ТОВАРНЫЙ РАЗДЕЛ, Страница 1",
+  "rotation": 270,
+  "reading_samples": [
+   72,
+   77
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "TTN № 12032 dated 20.08.2026, two items (Шампиньоны свежие лоток 400 гр / 250 гр), total 31 112,00. Landscape, turned in the frame.",
+   "TTN № 12032 dated 20.08.2026, ОКУД 0345009. Copy 1: the stamp is centred on 'Главный (старший) бухгалтер', and the signatures differ from the other two fronts."
+  ],
+  "occlusion": [
+   "#69 previous sheet flap over the stamp corner; #78-#82 hands at the edge",
+   "In 70 a blurred hand is at the bottom. From 78-82 hands are at the bottom edge."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-010",
+  "first_sample": 86,
+  "last_sample": 100,
+  "start_s": 45.047461,
+  "end_s": 53.04405,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    44.2478,
+    45.314011
+   ],
+   "end_bracket_s": [
+    52.7775,
+    53.3106
+   ]
+  },
+  "document_type": "ttn",
+  "side": "reverse",
+  "observed_form": "Оборотная сторона формы № 1-Т — ТРАНСПОРТНЫЙ РАЗДЕЛ, ТТН № 12032",
+  "observed_form_pass2": "Оборотная сторона формы № 1-Т — ТРАНСПОРТНЫЙ РАЗДЕЛ (ТТН № 12032)",
+  "rotation": 270,
+  "reading_samples": [
+   91,
+   99
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "TTN reverse sheet 1",
+   "A separate reverse sheet. The front was book-turned to the right, and the underside of the turning page was blank."
+  ],
+  "occlusion": [
+   "#85-#89 hand and arm cover much of the sheet; the turned page flap hides the top-left 'ТРАНСПОРТНЫЙ РАЗДЕЛ' heading throughout; #100 lower edge slightly lifted",
+   "In 86-89 the turned sheet curls over the right part, and hands are over the sheet. From 90-100 the curl stays at the top-right edge."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-011",
+  "first_sample": 102,
+  "last_sample": 118,
+  "start_s": 53.577156,
+  "end_s": 62.639961,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    53.3106,
+    53.843711
+   ],
+   "end_bracket_s": [
+    62.373411,
+    62.906511
+   ]
+  },
+  "document_type": "ttn",
+  "side": "front",
+  "observed_form": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ — Типовая межотраслевая форма № 1-Т, ОКУД 0345009",
+  "observed_form_pass2": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ — Типовая межотраслевая форма № 1-Т, Страница 1",
+  "rotation": 270,
+  "reading_samples": [
+   106,
+   116
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second TTN copy, same content. The stamp circle overlaps 'Отпуск разрешил' differently from leaf 8, so it is a different physical sheet.",
+   "TTN № 12032, copy 2. The stamp is lower, near 'Отпуск груза произвел', and the first signature's tail reaches 'Боровинский', so this is not a repeat of copy 1."
+  ],
+  "occlusion": [
+   "#102-#105 flap at the side; #110-#114 sheet held, shifted and tilted (#112 rotated); hands at the edges in #114-#118",
+   "In 103-105 the turned reverse sheet lies over the right-side header. 112 is blurred while the sheet is repositioned."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-012",
+  "first_sample": 121,
+  "last_sample": 124,
+  "start_s": 63.706166,
+  "end_s": 65.838594,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    62.906511,
+    63.972722
+   ],
+   "end_bracket_s": [
+    65.572044,
+    66.105144
+   ]
+  },
+  "document_type": "ttn",
+  "side": "reverse",
+  "observed_form": "Оборотная сторона формы № 1-Т — ТРАНСПОРТНЫЙ РАЗДЕЛ, ТТН № 12032",
+  "observed_form_pass2": "Оборотная сторона формы № 1-Т — ТРАНСПОРТНЫЙ РАЗДЕЛ",
+  "rotation": 270,
+  "reading_samples": [
+   121,
+   124
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second TTN reverse sheet. Its stamp position is close to leaf 9's, but the stack order shows it is the next separate sheet.",
+   "TTN reverse that follows copy 2."
+  ],
+  "occlusion": [
+   "#120-#123 flap at a corner and hand at the edge; #124 clean with the heading fully visible",
+   "In 121-123 a hand is at the bottom-left corner. 124 is motion-blurred, just before a fast turn."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-013",
+  "first_sample": 125,
+  "last_sample": 133,
+  "start_s": 65.838594,
+  "end_s": 70.63655,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    65.572044,
+    66.105144
+   ],
+   "end_bracket_s": [
+    70.37,
+    70.9031
+   ]
+  },
+  "document_type": "ttn",
+  "side": "front",
+  "observed_form": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ — Типовая межотраслевая форма № 1-Т, ОКУД 0345009",
+  "observed_form_pass2": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ — Типовая межотраслевая форма № 1-Т, Страница 1",
+  "rotation": 270,
+  "reading_samples": [
+   126,
+   130
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Third TTN copy. Stamp sits lower and further right, over 'Отпуск груза произвел' / М.П.",
+   "TTN № 12032, copy 3. The stamp is further right and lower than on copies 1 and 2, and the signatures differ."
+  ],
+  "occlusion": [
+   "#131-#133 hand at the edge, which lifts slightly",
+   "From 131-133 hands are at the bottom-left, and the sheet starts to bend in 133."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-014",
+  "first_sample": 135,
+  "last_sample": 136,
+  "start_s": 71.169656,
+  "end_s": 72.235867,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    70.9031,
+    71.436211
+   ],
+   "end_bracket_s": [
+    71.969311,
+    72.502422
+   ]
+  },
+  "document_type": "ttn",
+  "side": "reverse",
+  "observed_form": "Оборотная сторона формы № 1-Т — ТРАНСПОРТНЫЙ РАЗДЕЛ, ТТН № 12032",
+  "observed_form_pass2": "Оборотная сторона формы № 1-Т — ТРАНСПОРТНЫЙ РАЗДЕЛ",
+  "rotation": 270,
+  "reading_samples": [
+   135,
+   136
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Third TTN reverse sheet; its stamp position differs from leaf 9's",
+   "A short showing of the TTN reverse that follows copy 3."
+  ],
+  "occlusion": [
+   "Turned page flap at the top; hand at the right edge",
+   "The turned sheet is at the top-right corner; a thumb is at the bottom-left."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-015",
+  "first_sample": 138,
+  "last_sample": 144,
+  "start_s": 72.768978,
+  "end_s": 76.500711,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    72.502422,
+    73.035533
+   ],
+   "end_bracket_s": [
+    76.234156,
+    76.767267
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "ЕВРАЗИЙСКИЙ ЭКОНОМИЧЕСКИЙ СОЮЗ ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ (EAC)",
+  "observed_form_pass2": "ЕВРАЗИЙСКИЙ ЭКОНОМИЧЕСКИЙ СОЮЗ ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ (EAC)",
+  "rotation": 0,
+  "reading_samples": [
+   139,
+   142
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Declaration of conformity from ООО 'Грибная радуга', ЕАЭС N RU Д-RU.PA01.B.86648/26, a certified copy ('копия верна')",
+   "Declaration of conformity from ООО 'ГРИБНАЯ РАДУГА' for fresh champignons, ЕАЭС N RU Д-RU.PA01.B.86648/26, with a 'копия верна' stamp."
+  ],
+  "occlusion": [
+   "#143-#144 hand at the bottom",
+   "In 143-144 fingers are at the bottom edge."
+  ]
+ },
+ {
+  "video": "20260818-6_131851",
+  "leaf": "leaf-016",
+  "first_sample": 147,
+  "last_sample": 154,
+  "start_s": 77.566923,
+  "end_s": 82.324042,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    76.234156,
+    77.833478
+   ],
+   "end_bracket_s": [
+    81.565233,
+    82.324042
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Letter: ФЕДЕРАЛЬНАЯ СЛУЖБА ПО ВЕТЕРИНАРНОМУ И ФИТОСАНИТАРНОМУ НАДЗОРУ (Россельхознадзор) УПРАВЛЕНИЕ ПО ОРЛОВСКОЙ И КУРСКОЙ ОБЛАСТЯМ — Генеральному директору ООО «Грибная радуга»",
+  "observed_form_pass2": "Letter: ФЕДЕРАЛЬНАЯ СЛУЖБА ПО ВЕТЕРИНАРНОМУ И ФИТОСАНИТАРНОМУ НАДЗОРУ (Россельхознадзор) УПРАВЛЕНИЕ ПО ОРЛОВСКОЙ И КУРСКОЙ ОБЛАСТЯМ — to Генеральному директору ООО «Грибная радуга»",
+  "rotation": 0,
+  "reading_samples": [
+   150,
+   154
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Official letter dated 16.01.2026, № УФС-ОК-24/46, about quarantine certificates; a certified copy",
+   "Official letter dated 16.01.2026 № УФС-ОК-24/46 on quarantine certificates, with a 'копия верна' stamp."
+  ],
+  "occlusion": [
+   "The previous (EAC) page is held upright at the right edge the whole time; #145 covers the right third; #146 motion-blurred hand; #147-#149 hand over the text",
+   "In 147-148 a hand covers the right half of the body. From 149-154 a hand or the next sheet is at the top and right edges."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-001",
+  "first_sample": 1,
+  "last_sample": 6,
+  "start_s": 0.0,
+  "end_s": 2.932088,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    0.0,
+    0.0
+   ],
+   "end_bracket_s": [
+    2.665533,
+    3.198644
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "observed_form_pass2": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "rotation": 90,
+  "reading_samples": [
+   1,
+   5
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "First of three identical copies of the route sheet stacked on top of each other. Sheet underneath is revealed by the turn at 7.",
+   "First of three physical copies of the same route sheet (stamp 'Русское молоко'). Top sheet; the page turn at 7 exposes copy 2 underneath."
+  ],
+  "occlusion": [
+   "Fingers at the top-right corner in 3-6, over blank area only",
+   "Clean in 1-2; fingers at the top-right corner in 3-6, away from the header"
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-002",
+  "first_sample": 8,
+  "last_sample": 18,
+  "start_s": 3.465194,
+  "end_s": 9.329355,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    3.198644,
+    3.731744
+   ],
+   "end_bracket_s": [
+    9.0628,
+    9.595911
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "observed_form_pass2": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "rotation": 90,
+  "reading_samples": [
+   9,
+   16
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second physical copy, same content as leaf 0 but a different sheet (the turn at 7 lands a sheet on the left stack). Not a repeat.",
+   "Second physical copy of the same route sheet. It is a different sheet from leaf 0 (the turn at 7), so it is not a repeat."
+  ],
+  "occlusion": [
+   "The flipped previous sheet covers the bottom-left corner, cutting off the 'Маршрутный лист' word of the title. Hand on the right edge. Fingers lift the top corner in 16-18",
+   "The start of the title ('Маршрутный лист №') is partly hidden by the turned sheet lying at bottom-left. Hand on the right edge; hand at the top in 15-18."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-003",
+  "first_sample": 20,
+  "last_sample": 28,
+  "start_s": 9.862461,
+  "end_s": 14.660411,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    9.595911,
+    10.129011
+   ],
+   "end_bracket_s": [
+    14.393856,
+    14.926967
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "observed_form_pass2": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "rotation": 90,
+  "reading_samples": [
+   20,
+   26
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Third physical copy. The ТОРГ-12 shows through it from beneath.",
+   "Third physical copy of the route sheet. At 29-31 it is lifted and the ТОРГ-12 is exposed (30), then it is laid back down."
+  ],
+  "occlusion": [
+   "Flipped stack at bottom-left. Finger over the stamp in 21, hands at left in 22-23 and at top in 25-28",
+   "Turned pile at left covers the start of the title. Show-through of the form underneath is visible. Hands at the right and top edges."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-004",
+  "first_sample": 32,
+  "last_sample": 32,
+  "start_s": 16.259739,
+  "end_s": 16.792839,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    15.993189,
+    16.526289
+   ],
+   "end_bracket_s": [
+    16.526289,
+    17.059389
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "observed_form_pass2": "Маршрутный лист № РБ-00048247 от 14 августа 2026 г.",
+  "rotation": 90,
+  "reading_samples": [
+   32
+  ],
+  "repeat_of": [
+   2,
+   2
+  ],
+  "notes": [
+   "Aborted turn at 29-31: the third copy was lifted, exposing the ТОРГ-12, then put back down. It is flat again for one sample before the real turn. Brief, occluded re-showing.",
+   "Copy 3 is laid flat again for one sample after the aborted lift at 29-31, then turned for real at 33. If a reviewer prefers to count aborted re-showings as transitions, this one is borderline."
+  ],
+  "occlusion": [
+   "A hand with a watch reaches across the right half of the sheet. The title is visible",
+   "Arm with a watch covers the right half; the header and stamp are visible"
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-005",
+  "first_sample": 34,
+  "last_sample": 45,
+  "start_s": 17.325944,
+  "end_s": 23.723211,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    16.526289,
+    17.5925
+   ],
+   "end_bracket_s": [
+    23.456656,
+    23.989767
+   ]
+  },
+  "document_type": "torg12",
+  "side": "single",
+  "observed_form": "Унифицированная форма № ТОРГ-12, ОКУД 0330212, ТОВАРНАЯ НАКЛАДНАЯ № РРРБ-127817 от 17.08.2026; 'Товарная накладная имеет приложение на 1 листе и содержит Три порядковых номеров записей'",
+  "observed_form_pass2": "ТОВАРНАЯ НАКЛАДНАЯ № РРРБ-127817 от 17.08.2026; Унифицированная форма № ТОРГ-12, Форма по ОКУД 0330212; 'Товарная накладная имеет приложение на 1 листе и содержит ... порядковых номеров записей'",
+  "rotation": 90,
+  "reading_samples": [
+   36,
+   42
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "First ТОРГ-12 copy. Line 'Страница 1 к товарной накладной'.",
+   "First physical copy of the ТОРГ-12, with stamp, signatures and 'ДОВЕРЕННОСТЬ' handwriting. Turn at 46-48 reveals a second copy."
+  ],
+  "occlusion": [
+   "The flipped stack and hands cover the doc's top-left (Грузоотправитель area) in 33-35 and 39. Hand at the bottom (signature area) throughout. Hands at the codes corner in 43-45",
+   "Blurred hand over the left (header) part in 34. Hands at the right edge and turned pile at left otherwise. Fingers at the top-right corner in 43-45."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-006",
+  "first_sample": 49,
+  "last_sample": 54,
+  "start_s": 25.322539,
+  "end_s": 28.521172,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    25.055989,
+    25.589089
+   ],
+   "end_bracket_s": [
+    28.254611,
+    28.787733
+   ]
+  },
+  "document_type": "torg12",
+  "side": "single",
+  "observed_form": "Унифицированная форма № ТОРГ-12, ОКУД 0330212, ТОВАРНАЯ НАКЛАДНАЯ № РРРБ-127817 от 17.08.2026; 'имеет приложение на 1 листе'",
+  "observed_form_pass2": "ТОВАРНАЯ НАКЛАДНАЯ № РРРБ-127817 от 17.08.2026; Унифицированная форма № ТОРГ-12, ОКУД 0330212",
+  "rotation": 90,
+  "reading_samples": [
+   49,
+   52
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second physical copy of the same ТОРГ-12, revealed under the first by the turn at 46-48. Its stamp and handwriting positions differ.",
+   "Second physical copy of the same ТОРГ-12. The stamp and handwriting sit slightly differently from copy 1 (see 47, where both are visible). The turn starts at 55."
+  ],
+  "occlusion": [
+   "Fingers over the top-left corner. Hand blur over the codes area in 51. Hands at the bottom edge",
+   "Right hand over the lower-right (bottom of the page, signatures). Hand at the top-right corner in 52-54, near the codes box."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-007",
+  "first_sample": 57,
+  "last_sample": 73,
+  "start_s": 29.587388,
+  "end_s": 38.650194,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    29.320833,
+    29.853944
+   ],
+   "end_bracket_s": [
+    38.383644,
+    38.916744
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Реестр ВСД (сжатая, сокращенная форма) по накладной РРРБ-127817 от 17.08.2026",
+  "observed_form_pass2": "Реестр ВСД (сжатая, сокращенная форма) по накладной РРРБ-127817 от 17.08.2026; Страница № 1 из 1",
+  "rotation": 0,
+  "reading_samples": [
+   57,
+   69
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Veterinary certificate register with QR codes, 'Страница № 1 из 1'.",
+   "Veterinary certificates register (VSD) with 2 QR codes and stamp. The aborted corner lift at 64-66 was kept inside this leaf because the sheet never left view."
+  ],
+  "occlusion": [
+   "Corner lifted by fingers in 64-66 (not turned, falls back). Hand at the right edge",
+   "Mostly clean. Hand lifts the top-right corner at 64-66 (aborted, same sheet resumes at 67). Sheet slightly tilted at 73."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-008",
+  "first_sample": 77,
+  "last_sample": 86,
+  "start_s": 40.249506,
+  "end_s": 45.580561,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    39.982956,
+    40.516056
+   ],
+   "end_bracket_s": [
+    45.314011,
+    45.847111
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Приложение к накладной РРРБ-127817 от 17.08.2026 — [Реестр] СЕРТИФИКАТОВ СООТВЕТСТВИЯ И ДЕКЛАРАЦИЙ О СООТВЕТСТВИИ НА ОТГРУЖЕННЫЙ ТОВАР",
+  "observed_form_pass2": "...СЕРТИФИКАТОВ СООТВЕТСТВИЯ И ДЕКЛАРАЦИЙ О СООТВЕТСТВИИ НА ОТГРУЖЕННЫЙ ТОВАР. (Приложение к накладной РРРБ-127817 от 17.08.2026), ООО \"Русское молоко\"",
+  "rotation": 90,
+  "reading_samples": [
+   78,
+   84
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Certificate and declaration register.",
+   "Register of certificates and declarations of conformity (a letter-style annex), with stamp. Not a transport form."
+  ],
+  "occlusion": [
+   "The flipped stack covers the start of the title line ('...ограниченной ответственностью Русское молоко'). Hands at the right and top",
+   "First word of the heading hidden by the turned pile at left. Hands on the right; hands at the top in 85-86."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-009",
+  "first_sample": 89,
+  "last_sample": 98,
+  "start_s": 46.646783,
+  "end_s": 51.977839,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    46.380233,
+    46.913333
+   ],
+   "end_bracket_s": [
+    51.711289,
+    52.244389
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Реализация товаров и услуг РРРБ-127817 от 17.08.2026 0:00:00",
+  "observed_form_pass2": "Реализация товаров и услуг РРРБ-127817 от 17.08.2026 0:00:00 (Контрагент: УМНЫЙ РИТЕЙЛ ООО)",
+  "rotation": 0,
+  "reading_samples": [
+   90,
+   96
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Internal goods list with a table (Код, Товар, Дата изготовления, Количество).",
+   "Packing list printout (3 rows, Европоддон plus 2 products) with stamp."
+  ],
+  "occlusion": [
+   "Flipped stack at bottom-left. Hand at the right edge. Fingers at the top in 94-95",
+   "Clean except hands at the right edge; fingers at the top in 94-95"
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-010",
+  "first_sample": 101,
+  "last_sample": 109,
+  "start_s": 53.04405,
+  "end_s": 57.842006,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    52.7775,
+    53.3106
+   ],
+   "end_bracket_s": [
+    57.575456,
+    58.108556
+   ]
+  },
+  "document_type": "trn",
+  "side": "front|single",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; Экземпляр № 1; № РРРБ-127817 от 17.08.2026",
+  "observed_form_pass2": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом (ред. ПП РФ от 30.11.2021 № 2116); № РРРБ-127817 от 17.08.2026; Экземпляр № 1",
+  "rotation": 0,
+  "reading_samples": [
+   102,
+   108
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Copy 1, read in the header box 'Экземпляр №'.",
+   "Standalone ТрН, copy 1 of 3, with Грузоотправитель, Заказчик and Перевозчик sections and two stamps."
+  ],
+  "occlusion": [
+   "Finger blur over the header in 106. Flipped stack at bottom-left",
+   "Hand on the right edge. Blurred hand at the top-left in 106."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-011",
+  "first_sample": 112,
+  "last_sample": 127,
+  "start_s": 58.908212,
+  "end_s": 67.437911,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    58.641656,
+    59.174767
+   ],
+   "end_bracket_s": [
+    67.171356,
+    67.704467
+   ]
+  },
+  "document_type": "trn",
+  "side": "front|single",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4; Экземпляр № 2; № РРРБ-127817 от 17.08.2026",
+  "observed_form_pass2": "Транспортная накладная (форма), Приложение № 4; № РРРБ-127817 от 17.08.2026; Экземпляр № 2",
+  "rotation": 0,
+  "reading_samples": [
+   114,
+   124
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Copy 2, a different physical sheet from copy 1.",
+   "ТрН copy 2, a different physical sheet (Экземпляр № 2)."
+  ],
+  "occlusion": [
+   "A hand fiddles at the top-right corner in 117-120, partly over the header right side, sheet not turned. Hand blur in 122",
+   "Hand at the right edge. Hand over the top area in 117-120 and 125-126."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-012",
+  "first_sample": 130,
+  "last_sample": 134,
+  "start_s": 68.504128,
+  "end_s": 71.169656,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    68.237578,
+    68.770678
+   ],
+   "end_bracket_s": [
+    70.9031,
+    71.436211
+   ]
+  },
+  "document_type": "trn",
+  "side": "front|single",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4; Экземпляр № 3; № РРРБ-127817 от 17.08.2026",
+  "observed_form_pass2": "Транспортная накладная (форма), Приложение № 4; № РРРБ-127817 от 17.08.2026; Экземпляр № 3",
+  "rotation": 0,
+  "reading_samples": [
+   130,
+   134
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Copy 3.",
+   "ТрН copy 3 (Экземпляр № 3). The turn starts at 135."
+  ],
+  "occlusion": [
+   "Hand blur over the barcode and top in 133",
+   "Hands at the right and bottom-left. Hand at the top in 133-134."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-013",
+  "first_sample": 138,
+  "last_sample": 147,
+  "start_s": 72.768978,
+  "end_s": 78.100033,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    71.969311,
+    73.035533
+   ],
+   "end_bracket_s": [
+    77.833478,
+    78.366589
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Типовая межотраслевая форма № М-2, ОКУД 0315001 — ДОВЕРЕННОСТЬ № РРРБ-127817",
+  "observed_form_pass2": "ДОВЕРЕННОСТЬ № РРРБ-127817 (Типовая межотраслевая форма № М-2, ОКУД 0315001), дата выдачи 17 августа 2026 г.",
+  "rotation": 0,
+  "reading_samples": [
+   139,
+   144
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Power of attorney with a tear-off counterfoil strip at the top.",
+   "Power of attorney М-2 with tear-off counterfoil, stamp and signatures."
+  ],
+  "occlusion": [
+   "The previous sheet's flap is still settling at bottom-left in 137. Hand blur in 146. Corner pinched at the top-right in 147",
+   "Hands at the right edge. Hand at the top-right in 147."
+  ]
+ },
+ {
+  "video": "20260821_145342",
+  "leaf": "leaf-014",
+  "first_sample": 149,
+  "last_sample": 163,
+  "start_s": 78.633139,
+  "end_s": 86.825313,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    78.366589,
+    78.899689
+   ],
+   "end_bracket_s": [
+    86.363178,
+    86.825313
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Счет-фактура № РРРБ-127817 от 17 августа 2026 г. (Приложение № 1 к постановлению Правительства РФ от 26.12.2011 № 1137; 'Исправление № -- от --')",
+  "observed_form_pass2": "[Счет-фактура] № РРРБ-127817 от 17 августа 2026 г.; Исправление № -- от --; Приложение № 1 к постановлению Правительства РФ от 26.12.2011 № 1137; 'ПРИМЕЧАНИЕ. Первый экземпляр - покупателю, второй экземпляр - продавцу'",
+  "rotation": 90,
+  "reading_samples": [
+   153,
+   163
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Standalone invoice: header lines start at the left edge with no УПД Статус block. The bottom has 'Руководитель организации / Главный бухгалтер / Индивидуальный предприниматель' and 'ПРИМЕЧАНИЕ. Первый экземпляр - покупателю...', with no 'Товар (груз) передал' section, so it is not a УПД.",
+   "A standalone invoice with no УПД Статус column. The seller fields start at the left margin, the signature block is only Руководитель and Главный бухгалтер with no передал/принял section, and it has the 'первый экземпляр - покупателю' note. 'Документ об отгрузке Накладная № РРРБ-127817 от 17.08.2026'. One physical sheet through the end of the video."
+  ],
+  "occlusion": [
+   "The flipped stack always covers the first letters of the title ('Сч...'). Finger over the header in 151-152 and 160. Motion blur in 159 and 161",
+   "The leading word of the heading (before '...РБ-127817') is hidden under the turned pile in every sample. Hand covers the header in 150-152. Sheet motion-blurred (shifted, not turned) at 159."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-001",
+  "first_sample": 1,
+  "last_sample": 5,
+  "start_s": 0.0,
+  "end_s": 2.398977,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    0.0,
+    0.0
+   ],
+   "end_bracket_s": [
+    2.132422,
+    2.665533
+   ]
+  },
+  "document_type": "torg12",
+  "side": "front|single",
+  "observed_form": "Товарная накладная, Унифицированная форма № ТОРГ-12 (ОКУД 0330212), № Чл000067597 от 20.08.2026, Страница 1",
+  "observed_form_pass2": "Товарная накладная, Унифицированная форма № ТОРГ-12, Форма по ОКУД 0330212, № Чл000067597 от 20.08.2026, Страница 1",
+  "rotation": 0,
+  "reading_samples": [
+   1,
+   4
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "First copy of the ТОРГ-12. It has handwriting 'КБ Пермь' at the top and 'поддон 1шт' below the stamp, and the line 'Товарная накладная имеет приложение на ... листах и содержит ... порядковых номеров записей'.",
+   "First ТОРГ-12 copy. It has the handwritten 'КБ Пермь' at the top and 'поддон 1шт' below the stamp, which tells it apart from the next copy. It has the line 'Товарная накладная имеет приложение на ... и содержит Один порядковых номеров записей'."
+  ],
+  "occlusion": [
+   "Sample 1 has the sheet's left edge at the frame border. Samples 3-5 have a hand at the bottom, below the printed area. Sample 5 shows the start of the lift.",
+   "Hand over the bottom margin in 3-5; in 5 the bottom edge starts to lift. Header clear throughout."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-002",
+  "first_sample": 7,
+  "last_sample": 11,
+  "start_s": 2.932083,
+  "end_s": 5.597612,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    2.665533,
+    3.198633
+   ],
+   "end_bracket_s": [
+    5.331056,
+    5.864167
+   ]
+  },
+  "document_type": "torg12",
+  "side": "front|single",
+  "observed_form": "Товарная накладная, Унифицированная форма № ТОРГ-12 (ОКУД 0330212), № Чл000067597 от 20.08.2026, Страница 1",
+  "observed_form_pass2": "Товарная накладная, Унифицированная форма № ТОРГ-12, Форма по ОКУД 0330212, № Чл000067597 от 20.08.2026, Страница 1",
+  "rotation": 0,
+  "reading_samples": [
+   7,
+   10
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second, separate copy of the same ТОРГ-12. It has no 'КБ Пермь' or 'поддон' handwriting, so it is a different physical sheet from leaf 0.",
+   "Second ТОРГ-12 copy, a different physical sheet: no 'КБ Пермь' or 'поддон 1шт' handwriting, and the stamp and signatures sit in slightly different places. Same printed content as leaf 0."
+  ],
+  "occlusion": [
+   "Sample 8 has motion blur from a hand at the bottom left. Samples 9-11 have a hand at the bottom edge. Sample 11 shows the start of the lift.",
+   "Blurred hand at the bottom-left in 8; fingers over the bottom margin in 9-11; the bottom edge starts to lift in 11."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-003",
+  "first_sample": 13,
+  "last_sample": 18,
+  "start_s": 6.130717,
+  "end_s": 9.329355,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    5.864167,
+    6.397267
+   ],
+   "end_bracket_s": [
+    9.0628,
+    9.595911
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Счет-фактура № 2913116 от 20 августа 2026 г. / Исправление № -- от -- (Приложение № 1 к постановлению Правительства РФ № 1137)",
+  "observed_form_pass2": "Счет-фактура № 2913116 от 20 августа 2026 г. Исправление № -- от -- (Приложение № 1 к постановлению Правительства РФ от 26.12.2011 № 1137)",
+  "rotation": 270,
+  "reading_samples": [
+   13,
+   17
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Standalone счет-фактура with no УПД status box. The sheet is shown landscape; turning it 270° clockwise makes it upright (checked by rotating the frame). Номер заказа Z45-001073.",
+   "Standalone счет-фактура with no УПД Статус box and no 'Универсальный передаточный документ' heading, so it is typed unknown. Shot sideways in landscape: the header sits along the right edge of the frame. Box 'Номер заказа: Z45-001073'; seller ООО КФ 'ФАНТЭЛЬ', buyer ООО 'Прометей'; total 55 440,00."
+  ],
+  "occlusion": [
+   "Fingers at the bottom-left corner in samples 16-18, away from the header",
+   "Fingers at the lower-left corner in 16-18; otherwise clear."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-004",
+  "first_sample": 20,
+  "last_sample": 26,
+  "start_s": 9.862461,
+  "end_s": 13.5942,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    9.595911,
+    10.129011
+   ],
+   "end_bracket_s": [
+    13.327644,
+    13.860756
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "УДОСТОВЕРЕНИЕ О КАЧЕСТВЕ № Чл000067597 от 20 августа 2026 г.",
+  "observed_form_pass2": "УДОСТОВЕРЕНИЕ О КАЧЕСТВЕ № Чл000067597 от 20 августа 2026 г.",
+  "rotation": 0,
+  "reading_samples": [
+   20,
+   24
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Quality certificate from ООО 'Кондитерская фабрика ФАНТЭЛЬ'",
+   "Quality certificate from ООО 'Кондитерская фабрика ФАНТЭЛЬ' with a stamp. The lower half of the sheet is blank."
+  ],
+  "occlusion": [
+   "Samples 23-26 have a hand at the bottom, over blank paper",
+   "Hand over the bottom blank area in 23-26; the header is never covered."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-005",
+  "first_sample": 28,
+  "last_sample": 33,
+  "start_s": 14.127306,
+  "end_s": 17.325944,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    13.860756,
+    14.393856
+   ],
+   "end_bracket_s": [
+    17.059389,
+    17.5925
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "ЕВРАЗИЙСКИЙ ЭКОНОМИЧЕСКИЙ СОЮЗ ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ (ЕАС)",
+  "observed_form_pass2": "ЕАС ЕВРАЗИЙСКИЙ ЭКОНОМИЧЕСКИЙ СОЮЗ ДЕКЛАРАЦИЯ О СООТВЕТСТВИИ (рег. № ЕАЭС N RU Д-RU.PA01.B.39957/21)",
+  "rotation": 0,
+  "reading_samples": [
+   28,
+   30
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "EAEU declaration of conformity, ЕАЭС N RU Д-RU.РА01.В.39957/21",
+   "EAEU declaration of conformity for confectionery from КФ 'ФАНТЭЛЬ'."
+  ],
+  "occlusion": [
+   "Samples 30-33 have a hand over the lower-left signature and registration lines",
+   "Hand at the bottom-left over the signature and registration lines in 30-33."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-006",
+  "first_sample": 35,
+  "last_sample": 40,
+  "start_s": 17.85905,
+  "end_s": 21.057688,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    17.5925,
+    18.1256
+   ],
+   "end_bracket_s": [
+    20.791133,
+    21.324244
+   ]
+  },
+  "document_type": "trn",
+  "side": "front",
+  "observed_form": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; Номер УПД 2913116 от 20.08.2026",
+  "observed_form_pass2": "Транспортная накладная (форма), Приложение № 4 к Правилам перевозок грузов автомобильным транспортом; top lines 'Номер заказа Z45-001073 / Номер УПД 2913116 от 20.08.2026 / Номер накладной Чл000067597 от 20.08.2026'",
+  "rotation": 0,
+  "reading_samples": [
+   35,
+   38
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Front of the TRN with sections 1. Грузоотправитель to 7. Транспортное средство and the Заказчик/Перевозчик blocks",
+   "Page 1 of the Транспортная накладная: sections 1 Грузоотправитель, 1а Заказчик, 2 Грузополучатель, 3 Груз, 4 Сопроводительные документы, 5 Указания, 6 Перевозчик (ООО 'Екатеринбург ТрансАвто'), 7 Транспортное средство (КАМАЗ С612ХН)."
+  ],
+  "occlusion": [
+   "Samples 37-40 have a hand at the bottom left. Sample 40 has the bottom-left corner lifting, below the printed area.",
+   "Fingers at the bottom-left in 37-40; in 40 the bottom edge lifts slightly. Header clear."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-007",
+  "first_sample": 42,
+  "last_sample": 47,
+  "start_s": 21.590794,
+  "end_s": 24.789434,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    21.324244,
+    21.857344
+   ],
+   "end_bracket_s": [
+    24.522878,
+    25.055989
+   ]
+  },
+  "document_type": "trn",
+  "side": "reverse",
+  "observed_form": "Продолжение приложения № 4, Оборотная сторона (8. Прием груза ... 12. Стоимость перевозки груза; Сведения о грузе)",
+  "observed_form_pass2": "Продолжение приложения № 4, Оборотная сторона (8. Прием груза ... 12. Стоимость перевозки груза; Сведения о грузе)",
+  "rotation": 0,
+  "reading_samples": [
+   42,
+   46
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Reverse of the TRN. Transition sample 41 suggests it is the next sheet in the stack, printed one-sided.",
+   "Reverse page of the Транспортная накладная, shown as the next sheet in the stack after a turn. It has a Сведения о грузе table (Пирожное 'Домовенок', 480,000) and the note 'Температура продукции составляет +2/+4 С'."
+  ],
+  "occlusion": [
+   "Samples 45-47 have a hand at the bottom left, below the table",
+   "Fingers at the bottom-left in 45-47, below the printed area."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-008",
+  "first_sample": 49,
+  "last_sample": 56,
+  "start_s": 25.322539,
+  "end_s": 29.587388,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    25.055989,
+    25.589089
+   ],
+   "end_bracket_s": [
+    29.320833,
+    29.853944
+   ]
+  },
+  "document_type": "ttn",
+  "side": "front",
+  "observed_form": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т (ОКУД 0345009), I ТОВАРНЫЙ РАЗДЕЛ, Страница 1, № Чл000067597 от 20.08.2026",
+  "observed_form_pass2": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т, Форма по ОКУД 0345009, № Чл000067597 от 20.08.2026, I ТОВАРНЫЙ РАЗДЕЛ, Страница 1",
+  "rotation": 270,
+  "reading_samples": [
+   49,
+   54
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Copy 1 of the 1-Т front. The stamp sits low, just below the 'Главный (старший) бухгалтер' line, which stays readable.",
+   "First ТТН copy, front side, shot in landscape with the header along the right edge of the frame. The stamp sits low at 'Отпуск груза произвел'."
+  ],
+  "occlusion": [
+   "Samples 51-56 have fingers at the image's bottom-left (the page's lower-right corner), away from the header",
+   "Fingers at the lower-left corner in 51-56, outside the header."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-009",
+  "first_sample": 58,
+  "last_sample": 62,
+  "start_s": 30.120494,
+  "end_s": 32.786023,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    29.853944,
+    30.387044
+   ],
+   "end_bracket_s": [
+    32.519467,
+    33.052578
+   ]
+  },
+  "document_type": "ttn",
+  "side": "reverse",
+  "observed_form": "II ТРАНСПОРТНЫЙ РАЗДЕЛ (ТТН № Чл000067597), reverse of form 1-Т",
+  "observed_form_pass2": "II ТРАНСПОРТНЫЙ РАЗДЕЛ (СВЕДЕНИЯ О ГРУЗЕ, ПРОЧИЕ СВЕДЕНИЯ), ТТН № Чл000067597",
+  "rotation": 270,
+  "reading_samples": [
+   58,
+   60
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Transport section after copy 1. The stamp is over the 'Сведения о грузе' and 'Сдал/Принял' area.",
+   "Transport section of the first ТТН copy, shown as the next sheet. Its stamp is at the 'Указанный груз...' block, with a tilt that differs from the other copies."
+  ],
+  "occlusion": [
+   "Samples 61-62 have fingers at the bottom-left corner",
+   "Fingers at the lower-left corner in 60-62."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-010",
+  "first_sample": 64,
+  "last_sample": 68,
+  "start_s": 33.319133,
+  "end_s": 35.984656,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    33.052578,
+    33.585689
+   ],
+   "end_bracket_s": [
+    35.7181,
+    36.251211
+   ]
+  },
+  "document_type": "ttn",
+  "side": "front",
+  "observed_form": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т (ОКУД 0345009), I ТОВАРНЫЙ РАЗДЕЛ, Страница 1",
+  "observed_form_pass2": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т, Форма по ОКУД 0345009, № Чл000067597 от 20.08.2026, I ТОВАРНЫЙ РАЗДЕЛ, Страница 1",
+  "rotation": 270,
+  "reading_samples": [
+   64,
+   67
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Copy 2 of the 1-Т front, a different physical sheet. The stamp sits higher and partly covers 'Главный (старший) бухгалтер', while the third 'Старший кладовщик' stays clear.",
+   "Second ТТН copy, front side. It is a different physical sheet from leaf 7: the stamp angle and the signature strokes differ, and the stack is turned forward only."
+  ],
+  "occlusion": [
+   "Samples 67-68 have fingers at the bottom-left corner",
+   "Fingers at the lower-left in 66-68."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-011",
+  "first_sample": 70,
+  "last_sample": 74,
+  "start_s": 36.517761,
+  "end_s": 39.183294,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    36.251211,
+    36.784311
+   ],
+   "end_bracket_s": [
+    38.916744,
+    39.982956
+   ]
+  },
+  "document_type": "ttn",
+  "side": "reverse",
+  "observed_form": "II ТРАНСПОРТНЫЙ РАЗДЕЛ (ТТН № Чл000067597), reverse of form 1-Т",
+  "observed_form_pass2": "II ТРАНСПОРТНЫЙ РАЗДЕЛ (СВЕДЕНИЯ О ГРУЗЕ, ПРОЧИЕ СВЕДЕНИЯ), ТТН № Чл000067597",
+  "rotation": 270,
+  "reading_samples": [
+   70,
+   73
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Transport section after copy 2. Sample 75 starts the lift with a curl over the lower table, so it is counted as a transition.",
+   "Transport section of the second ТТН copy. The stamp position differs from leaves 8 and 12."
+  ],
+  "occlusion": [
+   "Minor fingers at the bottom-left",
+   "In 74-75 the hand starts lifting the sheet: the far edge in 75 curls with some blur, but the header is still readable."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-012",
+  "first_sample": 77,
+  "last_sample": 81,
+  "start_s": 40.249506,
+  "end_s": 42.915039,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    39.982956,
+    40.516056
+   ],
+   "end_bracket_s": [
+    42.648489,
+    43.181589
+   ]
+  },
+  "document_type": "ttn",
+  "side": "front",
+  "observed_form": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т (ОКУД 0345009), I ТОВАРНЫЙ РАЗДЕЛ, Страница 1",
+  "observed_form_pass2": "ТОВАРНО-ТРАНСПОРТНАЯ НАКЛАДНАЯ, Типовая межотраслевая форма № 1-Т, Форма по ОКУД 0345009, № Чл000067597 от 20.08.2026, I ТОВАРНЫЙ РАЗДЕЛ, Страница 1",
+  "rotation": 270,
+  "reading_samples": [
+   77,
+   80
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Copy 3 of the 1-Т front, a different physical sheet. The stamp partly covers the third 'Старший кладовщик'.",
+   "Third ТТН copy, front side, with the stamp next to 'М.П.'. A distinct sheet from leaves 7 and 9."
+  ],
+  "occlusion": [
+   "Samples 79-81 have fingers at the bottom-left",
+   "Fingers at the lower-left in 79-81."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-013",
+  "first_sample": 83,
+  "last_sample": 86,
+  "start_s": 43.448144,
+  "end_s": 45.580561,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    43.181589,
+    43.7147
+   ],
+   "end_bracket_s": [
+    45.314011,
+    46.380233
+   ]
+  },
+  "document_type": "ttn",
+  "side": "reverse",
+  "observed_form": "II ТРАНСПОРТНЫЙ РАЗДЕЛ (ТТН № Чл000067597), reverse of form 1-Т",
+  "observed_form_pass2": "II ТРАНСПОРТНЫЙ РАЗДЕЛ (СВЕДЕНИЯ О ГРУЗЕ, ПРОЧИЕ СВЕДЕНИЯ), ТТН № Чл000067597",
+  "rotation": 270,
+  "reading_samples": [
+   83,
+   85
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Transport section after copy 3. Sample 87 is curled mid-lift, so it is counted as a transition.",
+   "Transport section of the third ТТН copy, with its own stamp position."
+  ],
+  "occlusion": [
+   "Sample 86 has fingers at the bottom-left",
+   "In 86-87 the hand lifts the sheet: in 87 the right third of the upright page curls with motion blur, though the header is readable."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-014",
+  "first_sample": 89,
+  "last_sample": 97,
+  "start_s": 46.646783,
+  "end_s": 51.444733,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    46.380233,
+    46.913333
+   ],
+   "end_bracket_s": [
+    51.178178,
+    51.711289
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Заказ на отгрузку 000049965 от 14.08.2026 22:09:30 (67597), Север ТСЛ ООО",
+  "observed_form_pass2": "Заказ на отгрузку 000049965 от 14.08.2026 22:09:30 (67597), Север ТСЛ ООО (620050, Свердловская обл, г Екатеринбург, ул Автомагистральная, стр. 75)",
+  "rotation": 0,
+  "reading_samples": [
+   89,
+   94
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Warehouse shipping order with handwritten 'Фантэль КБ ПРМ', written fairly level",
+   "First copy of the shipment order, with the handwritten 'Фантэль КБ ПРМ' at the top right in a rounded hand. Below the small header table the sheet is blank."
+  ],
+  "occlusion": [
+   "Samples 92-97 have a hand at the bottom, over blank paper. Sample 97 shows the bottom edge starting to lift.",
+   "Hand over the bottom blank area in 92-97; in 97 the fingers lift the lower corner."
+  ]
+ },
+ {
+  "video": "20260818_131702",
+  "leaf": "leaf-015",
+  "first_sample": 99,
+  "last_sample": 103,
+  "start_s": 51.977839,
+  "end_s": 54.643366,
+  "boundary_uncertainty": {
+   "method": "midpoints of adjacent 0.53 s samples; brackets cover both independent labellers' boundaries",
+   "start_bracket_s": [
+    51.711289,
+    52.244389
+   ],
+   "end_bracket_s": [
+    54.376811,
+    54.909922
+   ]
+  },
+  "document_type": "unknown",
+  "side": "single",
+  "observed_form": "Заказ на отгрузку 000049965 от 14.08.2026 22:09:30 (67597), Север ТСЛ ООО",
+  "observed_form_pass2": "Заказ на отгрузку 000049965 от 14.08.2026 22:09:30 (67597), Север ТСЛ ООО",
+  "rotation": 0,
+  "reading_samples": [
+   99,
+   102
+  ],
+  "repeat_of": [
+   null,
+   null
+  ],
+  "notes": [
+   "Second copy of the shipping order, a different physical sheet: the handwritten 'Фантель КБ ПРМ' is larger and slanted, unlike leaf 13",
+   "Second copy of the same shipment order, a different physical sheet: its 'Фантэль КБ ПРМ' handwriting is narrower and more slanted, laid out differently from 89-97. It appears after the top sheet is slid away in 98."
+  ],
+  "occlusion": [
+   "Fingers at the bottom edge in samples 99-100 and 102-103",
+   "Fingers at the bottom edge in 99-103, over the blank area only."
+  ]
+ }
+]
