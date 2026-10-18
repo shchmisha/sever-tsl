@@ -46,6 +46,10 @@ McNemar p = 1.0; wall time 0.52–0.96×).
 - `ab-vs-earlier/` — `tools/compare_runs.py --matching bracket`, earlier run vs cabinet run, 5 videos.
 - `tables/<video>/documents.{csv,json}` — the per-document export of each cabinet run.
 
+All 7 jobs ran before production switched to `20261019-lookalike-docs` (ef947b6) at 01:10 MSK on 19.10 (same
+implementation fingerprint 59be257c on every job). The scores are identical whether the document assembly of
+8519b29 or ef947b6 is used.
+
 Error causes (frames inspected for every miss) are in `analysis/final-report-20261018/error-statistics.{md,json}`.
 
 Reproduce (results fetched from `/srv/sever/runs/<API job>/results.json`):
