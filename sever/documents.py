@@ -328,3 +328,53 @@ def export_documents(out: Path, assembly: dict) -> None:
     temporary = out / "documents.json.tmp"
     temporary.write_text(json.dumps(assembly, ensure_ascii=False, indent=2), encoding="utf-8")
     temporary.replace(out / "documents.json")
+
+
+STATUS_TEXT = {"recognized": "прочитано", "not_present": "поле на бланке не заполнено",
+               "unreadable": "не удалось прочитать", "conflict": "листы расходятся"}
+
+
+def document_title(record: dict) -> str:
+    """«УПД № 2591 от 23 августа 2026 г.» with honest gaps when the number or date is unknown."""
+    number = record.get("number")
+    date = record.get("date")
+    title = record["document_type_label"] + (f" № {number}" if number else " без определённого номера")
+    return title + (f" от {date}" if date else "")
+
+
+def _short_form(text: str | None) -> str:
+    value = (text or "").split(";")[0].strip()
+    return value if len(value) <= 70 else value[:67].rstrip() + "…"
+
+
+def customer_summary(assembly: dict, *, preliminary: bool = False) -> dict:
+    """What a customer needs at a glance: documents with their fields, and what else the video showed."""
+    documents = []
+    for record in assembly["documents"]:
+        kind = record["document_type"]
+        labels = FIELD_LABELS[kind]
+        fields = []
+        for name, label in labels.items():
+            field = record["fields"][name]
+            if name in {NUMBER_FIELD[kind], DATE_FIELD[kind]} and field["status"] == "recognized":
+                continue  # already in the title
+            note = STATUS_TEXT.get(field["status"], field["status"])
+            if field["status"] == "conflict" and field.get("candidates"):
+                note += ": " + " / ".join(candidate.get("raw_value") or BLANK_TEXT for candidate in field["candidates"])
+            fields.append({"label": label, "status": field["status"],
+                           "value": field["raw_value"] if field["status"] == "recognized" else None,
+                           "note": None if field["status"] == "recognized" else note})
+        documents.append({"id": record["document_id"], "type": kind, "type_label": record["document_type_label"],
+                          "title": document_title(record), "complete": record["status"] == "complete",
+                          "undetermined": len(record["undetermined_fields"]), "fields": fields,
+                          "sheets": len(record["sheets"]), "start_s": record.get("start_s")})
+    forms: "OrderedDict[str, dict]" = OrderedDict()
+    for sheet in assembly.get("other_forms", []):
+        name = _short_form(sheet.get("observed_form")) or "Форма не определена"
+        entry = forms.setdefault(name.casefold(), {"form": name, "sheets": 0,
+                                                   "out_of_scope": sheet.get("reason") == "out_of_scope_form_confirmed"})
+        entry["sheets"] += 1
+    summary = assembly.get("summary", {})
+    return {"version": assembly.get("version"), "preliminary": preliminary, "documents": documents,
+            "other_forms": list(forms.values()), "other_form_sheets": summary.get("other_form_sheets", 0),
+            "unassigned_sheets": summary.get("unassigned_sheets", 0), "sheets_total": summary.get("sheets_total", 0)}

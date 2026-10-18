@@ -153,7 +153,8 @@ def test_machine_prefix_and_audited_suffix_recover_exports_with_explicit_runtime
     assert '.recover-exports-' not in report and 'href="video/frame-1.jpg"' in report
     # Persistent previews must survive temporary export-stage cleanup; opening
     # the report must never fetch the original full-resolution source inline.
-    previews = re.findall(r'<img\b[^>]*\bsrc="([^"]+)"', report)
+    # Document cards reuse the same previews as thumbnails; every source frame still has exactly one preview file.
+    previews = sorted({src for src in re.findall(r'<img\b[^>]*\bsrc="([^"]+)"', report) if not src.endswith("-thumb.jpg")})
     assert len(previews) == len(original_frames)
     for relative in previews:
         assert relative.startswith("report-assets/")
@@ -220,7 +221,7 @@ def test_report_shows_each_model_proposal_even_when_final_field_conflicts(machin
     visible = (machine["out"] / "report.html").read_text().split("<details>", 1)[0]
     assert "Ответ модели на этом кадре" in visible
     assert "номер &lt;А&gt;" in visible and "номер Б &amp; В" in visible
-    assert "conflict" in visible and "recognized" in visible
+    assert "кадры расходятся" in visible and "прочитано" in visible
     assert result == before
 
 

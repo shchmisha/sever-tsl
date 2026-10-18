@@ -10,7 +10,10 @@ from uuid import uuid4
 from PIL import Image
 
 from .coverage import REASONS, load_video_coverage
-from .documents import BLANK_TEXT, COLUMNS, FIELD_COLUMN, TYPE_LABELS, assemble_documents, undetermined_text
+from .documents import FIELD_LABELS, assemble_documents, customer_summary
+
+SHEET_STATUS = {"recognized": "прочитано", "not_present": "поле пустое", "unreadable": "не читается",
+                "conflict": "кадры расходятся"}
 
 
 _PREVIEW_SIZE = (1024, 760)
@@ -255,38 +258,86 @@ def _frame_preview(path: Path, assets: Path) -> tuple[Path, tuple[int, int]]:
             temporary.unlink(missing_ok=True)
         return target, preview.size
 
-def _documents_section(assembly: dict, esc, processing: bool) -> str:
-    """Customer view first: one row per document, one column per contract field."""
-    summary = assembly["summary"]
-    by_type = ", ".join(f"{TYPE_LABELS[kind]} {count}" for kind, count in summary["documents_by_type"].items())
-    rows = []
-    titles = dict(COLUMNS)
-    for record in assembly["documents"]:
-        cells = {title: "" for _, title in COLUMNS}
-        for name, field in record["fields"].items():
-            value = field["raw_value"] if field["status"] == "recognized" else BLANK_TEXT if field["status"] == "not_present" else ""
-            cells[titles[FIELD_COLUMN[name]]] = value or ""
-        sheets = ", ".join(
-            f'<a href="#sheet-{esc(sheet["page_id"])}">{sheet["start_s"]:.1f}–{sheet["end_s"]:.1f} с</a>'
-            for sheet in record["sheets"]
-            if isinstance(sheet.get("start_s"), (int, float)) and isinstance(sheet.get("end_s"), (int, float)))
-        missing = undetermined_text(record)
-        rows.append("<tr>" + f'<td>{esc(record["document_type_label"])}</td>'
-                    + "".join(f"<td>{esc(cells[title])}</td>" for _, title in COLUMNS)
-                    + f'<td class="missing">{esc(missing)}</td><td>{sheets}</td></tr>')
-    head = "<tr><th>Тип</th>" + "".join(f"<th>{esc(title)}</th>" for _, title in COLUMNS) + "<th>Не удалось определить</th><th>Листы в видео</th></tr>"
-    table = (f'<div class="table"><table class="documents"><thead>{head}</thead><tbody>{"".join(rows)}</tbody></table></div>'
-             if rows else "<p>Документов четырёх типов из ТЗ не найдено.</p>")
-    note = "Предварительно: обработка продолжается, список документов ещё может измениться. " if processing else ""
-    extra = []
-    if summary["other_form_sheets"]:
-        extra.append(f'листов других форм вне ТЗ: {summary["other_form_sheets"]}')
-    if summary["unassigned_sheets"]:
-        extra.append(f'листов без номера и без данных, не отнесённых к документу: {summary["unassigned_sheets"]}')
-    return (f'<section id="documents"><h2>Документы: {summary["documents"]}' + (f" ({esc(by_type)})" if by_type else "") + "</h2>"
-            f'<p>{esc(note)}Листы одного документа (копии, оборот, продолжение, повторный показ) объединены по типу и собственному номеру. '
-            f'Каждое значение взято без изменений с листа, где оно напечатано. Всего листов в видео: {summary["sheets_total"]}'
-            + (f'; {esc("; ".join(extra))}' if extra else "") + ".</p>" + table + "</section>")
+def _sheet_thumbnail(preview: Path, rotation: int) -> Path | None:
+    """Small upright thumbnail for document cards, derived from the display preview only."""
+    rotation = rotation % 360 if isinstance(rotation, int) else 0
+    target = preview.with_name(f"{preview.stem}-r{rotation}-thumb.jpg")
+    if target.is_file():
+        return target
+    try:
+        with Image.open(preview) as image:
+            thumb = image.convert("RGB").rotate(-rotation, expand=True)
+        thumb.thumbnail((240, 240), Image.Resampling.LANCZOS)
+        temporary = target.with_name(f".{target.stem}-{uuid4().hex}.tmp")
+        try:
+            thumb.save(temporary, format="JPEG", quality=80, optimize=True)
+            temporary.replace(target)
+        finally:
+            temporary.unlink(missing_ok=True)
+        return target
+    except OSError:
+        return None
+
+
+def _page_rotation(page: dict) -> int:
+    views = (page.get("image_recognition") or {}).get("views") or []
+    selected = page.get("selected_frame_id")
+    for view in sorted(views, key=lambda view: view.get("frame_id") != selected):
+        rotation = (view.get("pixel_proof") or {}).get("rotation_clockwise_degrees")
+        if rotation is None:
+            rotation = (view.get("image_preparation") or {}).get("rotation_clockwise")
+        if isinstance(rotation, int):
+            return rotation
+    return 0
+
+
+def _documents_section(assembly: dict, esc, processing: bool, thumbs: dict) -> str:
+    """Customer view first: one card per document with its contract fields and sheet thumbnails."""
+    summary = customer_summary(assembly, preliminary=processing)
+    records = {record["document_id"]: record for record in assembly["documents"]}
+    cards = []
+    for doc in summary["documents"]:
+        record = records[doc["id"]]
+        state = ('<span class="state ok">Все поля прочитаны</span>' if doc["complete"]
+                 else f'<span class="state warn">Не определено полей: {doc["undetermined"]}</span>')
+        rows = "".join(
+            f'<dt>{esc(field["label"])}</dt><dd>{esc(field["value"])}</dd>' if field["value"] else
+            f'<dt>{esc(field["label"])}</dt><dd class="missing">{esc(field["note"])}</dd>'
+            for field in doc["fields"])
+        sheets = []
+        for sheet in record["sheets"]:
+            if not isinstance(sheet.get("start_s"), (int, float)) or not isinstance(sheet.get("end_s"), (int, float)):
+                continue
+            image = thumbs.get(sheet["page_id"])
+            picture = f'<img loading="lazy" decoding="async" src="{image}" alt="">' if image else '<span class="noimg">лист</span>'
+            sheets.append(f'<a class="sheet-thumb" href="#sheet-{esc(sheet["page_id"])}">{picture}'
+                          f'<span>{sheet["start_s"]:.1f}–{sheet["end_s"]:.1f} с</span></a>')
+        title = doc["title"][len(doc["type_label"]):].strip()
+        cards.append(f'<article class="doc-card"><header><span class="badge">{esc(doc["type_label"])}</span>'
+                     f'<h3>{esc(title)}</h3>{state}</header><dl class="doc-fields">{rows}</dl>'
+                     f'<p class="doc-sheets-title">Листы этого документа в видео ({len(record["sheets"])}): копии, оборот, продолжение и повторные показы</p>'
+                     f'<div class="doc-sheets">{"".join(sheets)}</div></article>')
+    count = len(summary["documents"])
+    note = "Предварительно: обработка не завершена, список ещё может измениться. " if processing else ""
+    lead = (f"<p>{esc(note)}Листы одного документа объединены по типу и собственному номеру. Каждое значение взято без изменений "
+            f"с листа, где оно напечатано; нажмите на миниатюру, чтобы открыть лист с кадрами.</p>")
+    body = ('<div class="doc-grid">' + "".join(cards) + "</div>") if cards else (
+        '<p class="empty-docs">Документы четырёх типов из ТЗ (УПД, ТОРГ-12, ТТН, транспортная накладная) в этом видео не найдены.</p>')
+    other = ""
+    if assembly.get("other_forms"):
+        rows = "".join(
+            f'<tr><td><a href="#sheet-{esc(item["page_id"])}">{item["start_s"]:.1f}–{item["end_s"]:.1f} с</a></td>'
+            f'<td>{esc(item.get("observed_form") or "Форма не прочитана")}</td>'
+            f'<td>{"форма вне четырёх типов ТЗ" if item.get("reason") == "out_of_scope_form_confirmed" else "форму не удалось определить"}</td></tr>'
+            for item in assembly["other_forms"]
+            if isinstance(item.get("start_s"), (int, float)) and isinstance(item.get("end_s"), (int, float)))
+        other = (f'<h2 id="other-sheets">Другие листы в видео: {len(assembly["other_forms"])}</h2>'
+                 '<p>Эти листы не отнесены к четырём типам документов из ТЗ, поэтому их реквизиты не извлекаются.</p>'
+                 '<div class="table"><table><thead><tr><th>Время</th><th>Что на листе</th><th>Почему не документ</th></tr></thead>'
+                 f'<tbody>{rows}</tbody></table></div>')
+    if assembly.get("unassigned_sheets"):
+        other += (f'<p>Листов без номера и без данных, не отнесённых к документу: {len(assembly["unassigned_sheets"])}.</p>')
+    return (f'<section id="documents"><h2>Документы в видео: {count}</h2>{lead}{body}{other}</section>')
 
 
 def write_report(out:Path,result:dict,*,report_root:Path|None=None):
@@ -301,6 +352,7 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
     assembly = result.get("documents") if isinstance(result.get("documents"), dict) else assemble_documents(result)
     membership = {sheet["page_id"]: f'{record["document_type_label"]} № {record["number"]}' if record["number"] else f'{record["document_type_label"]} без номера'
                   for record in assembly["documents"] for sheet in record["sheets"]}
+    thumbs = {}
     for page in result["pages"]:
         doc=page["result"]
         frames=[]
@@ -321,11 +373,15 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
             else:
                 image = "Превью недоступно · открыть исходный кадр"
             selected = " · выбранный кадр" if frame["frame_id"] == page.get("selected_frame_id") else ""
+            if preview and (selected or page["page_id"] not in thumbs):
+                thumb = _sheet_thumbnail(preview[0], _page_rotation(page))
+                thumbs[page["page_id"]] = url(thumb or preview[0])
             frames.append(f'<figure><a href="{url(path)}" title="Открыть исходный кадр в полном разрешении">{image}</a><figcaption>{esc(frame["frame_id"])} · {frame["timestamp_s"]:.2f} с{selected}</figcaption></figure>')
         rows=[]
         for name,field in doc["fields"].items():
             evidence=" | ".join(f'{e["frame_id"]}: {e["text"]}' for e in field.get("evidence",[]))
-            rows.append(f'<tr><td>{esc(name)}</td><td>{esc(field["raw_value"])}</td><td>{esc(field["normalized_value"])}</td><td>{esc(field["status"])}</td><td>{esc(evidence)}</td></tr>')
+            label = FIELD_LABELS.get(doc["document_type"], {}).get(name, name)
+            rows.append(f'<tr><td>{esc(label)}</td><td>{esc(field["raw_value"])}</td><td>{esc(field["normalized_value"])}</td><td>{esc(SHEET_STATUS.get(field["status"], field["status"]))}</td><td>{esc(evidence)}</td></tr>')
         comparison=page.get("neighbor_comparison",{})
         views=f'<p>Проверка кадров: {esc(comparison.get("status"))}; рассмотрено дополнительных видов: {len(comparison.get("attempts",[]))}. Неразрешённые или неподтверждённые поля: {esc(", ".join(comparison.get("remaining_fields",[])))}</p>' if comparison else ""
         inn_rows=[]
@@ -356,7 +412,7 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
                 text = f'<pre class="image-text">{esc(visible_text)}</pre>' if visible_text.strip() else '<p>Модель не вернула читаемый текст для этого вида.</p>'
                 proposals = []
                 for name, field in (reading.get("document") or {}).get("fields", {}).items():
-                    proposals.append(f'<tr><td>{esc(name)}</td><td>{esc(field.get("raw_value"))}</td><td>{esc(field.get("status"))}</td></tr>')
+                    proposals.append(f'<tr><td>{esc(FIELD_LABELS.get(reading.get("document_type") or doc["document_type"], {}).get(name, name))}</td><td>{esc(field.get("raw_value"))}</td><td>{esc(SHEET_STATUS.get(field.get("status"), field.get("status")))}</td></tr>')
                 proposal_table = ('<div class="table"><table><thead><tr><th>Поле</th><th>Ответ модели на этом кадре</th><th>Статус модели</th></tr></thead><tbody>'
                                   + "".join(proposals) + '</tbody></table></div>') if proposals else ""
                 image_readings.append(f'<section class="image-reading"><p>{reference} · Определённая моделью форма: <strong>{esc(observed_form)}</strong></p><p>{esc(scope_note)}</p>{text}{proposal_table}</section>')
@@ -403,6 +459,7 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
         title = "Север ТСЛ — результат"
         heading = "Север ТСЛ — результат обработки"
         notice = ""
+    coverage_html = ""
     coverage = result.get("video_coverage") or load_video_coverage(out / "video" / "video-analysis.json")
     if coverage.get("warning"):
         heading_text = "Видео обработано не полностью." if coverage.get("candidate_limit") else "Охват видео требует проверки."
@@ -412,9 +469,20 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
             moment = f"{timestamp:.2f} с" if isinstance(timestamp, (int, float)) else "Время не сохранено"
             details.append(f'<li>{esc(moment)} — {esc(REASONS.get(view.get("reason"), REASONS["unconfirmed_excluded_view"]))}</li>')
         exclusions = ('<details><summary>Исключённые неподтверждённые кадры</summary><ul>' + "".join(details) + '</ul></details>') if details else ""
-        notice += f'<section id="video-coverage-warning" role="alert"><p><strong>{heading_text}</strong> {esc(coverage["warning"])}</p>{exclusions}</section>'
-    links = ('<a href="partial-results.json">Промежуточный JSON</a> · <a href="trace.jsonl">Трасса шагов</a>' if processing or failed
-             else '<a href="documents.csv">CSV по документам</a> · <a href="results.json">JSON</a> · <a href="fields.csv">CSV по листам</a> · <a href="trace.jsonl">Трасса шагов</a>')
-    documents_section = _documents_section(assembly, esc, processing or failed)
-    page=f'''<!doctype html><html lang="ru"><meta charset="utf-8">{refresh}<meta name="viewport" content="width=device-width"><title>{title}</title><style>body{{font:15px system-ui;max-width:1300px;margin:28px auto;padding:0 18px;color:#182333;background:#f4f6fa}}article{{background:white;padding:20px;margin:20px 0;border-radius:10px}}h1{{font-size:26px}}h2{{font-size:18px}}.frames{{display:flex;flex-wrap:wrap;gap:20px}}figure{{margin:0}}img{{display:block;width:auto;height:auto;max-height:380px;max-width:42vw}}figcaption{{font-size:12px;color:#586475}}.table{{overflow:auto}}table{{border-collapse:collapse;margin-top:18px;width:100%}}td,th{{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid #dae0ea}}pre{{white-space:pre-wrap;font-size:12px}}.image-text{{padding:12px;background:#f4f6fa;font-size:14px;overflow-wrap:anywhere}}a{{color:#165dca}}details.sheet{{background:white;margin:10px 0;border-radius:10px;padding:10px 16px}}details.sheet>summary{{cursor:pointer;font-weight:600}}details.sheet article{{margin:0;padding:10px 0}}#documents{{background:white;padding:20px;margin:20px 0;border-radius:10px}}table.documents td,table.documents th{{font-size:14px}}td.missing{{color:#a33}}</style><h1>{heading}</h1>{notice}<p>Проверяемые формы: УПД, ТОРГ-12, товарно-транспортная накладная и транспортная накладная.</p><p>{esc(result["source"]["path"])}<br>SHA-256: {esc(result["source"]["sha256"])}</p><p>{len(result["pages"])} кандидатов листов · {result["elapsed_seconds"]:.1f} с обработки. Уверенность модели и показатели качества не являются измеренной точностью.</p><p>{links}</p>{documents_section}<h2>Листы видео подробно</h2><p>Распознавание каждого листа с кадрами и ответами модели. Нажмите на строку листа, чтобы раскрыть его.</p>{"".join(cards)}</html>'''
+        coverage_html = f'<section id="video-coverage-warning" role="alert"><p><strong>{heading_text}</strong> {esc(coverage["warning"])}</p>{exclusions}</section>'
+    links = ('<a class="btn" href="partial-results.json">Промежуточный JSON</a> <a class="btn" href="trace.jsonl">Трасса шагов</a>' if processing or failed
+             else '<a class="btn primary" href="documents.csv">Скачать таблицу документов (CSV)</a> <a class="btn" href="results.json">JSON</a> <a class="btn" href="fields.csv">CSV по листам</a> <a class="btn" href="trace.jsonl">Трасса шагов</a>')
+    video_name = Path(str(result["source"].get("path") or "")).name or "видео"
+    minutes = result.get("elapsed_seconds") or 0
+    document_count = len(assembly["documents"])
+    lead = (f'<p class="lead"><strong>{esc(video_name)}</strong> · найдено документов: {document_count} · листов в видео: {len(result["pages"])}'
+            f' · обработка: {minutes / 60:.0f} мин</p>' if minutes >= 60 else
+            f'<p class="lead"><strong>{esc(video_name)}</strong> · найдено документов: {document_count} · листов в видео: {len(result["pages"])}'
+            f' · обработка: {minutes:.0f} с</p>')
+    technical = (f'<details class="technical"><summary>Технические сведения</summary><p>Проверяемые формы: УПД, ТОРГ-12, '
+                 f'товарно-транспортная накладная и транспортная накладная.</p><p>{esc(result["source"]["path"])}<br>SHA-256: '
+                 f'{esc(result["source"]["sha256"])}</p><p>{len(result["pages"])} кандидатов листов · {result["elapsed_seconds"]:.1f} с обработки. '
+                 f'Уверенность модели и показатели качества не являются измеренной точностью.</p></details>')
+    documents_section = _documents_section(assembly, esc, processing or failed, thumbs)
+    page=f'''<!doctype html><html lang="ru"><meta charset="utf-8">{refresh}<meta name="viewport" content="width=device-width"><title>{title}</title><style>body{{font:15px system-ui;max-width:1300px;margin:28px auto;padding:0 18px;color:#182333;background:#f4f6fa}}article{{background:white;padding:20px;margin:20px 0;border-radius:10px}}h1{{font-size:26px}}h2{{font-size:18px}}.frames{{display:flex;flex-wrap:wrap;gap:20px}}figure{{margin:0}}img{{display:block;width:auto;height:auto;max-height:380px;max-width:42vw}}figcaption{{font-size:12px;color:#586475}}.table{{overflow:auto}}table{{border-collapse:collapse;margin-top:18px;width:100%}}td,th{{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid #dae0ea}}pre{{white-space:pre-wrap;font-size:12px}}.image-text{{padding:12px;background:#f4f6fa;font-size:14px;overflow-wrap:anywhere}}a{{color:#165dca}}.doc-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}}.doc-card{{margin:0;border:1px solid #dae0ea;border-radius:12px;padding:16px 18px;background:#fbfcfe}}.doc-card header{{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:10px}}.doc-card h3{{margin:0;font-size:17px}}.badge{{background:#185c47;color:white;border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}}.state{{font-size:12px;border-radius:6px;padding:2px 8px}}.state.ok{{background:#e7f1e8;color:#2b6745}}.state.warn{{background:#fbf0d9;color:#815c13}}.doc-fields{{display:grid;grid-template-columns:minmax(140px,210px) minmax(0,1fr);gap:7px 14px;margin:0}}.doc-fields dt{{color:#586475}}.doc-fields dd{{margin:0;overflow-wrap:anywhere}}.doc-fields dd.missing{{color:#815c13;font-style:italic}}.doc-sheets-title{{font-size:12px;color:#586475;margin:14px 0 6px}}.doc-sheets{{display:flex;flex-wrap:wrap;gap:8px}}.sheet-thumb{{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:#586475;text-decoration:none}}.sheet-thumb img{{width:72px;height:96px;object-fit:cover;object-position:top;border-radius:6px;border:1px solid #dae0ea;max-width:none;max-height:none}}.noimg{{width:72px;height:96px;display:grid;place-items:center;border:1px dashed #c7cfdb;border-radius:6px}}.empty-docs{{background:#fbf6e9;color:#5c4a1f;border-radius:9px;padding:12px 14px}}@media (max-width:640px){{.doc-grid{{grid-template-columns:1fr}}.doc-fields{{grid-template-columns:1fr;gap:2px}}.doc-fields dt{{margin-top:8px}}}}.lead{{font-size:16px;margin:4px 0 14px}}.downloads{{display:flex;flex-wrap:wrap;gap:8px}}.btn{{display:inline-block;border:1px solid #c9d3e0;border-radius:8px;padding:7px 12px;text-decoration:none;background:white;font-size:13px}}.btn.primary{{background:#185c47;border-color:#185c47;color:white}}#video-coverage-warning{{background:#fbf6e9;border-radius:10px;padding:12px 16px;color:#5c4a1f}}.technical{{margin:24px 0;color:#586475}}details.sheet{{background:white;margin:10px 0;border-radius:10px;padding:10px 16px}}details.sheet>summary{{cursor:pointer;font-weight:600}}details.sheet article{{margin:0;padding:10px 0}}#documents{{background:white;padding:20px;margin:20px 0;border-radius:10px}}</style><h1>{heading}</h1>{notice}{lead}<p class="downloads">{links}</p>{documents_section}{coverage_html}<h2>Листы видео подробно</h2><p>Распознавание каждого листа с кадрами и ответами модели. Нажмите на строку листа, чтобы раскрыть его.</p>{"".join(cards)}{technical}</html>'''
     (out/"report.html").write_text(page,encoding="utf-8")

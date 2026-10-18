@@ -118,10 +118,30 @@
     .feedback-item p { margin:3px 0; font-size:12px; white-space:pre-wrap; overflow-wrap:anywhere; }
     .feedback-item small { color:var(--muted); font-size:10px; }
     .feedback-value { color:#536b59; }
+    .docs { margin-top:16px; border-top:1px solid var(--line); padding-top:14px; }
+    .docs-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin:0 0 10px; font-size:14px; }
+    .docs-pre { font-size:11px; color:var(--amber); background:#fbf0d9; border-radius:6px; padding:1px 7px; }
+    .docs-sheets { font-size:12px; color:var(--muted); }
+    .docs-empty { font-size:13px; color:#5c4a1f; background:#fbf6e9; border-radius:9px; padding:10px 12px; margin:0 0 10px; }
+    .doc { border:1px solid var(--line); border-radius:12px; margin:0 0 10px; background:#fbfcfa; }
+    .doc > summary { list-style:none; cursor:pointer; display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; padding:11px 14px; }
+    .doc > summary::-webkit-details-marker { display:none; }
+    .doc > summary::after { content:"▾"; margin-left:auto; color:var(--muted); transition:transform .15s; }
+    .doc:not([open]) > summary::after { transform:rotate(-90deg); }
+    .doc-type { font-size:11px; font-weight:700; letter-spacing:.04em; color:#fff; background:var(--green); border-radius:6px; padding:2px 8px; }
+    .doc-title { font-weight:620; font-size:14px; overflow-wrap:anywhere; }
+    .doc-state { font-size:11px; border-radius:6px; padding:2px 8px; }
+    .doc-state.ok { color:#2b6745; background:#e7f1e8; }
+    .doc-state.warn { color:var(--amber); background:#fbf0d9; }
+    .doc-fields { display:grid; grid-template-columns:minmax(150px,230px) minmax(0,1fr); gap:7px 16px; margin:0; padding:2px 14px 14px; font-size:13px; }
+    .doc-fields dt { color:var(--muted); }
+    .doc-fields dd { margin:0; overflow-wrap:anywhere; }
+    .doc-fields dd.missing { color:var(--amber); font-style:italic; }
+    .docs-other { font-size:12px; color:var(--muted); margin:6px 0 0; }
     .footer { font-size:11px; color:#829085; margin-top:30px; text-align:right; }
     .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }
     @media (max-width:860px) { .shell { padding-left:22px; padding-right:22px; } .workspace { grid-template-columns:270px minmax(0,1fr); gap:20px; } .upload-panel { padding:19px; } .job { padding:18px; } .job-top { flex-direction:column; gap:10px; } .text-action { margin-left:0; } }
-    @media (max-width:650px) { .topbar .shell { min-height:68px; } .shell { padding-left:18px; padding-right:18px; } main.shell { padding-top:27px; } h1 { font-size:27px; } .intro { font-size:14px; } .team { font-size:11px; } .workspace { display:flex; flex-direction:column; gap:27px; } .workspace > * { width:100%; } .dropzone { min-height:165px; } .aside-note { padding-top:16px; } .steps { display:none; } .aside-note h3 { display:none; } .aside-note p { margin-bottom:0; } .beta { margin-top:20px; margin-bottom:21px; } .job-top { flex-direction:row; gap:10px; } .status { max-width:120px; } .form-row { grid-template-columns:1fr; gap:0; } .footer { text-align:left; } }
+    @media (max-width:650px) { .topbar .shell { min-height:68px; } .shell { padding-left:18px; padding-right:18px; } main.shell { padding-top:27px; } h1 { font-size:27px; } .intro { font-size:14px; } .team { font-size:11px; } .workspace { display:flex; flex-direction:column; gap:27px; } .workspace > * { width:100%; } .dropzone { min-height:165px; } .aside-note { padding-top:16px; } .steps { display:none; } .aside-note h3 { display:none; } .aside-note p { margin-bottom:0; } .beta { margin-top:20px; margin-bottom:21px; } .job-top { flex-direction:row; gap:10px; } .status { max-width:120px; } .form-row { grid-template-columns:1fr; gap:0; } .footer { text-align:left; } .doc-fields { grid-template-columns:1fr; gap:2px; } .doc-fields dt { margin-top:8px; } }
     @media (prefers-reduced-motion:reduce) { * { transition:none!important; scroll-behavior:auto!important; } }
   </style>
 </head>
@@ -138,7 +158,7 @@
   <main class="shell">
     <p class="eyebrow">Клиентское тестирование</p>
     <h1>Документы из видео</h1>
-    <p class="intro">Загрузите видео с документами. Результат появится здесь: распознанные реквизиты, исходные кадры и выгрузка данных.</p>
+    <p class="intro">Загрузите видео с документами. Здесь появятся найденные документы — УПД, ТОРГ-12, ТТН и транспортные накладные — с их реквизитами. Исходные кадры и подробности — в отчёте.</p>
     <div class="beta" role="note">
       <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 9v5M10 5.8v.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       <div><strong>Тестовая версия — проверьте распознанные значения.</strong><span>Ошибки и пропуски возможны. Сравнивайте реквизиты с кадрами и оставляйте замечания к результату.</span></div>
@@ -169,11 +189,11 @@
         <div class="aside-note">
           <h3>Как проверить результат</h3>
           <ol class="steps">
-            <li>Дождитесь загрузки. Затем вкладку можно закрыть.</li>
-            <li>Откройте отчёт и сравните значения с кадрами.</li>
-            <li>Укажите ошибки через «Оставить замечание».</li>
+            <li>Загрузите видео. После загрузки вкладку можно закрыть.</li>
+            <li>Когда обработка закончится, в карточке видео появится список документов с реквизитами.</li>
+            <li>Сверьте значения с кадрами в отчёте. Ошибку отметьте через «Оставить замечание».</li>
           </ol>
-          <p style="margin-top:18px">Ориентир обработки — около 3 минут на выделенный лист. Сложные кадры и очередь могут увеличить время.</p>
+          <p style="margin-top:18px">Обработка занимает около 1–1,5 минуты на лист документа. Очередь и сложные кадры увеличивают время.</p>
           <p>Видео и результаты доступны всей вашей команде.</p>
         </div>
       </aside>
@@ -327,16 +347,18 @@
       titleWrap.append(name, meta);
       top.append(titleWrap, status);
       const progress = node('p', 'job-progress');
+      const docs = node('div', 'docs');
+      docs.hidden = true;
       const error = node('p', 'job-error');
       error.hidden = true;
       const coverage = node('p', 'job-coverage');
       coverage.hidden = true;
       coverage.setAttribute('role', 'status');
       const actions = node('div', 'job-actions');
-      const report = node('a', 'button primary', 'Открыть отчёт ↗');
+      const report = node('a', 'button primary', 'Отчёт с кадрами ↗');
       report.target = '_blank';
       report.rel = 'noopener';
-      const csv = node('a', 'button', 'Таблица документов CSV ↓');
+      const csv = node('a', 'button', 'Таблица CSV ↓');
       csv.download = '';
       const json = node('a', 'button', 'JSON ↓');
       json.download = '';
@@ -355,7 +377,7 @@
       feedbackSection.append(node('h4', '', 'Замечание к результату'), node('p', 'feedback-description', 'Опишите ошибку или пропуск. Замечание будет сохранено отдельно; распознанные значения останутся прежними.'));
       const form = node('form');
       const row = node('div', 'form-row');
-      const page = makeInput('Лист / кадр', 'page_id', 'Обозначение из отчёта', 120);
+      const page = makeInput('Документ или лист', 'page_id', 'Например, УПД № 2591', 120);
       const field = makeInput('Поле', 'field', 'Например, номер документа', 120);
       row.append(page.label, field.label);
       const commentLabel = node('label', '', 'Что нужно проверить');
@@ -376,8 +398,8 @@
       const feedbackHistory = node('div', 'feedback-history');
       feedbackSection.append(form, feedbackHistory);
       actions.append(report, csv, json, toggle);
-      card.append(top, progress, error, coverage, actions, feedbackSection);
-      const refs = {card,name,meta,status,progress,error,coverage,report,csv,json,toggle,form,comment,submit,outcome,feedbackHistory,feedbackSignature:'',sending:false};
+      card.append(top, progress, docs, error, coverage, actions, feedbackSection);
+      const refs = {card,name,meta,status,progress,docs,error,coverage,report,csv,json,toggle,form,comment,submit,outcome,feedbackHistory,feedbackSignature:'',summarySignature:'',sending:false};
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (refs.sending) return;
@@ -425,6 +447,48 @@
         refs.feedbackHistory.append(item);
       }
     }
+    function renderSummary(refs, summary) {
+      const signature = JSON.stringify(summary || null);
+      if (signature === refs.summarySignature) return;
+      refs.summarySignature = signature;
+      const box = refs.docs;
+      const wasOpen = new Set([...box.querySelectorAll('details[open]')].map(item => item.dataset.id));
+      const firstRender = !box.childElementCount;
+      box.replaceChildren();
+      if (!summary || typeof summary !== 'object') { box.hidden = true; return; }
+      const docs = Array.isArray(summary.documents) ? summary.documents : [];
+      box.hidden = false;
+      const head = node('p', 'docs-head');
+      head.append(node('strong', '', docs.length ? 'Найдено документов: ' + docs.length : 'Документы из ТЗ не найдены'));
+      if (summary.preliminary) head.append(node('span', 'docs-pre', 'предварительно'));
+      if (summary.sheets_total) head.append(node('span', 'docs-sheets', 'листов в видео: ' + summary.sheets_total));
+      box.append(head);
+      if (!docs.length) box.append(node('p', 'docs-empty', 'Система ищет четыре типа документов из ТЗ: УПД, ТОРГ-12, ТТН и транспортную накладную. Среди листов этого видео их не нашлось.'));
+      for (const doc of docs) {
+        if (!doc || typeof doc.title !== 'string') continue;
+        const item = node('details', 'doc');
+        item.dataset.id = String(doc.id || '');
+        item.open = firstRender ? docs.length <= 3 : wasOpen.has(item.dataset.id);
+        const line = node('summary');
+        const title = doc.title.startsWith(doc.type_label) ? doc.title.slice(String(doc.type_label).length).trim() : doc.title;
+        line.append(node('span', 'doc-type', doc.type_label || ''), node('span', 'doc-title', title),
+                    node('span', 'doc-state ' + (doc.complete ? 'ok' : 'warn'), doc.complete ? 'все поля прочитаны' : 'не определено полей: ' + doc.undetermined));
+        item.append(line);
+        const list = node('dl', 'doc-fields');
+        for (const field of Array.isArray(doc.fields) ? doc.fields : []) {
+          list.append(node('dt', '', field.label || ''));
+          list.append(node('dd', field.value ? '' : 'missing', field.value || field.note || ''));
+        }
+        item.append(list);
+        box.append(item);
+      }
+      if (summary.other_form_sheets) {
+        const forms = (Array.isArray(summary.other_forms) ? summary.other_forms : []).map(form => form.form).filter(Boolean);
+        const short = forms.slice(0, 6).map(form => form.length > 48 ? form.slice(0, 46).trimEnd() + '…' : form);
+        const shown = short.join(', ') + (forms.length > 6 ? ' и другие' : '');
+        box.append(node('p', 'docs-other', 'Другие листы: ' + summary.other_form_sheets + ' — не относятся к четырём типам из ТЗ' + (shown ? ': ' + shown : '') + '.'));
+      }
+    }
     function renderJobs(jobs) {
       const present = new Set();
       const sorted = [...jobs].sort((a,b) => (Date.parse(b.created_at) || 0) - (Date.parse(a.created_at) || 0));
@@ -448,6 +512,7 @@
         updateLink(refs.csv, job.csv_url);
         updateLink(refs.json, job.results_url);
         updateFeedback(refs, job.feedback);
+        renderSummary(refs, job.summary);
       }
       for (const [id, refs] of cards) if (!present.has(id)) { refs.card.remove(); cards.delete(id); }
       // Preserve focused forms during polling; insert only cards that changed position.

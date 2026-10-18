@@ -377,5 +377,50 @@ def test_portal_serves_separate_safe_coverage_warning(environment):
     assert "node('p', 'job-coverage')" in page
     assert "refs.coverage.textContent = coverageWarning" in page
     assert "refs.error.textContent.includes(coverageWarning)" in page
-    assert "progress,error,coverage,report" in page
+    assert "progress,docs,error,coverage,report" in page
     assert ".job-coverage" in page and "color:var(--amber)" in page
+
+
+def _portal_sheet(page_id, start, kind, **values):
+    from sever.schema import FIELDS_BY_TYPE
+    fields = {name: ({"raw_value": values[name], "normalized_value": values[name], "status": "recognized", "evidence": []}
+                     if name in values else {"raw_value": None, "normalized_value": None, "status": "unreadable", "evidence": []})
+              for name in FIELDS_BY_TYPE[kind]}
+    return {"page_id": page_id, "start_s": start, "end_s": start + 4.0, "frames": [],
+            "result": {"document_type": kind, "fields": fields, "errors": []}}
+
+
+def test_job_card_summary_lists_documents_and_other_forms(environment):
+    client, _, states = environment
+    job = upload(client).json()
+    directory = portal.RUNS / job["job_id"]
+    directory.mkdir(parents=True)
+    other = _portal_sheet("page-3", 8.0, "upd")
+    other["result"] = {"document_type": "unknown", "fields": {}, "errors": []}
+    other["image_recognition"] = {"stop_reason": "out_of_scope_form_confirmed", "views": [{"observed_form": "CMR"}]}
+    result = {"source": {"path": "v.mp4", "sha256": "0" * 64}, "pages": [
+        _portal_sheet("page-1", 0.0, "ttn", document_number="2591", document_date="23.08.2026", consignor="ООО Ромашка"),
+        _portal_sheet("page-2", 4.0, "ttn", document_number="2591"), other]}
+    (directory / "results.json").write_text(json.dumps(result, ensure_ascii=False))
+    states[job["job_id"]] = {"status": "completed"}
+    summary = client.get(f"/portal-api/jobs/{job['id']}", headers=AUTH).json()["summary"]
+    assert summary["preliminary"] is False and summary["sheets_total"] == 3
+    [document] = summary["documents"]
+    assert document["title"] == "ТТН № 2591 от 23.08.2026" and document["sheets"] == 2
+    assert {field["label"]: field["value"] or field["note"] for field in document["fields"]} == {
+        "Грузоотправитель": "ООО Ромашка", "Грузополучатель": "не удалось прочитать"}
+    assert summary["other_forms"] == [{"form": "CMR", "sheets": 1, "out_of_scope": True}]
+
+
+def test_stopped_job_card_summary_is_preliminary(environment):
+    client, _, states = environment
+    job = upload(client).json()
+    directory = portal.RUNS / job["job_id"]
+    directory.mkdir(parents=True)
+    partial = {"status": "failed", "pages": [_portal_sheet("page-1", 0.0, "upd", invoice_number="7")]}
+    (directory / "partial-results.json").write_text(json.dumps(partial, ensure_ascii=False))
+    states[job["job_id"]] = {"status": "failed", "error_type": "InterruptedByServiceRestart"}
+    current = client.get(f"/portal-api/jobs/{job['id']}", headers=AUTH).json()
+    assert current["status"] == "failed"
+    assert current["summary"]["preliminary"] is True
+    assert current["summary"]["documents"][0]["title"] == "УПД № 7"

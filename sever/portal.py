@@ -170,6 +170,32 @@ def coverage_warning(row):
     return video_coverage(row)["warning"]
 
 
+_SUMMARY_CACHE: dict = {}
+
+
+def documents_summary(row):
+    """Per-document summary shown on the job card; preliminary while a job runs or after a stop."""
+    from .documents import assemble_documents, customer_summary
+
+    job_id = row.get("job_id")
+    if not job_id:
+        return None
+    for name, preliminary in (("documents.json", False), ("results.json", False), ("partial-results.json", True)):
+        path = job_file(job_id, name)
+        if path is None or not path.is_file():
+            continue
+        try:
+            stamp = (str(path), path.stat().st_mtime_ns)
+            if _SUMMARY_CACHE.get(job_id, (None,))[0] != stamp:
+                data = json.loads(path.read_text(encoding="utf-8"))
+                assembly = data if name == "documents.json" else assemble_documents(data)
+                _SUMMARY_CACHE[job_id] = (stamp, customer_summary(assembly, preliminary=preliminary))
+            return _SUMMARY_CACHE[job_id][1]
+        except (OSError, ValueError, KeyError, TypeError):
+            return None
+    return None
+
+
 def public_job(row):
     with database() as db:
         notes = [dict(note) for note in db.execute(
@@ -183,6 +209,7 @@ def public_job(row):
     if not result["results_url"] and row["job_id"] and artifact(row["job_id"], "partial-results.json"):
         result["results_url"] = f"/jobs/{row['job_id']}/partial-results.json"
     result["feedback"] = notes
+    result["summary"] = documents_summary(row)
     coverage = video_coverage(row)
     result["video_coverage"] = coverage
     warning = coverage["warning"]

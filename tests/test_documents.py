@@ -147,8 +147,9 @@ def test_report_leads_with_documents_and_folds_sheets(tmp_path):
     write_report(tmp_path, result)
     page = (tmp_path / "report.html").read_text(encoding="utf-8")
     assert page.index('id="documents"') < page.index('id="sheet-page-0001"')
-    assert "Документы: 2 (УПД 1, ТТН 1)" in page
-    assert '<a href="#sheet-page-0003">' in page
+    assert "Документы в видео: 2" in page
+    assert '<h3>№ 2591 от 23 августа 2026 г.</h3>' in page and "Адрес грузоотправителя" in page
+    assert 'href="#sheet-page-0003"' in page
     assert "лист документа ТТН № 2591" in page
     assert 'href="documents.csv"' in page
 
