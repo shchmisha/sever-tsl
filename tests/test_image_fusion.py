@@ -385,16 +385,16 @@ def test_numeric_strong_agreement_accepts_many_identical_views_over_one_glyph_di
     strong = meta["field_confirmations"]["invoice_number"]["strong_agreement"]
     assert strong["accepted_comparison"] == "2559" and strong["agreeing_frame_ids"] == ["f0", "f1", "f2"]
     assert strong["dissent"] == [{"comparison": "2660", "raw_values": ["2660"], "frame_ids": ["f9"]}]
-    assert strong["policy"]["version"] == "numeric-strong-agreement-v1"
+    assert strong["policy"]["version"] == "strong-agreement-v2"
     # Every raw reading, including the dissent, remains in the record.
     assert [item["fields"]["invoice_number"]["raw_value"] for item in meta["readings"]] == ["2559"] * 3 + ["2660"]
 
 
 @pytest.mark.parametrize("agreeing,dissent", [
     (2, ["2660"]),                 # fewer than three agreeing views
-    (3, ["2660", "2650"]),         # two dissenting views
+    (3, ["2660", "2650"]),         # 3 is below twice the two dissenting views
     (3, ["7781"]),                 # dissent too far from the leader (edit distance 4)
-    (5, ["2660", "2560"]),         # ratio 5:2 is below 3:1
+    (5, ["2660", "2660", "2560"]), # one dissent value on two frames: 5 < 3x2
 ])
 def test_numeric_strong_agreement_stays_a_conflict_outside_its_bounds(agreeing, dissent):
     items = [reading(f"f{n}", kind="ttn", values={"document_number": "2559"}) for n in range(agreeing)]
@@ -404,10 +404,25 @@ def test_numeric_strong_agreement_stays_a_conflict_outside_its_bounds(agreeing, 
     assert "strong_agreement" not in meta["field_confirmations"]["document_number"]
 
 
-def test_strong_agreement_never_applies_to_names_addresses_or_blank_claims():
-    names = [reading(f"f{n}", values={"consignee": 'ООО "Получатель"'}) for n in range(4)]
-    names.append(reading("f9", values={"consignee": 'ООО "Получитель"'}))
-    assert fuse(names)[0].fields["consignee"].status == "conflict"
+def test_text_strong_agreement_needs_four_identical_views_and_keeps_every_dissent():
+    names = [reading(f"f{n}", values={"consignee": 'ООО "УМНЫЙ РИТЕЙЛ"'}) for n in range(7)]
+    names.append(reading("d1", values={"consignee": 'ООО "УМНЫЙ РИТЕИЛ"'}))
+    names.append(reading("d2", values={"consignee": 'ООО "УМНЫЙ РИТЕИЛ"; ИНН/КПП 7725382984/860245001'}))
+    result, meta = fuse(names)
+    field = result.fields["consignee"]
+    assert field.status == "recognized" and field.raw_value == 'ООО "УМНЫЙ РИТЕЙЛ"'
+    strong = meta["field_confirmations"]["consignee"]["strong_agreement"]
+    assert sorted(d["frame_ids"][0] for d in strong["dissent"]) == ["d1", "d2"]
+    # Six identical views against two frames of one variant and one of another.
+    address = 'ООО "А"; 628422, г. Сургут, ул. Мира, д. 21, соор. 16'
+    items = [reading(f"f{n}", values={"consignee_address": address}) for n in range(6)]
+    items += [reading(f"d{n}", values={"consignee_address": address.replace("соор", "корп")}) for n in range(2)]
+    items.append(reading("d9", values={"consignee_address": address.replace("Мира", "Мирa")}))
+    assert fuse(items)[0].fields["consignee_address"].raw_value == address
+    # Three identical views are not enough for a name, and blank claims never qualify.
+    few = [reading(f"f{n}", values={"consignee": 'ООО "Получатель"'}) for n in range(3)]
+    few.append(reading("f9", values={"consignee": 'ООО "Получитель"'}))
+    assert fuse(few)[0].fields["consignee"].status == "conflict"
     blank = [reading(f"f{n}", values={"invoice_number": "2559"}) for n in range(3)]
     blank.append(reading("f9", absent=["invoice_number"]))
     assert fuse(blank)[0].fields["invoice_number"].status == "conflict"

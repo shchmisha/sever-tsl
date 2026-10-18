@@ -45,16 +45,17 @@ _ORGANIZATION_FIELDS = frozenset({"consignor", "consignee", "supplier", "custome
 _ADDRESS_FIELDS = frozenset({"consignor_address", "consignee_address"})
 _NUMERIC_FIELDS = frozenset({"document_number", "invoice_number", "document_date", "invoice_date"})
 
-# A bounded exception to "disagreement is a conflict": a number or date read
-# identically on many distinct frames is not overturned by one frame whose
-# reading differs by a glyph or two. The dissent stays in the record.
+# A bounded exception to "disagreement is a conflict": a value read identically
+# on many distinct frames is not overturned by a few frames whose readings
+# differ (a glyph slip, a swallowed caption). Every dissenting reading stays in
+# the record; no value is ever edited or merged.
 STRONG_AGREEMENT_POLICY = {
-    "version": "numeric-strong-agreement-v1",
-    "fields": sorted(_NUMERIC_FIELDS),
-    "minimum_agreeing_frames": 3,
-    "maximum_dissenting_frames_per_value": 1,
-    "minimum_agreement_ratio": 3,
-    "maximum_dissent_edit_distance": 3,
+    "version": "strong-agreement-v2",
+    "numeric_fields": sorted(_NUMERIC_FIELDS),
+    "minimum_agreeing_frames": {"numeric": 3, "text": 4},
+    "minimum_ratio_to_all_dissent": 2,
+    "minimum_ratio_to_each_dissent_value": 3,
+    "maximum_dissent_edit_distance_numeric": 3,
     "dissent_is_preserved": True,
 }
 
@@ -71,16 +72,17 @@ def _edit_distance(left: str, right: str) -> int:
 
 def _strong_agreement(name: str, value_frames: dict[str, set[str]]) -> str | None:
     """Return the comparison key that wins by strong agreement, or None."""
-    if name not in _NUMERIC_FIELDS or len(value_frames) < 2:
+    if len(value_frames) < 2:
         return None
     policy = STRONG_AGREEMENT_POLICY
+    numeric = name in _NUMERIC_FIELDS
     ranked = sorted(value_frames.items(), key=lambda item: (-len(item[1]), item[0]))
     (leader, leader_frames), rest = ranked[0], ranked[1:]
     dissent_frames = sum(len(frames) for _, frames in rest)
-    if (len(leader_frames) < policy["minimum_agreeing_frames"]
-            or any(len(frames) > policy["maximum_dissenting_frames_per_value"] for _, frames in rest)
-            or len(leader_frames) < policy["minimum_agreement_ratio"] * dissent_frames
-            or any(_edit_distance(leader, key) > policy["maximum_dissent_edit_distance"] for key, _ in rest)):
+    if (len(leader_frames) < policy["minimum_agreeing_frames"]["numeric" if numeric else "text"]
+            or len(leader_frames) < policy["minimum_ratio_to_all_dissent"] * dissent_frames
+            or any(len(leader_frames) < policy["minimum_ratio_to_each_dissent_value"] * len(frames) for _, frames in rest)
+            or (numeric and any(_edit_distance(leader, key) > policy["maximum_dissent_edit_distance_numeric"] for key, _ in rest))):
         return None
     return leader
 _QUOTE_GLYPHS = str.maketrans({character: '"' for character in '«»„“”‟″'}
@@ -229,9 +231,8 @@ def fuse_readings(readings: list[DocumentResult], *, source_id: str,
             dissent = [{"comparison": key, "raw_values": list(dict.fromkeys(v.raw_value for v in group)),
                         "frame_ids": sorted(value_frames[key])} for key, group in values.items() if key != winner]
             status = "recognized"
-            reason = (f"Numeric strong agreement: {len(value_frames[winner])} distinct image views read the same value; "
-                      f"{sum(len(d['frame_ids']) for d in dissent)} dissenting view(s) differ by at most "
-                      f"{STRONG_AGREEMENT_POLICY['maximum_dissent_edit_distance']} characters and are preserved, not adopted")
+            reason = (f"Strong agreement: {len(value_frames[winner])} distinct image views read the same value; "
+                      f"{sum(len(d['frame_ids']) for d in dissent)} dissenting view(s) are preserved, not adopted")
             fused = FieldValue(status=status, raw_value=original.raw_value,
                 normalized_value=original.normalized_value, confidence=None, reason=reason, evidence=evidence)
             strong = {"policy": dict(STRONG_AGREEMENT_POLICY), "accepted_comparison": winner,

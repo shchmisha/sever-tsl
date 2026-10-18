@@ -557,6 +557,12 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                     continue
                 prior = resolution["field"]
                 current = document.fields[name]
+                if (current.status == "recognized"
+                        and fusion.get("field_confirmations", {}).get(name, {}).get("strong_agreement")):
+                    # Many single frames agree; an invalidated joint value does not
+                    # keep the field in dispute. The review stays in the record.
+                    fusion["field_confirmations"][name]["superseded_joint_review"] = prior.model_dump(mode="json")
+                    continue
                 reason = "A fresh joint pixel reading and later source reading disagree; another fresh joint review is required"
                 document.fields[name] = FieldValue(status="conflict", reason=reason,
                     evidence=[*current.evidence, *prior.evidence])
@@ -682,9 +688,32 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                         leaf_visibility_assessments.pop(name, None)
                 proposed_resolutions = [name for name, field in fields.items()
                                         if field.status in {"recognized", "not_present"}]
+                # A joint review adjudicates between readings. When single frames
+                # already agree on a value (two or more distinct frames), a joint
+                # value that matches none of the single-frame readings is recorded
+                # but not adopted; the field keeps its fused status. Where single
+                # frames scatter or read nothing, the joint read may settle it.
+                novel = {}
+                for name, field in fields.items():
+                    if field.status != "recognized" or not field.raw_value:
+                        continue
+                    frames_by_key = {}
+                    for reading in readings:
+                        if (reading.document_type != document.document_type or name not in reading.fields
+                                or reading.fields[name].status != "recognized" or not reading.fields[name].raw_value):
+                            continue
+                        key = _field_comparison(name, reading.fields[name].raw_value)
+                        frames_by_key.setdefault(key, set()).update(
+                            e.frame_id for e in reading.fields[name].evidence if e.frame_id.strip())
+                    dominant = any(len(frames) >= 2 for frames in frames_by_key.values())
+                    if dominant and _field_comparison(name, field.raw_value) not in frames_by_key:
+                        novel[name] = {"raw_value": field.raw_value, "single_frame_values": sorted(frames_by_key),
+                                       "reason": "Joint-review value matches no single-frame reading although frames already agree; not adopted"}
+                if novel:
+                    entry["rejected_novel_values"] = novel
                 replaced = []
                 for name, field in fields.items():
-                    if field.status not in {"recognized", "not_present"}:
+                    if field.status not in {"recognized", "not_present"} or name in novel:
                         continue
                     reviewed_fields[name] = {"field": field.model_copy(deep=True),
                         "document_type": document.document_type, "source_reading_count": len(readings), "entry": entry}

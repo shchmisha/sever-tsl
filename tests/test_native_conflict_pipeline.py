@@ -7,6 +7,7 @@ from PIL import Image, ImageDraw
 import pytest
 
 from sever.agents import AgentConfig, BatchBudgetExceeded, FatalProviderError
+from sever.image_fusion import _field_comparison
 from sever.native_pipeline import process_video_images, _conflict_review_frames
 from sever.schema import Evidence, FieldValue
 from test_native_pipeline import setup_pages, answer
@@ -23,7 +24,9 @@ def prepared(tmp_path, monkeypatch, count=4):
     async def reader(frame, *, source_id, page_id, **kwargs):
         seen.append(frame["frame_id"])
         result = answer(frame, source_id, page_id, "upd")
-        result["document"].fields["consignee"].raw_value = "Organization A" if len(seen) == 1 else "Organization A; auxiliary identifier"
+        # Alternate two readings so no value reaches strong agreement; the
+        # dispute can only be settled by a joint review.
+        result["document"].fields["consignee"].raw_value = "Organization A" if len(seen) % 2 else "Organization A; auxiliary identifier"
         result["recognition"]["pixel_proof"] = {
             "source_sha256": hashlib.sha256(open(frame["path"], "rb").read()).hexdigest(),
             "rotation_clockwise_degrees": 90,
@@ -372,3 +375,89 @@ def test_no_progress_stop_leaves_frames_unread_but_still_runs_final_review(tmp_p
     assert page["image_recognition"]["no_progress_stop"]["triggered"] is True
     events = [json.loads(line)["event"] for line in (out / "trace.jsonl").read_text().splitlines()]
     assert events.count("leaf_search_stopped_without_progress") == 1
+
+
+def test_joint_review_value_no_frame_ever_read_is_recorded_but_not_adopted(tmp_path, monkeypatch):
+    # The first frame swallows a caption into the address, so the second read
+    # creates a conflict and the initial joint review answers with a truncated
+    # value no frame read (adopted: no two frames agree yet). Later frames agree
+    # with the second reading, which invalidates that answer; the final review
+    # repeats the stray value, now rejected, and strong agreement settles it.
+    # consignee keeps alternating (3 vs 2) so the leaf reads every frame.
+    source, frames, base_reader, seen = prepared(tmp_path, monkeypatch, count=5)
+    address = 'ООО "А"; 628422, г. Сургут, ул. Мира, д. 21, соор. 16'
+    sequence = ["Адрес: " + address] + [address] * 4
+
+    async def reader(frame, **kwargs):
+        value = await base_reader(frame, **kwargs)
+        value["document"].fields["consignee_address"].raw_value = sequence[len(seen) - 1]
+        return value
+
+    calls = []
+
+    async def reviewer(chosen, **kwargs):
+        calls.append(kwargs["unresolved_fields"])
+        answer = reviewed(chosen, kwargs["unresolved_fields"])
+        answer["fields"]["consignee"] = FieldValue(status="unreadable", reason="still disputed")
+        answer["fields"]["consignee_address"].raw_value = "ул., д. 21, соор. 16"
+        answer["fields"]["consignee_address"].normalized_value = "ул., д. 21, соор. 16"
+        return answer
+
+    page = run(source, tmp_path / "run", reader, reviewer)["pages"][0]
+    # Once four frames agree, the address is settled by strong agreement and the
+    # final review is asked only about the still-disputed consignee.
+    assert len(seen) == 5 and calls == [["consignee", "consignee_address"], ["consignee"]]
+    field = page["result"]["fields"]["consignee_address"]
+    assert field["status"] == "recognized" and field["raw_value"] == address
+    assert page["result"]["fields"]["consignee"]["status"] == "conflict"
+    confirmation = page["image_recognition"]["fusion"]["field_confirmations"]["consignee_address"]
+    assert confirmation["strong_agreement"]["agreeing_frame_ids"] == ["frame-1", "frame-2", "frame-3", "frame-4"]
+    assert confirmation["superseded_joint_review"]["raw_value"] == "ул., д. 21, соор. 16"
+    initial, final = page["image_recognition"]["conflict_reviews"]
+    assert initial["phase"] == "initial" and initial["resolved_fields"] == ["consignee_address"]
+    assert initial["invalidated_fields"]["consignee_address"]["frame_ids"] == ["frame-2"]
+    assert final["phase"] == "final" and not final.get("resolved_fields") and "rejected_novel_values" not in final
+    assert [v["document"]["fields"]["consignee_address"]["raw_value"] for v in page["image_recognition"]["views"]] == sequence
+
+
+def test_joint_review_novel_value_is_rejected_once_two_frames_agree(tmp_path, monkeypatch):
+    # Three frames: a slip, then two identical readings. Too few for strong
+    # agreement, but enough that a joint value matching no reading is refused.
+    source, frames, base_reader, seen = prepared(tmp_path, monkeypatch, count=3)
+    address = 'ООО "А"; 628422, г. Сургут, ул. Мира, д. 21, соор. 16'
+    sequence = ["Адрес: " + address, address, address]
+
+    async def reader(frame, **kwargs):
+        value = await base_reader(frame, **kwargs)
+        value["document"].fields["consignee_address"].raw_value = sequence[len(seen) - 1]
+        return value
+
+    async def reviewer(chosen, **kwargs):
+        answer = reviewed(chosen, kwargs["unresolved_fields"])
+        answer["fields"]["consignee"] = FieldValue(status="unreadable", reason="still disputed")
+        answer["fields"]["consignee_address"].raw_value = "ул., д. 21, соор. 16"
+        answer["fields"]["consignee_address"].normalized_value = "ул., д. 21, соор. 16"
+        return answer
+
+    page = run(source, tmp_path / "run", reader, reviewer)["pages"][0]
+    assert len(seen) == 3
+    assert page["result"]["fields"]["consignee_address"]["status"] == "conflict"
+    initial, final = page["image_recognition"]["conflict_reviews"]
+    assert initial["resolved_fields"] == ["consignee_address"]          # 1 vs 1: nothing dominant yet
+    assert final["resolved_fields"] == []
+    assert final["rejected_novel_values"]["consignee_address"]["single_frame_values"] == \
+        sorted([_field_comparison("consignee_address", address), _field_comparison("consignee_address", "Адрес: " + address)])
+
+
+def test_joint_review_may_settle_a_field_single_frames_scatter_on(tmp_path, monkeypatch):
+    source, frames, reader, seen = prepared(tmp_path, monkeypatch, count=2)
+
+    async def reviewer(chosen, **kwargs):
+        answer = reviewed(chosen, kwargs["unresolved_fields"])
+        answer["fields"]["consignee"].raw_value = 'ООО "Organization A"'
+        answer["fields"]["consignee"].normalized_value = 'ООО "Organization A"'
+        return answer
+
+    page = run(source, tmp_path / "run", reader, reviewer)["pages"][0]
+    assert page["result"]["fields"]["consignee"]["raw_value"] == 'ООО "Organization A"'
+    assert "rejected_novel_values" not in page["image_recognition"]["conflict_reviews"][0]
