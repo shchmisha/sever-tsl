@@ -1,0 +1,1412 @@
+{
+  "labels": [
+    "before",
+    "after"
+  ],
+  "ratio_b_over_a": {
+    "elapsed_seconds": 0.936,
+    "model_requests": 0.883,
+    "model_seconds": 0.925,
+    "input_tokens": 0.803,
+    "output_tokens": 0.986
+  },
+  "notes": [
+    "Timings include any other work on the model server during each run; check that no API jobs ran alongside."
+  ],
+  "paired": {
+    "field_checks": {
+      "paired_rows": 22,
+      "a_only_correct": 0,
+      "b_only_correct": 1,
+      "mcnemar_exact_p": 1.0,
+      "changed_rows": [
+        {
+          "truth_page_id": "sample-05-page-004",
+          "field": "consignor_address",
+          "a": false,
+          "b": true
+        }
+      ]
+    },
+    "abstention_checks": {
+      "paired_rows": 22,
+      "a_only_correct": 0,
+      "b_only_correct": 0,
+      "mcnemar_exact_p": null,
+      "changed_rows": []
+    }
+  },
+  "runs": {
+    "before": {
+      "summary": {
+        "directory": "/private/tmp/claude-501/-Users-shchm-Documents------/7f54e79e-5983-4eb1-823a-cbad3741208a/scratchpad/acc/v5/phase1-measured",
+        "complete": true,
+        "status": "completed",
+        "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+        "elapsed_seconds": 1131.89,
+        "leaves": 15,
+        "leaves_read": 15,
+        "stop_reasons": {
+          "all_required_fields_confirmed": 4,
+          "requires_other_document_side": 6,
+          "out_of_scope_form_confirmed": 5
+        },
+        "document_types": {
+          "upd": 4,
+          "ttn": 4,
+          "unknown": 5,
+          "torg12": 2
+        },
+        "native_pipeline_version": "native-image-joint-leaf-visibility-v1",
+        "leaf_concurrency": 1,
+        "trace": {
+          "requests": 188,
+          "responses": 188,
+          "call_kinds": {
+            "orientation": 15,
+            "triage": 19,
+            "field_agent": 115,
+            "joint_review": 39
+          },
+          "model_seconds": 1002.56,
+          "input_tokens": 1992133,
+          "output_tokens": 41696,
+          "trace_started": 1792287817.570199,
+          "trace_ended": 1792288949.48469,
+          "server_timings": {
+            "responses": 188,
+            "cache_n": 1359187,
+            "prompt_n": 632946,
+            "prompt_ms": 271292.67,
+            "predicted_n": 41696,
+            "predicted_ms": 688583.4
+          }
+        },
+        "seconds_per_leaf": 75.46,
+        "requests_per_leaf": 12.53
+      },
+      "accuracy": {
+        "status": "scored",
+        "truth_video": "sample-05",
+        "address_boundary": "current",
+        "matching": "bracket",
+        "bracket_matches": [
+          {
+            "truth_page_id": "sample-05-page-005",
+            "primary_timestamp_s": 21.324244444444446,
+            "prediction_interval_s": [
+              18.925261111111112,
+              21.5908
+            ],
+            "core_interval_s": [
+              19.108522,
+              21.174306
+            ],
+            "bracket_window_s": [
+              18.592078,
+              21.690756
+            ]
+          }
+        ],
+        "labelled_fields": {
+          "correct": 21,
+          "total": 22
+        },
+        "abstention_checks": {
+          "correct": 22,
+          "total": 22,
+          "undetected_rows": 0,
+          "semantic_pending_rows": 4,
+          "failures": []
+        },
+        "confidence_intervals": {
+          "candidate_coverage": [
+            0.7961,
+            1.0
+          ],
+          "detection": [
+            0.7961,
+            1.0
+          ],
+          "type_accuracy_all_expected": [
+            0.6212,
+            0.9626
+          ],
+          "type_accuracy_targets": [
+            0.4902,
+            0.9433
+          ],
+          "e2e": [
+            0.1078,
+            0.6032
+          ],
+          "e2e_on_fully_labeled": [
+            0.3006,
+            0.9544
+          ],
+          "unknown_rejection": [
+            0.5655,
+            1.0
+          ],
+          "abstention_checks": [
+            0.8513,
+            1.0
+          ],
+          "labeled_fields": [
+            0.782,
+            0.9919
+          ]
+        },
+        "field_accuracy": {
+          "ttn.consignee": {
+            "correct": 2,
+            "total": 2
+          },
+          "ttn.consignor": {
+            "correct": 2,
+            "total": 2
+          },
+          "ttn.document_date": {
+            "correct": 2,
+            "total": 2
+          },
+          "ttn.document_number": {
+            "correct": 4,
+            "total": 4
+          },
+          "upd.consignee": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.consignee_address": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.consignor": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.consignor_address": {
+            "correct": 1,
+            "total": 2
+          },
+          "upd.invoice_date": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.invoice_number": {
+            "correct": 2,
+            "total": 2
+          }
+        },
+        "type_accuracy_targets": {
+          "correct": 8,
+          "total": 10
+        },
+        "unknown_rejection": {
+          "correct": 5,
+          "total": 5
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 3,
+          "total": 4
+        },
+        "intervals_detected": {
+          "correct": 15,
+          "total": 15
+        },
+        "unmatched_predictions": 0,
+        "per_interval": [
+          {
+            "truth_page_id": "sample-05-page-001",
+            "prediction_page_id": "page-0001",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "invoice_number": true,
+              "invoice_date": true,
+              "consignor": true,
+              "consignor_address": true,
+              "consignee": true,
+              "consignee_address": true
+            },
+            "e2e_success": true,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-002",
+            "prediction_page_id": "page-0002",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_number": true,
+              "document_date": true
+            },
+            "e2e_success": true,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-003",
+            "prediction_page_id": "page-0003",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "document_number": true
+            },
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_date": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-004",
+            "prediction_page_id": "page-0004",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "invoice_number": true,
+              "invoice_date": true,
+              "consignor": true,
+              "consignor_address": false,
+              "consignee": true,
+              "consignee_address": true
+            },
+            "e2e_success": false,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-005",
+            "prediction_page_id": "page-0005",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_number": true,
+              "document_date": true
+            },
+            "e2e_success": true,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-006",
+            "prediction_page_id": "page-0006",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "document_number": true
+            },
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_date": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-007",
+            "prediction_page_id": "page-0007",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-008",
+            "prediction_page_id": "page-0008",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-009",
+            "prediction_page_id": "page-0009",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-010",
+            "prediction_page_id": "page-0010",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-011",
+            "prediction_page_id": "page-0011",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-012",
+            "prediction_page_id": "page-0012",
+            "detected": true,
+            "type_correct": false,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_number": true,
+              "document_date": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-013",
+            "prediction_page_id": "page-0013",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignor_address": true,
+              "consignee": true,
+              "consignee_address": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-014",
+            "prediction_page_id": "page-0014",
+            "detected": true,
+            "type_correct": false,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_number": true,
+              "document_date": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-015",
+            "prediction_page_id": "page-0015",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignor_address": true,
+              "consignee": true,
+              "consignee_address": true
+            }
+          }
+        ]
+      }
+    },
+    "after": {
+      "summary": {
+        "directory": "/private/tmp/claude-501/-Users-shchm-Documents------/7f54e79e-5983-4eb1-823a-cbad3741208a/scratchpad/acc/v5/phase1-speed",
+        "complete": true,
+        "status": "completed",
+        "source_sha256": "6993174430b13f0d2968fb7e83a4aa597047521c1d0d9c167a317759ef48cd91",
+        "elapsed_seconds": 1059.92,
+        "leaves": 15,
+        "leaves_read": 15,
+        "stop_reasons": {
+          "all_required_fields_confirmed": 4,
+          "requires_other_document_side": 6,
+          "out_of_scope_form_confirmed": 5
+        },
+        "document_types": {
+          "upd": 4,
+          "ttn": 6,
+          "unknown": 5
+        },
+        "native_pipeline_version": "native-image-joint-leaf-visibility-v1",
+        "leaf_concurrency": 1,
+        "trace": {
+          "requests": 166,
+          "responses": 166,
+          "call_kinds": {
+            "orientation": 15,
+            "triage": 19,
+            "field_agent": 101,
+            "joint_review": 31
+          },
+          "model_seconds": 927.36,
+          "input_tokens": 1600314,
+          "output_tokens": 41104,
+          "trace_started": 1792288950.9822319,
+          "trace_ended": 1792290010.9144094,
+          "server_timings": {
+            "responses": 166,
+            "cache_n": 1087515,
+            "prompt_n": 512799,
+            "prompt_ms": 220771.21,
+            "predicted_n": 41104,
+            "predicted_ms": 675451.24
+          }
+        },
+        "seconds_per_leaf": 70.66,
+        "requests_per_leaf": 11.07
+      },
+      "accuracy": {
+        "status": "scored",
+        "truth_video": "sample-05",
+        "address_boundary": "current",
+        "matching": "bracket",
+        "bracket_matches": [
+          {
+            "truth_page_id": "sample-05-page-005",
+            "primary_timestamp_s": 21.324244444444446,
+            "prediction_interval_s": [
+              18.925261111111112,
+              21.5908
+            ],
+            "core_interval_s": [
+              19.108522,
+              21.174306
+            ],
+            "bracket_window_s": [
+              18.592078,
+              21.690756
+            ]
+          }
+        ],
+        "labelled_fields": {
+          "correct": 22,
+          "total": 22
+        },
+        "abstention_checks": {
+          "correct": 22,
+          "total": 22,
+          "undetected_rows": 0,
+          "semantic_pending_rows": 4,
+          "failures": []
+        },
+        "confidence_intervals": {
+          "candidate_coverage": [
+            0.7961,
+            1.0
+          ],
+          "detection": [
+            0.7961,
+            1.0
+          ],
+          "type_accuracy_all_expected": [
+            0.7961,
+            1.0
+          ],
+          "type_accuracy_targets": [
+            0.7225,
+            1.0
+          ],
+          "e2e": [
+            0.1682,
+            0.6873
+          ],
+          "e2e_on_fully_labeled": [
+            0.5101,
+            1.0
+          ],
+          "unknown_rejection": [
+            0.5655,
+            1.0
+          ],
+          "abstention_checks": [
+            0.8513,
+            1.0
+          ],
+          "labeled_fields": [
+            0.8513,
+            1.0
+          ]
+        },
+        "field_accuracy": {
+          "ttn.consignee": {
+            "correct": 2,
+            "total": 2
+          },
+          "ttn.consignor": {
+            "correct": 2,
+            "total": 2
+          },
+          "ttn.document_date": {
+            "correct": 2,
+            "total": 2
+          },
+          "ttn.document_number": {
+            "correct": 4,
+            "total": 4
+          },
+          "upd.consignee": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.consignee_address": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.consignor": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.consignor_address": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.invoice_date": {
+            "correct": 2,
+            "total": 2
+          },
+          "upd.invoice_number": {
+            "correct": 2,
+            "total": 2
+          }
+        },
+        "type_accuracy_targets": {
+          "correct": 10,
+          "total": 10
+        },
+        "unknown_rejection": {
+          "correct": 5,
+          "total": 5
+        },
+        "e2e_on_fully_labeled": {
+          "correct": 4,
+          "total": 4
+        },
+        "intervals_detected": {
+          "correct": 15,
+          "total": 15
+        },
+        "unmatched_predictions": 0,
+        "per_interval": [
+          {
+            "truth_page_id": "sample-05-page-001",
+            "prediction_page_id": "page-0001",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "invoice_number": true,
+              "invoice_date": true,
+              "consignor": true,
+              "consignor_address": true,
+              "consignee": true,
+              "consignee_address": true
+            },
+            "e2e_success": true,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-002",
+            "prediction_page_id": "page-0002",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_number": true,
+              "document_date": true
+            },
+            "e2e_success": true,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-003",
+            "prediction_page_id": "page-0003",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "document_number": true
+            },
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_date": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-004",
+            "prediction_page_id": "page-0004",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "invoice_number": true,
+              "invoice_date": true,
+              "consignor": true,
+              "consignor_address": true,
+              "consignee": true,
+              "consignee_address": true
+            },
+            "e2e_success": true,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-005",
+            "prediction_page_id": "page-0005",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_number": true,
+              "document_date": true
+            },
+            "e2e_success": true,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-006",
+            "prediction_page_id": "page-0006",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {
+              "document_number": true
+            },
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_date": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-007",
+            "prediction_page_id": "page-0007",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-008",
+            "prediction_page_id": "page-0008",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-009",
+            "prediction_page_id": "page-0009",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-010",
+            "prediction_page_id": "page-0010",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-011",
+            "prediction_page_id": "page-0011",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {}
+          },
+          {
+            "truth_page_id": "sample-05-page-012",
+            "prediction_page_id": "page-0012",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_number": true,
+              "document_date": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-013",
+            "prediction_page_id": "page-0013",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignor_address": true,
+              "consignee": true,
+              "consignee_address": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-014",
+            "prediction_page_id": "page-0014",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignee": true,
+              "document_number": true,
+              "document_date": true
+            }
+          },
+          {
+            "truth_page_id": "sample-05-page-015",
+            "prediction_page_id": "page-0015",
+            "detected": true,
+            "type_correct": true,
+            "field_checks": {},
+            "e2e_success": null,
+            "abstention_checks": {
+              "consignor": true,
+              "consignor_address": true,
+              "consignee": true,
+              "consignee_address": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "leaves": [
+    {
+      "page_id": "page-0001",
+      "before": {
+        "interval_s": [
+          0.0,
+          3.9982944444444444
+        ],
+        "document_type": "upd",
+        "stop_reason": "all_required_fields_confirmed",
+        "views": 2,
+        "confirmed_fields": 6,
+        "required_fields": 6,
+        "requests": 13,
+        "model_seconds": 50.38,
+        "leaf_seconds": 52.56,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 11
+        }
+      },
+      "after": {
+        "interval_s": [
+          0.0,
+          3.9982944444444444
+        ],
+        "document_type": "upd",
+        "stop_reason": "all_required_fields_confirmed",
+        "views": 2,
+        "confirmed_fields": 6,
+        "required_fields": 6,
+        "requests": 9,
+        "model_seconds": 42.7,
+        "leaf_seconds": 44.72,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 7
+        }
+      }
+    },
+    {
+      "page_id": "page-0002",
+      "before": {
+        "interval_s": [
+          3.9982944444444444,
+          8.79625
+        ],
+        "document_type": "ttn",
+        "stop_reason": "all_required_fields_confirmed",
+        "views": 2,
+        "confirmed_fields": 4,
+        "required_fields": 4,
+        "requests": 8,
+        "model_seconds": 29.45,
+        "leaf_seconds": 31.01,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6
+        }
+      },
+      "after": {
+        "interval_s": [
+          3.9982944444444444,
+          8.79625
+        ],
+        "document_type": "ttn",
+        "stop_reason": "all_required_fields_confirmed",
+        "views": 2,
+        "confirmed_fields": 4,
+        "required_fields": 4,
+        "requests": 8,
+        "model_seconds": 27.94,
+        "leaf_seconds": 29.45,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6
+        }
+      }
+    },
+    {
+      "page_id": "page-0003",
+      "before": {
+        "interval_s": [
+          8.79625,
+          11.99488888888889
+        ],
+        "document_type": "ttn",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 1,
+        "required_fields": 4,
+        "requests": 22,
+        "model_seconds": 100.84,
+        "leaf_seconds": 105.16,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 15,
+          "joint_review": 5
+        }
+      },
+      "after": {
+        "interval_s": [
+          8.79625,
+          11.99488888888889
+        ],
+        "document_type": "ttn",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 1,
+        "required_fields": 4,
+        "requests": 14,
+        "model_seconds": 94.44,
+        "leaf_seconds": 98.07,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 10,
+          "joint_review": 2
+        }
+      }
+    },
+    {
+      "page_id": "page-0004",
+      "before": {
+        "interval_s": [
+          11.99488888888889,
+          18.925261111111112
+        ],
+        "document_type": "upd",
+        "stop_reason": "all_required_fields_confirmed",
+        "views": 2,
+        "confirmed_fields": 6,
+        "required_fields": 6,
+        "requests": 10,
+        "model_seconds": 52.2,
+        "leaf_seconds": 54.67,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6,
+          "joint_review": 2
+        }
+      },
+      "after": {
+        "interval_s": [
+          11.99488888888889,
+          18.925261111111112
+        ],
+        "document_type": "upd",
+        "stop_reason": "all_required_fields_confirmed",
+        "views": 2,
+        "confirmed_fields": 6,
+        "required_fields": 6,
+        "requests": 12,
+        "model_seconds": 62.23,
+        "leaf_seconds": 65.01,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 7,
+          "joint_review": 3
+        }
+      }
+    },
+    {
+      "page_id": "page-0005",
+      "before": {
+        "interval_s": [
+          18.925261111111112,
+          21.5908
+        ],
+        "document_type": "ttn",
+        "stop_reason": "all_required_fields_confirmed",
+        "views": 2,
+        "confirmed_fields": 4,
+        "required_fields": 4,
+        "requests": 15,
+        "model_seconds": 56.7,
+        "leaf_seconds": 59.41,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 9,
+          "joint_review": 4
+        }
+      },
+      "after": {
+        "interval_s": [
+          18.925261111111112,
+          21.5908
+        ],
+        "document_type": "ttn",
+        "stop_reason": "all_required_fields_confirmed",
+        "views": 2,
+        "confirmed_fields": 4,
+        "required_fields": 4,
+        "requests": 9,
+        "model_seconds": 30.78,
+        "leaf_seconds": 32.51,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 7
+        }
+      }
+    },
+    {
+      "page_id": "page-0006",
+      "before": {
+        "interval_s": [
+          21.5908,
+          26.38875
+        ],
+        "document_type": "ttn",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 1,
+        "required_fields": 4,
+        "requests": 19,
+        "model_seconds": 104.69,
+        "leaf_seconds": 109.45,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 12,
+          "joint_review": 5
+        }
+      },
+      "after": {
+        "interval_s": [
+          21.5908,
+          26.38875
+        ],
+        "document_type": "ttn",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 1,
+        "required_fields": 4,
+        "requests": 15,
+        "model_seconds": 99.55,
+        "leaf_seconds": 104.56,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6,
+          "joint_review": 7
+        }
+      }
+    },
+    {
+      "page_id": "page-0007",
+      "before": {
+        "interval_s": [
+          26.38875,
+          38.90178888888889
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 3,
+        "model_seconds": 4.63,
+        "leaf_seconds": 5.92,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 2
+        }
+      },
+      "after": {
+        "interval_s": [
+          26.38875,
+          38.90178888888889
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 3,
+        "model_seconds": 4.5,
+        "leaf_seconds": 5.77,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 2
+        }
+      }
+    },
+    {
+      "page_id": "page-0008",
+      "before": {
+        "interval_s": [
+          38.90178888888889,
+          42.36698333333334
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 3,
+        "model_seconds": 4.73,
+        "leaf_seconds": 6.02,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 2
+        }
+      },
+      "after": {
+        "interval_s": [
+          38.90178888888889,
+          42.36698333333334
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 3,
+        "model_seconds": 4.75,
+        "leaf_seconds": 6.02,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 2
+        }
+      }
+    },
+    {
+      "page_id": "page-0009",
+      "before": {
+        "interval_s": [
+          42.36698333333334,
+          45.832161111111105
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 3,
+        "model_seconds": 4.47,
+        "leaf_seconds": 5.73,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 2
+        }
+      },
+      "after": {
+        "interval_s": [
+          42.36698333333334,
+          45.832161111111105
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 3,
+        "model_seconds": 4.48,
+        "leaf_seconds": 5.73,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 2
+        }
+      }
+    },
+    {
+      "page_id": "page-0010",
+      "before": {
+        "interval_s": [
+          45.832161111111105,
+          52.22943333333333
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 3,
+        "model_seconds": 4.68,
+        "leaf_seconds": 5.97,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 2
+        }
+      },
+      "after": {
+        "interval_s": [
+          45.832161111111105,
+          52.22943333333333
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 3,
+        "model_seconds": 4.59,
+        "leaf_seconds": 5.86,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 2
+        }
+      }
+    },
+    {
+      "page_id": "page-0011",
+      "before": {
+        "interval_s": [
+          52.22943333333333,
+          56.75975555555556
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 8,
+        "model_seconds": 19.17,
+        "leaf_seconds": 21.26,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6
+        }
+      },
+      "after": {
+        "interval_s": [
+          52.22943333333333,
+          56.75975555555556
+        ],
+        "document_type": "unknown",
+        "stop_reason": "out_of_scope_form_confirmed",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 0,
+        "requests": 8,
+        "model_seconds": 20.93,
+        "leaf_seconds": 23.3,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6
+        }
+      }
+    },
+    {
+      "page_id": "page-0012",
+      "before": {
+        "interval_s": [
+          56.75975555555556,
+          60.223861111111106
+        ],
+        "document_type": "torg12",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 4,
+        "requests": 15,
+        "model_seconds": 94.99,
+        "leaf_seconds": 100.83,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6,
+          "joint_review": 7
+        }
+      },
+      "after": {
+        "interval_s": [
+          56.75975555555556,
+          60.223861111111106
+        ],
+        "document_type": "ttn",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 4,
+        "requests": 11,
+        "model_seconds": 73.87,
+        "leaf_seconds": 77.66,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6,
+          "joint_review": 3
+        }
+      }
+    },
+    {
+      "page_id": "page-0013",
+      "before": {
+        "interval_s": [
+          60.223861111111106,
+          66.34938333333332
+        ],
+        "document_type": "upd",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 2,
+        "required_fields": 6,
+        "requests": 13,
+        "model_seconds": 90.9,
+        "leaf_seconds": 96.76,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 7,
+          "joint_review": 4
+        }
+      },
+      "after": {
+        "interval_s": [
+          60.223861111111106,
+          66.34938333333332
+        ],
+        "document_type": "upd",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 2,
+        "required_fields": 6,
+        "requests": 11,
+        "model_seconds": 80.62,
+        "leaf_seconds": 84.76,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 6,
+          "joint_review": 3
+        }
+      }
+    },
+    {
+      "page_id": "page-0014",
+      "before": {
+        "interval_s": [
+          66.34938333333332,
+          69.80936666666666
+        ],
+        "document_type": "torg12",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 0,
+        "required_fields": 4,
+        "requests": 19,
+        "model_seconds": 100.8,
+        "leaf_seconds": 107.48,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 11,
+          "joint_review": 6
+        }
+      },
+      "after": {
+        "interval_s": [
+          66.34938333333332,
+          69.80936666666666
+        ],
+        "document_type": "ttn",
+        "stop_reason": "requires_other_document_side",
+        "views": 10,
+        "confirmed_fields": 0,
+        "required_fields": 4,
+        "requests": 42,
+        "model_seconds": 267.61,
+        "leaf_seconds": 293.2,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 30,
+          "joint_review": 10
+        }
+      }
+    },
+    {
+      "page_id": "page-0015",
+      "before": {
+        "interval_s": [
+          69.80936666666666,
+          72.808
+        ],
+        "document_type": "upd",
+        "stop_reason": "requires_other_document_side",
+        "views": 5,
+        "confirmed_fields": 2,
+        "required_fields": 6,
+        "requests": 34,
+        "model_seconds": 283.93,
+        "leaf_seconds": 301.23,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 26,
+          "joint_review": 6
+        }
+      },
+      "after": {
+        "interval_s": [
+          69.80936666666666,
+          72.808
+        ],
+        "document_type": "upd",
+        "stop_reason": "requires_other_document_side",
+        "views": 2,
+        "confirmed_fields": 2,
+        "required_fields": 6,
+        "requests": 15,
+        "model_seconds": 108.37,
+        "leaf_seconds": 114.23,
+        "call_kinds": {
+          "orientation": 1,
+          "triage": 1,
+          "field_agent": 10,
+          "joint_review": 3
+        }
+      }
+    }
+  ]
+}
