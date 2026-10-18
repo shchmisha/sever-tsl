@@ -43,3 +43,31 @@ fields, joint values must match a reading) changes exactly two final values, bot
 affected. Rescored with bracket matching: video 4 "after" 22/22, video 5 "after" 22/22, abstention 44/44 —
 i.e. 44/44 labelled fields on the two labelled videos. This is a replay of stored readings, not a live run;
 the live confirmation run is next.
+
+## Live confirmation and MTP, 2026-10-18 afternoon (production release 61c7274, Qwen3.8-27B)
+
+Fusion fix, live (before = 371cd3e, after = 61c7274 = production), bracket matching:
+
+| | video 5 before / after | video 4 before / after |
+|---|---|---|
+| Labelled fields | 22/22 / 22/22 | 20/22 / **22/22** |
+| Fully correct labelled sheets | 4/4 / 4/4 | 3/4 / **4/4** |
+| Target types | 10/10 / 10/10 | 10/10 / 10/10 |
+| Abstention checks | 22/22 / 22/22 | 22/22 / 22/22 |
+| Wall time | 1,062 s / 1,060 s | 2,122 s / 2,086 s |
+
+Video 4 sheet 4 again produced the 7-vs-1-vs-1 name and 6-vs-2-vs-1 address readings; strong agreement settled both
+on the correct values. Combined system on both labelled videos: **44/44 fields, 20/20 types, 44/44 abstention**.
+
+MTP speculative decoding (`--spec-type draft-mtp --spec-draft-n-max 2`, temporary systemd drop-in
+`mtp-dropin.conf`; startup log line `creating MTP draft context against the target model`), video 5, same release:
+
+| | MTP off | MTP on |
+|---|---|---|
+| Wall time | 1,060 s | **760 s** (0.72×) |
+| Model time | 927 s | 626 s |
+| Decode speed | 61 tok/s | **132 tok/s** |
+| Labelled fields / types / abstention | 22/22, 10/10, 22/22 | 22/22, 10/10, 22/22 |
+| GPU memory peak | 26.7 GB | 27.2 GB |
+
+The model service was restored without MTP after the test; enabling it permanently is a separate decision.
