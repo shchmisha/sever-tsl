@@ -20,4 +20,17 @@ Qwen3.6 writes Russian prose before its tool calls (field agent 325 vs 203 outpu
 863 vs 639, one call hit the 8,192-token cap) and spent 31–37 calls on three two-sided sheets where Qwen3.8 needed
 11–15, ending them by the no-progress stop instead of "other document side". Decode speed is identical (~61 tok/s).
 Despite its lead on MWS Vision Bench (Russian business-document KIE 0.893 vs 0.807), it is slower and less
-accurate on this footage. Decision: stay on Qwen3.8-27B. Video 4 result to be appended.
+accurate on this footage. Decision: stay on Qwen3.8-27B.
+
+Video 4 (bracket matching; the Qwen3.8 baseline is the same release, run earlier the same day):
+
+| | Qwen3.8-27B | Qwen3.6-27B |
+|---|---|---|
+| Wall time | 2,119 s | 2,395 s (1.13×) |
+| Output tokens | 70,542 | 82,929 |
+| Labelled fields | 20/22 | 19/22 |
+| Fully correct labelled sheets | 3/4 | 1/4 |
+| Target types / non-target rejected | 10/10, 42/43 | 10/10, 42/43 |
+
+Both videos: Qwen3.8 42/44 labelled fields, 20/20 types, 3,179 s; Qwen3.6 40/44, 18/20, 4,236 s. The model service
+was restored to Qwen3.8 at 11:43 UTC and the API restarted on release 20261018-phase1-accuracy (health ok).
