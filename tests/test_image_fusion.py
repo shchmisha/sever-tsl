@@ -276,7 +276,18 @@ def test_matching_model_normalization_cannot_hide_different_literal_digits():
     assert result.fields["invoice_number"].status == "conflict"
 
 
-@pytest.mark.parametrize("first,second", [("1234", "1235"), ("А1234", "A1234")])
+def test_lookalike_script_readings_of_one_number_agree_and_keep_both_raw_values():
+    # «С01-345858» (Cyrillic С) and «C01-345858» (Latin C) print identically.
+    items = [reading("f1", values={"invoice_number": "С01-345858"}),
+             reading("f2", values={"invoice_number": "C01-345858"})]
+    result, meta = fuse(items)
+    field = result.fields["invoice_number"]
+    assert field.status == "recognized" and field.raw_value in {"С01-345858", "C01-345858"}
+    [group] = meta["field_confirmations"]["invoice_number"]["value_groups"]
+    assert sorted(group["raw_values"]) == sorted(["С01-345858", "C01-345858"])
+
+
+@pytest.mark.parametrize("first,second", [("1234", "1235")])
 def test_numeric_or_script_disagreement_is_not_repaired_or_majority_selected(first, second):
     items = [reading("f1", values={"invoice_number": first}),
              reading("f2", values={"invoice_number": second}),
@@ -385,14 +396,14 @@ def test_numeric_strong_agreement_accepts_many_identical_views_over_one_glyph_di
     strong = meta["field_confirmations"]["invoice_number"]["strong_agreement"]
     assert strong["accepted_comparison"] == "2559" and strong["agreeing_frame_ids"] == ["f0", "f1", "f2"]
     assert strong["dissent"] == [{"comparison": "2660", "raw_values": ["2660"], "frame_ids": ["f9"]}]
-    assert strong["policy"]["version"] == "strong-agreement-v2"
+    assert strong["policy"]["version"] == "strong-agreement-v3-majority-lookalike"
     # Every raw reading, including the dissent, remains in the record.
     assert [item["fields"]["invoice_number"]["raw_value"] for item in meta["readings"]] == ["2559"] * 3 + ["2660"]
 
 
 @pytest.mark.parametrize("agreeing,dissent", [
     (2, ["2660"]),                 # fewer than three agreeing views
-    (3, ["2660", "2650"]),         # 3 is below twice the two dissenting views
+    (3, ["2660", "2650", "2569"]), # 3 agreeing views are not more than the three dissenting views
     (3, ["7781"]),                 # dissent too far from the leader (edit distance 4)
     (5, ["2660", "2660", "2560"]), # one dissent value on two frames: 5 < 3x2
 ])
@@ -426,3 +437,19 @@ def test_text_strong_agreement_needs_four_identical_views_and_keeps_every_dissen
     blank = [reading(f"f{n}", values={"invoice_number": "2559"}) for n in range(3)]
     blank.append(reading("f9", absent=["invoice_number"]))
     assert fuse(blank)[0].fields["invoice_number"].status == "conflict"
+
+
+def test_text_majority_wins_when_dissent_is_scattered_across_readings():
+    # ТВ_1: 13 frames read the seller address under «он же»; 8 frames split over 5 other readings.
+    good = "224028, Республика Беларусь, г. Брест, ул. Я.Купалы, 118"
+    items = [reading(f"f{n}", values={"consignor_address": good}) for n in range(13)]
+    for n, (value, count) in enumerate([("ОАО \"Савушкин продукт\" 224028, Республика Беларусь, г. Брест, ул. Я.Купалы, 118", 2),
+                                        ("ООО \"Савушкин продукт\" 143908, РФ, Москов.обл., г.Балашиха", 2),
+                                        ("ОАО \"Савушкин продукт\" 143908, РФ, Москов.обл., г.Балашиха, ст.Стройка", 2),
+                                        ("224028, Республика Беларусь, г. Брест, ул. Я.Купаля, 118", 1),
+                                        (good + ", ИНН/КПП продавца: 200030514 / 05882743", 1)]):
+        items += [reading(f"d{n}-{k}", values={"consignor_address": value}) for k in range(count)]
+    result, meta = fuse(items)
+    field = result.fields["consignor_address"]
+    assert field.status == "recognized" and field.raw_value == good
+    assert len(meta["field_confirmations"]["consignor_address"]["strong_agreement"]["dissent"]) == 5

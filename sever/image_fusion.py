@@ -36,9 +36,15 @@ def _grounded_type_frames(reading: DocumentResult) -> set[str]:
             if reading.document_type != "unknown" else set())
 
 
+# Latin letters that print exactly like Cyrillic ones (C/С, P/Р, B/В, …): two frames that
+# read «C01-345858» and «С01-345858» saw the same printed characters. Only the comparison
+# key is folded; every original raw value is kept.
+_LOOKALIKE_LATIN = str.maketrans("abcehkmoptxy", "авсенкмортху")
+
+
 def _literal_comparison(value: str) -> str:
-    """Compare only Unicode, letter case and whitespace, independent of field."""
-    return " ".join(unicodedata.normalize("NFKC", value).casefold().split())
+    """Compare only Unicode, letter case, look-alike script and whitespace, independent of field."""
+    return " ".join(unicodedata.normalize("NFKC", value).casefold().translate(_LOOKALIKE_LATIN).split())
 
 
 _ORGANIZATION_FIELDS = frozenset({"consignor", "consignee", "supplier", "customer"})
@@ -50,10 +56,10 @@ _NUMERIC_FIELDS = frozenset({"document_number", "invoice_number", "document_date
 # differ (a glyph slip, a swallowed caption). Every dissenting reading stays in
 # the record; no value is ever edited or merged.
 STRONG_AGREEMENT_POLICY = {
-    "version": "strong-agreement-v2",
+    "version": "strong-agreement-v3-majority-lookalike",
     "numeric_fields": sorted(_NUMERIC_FIELDS),
     "minimum_agreeing_frames": {"numeric": 3, "text": 4},
-    "minimum_ratio_to_all_dissent": 2,
+    "minimum_ratio_to_all_dissent": 1,
     "minimum_ratio_to_each_dissent_value": 3,
     "maximum_dissent_edit_distance_numeric": 3,
     "dissent_is_preserved": True,
@@ -80,7 +86,7 @@ def _strong_agreement(name: str, value_frames: dict[str, set[str]]) -> str | Non
     (leader, leader_frames), rest = ranked[0], ranked[1:]
     dissent_frames = sum(len(frames) for _, frames in rest)
     if (len(leader_frames) < policy["minimum_agreeing_frames"]["numeric" if numeric else "text"]
-            or len(leader_frames) < policy["minimum_ratio_to_all_dissent"] * dissent_frames
+            or len(leader_frames) <= policy["minimum_ratio_to_all_dissent"] * dissent_frames
             or any(len(leader_frames) < policy["minimum_ratio_to_each_dissent_value"] * len(frames) for _, frames in rest)
             or (numeric and any(_edit_distance(leader, key) > policy["maximum_dissent_edit_distance_numeric"] for key, _ in rest))):
         return None

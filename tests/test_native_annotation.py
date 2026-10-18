@@ -515,7 +515,6 @@ def test_unicode_case_whitespace_agreement_preserves_actual_each_frame_raw(nativ
     ("document_date", "31.02.2020", "30.02.2020"),
     ("document_date", "02.06.99", "03.06.99"),
     ("document_number", "12/3", "123"),
-    ("document_number", "А-42", "A-42"),
 ])
 def test_different_literal_readings_cannot_confirm_fused_value_through_field_specific_normalization(native_run, name, first, second):
     run, data = native_run
