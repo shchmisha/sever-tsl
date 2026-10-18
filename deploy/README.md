@@ -271,7 +271,10 @@ OCR → классификация → чтение целевых изобра�
 
 Настройки запуска модели берутся из [sever-model.service](sever-model.service):
 GPU layers `all`, context 65536, один slot, flash attention, KV cache `q8_0`,
-`image-min-tokens=1024`, `image-max-tokens=4096`, Jinja и `enable_thinking=false`. Изменение этих параметров
+`image-min-tokens=1024`, `image-max-tokens=4096`, Jinja и `enable_thinking=false`, MTP speculative decoding
+(`--spec-type draft-mtp --spec-draft-n-max 2`, включено 2026-10-18: декодирование 61 → 132 tok/s, видео 5
+1060 → 760 s при той же точности, +1 GB VRAM; прежний unit сохранён на сервере в
+`/root/sever-model.service.before-mtp-20261018`). Изменение этих параметров
 меняет условия сравнения: сохраняйте service/config/model hashes вместе с результатами.
 Сохранённые ответы распознавания не используются для нового чтения. Новые
 фактические вызовы модели должны быть видны в трассе каждого свежего задания.
