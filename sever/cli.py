@@ -53,8 +53,14 @@ def documents_command(run:Path,report:bool=typer.Option(True,help="Also rebuild 
     assembly=assemble_documents(result)
     export_documents(run,assembly)
     if report:
-        archive_restart_artifacts(run,("report.html",),reason="documents-export")
-        write_report(run,{**result,"documents":assembly})
+        history=archive_restart_artifacts(run,("report.html",),reason="documents-export")
+        try:
+            write_report(run,{**result,"documents":assembly})
+        except BaseException:
+            # Never leave a finished run without its report: put the previous one back.
+            if history is not None and (history/"report.html").is_file():
+                (history/"report.html").replace(run/"report.html")
+            raise
     typer.echo(json.dumps({"documents_csv":str(run.resolve()/"documents.csv"),**assembly["summary"]},ensure_ascii=False))
 
 @app.command("evaluate")

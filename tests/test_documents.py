@@ -255,3 +255,19 @@ def test_number_variants_with_different_dates_stay_separate_documents():
     result = video(sheet("p1", 0, "ttn", **{**TTN_FRONT, "document_number": "АБ-100"}),
                    sheet("p2", 4, "ttn", **{**TTN_FRONT, "document_number": "АВ-100", "document_date": "24.08.2026"}))
     assert len(assemble_documents(result)["documents"]) == 2
+
+
+def test_documents_command_restores_the_previous_report_when_rebuilding_fails(tmp_path, monkeypatch):
+    import sever.report
+
+    result = video(sheet("page-0001", 0, "upd", **UPD))
+    (tmp_path / "results.json").write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
+    (tmp_path / "report.html").write_text("old", encoding="utf-8")
+
+    def broken(*args, **kwargs):
+        raise OSError("disk full")
+    monkeypatch.setattr(sever.report, "write_report", broken)
+    outcome = CliRunner().invoke(app, ["documents", str(tmp_path)])
+    assert outcome.exit_code != 0
+    assert (tmp_path / "report.html").read_text() == "old"
+    assert (tmp_path / "documents.csv").is_file()
