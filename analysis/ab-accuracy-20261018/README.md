@@ -33,3 +33,13 @@ What changed on the labels:
 
 Evidence-requirement cost, measured over all four runs (320 views, 257 value proposals): **0** proposals were
 downgraded by the panel-citation rules (`validation_errors` per view). The requirement costs output tokens, not values.
+
+## Offline replay of the fusion fix (commit f492a0a), no model calls
+
+Re-fusing the stored per-view readings of these four runs with the new rules (strong agreement for all
+fields, joint values must match a reading) changes exactly two final values, both on video 4 sheet 4 in the
+"after" run: `consignee` conflict → `ООО "УМНЫЙ РИТЕЙЛ"` (7 frames vs 1 vs 1) and `consignee_address`
+`ул., д. 21, соор. 16` → the full block (6 frames vs 2 vs 1). No other field in any of the four runs is
+affected. Rescored with bracket matching: video 4 "after" 22/22, video 5 "after" 22/22, abstention 44/44 —
+i.e. 44/44 labelled fields on the two labelled videos. This is a replay of stored readings, not a live run;
+the live confirmation run is next.
