@@ -393,7 +393,7 @@ def test_numeric_strong_agreement_accepts_many_identical_views_over_one_glyph_di
 @pytest.mark.parametrize("agreeing,dissent", [
     (2, ["2660"]),                 # fewer than three agreeing views
     (3, ["2660", "2650"]),         # two dissenting views
-    (3, ["9999"]),                 # dissent too far from the leader (edit distance 4)
+    (3, ["7781"]),                 # dissent too far from the leader (edit distance 4)
     (5, ["2660", "2560"]),         # ratio 5:2 is below 3:1
 ])
 def test_numeric_strong_agreement_stays_a_conflict_outside_its_bounds(agreeing, dissent):
