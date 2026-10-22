@@ -30,11 +30,13 @@ def _recognized_key(field: Any, name: str) -> str | None:
 
 
 def needs_detail_verification(proposed_field, readings, field_name: str, document_type: str) -> bool:
-    """Whether a recognized proposal disagrees with a grounded direct reading.
+    """Whether a recognized proposal introduces an unobserved literal value.
 
     Agreement is tested per original frame reading, so an agreed suffix cannot
     be changed unnoticed merely because the readings differ elsewhere. Missing,
     printed-blank, and ungrounded readings do not create a verification target.
+    Choosing an existing grounded reading retains the established joint-review
+    policy; only a new literal value requires the additional independent pass.
     ``readings`` accepts DocumentResult objects or their JSON dictionaries.
     """
     if field_name not in FIELDS_BY_TYPE.get(document_type, ()):
@@ -42,6 +44,7 @@ def needs_detail_verification(proposed_field, readings, field_name: str, documen
     proposed = _recognized_key(proposed_field, field_name)
     if proposed is None:
         return False
+    observed_keys = set()
     for reading in readings:
         if _get(reading, "document_type") != document_type:
             continue
@@ -51,9 +54,9 @@ def needs_detail_verification(proposed_field, readings, field_name: str, documen
             continue
         evidence = _get(field, "evidence", ()) or ()
         if any(isinstance(_get(item, "frame_id"), str) and _get(item, "frame_id").strip()
-               for item in evidence) and observed != proposed:
-            return True
-    return False
+               for item in evidence):
+            observed_keys.add(observed)
+    return bool(observed_keys) and proposed not in observed_keys
 
 
 def _finite(value, default=0.0):

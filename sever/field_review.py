@@ -48,7 +48,8 @@ async def verify_document_fields(pages, *, source_id, config, out, trace_path, v
             candidates = original.get("candidates", [])
             # Truly absent/unreadable fields and single supported values need
             # no fine-print reread. A printed blank is not a text alternative.
-            if len(candidates) < 2 or not all(item.get("status") == "recognized" for item in candidates):
+            if (original.get("status") != "conflict" or len(candidates) < 2
+                    or not all(item.get("status") == "recognized" for item in candidates)):
                 continue
             frames = frames_for_verification(members, name)
             entry = {"source_id": source_id, "document_type": record["document_type"],

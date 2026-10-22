@@ -153,7 +153,7 @@ def native_implementation():
                 ensure_ascii=False,separators=(",",":")).encode()).hexdigest()},
         "leaf_search":{"no_progress_stop":_NO_PROGRESS_POLICY,"orientation":"first_fresh_decision_shared_by_leaf"},
         "field_detail_verification":{"version":field_verification.FIELD_VERIFICATION_VERSION,
-            "trigger":"disputed_joint_values_and_cross_sheet_text_disagreements",
+            "trigger":"new_joint_values_and_unresolved_cross_sheet_text_conflicts",
             "prior_answers_in_model_input":False,"max_source_views":field_verification.MAX_REVIEW_FRAMES,
             "requests_per_frame":field_verification.MAX_REQUESTS_PER_FRAME,
             "detail_tile_edge":field_verification.DETAIL_EDGE,

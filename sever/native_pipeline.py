@@ -709,7 +709,7 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                         signature = (name, tuple(frame["source_sha256"] for frame in chosen))
                         detail = {"field_name": name, "phase": phase,
                             "frame_ids": [frame["frame_id"] for frame in chosen],
-                            "trigger": "joint_reading_disagrees_with_original_readings"}
+                            "trigger": "joint_reading_introduces_new_literal_value"}
                         detail_verifications.append(detail)
                         entry.setdefault("detail_verifications", []).append(detail)
                         if len(chosen) < 2 or signature in detail_attempts:

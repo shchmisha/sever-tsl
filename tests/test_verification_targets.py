@@ -43,8 +43,16 @@ def test_new_joint_suffix_is_verified_even_when_direct_addresses_differ_elsewher
     readings = [direct('ООО "Гринфилдс", дом 16, стр. 8', "f1"),
                 direct('ООО "Тринфилдс", дом 15, стр. 8', "f2")]
     assert needs_detail_verification(recognized('ООО "Гринфилдс", дом 15, стр. В'), readings, FIELD, "upd")
-    # A proposed value matching one reading still has to settle the other side.
-    assert needs_detail_verification(readings[0]["fields"][FIELD], readings, FIELD, "upd")
+    # A joint choice of an existing grounded value keeps the established policy.
+    assert not needs_detail_verification(readings[0]["fields"][FIELD], readings, FIELD, "upd")
+
+
+def test_supported_invoice_number_is_not_made_unreadable_by_an_unneeded_reread():
+    name = "invoice_number"
+    readings = [{"document_type": "upd", "fields": {name: recognized(value, str(index))}}
+                for index, value in enumerate(["ГФЛ00056144", "ГФП00056144"])]
+    assert not needs_detail_verification(recognized("ГФЛ00056144"), readings, name, "upd")
+    assert needs_detail_verification(recognized("ГФБ00056144"), readings, name, "upd")
 
 
 @pytest.mark.parametrize("value", ["дом 16, стр. В", "дом 16, стр. 8"])

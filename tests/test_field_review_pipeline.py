@@ -133,9 +133,9 @@ def test_document_detail_budget_failure_is_not_turned_into_a_success(tmp_path):
             out=tmp_path, trace_path=tmp_path / "trace.jsonl", verifier=stopped))
 
 
-def test_uncovered_dispute_cannot_keep_a_majority_without_verification(tmp_path):
+def test_uncovered_cross_sheet_conflict_stays_unresolved(tmp_path):
     pages = pages_with_dispute(tmp_path)
-    for index, value in enumerate([UPD["consignor_address"], "Москва, дом 15, стр. 5", "Москва, дом 15, стр. 6"], 2):
+    for index, value in enumerate(["Москва, дом 15, стр. 5", "Москва, дом 15, стр. 6"], 2):
         page = deepcopy(pages[0])
         page["page_id"] = f"page-{index}"
         page["result"]["page_id"] = page["page_id"]
@@ -152,6 +152,22 @@ def test_uncovered_dispute_cannot_keep_a_majority_without_verification(tmp_path)
     field = assembly["documents"][0]["fields"]["consignor_address"]
     assert entries[0]["status"] == "insufficient_source_views"
     assert field["status"] == "conflict" and field["raw_value"] is None
+
+
+def test_supported_cross_sheet_majority_keeps_existing_behavior(tmp_path):
+    pages = pages_with_dispute(tmp_path)
+    third = deepcopy(pages[0])
+    third["page_id"] = "page-c"
+    third["result"]["page_id"] = "page-c"
+    pages.append(third)
+
+    async def forbidden(*args, **kwargs):
+        pytest.fail("A supported majority is already resolved by the existing policy")
+
+    assert asyncio.run(verify_document_fields(pages, source_id="source", config=AgentConfig(), out=tmp_path,
+        trace_path=tmp_path / "trace.jsonl", verifier=forbidden)) == []
+    field = assemble_documents({"pages": pages})["documents"][0]["fields"]["consignor_address"]
+    assert field["status"] == "recognized" and field["raw_value"] == UPD["consignor_address"]
 
 
 def test_document_detail_timeout_is_exposed_in_api_job_status(tmp_path, monkeypatch):
