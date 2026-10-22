@@ -45,6 +45,11 @@ McNemar p = 1.0; wall time 0.52–0.96×).
   (38/41: the 145110 счёт-фактура was labelled as УПД on 18.10).
 - `ab-vs-earlier/` — `tools/compare_runs.py --matching bracket`, earlier run vs cabinet run, 5 videos.
 - `tables/<video>/documents.{csv,json}` — the per-document export of each cabinet run.
+- `truth-vs-output-7-videos.csv` — every labelled field on all 7 videos side by side: ground-truth value vs
+  cabinet-run output for the same matched document (75 labelled fields, 70 correct, 5 misses shown with their
+  truth values and `[conflict]`/empty outputs; the 4 extra output documents listed with their reason).
+  Join of `score-7-videos.json` matching with `ground-truth-expanded-provisional.json` and `tables/`;
+  candidate readings behind each conflict stay in `misses-7-videos.json`.
 
 All 7 jobs ran before production switched to `20261019-lookalike-docs` (ef947b6) at 01:10 MSK on 19.10 (same
 implementation fingerprint 59be257c on every job). The scores are identical whether the document assembly of
