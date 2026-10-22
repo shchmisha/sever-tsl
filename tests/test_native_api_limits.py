@@ -6,7 +6,7 @@ import pytest
 
 from sever import api
 from sever import image_reader
-from sever import image_agent, image_orientation, zoom_image_reader, image_conflicts
+from sever import image_agent, image_orientation, zoom_image_reader, image_conflicts, field_verification
 from sever.inference_gate import InferenceGateBusy, evaluation_access, gate_path
 
 
@@ -191,6 +191,12 @@ def test_native_health_fingerprint_is_stable_covers_source_prompt_schema_and_no_
     (image_conflicts, "MAX_MODEL_REQUESTS", 13),
     (image_conflicts, "MAX_ZOOM_IMAGES", 13),
     (image_conflicts, "MAX_REVIEW_FRAMES", 3),
+    (field_verification, "FIELD_VERIFICATION_VERSION", "changed-detail-version"),
+    (field_verification, "LOCALIZATION_INSTRUCTIONS", "Changed field localization task"),
+    (field_verification, "TRANSCRIPTION_INSTRUCTIONS", "Changed field detail task"),
+    (field_verification, "DETAIL_EDGE", 512),
+    (field_verification, "DETAIL_OVERLAP", 32),
+    (field_verification, "MAX_REQUESTS_PER_FRAME", 4),
 ])
 def test_loaded_zoom_and_orientation_tasks_change_pin_without_file_edits(monkeypatch, isolated_jobs, module, name, value):
     monkeypatch.setenv("HARNESS_PROVIDER_KIND", "local")

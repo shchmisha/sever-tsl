@@ -100,6 +100,7 @@ def _native_source_hashes():
     names=("image_reader.py","image_fusion.py","native_pipeline.py","schema.py",
            "adaptive_image_reader.py","image_orientation.py","image_triage.py","image_detail.py","documents.py",
            "image_agent.py","zoom_image_reader.py","image_conflicts.py","inference_gate.py",
+           "field_verification.py","verification_targets.py","field_review.py",
            "pipeline.py","video.py","frame_pool.py","quality.py","normalize.py","coverage.py",
            "agents.py","cli.py","tracing.py","api.py")
     return {name:hashlib.sha256((root/name).read_bytes()).hexdigest() for name in names}
@@ -116,7 +117,7 @@ def native_implementation():
     from .zoom_image_reader import ZOOM_READER_VERSION
     from .image_triage import TRIAGE_VERSION,TRIAGE_OUTPUT_LIMIT,INSTRUCTIONS as TRIAGE_INSTRUCTIONS,_TriageDecision
     from .native_pipeline import _NO_PROGRESS_POLICY
-    from . import image_conflicts
+    from . import image_conflicts, field_verification
     from .schema import FIELDS_BY_TYPE
     model=os.getenv("HARNESS_MODEL_NAME","openai/gpt-4.1-mini")
     schema=json.dumps(_NativeReadingResponse.model_json_schema(),sort_keys=True,
@@ -151,6 +152,19 @@ def native_implementation():
             "schema_sha256":hashlib.sha256(json.dumps(_TriageDecision.model_json_schema(),sort_keys=True,
                 ensure_ascii=False,separators=(",",":")).encode()).hexdigest()},
         "leaf_search":{"no_progress_stop":_NO_PROGRESS_POLICY,"orientation":"first_fresh_decision_shared_by_leaf"},
+        "field_detail_verification":{"version":field_verification.FIELD_VERIFICATION_VERSION,
+            "trigger":"disputed_joint_values_and_cross_sheet_text_disagreements",
+            "prior_answers_in_model_input":False,"max_source_views":field_verification.MAX_REVIEW_FRAMES,
+            "requests_per_frame":field_verification.MAX_REQUESTS_PER_FRAME,
+            "detail_tile_edge":field_verification.DETAIL_EDGE,
+            "detail_tile_overlap":field_verification.DETAIL_OVERLAP,
+            "max_detail_tiles":field_verification.MAX_DETAIL_TILES,
+            "instructions_sha256":hashlib.sha256((field_verification.LOCALIZATION_INSTRUCTIONS
+                +field_verification.TRANSCRIPTION_INSTRUCTIONS).encode()).hexdigest(),
+            "schema_sha256":hashlib.sha256(json.dumps({
+                "localization":field_verification._Location.model_json_schema(),
+                "transcription":field_verification._Transcription.model_json_schema()},sort_keys=True,
+                ensure_ascii=False,separators=(",",":")).encode()).hexdigest()},
         "source_sha256":_native_source_hashes(),
         "configuration":{"document_reader":reader,"provider_kind":"local" if local else "remote",
             "model_name":model,"vision_model":os.getenv("HARNESS_VISION_MODEL",model),
@@ -203,7 +217,8 @@ def execute(job_id:str, request:JobRequest, config):
                     return
                 result=asyncio.run(process_video(Path(request.source_path),directory(job_id),config=config,sample_interval=request.sample_interval,max_pages=request.max_pages,progress=progress))
                 failed=sum(bool(p["result"]["errors"]) for p in result["pages"])
-                state(job_id,{"status":"completed_with_errors" if failed else "completed","page_count":len(result["pages"]),"pages_with_errors":failed,"usage":result["usage"],"results_url":f"/v1/jobs/{job_id}/results","csv_url":f"/v1/jobs/{job_id}/fields.csv","documents_csv_url":f"/v1/jobs/{job_id}/documents.csv",**binding})
+                detail_failed=sum(item.get("status")=="failed" for item in result.get("document_field_verifications", []))
+                state(job_id,{"status":"completed_with_errors" if failed or detail_failed else "completed","page_count":len(result["pages"]),"pages_with_errors":failed,"usage":result["usage"],"results_url":f"/v1/jobs/{job_id}/results","csv_url":f"/v1/jobs/{job_id}/fields.csv","documents_csv_url":f"/v1/jobs/{job_id}/documents.csv",**({"document_fields_with_errors":detail_failed} if detail_failed else {}),**binding})
             except Exception as exc:
                 state(job_id,{"status":"failed","error_type":type(exc).__name__,**binding})
     except Exception as exc:

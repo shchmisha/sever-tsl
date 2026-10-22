@@ -265,6 +265,44 @@ def assemble_documents(result: dict) -> dict:
             "start_s": min(starts) if starts else None, "end_s": max(ends) if ends else None,
             "errors": sorted({error for sheet in members for error in sheet["page"]["result"].get("errors", [])}),
         })
+    # Fresh detail readings are bound to this video's exact sheet membership.
+    # Rebuilding exports reuses the recorded decision as evidence, without any
+    # new model call or alteration of the original per-sheet results.
+    source_id = (result.get("source") or {}).get("sha256") or result.get("source_id")
+    for entry in result.get("document_field_verifications", []):
+        if not source_id or entry.get("source_id") != source_id or not isinstance(entry.get("field"), dict):
+            continue
+        members = set(entry.get("source_page_ids", []))
+        for record in records:
+            if (record["document_type"] != entry.get("document_type")
+                    or {sheet["page_id"] for sheet in record["sheets"]} != members):
+                continue
+            name = entry.get("field_name")
+            if name not in record["fields"]:
+                continue
+            from .schema import FieldValue
+
+            field = FieldValue.model_validate(entry["field"])
+            if field.status not in {"recognized", "conflict", "unreadable"}:
+                continue
+            allowed = set(entry.get("frame_ids", []))
+            cited = {item.frame_id for item in field.evidence}
+            frame_pages = entry.get("frame_pages", {})
+            if (not cited <= allowed or not set(frame_pages.values()) <= members
+                    or (field.status == "recognized" and (entry.get("status") != "resolved" or len(cited) < 2))):
+                continue
+            previous = record["fields"][name]
+            record["fields"][name] = {**previous, "status": field.status,
+                "raw_value": field.raw_value if field.status == "recognized" else None,
+                "normalized_value": field.normalized_value,
+                "source_page_ids": sorted({frame_pages[identifier] for identifier in cited if identifier in frame_pages}),
+                "evidence": [item.model_dump(mode="json") for item in field.evidence],
+                "reason": field.reason, "detail_verified": field.status == "recognized"}
+            record["undetermined_fields"] = [key for key, value in record["fields"].items()
+                                             if value["status"] in {"unreadable", "conflict"}]
+            record["status"] = "incomplete" if record["undetermined_fields"] else "complete"
+            record["number"] = record["fields"][NUMBER_FIELD[record["document_type"]]]["raw_value"]
+            record["date"] = record["fields"][DATE_FIELD[record["document_type"]]]["raw_value"]
     by_type = {}
     for record in records:
         by_type[record["document_type"]] = by_type.get(record["document_type"], 0) + 1

@@ -348,6 +348,7 @@ def _type_conflict_review_frames(page, readings, views, *, previous_frame_ids=()
 async def process_video_images(source: Path, out: Path, *, config, sample_interval=.5,
                                max_pages=100, progress=None, reader=None,
                                additional_frames=None, conflict_reader=None,
+                               field_verifier=None,
                                no_progress_views=_NO_PROGRESS_POLICY["consecutive_views_without_progress"],
                                leaf_concurrency=1):
     from .video import analyze_video
@@ -389,6 +390,9 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
     # Leaves finish in any order when several run at once; exports keep page order.
     completed, in_flight, outcomes = {}, {}, {}
     default_reader = reader is None
+    if default_reader and field_verifier is None:
+        from .field_verification import verify_field_views
+        field_verifier = verify_field_views
     if reader is None:
         from .zoom_image_reader import read_frame_zoom
         reader = read_frame_zoom
@@ -438,6 +442,8 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         seen = set()
         saturation = _FragmentSaturation()
         conflict_reviews = []
+        detail_verifications = []
+        detail_attempts = set()
         reviewed_type = None
         pending_type_review = None
         reviewed_fields = {}
@@ -579,6 +585,7 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             page["image_recognition"] = {"engine": "native_image", "views": views,
                 "attempts": attempts, "complete": False, "fusion": fusion,
                 "conflict_reviews": conflict_reviews,
+                "detail_verifications": detail_verifications,
                 "leaf_visibility_assessments": leaf_visibility_assessments,
                 "redundancy_saturation": saturation.metadata(),
                 "local_ocr_used": False, "separate_classifier_used": False}
@@ -689,6 +696,52 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                         leaf_visibility_assessments.pop(name, None)
                 proposed_resolutions = [name for name, field in fields.items()
                                         if field.status in {"recognized", "not_present"}]
+                if field_verifier is not None:
+                    from .verification_targets import needs_detail_verification, frames_for_verification
+                    from .field_review import checked_detail_field
+
+                    for name, proposed in list(fields.items()):
+                        if not needs_detail_verification(proposed, readings, name, document.document_type):
+                            continue
+                        chosen = frames_for_verification([{**page,
+                            "result": document.model_dump(mode="json"),
+                            "image_recognition": {"views": views}}], name)
+                        signature = (name, tuple(frame["source_sha256"] for frame in chosen))
+                        detail = {"field_name": name, "phase": phase,
+                            "frame_ids": [frame["frame_id"] for frame in chosen],
+                            "trigger": "joint_reading_disagrees_with_original_readings"}
+                        detail_verifications.append(detail)
+                        entry.setdefault("detail_verifications", []).append(detail)
+                        if len(chosen) < 2 or signature in detail_attempts:
+                            detail["status"] = "insufficient_new_source_views"
+                            verified = FieldValue(status="conflict", reason="Targeted detail verification needs new distinct source views")
+                        else:
+                            detail_attempts.add(signature)
+                            detail["status"] = "processing"
+                            publish_snapshot()
+                            try:
+                                if progress:
+                                    progress(f"Checking fine print on image {position}/{len(pages)}: {name}")
+                                answer = await field_verifier(chosen, source_id=source_id, page_id=page_id,
+                                    document_type=document.document_type, field_name=name, config=config,
+                                    cache_dir=out / "image-reading-evidence", trace_path=trace_path)
+                                verified = checked_detail_field(answer, name, chosen)
+                                detail.update(status="resolved" if verified.status == "recognized" else "unresolved",
+                                              answer={**answer, "fields": {name: verified.model_dump(mode="json")}})
+                            except (BatchBudgetExceeded, FatalProviderError):
+                                detail["status"] = "failed"
+                                raise
+                            except Exception as exc:
+                                detail.update(status="failed", error_type=type(exc).__name__)
+                                verified = FieldValue(status="conflict", reason="Targeted detail verification did not confirm this field")
+                                if isinstance(exc, EvidencePersistenceError):
+                                    detail["evidence_persistence_failed"] = True
+                                    raise
+                        fields[name] = verified
+                        if verified.status != "recognized":
+                            document.fields[name] = verified
+                        trace(trace_path, "field_detail_verification_finished", page_id=page_id,
+                              field_name=name, status=detail["status"], phase=phase)
                 # A joint review adjudicates between readings. When single frames
                 # already agree on a value (two or more distinct frames), a joint
                 # value that matches none of the single-frame readings is recorded
@@ -707,7 +760,9 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                         frames_by_key.setdefault(key, set()).update(
                             e.frame_id for e in reading.fields[name].evidence if e.frame_id.strip())
                     dominant = any(len(frames) >= 2 for frames in frames_by_key.values())
-                    if dominant and _field_comparison(name, field.raw_value) not in frames_by_key:
+                    detail_confirmed = any(item.get("field_name") == name and item.get("status") == "resolved"
+                                           for item in entry.get("detail_verifications", []))
+                    if dominant and not detail_confirmed and _field_comparison(name, field.raw_value) not in frames_by_key:
                         novel[name] = {"raw_value": field.raw_value, "single_frame_values": sorted(frames_by_key),
                                        "reason": "Joint-review value matches no single-frame reading although frames already agree; not adopted"}
                 if novel:
@@ -722,7 +777,9 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                     document.fields[name] = field
                     replaced.append(name)
                     fusion.setdefault("field_confirmations", {}).setdefault(name, {}).update(
-                        status=field.status, confirmed=True, resolution="fresh_joint_model_review",
+                        status=field.status, confirmed=True, resolution=("fresh_independent_native_details"
+                            if any(item.get("field_name") == name and item.get("status") == "resolved"
+                                   for item in entry.get("detail_verifications", [])) else "fresh_joint_model_review"),
                         reason=field.reason)
                 fusion.setdefault("coverage", {})["confirmed_fields"] = sum(
                     field.status in {"recognized", "not_present"} for field in document.fields.values())
@@ -1013,6 +1070,9 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         document.errors = list(dict.fromkeys([*document.errors, *(
             f"native_image: conflict_review_failed:{entry['error_type']}"
             for entry in conflict_reviews if entry.get("status") == "failed"
+        ), *(
+            f"{item['field_name']}: detail_verification_failed:{item['error_type']}"
+            for item in detail_verifications if item.get("status") == "failed" and item.get("error_type")
         )]))
         # Source-view/review failures remain in their immutable per-attempt
         # history. A later fully corroborated pixel reading can recover the
@@ -1023,6 +1083,8 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         source_errors.update(f"native_image: {prefix}conflict_review_failed:{entry['error_type']}"
                              for entry in conflict_reviews if entry.get("status") == "failed"
                              for prefix in ("", "type_"))
+        source_errors.update(f"{item['field_name']}: detail_verification_failed:{item['error_type']}"
+                             for item in detail_verifications if item.get("status") == "failed" and item.get("error_type"))
         # Correct later values cannot restore a lost raw response or its source
         # proof. Keep persistence failures active instead of declaring the
         # audit trail recovered through successful recognition on other views.
@@ -1032,6 +1094,8 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
         persistence_errors.update(f"native_image: {prefix}conflict_review_failed:{entry['error_type']}"
             for entry in conflict_reviews if entry.get("evidence_persistence_failed")
             for prefix in ("", "type_"))
+        persistence_errors.update(f"{item['field_name']}: detail_verification_failed:{item['error_type']}"
+            for item in detail_verifications if item.get("evidence_persistence_failed") and item.get("error_type"))
         fully_confirmed = document.document_type != "unknown" and all(
             field.status in {"recognized", "not_present"} for field in document.fields.values())
         error_history = []
@@ -1060,6 +1124,7 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             "local_ocr_used": False, "separate_classifier_used": False, "views": views,
             "attempts": attempts, "stop_reason": stop or exhausted, "frame_count_limit": None,
             "conflict_reviews": conflict_reviews, "error_history": error_history,
+            "detail_verifications": detail_verifications,
             "leaf_visibility_assessments": leaf_visibility_assessments,
             "redundancy_saturation": saturation.metadata(),
             "no_progress_stop": {"policy": {**_NO_PROGRESS_POLICY,
@@ -1118,6 +1183,12 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
                 task.cancel()
             await asyncio.gather(*tasks, return_exceptions=True)
     processed = [completed[index] for index in sorted(completed)]
+    document_field_verifications = []
+    if field_verifier is not None:
+        from .field_review import verify_document_fields
+
+        document_field_verifications = await verify_document_fields(processed, source_id=source_id,
+            config=config, out=out, trace_path=trace_path, verifier=field_verifier, progress=progress)
     after = config.usage.model_dump()
     usage = {key: value-before.get(key, 0) if isinstance(value, (int, float)) and not isinstance(value, bool)
              else value for key, value in after.items()}
@@ -1134,8 +1205,10 @@ async def process_video_images(source: Path, out: Path, *, config, sample_interv
             "redundancy_saturation": dict(_SATURATION_POLICY),
             "no_progress_stop": {**_NO_PROGRESS_POLICY, "consecutive_views_without_progress": no_progress_views},
             "leaf_concurrency": leaf_concurrency,
+            "field_detail_verification": "fresh_independent_native_tiles" if field_verifier else "disabled_for_custom_reader",
             "verify_inn": False, "verify_inn_requested": config.verify_inn},
-        "pages": processed, "usage": usage, "batch_usage": after,
+        "pages": processed, "document_field_verifications": document_field_verifications,
+        "usage": usage, "batch_usage": after,
         "elapsed_seconds": round(time.monotonic()-started, 2),
         "unit": "visible leaf; model-native transcription and field reading across actual source frames",
         "reading_summary": {"leaves_with_image_readings": sum(bool(p["image_recognition"]["views"]) for p in processed),

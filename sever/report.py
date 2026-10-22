@@ -232,6 +232,96 @@ def _conflict_review_sections(reviews, source_frames, report_root, esc, url):
     return rendered, public_reviews
 
 
+def _field_verification_sections(reviews, source_frames, report_root, esc, url, document_type=None):
+    """Show isolated readings and byte-bound native tiles, without provider data."""
+    sections, public = [], []
+    verified_sources = {}
+    for identifier, original in source_frames.items():
+        path = _review_image(original, report_root)
+        if path:
+            try:
+                verified_sources[identifier] = (path, hashlib.sha256(path.read_bytes()).hexdigest())
+            except OSError:
+                continue
+    for entry in reviews:
+        if not isinstance(entry, dict) or not isinstance(entry.get("field_name"), str):
+            continue
+        name = entry["field_name"]
+        answer = entry.get("answer") if isinstance(entry.get("answer"), dict) else {}
+        recognition = answer.get("recognition") or {}
+        proof = recognition.get("pixel_proof") or {} if isinstance(recognition, dict) else {}
+        sources = proof.get("sources") or {} if isinstance(proof, dict) else {}
+        frame_ids = {identifier for identifier in entry.get("frame_ids", []) if isinstance(identifier, str)}
+        bound_sources = {}
+        for label, source in sources.items() if isinstance(sources, dict) else []:
+            if not isinstance(source, dict):
+                continue
+            identifier = source.get("frame_id")
+            original = verified_sources.get(identifier) if identifier in frame_ids else None
+            if (original and source.get("source_sha256") == original[1]
+                    and _review_image(source.get("source_path"), report_root, original[1]) == original[0]):
+                bound_sources[label] = (identifier, source, original)
+        adjudication = answer.get("adjudication") or {}
+        field_reviews = adjudication.get("field_reviews") or {} if isinstance(adjudication, dict) else {}
+        field_review = field_reviews.get(name) or {} if isinstance(field_reviews, dict) else {}
+        model_review = field_review.get("model_review") or {} if isinstance(field_review, dict) else {}
+        readings = model_review.get("readings") or [] if isinstance(model_review, dict) else []
+        rows, public_readings = [], []
+        for reading in readings if isinstance(readings, list) else []:
+            if not isinstance(reading, dict):
+                continue
+            label = reading.get("frame_id")
+            bound = bound_sources.get(label) if isinstance(label, str) else None
+            reference = (f'<a href="{url(bound[2][0])}">{esc(bound[0])}</a>' if bound else
+                         esc(label) + " (источник не подтверждён)")
+            links, panel_ids = [], []
+            panels = bound[1].get("panels") or {} if bound else {}
+            cited = reading.get("panel_ids") or []
+            for identifier in list(dict.fromkeys(item for item in cited if isinstance(item, str)))[:12] if isinstance(cited, list) else []:
+                panel = panels.get(identifier) if isinstance(panels, dict) else None
+                if (not isinstance(panel, dict) or panel.get("verification_purpose") != "transcription_detail"
+                        or panel.get("panel_id") != identifier or panel.get("frame_id") != bound[0]
+                        or panel.get("source_sha256") != bound[2][1]):
+                    continue
+                digest = panel.get("upload_sha256")
+                path = _review_image(panel.get("upload_path"), report_root, digest) if digest else None
+                if path:
+                    links.append(f'<a href="{url(path)}">Фрагмент {len(links) + 1}</a>')
+                    panel_ids.append(identifier)
+            rows.append(f'<tr><td>{reference}</td><td>{esc(reading.get("raw_value"))}</td>'
+                        f'<td>{esc(SHEET_STATUS.get(reading.get("status"), reading.get("status")))}</td>'
+                        f'<td>{" · ".join(links) if links else "Подтверждённый фрагмент недоступен"}</td></tr>')
+            public_readings.append({"frame_id": bound[0] if bound else label,
+                "frame_binding_verified": bound is not None, "raw_value": reading.get("raw_value"),
+                "status": reading.get("status"), "panel_ids": panel_ids})
+        status = entry.get("status")
+        status_label = {"resolved": "Подтверждено", "unresolved": "Разногласия сохранились",
+            "failed": "Проверка не завершена", "processing": "Проверка продолжается",
+            "insufficient_source_views": "Недостаточно исходных кадров",
+            "insufficient_new_source_views": "Недостаточно новых исходных кадров"}.get(status, "Статус не указан")
+        fields = answer.get("fields") or {}
+        field = entry.get("field") or (fields.get(name) if isinstance(fields, dict) else {}) or {}
+        field = field if isinstance(field, dict) else {}
+        outcome = (f'<p>Результат проверки: {esc(field.get("raw_value"))} · '
+                   f'{esc(SHEET_STATUS.get(field.get("status"), field.get("status")))}</p>') if field else ""
+        table = ('<div class="table"><table><thead><tr><th>Кадр</th><th>Буквальное значение</th>'
+                 '<th>Статус</th><th>Фрагменты исходного изображения</th></tr></thead><tbody>'
+                 + "".join(rows) + '</tbody></table></div>') if rows else '<p>Отдельные чтения кадров не сохранены.</p>'
+        kind = entry.get("document_type") or document_type
+        label = FIELD_LABELS.get(kind, {}).get(name, name)
+        members = entry.get("source_page_ids") or []
+        sheet_note = '<p>Листы: ' + esc(", ".join(item for item in members if isinstance(item, str))) + '</p>' if isinstance(members, list) and members else ""
+        sections.append(f'<section class="field-verification"><h4>{esc(label)} · {status_label}</h4>'
+                        f'{sheet_note}{outcome}{table}</section>')
+        public.append({"field_name": name, "status": status, "phase": entry.get("phase"),
+            "frame_ids": sorted(frame_ids), "source_page_ids": members if isinstance(members, list) else [],
+            "field": {key: field.get(key) for key in ("raw_value", "status")}, "readings": public_readings})
+    rendered = ('<details class="field-verifications"><summary>Проверка мелкого текста</summary>'
+        '<p>Каждый кадр прочитан отдельным новым запросом по фрагментам исходного разрешения. '
+        'Исходные ответы сохранены в чтениях листа.</p>' + "".join(sections) + '</details>') if sections else ""
+    return rendered, public
+
+
 def _frame_preview(path: Path, assets: Path) -> tuple[Path, tuple[int, int]]:
     """Derive a display image, keeping recognition/source pixels untouched."""
     with path.open("rb") as source:
@@ -350,6 +440,7 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
     membership = {sheet["page_id"]: f'{record["document_type_label"]} № {record["number"]}' if record["number"] else f'{record["document_type_label"]} без номера'
                   for record in assembly["documents"] for sheet in record["sheets"]}
     thumbs = {}
+    all_source_frames = {}
     for page in result["pages"]:
         doc=page["result"]
         frames=[]
@@ -422,9 +513,10 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
             fragments = '<h3>Прочитанные фрагменты</h3>' + ('<ul>' + "".join(excerpts) + '</ul>' if excerpts else
                 '<p>В результате нет подтверждающих цитат. Исходные кадры доступны по ссылкам ниже.</p>')
         conflict_reviews = ""
+        field_verifications = ""
         details_page = page
         recognition = page.get("image_recognition") or {}
-        if recognition.get("conflict_reviews"):
+        if recognition.get("conflict_reviews") or recognition.get("detail_verifications"):
             # Additional read frames are already bound by the saved independent
             # views; raw review transport is intentionally absent from HTML.
             review_sources = dict(source_frames)
@@ -432,13 +524,20 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
                 if reading.get("frame_id") not in review_sources and reading.get("frame_path"):
                     review_sources[reading["frame_id"]] = Path(reading["frame_path"]).resolve()
             conflict_reviews, public_reviews = _conflict_review_sections(
-                recognition["conflict_reviews"], review_sources, report_root, esc, url)
-            details_page = {**page, "image_recognition": {**recognition, "conflict_reviews": public_reviews}}
+                recognition.get("conflict_reviews", []), review_sources, report_root, esc, url)
+            field_verifications, public_details = _field_verification_sections(
+                recognition.get("detail_verifications", []), review_sources, report_root, esc, url, doc["document_type"])
+            details_page = {**page, "image_recognition": {**recognition, "conflict_reviews": public_reviews,
+                                                       "detail_verifications": public_details}}
+        all_source_frames.update(source_frames)
+        for reading in recognition.get("views", []):
+            if reading.get("frame_id") not in all_source_frames and reading.get("frame_path"):
+                all_source_frames[reading["frame_id"]] = Path(reading["frame_path"]).resolve()
         field_table = '<div class="table"><table><thead><tr><th>Поле</th><th>Исходное значение</th><th>Нормализованное</th><th>Статус</th><th>Доказательство</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table></div>' if rows else ""
         errors_html = f'<p class="sheet-errors">Ошибка обработки: {esc("; ".join(doc["errors"]))}</p>' if doc["errors"] else ""
         belongs = membership.get(page["page_id"])
         role = f"лист документа {belongs}" if belongs else ("прочий лист" if doc["document_type"] == "unknown" else "лист без реквизитов")
-        cards.append(f'<details class="sheet"><summary>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с · {esc(role)}</summary><article id="sheet-{esc(page["page_id"])}"><h2>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с</h2>{errors_html}{fragments}{conflict_reviews}<div class="frames">{"".join(frames)}</div>{field_table}{inns}<details><summary>Качество и координаты доказательств</summary><pre>{esc(json.dumps(details_page,ensure_ascii=False,indent=2))}</pre></details></article></details>')
+        cards.append(f'<details class="sheet"><summary>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с · {esc(role)}</summary><article id="sheet-{esc(page["page_id"])}"><h2>{esc(page["page_id"])} · {esc(display_type)} · {page["start_s"]:.2f}–{page["end_s"]:.2f} с</h2>{errors_html}{fragments}{conflict_reviews}{field_verifications}<div class="frames">{"".join(frames)}</div>{field_table}{inns}<details><summary>Качество и координаты доказательств</summary><pre>{esc(json.dumps(details_page,ensure_ascii=False,indent=2))}</pre></details></article></details>')
     processing = result.get("status") == "processing"
     failed = result.get("status") == "failed"
     refresh = '<meta http-equiv="refresh" content="10">' if processing else ""
@@ -481,5 +580,8 @@ def write_report(out:Path,result:dict,*,report_root:Path|None=None):
                  f'{esc(result["source"]["sha256"])}</p><p>{len(result["pages"])} листов · {result["elapsed_seconds"]:.1f} с обработки.</p>'
                  f'{coverage_html}</details>')
     documents_section = _documents_section(assembly, esc, processing or failed, thumbs)
+    document_verifications, _ = _field_verification_sections(
+        result.get("document_field_verifications", []), all_source_frames, report_root, esc, url)
+    documents_section += document_verifications
     page=f'''<!doctype html><html lang="ru"><meta charset="utf-8">{refresh}<meta name="viewport" content="width=device-width"><title>{title}</title><style>body{{font:15px system-ui;max-width:1300px;margin:28px auto;padding:0 18px;color:#182333;background:#f4f6fa}}article{{background:white;padding:20px;margin:20px 0;border-radius:10px}}h1{{font-size:26px}}h2{{font-size:18px}}.frames{{display:flex;flex-wrap:wrap;gap:20px}}figure{{margin:0}}img{{display:block;width:auto;height:auto;max-height:380px;max-width:42vw}}figcaption{{font-size:12px;color:#586475}}.table{{overflow:auto}}table{{border-collapse:collapse;margin-top:18px;width:100%}}td,th{{text-align:left;vertical-align:top;padding:9px;border-bottom:1px solid #dae0ea}}pre{{white-space:pre-wrap;font-size:12px}}.image-text{{padding:12px;background:#f4f6fa;font-size:14px;overflow-wrap:anywhere}}a{{color:#165dca}}.doc-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}}.doc-card{{margin:0;border:1px solid #dae0ea;border-radius:12px;padding:16px 18px;background:#fbfcfe}}.doc-card header{{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:10px}}.doc-card h3{{margin:0;font-size:17px}}.badge{{background:#185c47;color:white;border-radius:6px;padding:2px 9px;font-size:12px;font-weight:700}}.state{{font-size:12px;border-radius:6px;padding:2px 8px}}.state.ok{{background:#e7f1e8;color:#2b6745}}.state.warn{{background:#fbf0d9;color:#815c13}}.doc-fields{{display:grid;grid-template-columns:minmax(140px,210px) minmax(0,1fr);gap:7px 14px;margin:0}}.doc-fields dt{{color:#586475}}.doc-fields dd{{margin:0;overflow-wrap:anywhere}}.doc-fields dd.missing{{color:#815c13;font-style:italic}}.doc-sheets-title{{font-size:12px;color:#586475;margin:14px 0 6px}}.doc-sheets{{display:flex;flex-wrap:wrap;gap:8px}}.sheet-thumb{{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;color:#586475;text-decoration:none}}.sheet-thumb img{{width:72px;height:96px;object-fit:cover;object-position:top;border-radius:6px;border:1px solid #dae0ea;max-width:none;max-height:none}}.noimg{{width:72px;height:96px;display:grid;place-items:center;border:1px dashed #c7cfdb;border-radius:6px}}.empty-docs{{background:#fbf6e9;color:#5c4a1f;border-radius:9px;padding:12px 14px}}@media (max-width:640px){{.doc-grid{{grid-template-columns:1fr}}.doc-fields{{grid-template-columns:1fr;gap:2px}}.doc-fields dt{{margin-top:8px}}}}.lead{{font-size:16px;margin:4px 0 14px}}.downloads{{display:flex;flex-wrap:wrap;gap:8px}}.btn{{display:inline-block;border:1px solid #c9d3e0;border-radius:8px;padding:7px 12px;text-decoration:none;background:white;font-size:13px}}.btn.primary{{background:#185c47;border-color:#185c47;color:white}}details.others{{margin-top:18px}}details.others>summary{{cursor:pointer;font-weight:600}}.technical{{margin:24px 0;color:#586475}}details.sheet{{background:white;margin:10px 0;border-radius:10px;padding:10px 16px}}details.sheet>summary{{cursor:pointer;font-weight:600}}details.sheet article{{margin:0;padding:10px 0}}#documents{{background:white;padding:20px;margin:20px 0;border-radius:10px}}</style><h1>{heading}</h1>{notice}{lead}<p class="downloads">{links}</p>{limit_html}{documents_section}<h2>Листы видео подробно</h2><p>Кадры и прочитанные значения каждого листа. Нажмите на строку листа, чтобы раскрыть его.</p>{"".join(cards)}{technical}</html>'''
     (out/"report.html").write_text(page,encoding="utf-8")
